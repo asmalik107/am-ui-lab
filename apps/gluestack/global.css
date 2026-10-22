@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+@import 'uniwind';
+
+/* gluestack-ui's default palette (written by `gluestack-ui init --uniwind`) is
+   replaced by the shared lab tokens. Edit shared/tokens.ts, then `npm run tokens`. */
+@import './theme.generated.css';

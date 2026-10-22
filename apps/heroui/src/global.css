@@ -1,0 +1,156 @@
+/*
+ * HeroUI Native + Uniwind entry stylesheet.
+ * Order follows https://heroui.com/docs/native/getting-started/quick-start
+ * (tailwindcss, uniwind, heroui-native/styles). No @source line: not needed
+ * from heroui-native 1.0.8 (the library registers its own source).
+ *
+ * The three themes below re-declare every HeroUI theme variable from
+ * shared/tokens.ts (values copied by hand, CSS cannot import TS).
+ * `light` and `dark` are Uniwind's built-in themes; `brand` is registered
+ * through `extraThemes` in metro.config.js.
+ * Docs: https://heroui.com/docs/native/getting-started/theming
+ *       https://docs.uniwind.dev/theming/custom-themes
+ */
+@import 'tailwindcss';
+@import 'uniwind';
+
+@import 'heroui-native/styles';
+
+@theme {
+  /* shared/tokens radius.md = 10. HeroUI derives radius-xs..4xl from --radius. */
+  --radius: 10px;
+  --field-radius: 10px;
+  /* Baseline text field has a 1px border; HeroUI default is 0px. */
+  --field-border-width: 1px;
+}
+
+@layer theme {
+  :root {
+    @variant light {
+      --background: #FFFFFF;
+      --foreground: #18181B;
+      --surface: #F4F4F5;
+      --surface-foreground: #18181B;
+      --surface-secondary: #F4F4F5;
+      --surface-secondary-foreground: #18181B;
+      --surface-tertiary: #F4F4F5;
+      --surface-tertiary-foreground: #18181B;
+      --overlay: #FFFFFF;
+      --overlay-foreground: #18181B;
+      --backdrop: rgba(0, 0, 0, 0.5);
+      --muted: #52525B;
+      --default: #F4F4F5;
+      --default-foreground: #18181B;
+      --accent: #1D4ED8;
+      --accent-foreground: #FFFFFF;
+      --field-background: #FFFFFF;
+      --field-foreground: #18181B;
+      --field-placeholder: #52525B;
+      --field-border: #71717A;
+      --success: #15803D;
+      --success-foreground: #FFFFFF;
+      /* No warning token in shared/tokens: HeroUI default kept. */
+      --warning: oklch(0.7819 0.1585 72.33);
+      --warning-foreground: oklch(0.2103 0.0059 285.89);
+      --danger: #B91C1C;
+      --danger-foreground: #FFFFFF;
+      --segment: #FFFFFF;
+      --segment-foreground: #18181B;
+      --border: #71717A;
+      --separator: #71717A;
+      --focus: #1D4ED8;
+      --link: #1D4ED8;
+      --surface-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
+      --overlay-shadow:
+        0 2px 8px 0 rgba(0, 0, 0, 0.02), 0 -6px 12px 0 rgba(0, 0, 0, 0.01),
+        0 14px 28px 0 rgba(0, 0, 0, 0.03);
+      --field-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
+    }
+
+    @variant dark {
+      --background: #09090B;
+      --foreground: #FAFAFA;
+      --surface: #18181B;
+      --surface-foreground: #FAFAFA;
+      --surface-secondary: #18181B;
+      --surface-secondary-foreground: #FAFAFA;
+      --surface-tertiary: #18181B;
+      --surface-tertiary-foreground: #FAFAFA;
+      --overlay: #27272A;
+      --overlay-foreground: #FAFAFA;
+      --backdrop: rgba(0, 0, 0, 0.7);
+      --muted: #A1A1AA;
+      --default: #18181B;
+      --default-foreground: #FAFAFA;
+      --accent: #93C5FD;
+      --accent-foreground: #0B1B3A;
+      --field-background: #27272A;
+      --field-foreground: #FAFAFA;
+      --field-placeholder: #A1A1AA;
+      --field-border: #A1A1AA;
+      --success: #86EFAC;
+      --success-foreground: #09090B;
+      --warning: oklch(0.8203 0.1388 76.34);
+      --warning-foreground: oklch(0.2103 0.0059 285.89);
+      --danger: #FCA5A5;
+      --danger-foreground: #450A0A;
+      --segment: #27272A;
+      --segment-foreground: #FAFAFA;
+      --border: #A1A1AA;
+      --separator: #A1A1AA;
+      --focus: #93C5FD;
+      --link: #93C5FD;
+      --surface-shadow: 0 0 0 0 transparent inset;
+      --overlay-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+      --field-shadow: 0 0 0 0 transparent inset;
+    }
+
+    @variant brand {
+      --background: #FFF7ED;
+      --foreground: #1C1917;
+      --surface: #FFEDD5;
+      --surface-foreground: #1C1917;
+      --surface-secondary: #FFEDD5;
+      --surface-secondary-foreground: #1C1917;
+      --surface-tertiary: #FFEDD5;
+      --surface-tertiary-foreground: #1C1917;
+      --overlay: #FFFFFF;
+      --overlay-foreground: #1C1917;
+      --backdrop: rgba(28, 25, 23, 0.5);
+      --muted: #57534E;
+      --default: #FFEDD5;
+      --default-foreground: #1C1917;
+      --accent: #C2410C;
+      --accent-foreground: #FFFFFF;
+      --field-background: #FFFFFF;
+      --field-foreground: #1C1917;
+      --field-placeholder: #57534E;
+      --field-border: #78716C;
+      --success: #15803D;
+      --success-foreground: #FFFFFF;
+      --warning: oklch(0.7819 0.1585 72.33);
+      --warning-foreground: oklch(0.2103 0.0059 285.89);
+      --danger: #B91C1C;
+      --danger-foreground: #FFFFFF;
+      --segment: #FFFFFF;
+      --segment-foreground: #1C1917;
+      --border: #78716C;
+      --separator: #78716C;
+      --focus: #9A3412;
+      --link: #C2410C;
+      --surface-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
+      --overlay-shadow:
+        0 2px 8px 0 rgba(0, 0, 0, 0.02), 0 -6px 12px 0 rgba(0, 0, 0, 0.01),
+        0 14px 28px 0 rgba(0, 0, 0, 0.03);
+      --field-shadow:
+        0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 1px 2px 0 rgba(0, 0, 0, 0.06),
+        0 0 1px 0 rgba(0, 0, 0, 0.06);
+    }
+  }
+}

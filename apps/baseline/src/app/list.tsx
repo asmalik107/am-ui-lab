@@ -2,6 +2,7 @@ import { FlatList, Text, View } from 'react-native';
 
 import { ids, rows, type Row } from '@shared/content';
 
+import { useListMeasure } from '../perf';
 import { useTheme } from '../theme';
 
 function RowItem({ row }: { row: Row }) {
@@ -24,5 +25,13 @@ function RowItem({ row }: { row: Row }) {
 }
 
 export default function ListScreen() {
-  return <FlatList testID={ids.list} data={rows} keyExtractor={(r) => r.id} renderItem={({ item }) => <RowItem row={item} />} />;
+  return (
+    <FlatList
+      onLayout={useListMeasure()}
+      testID={ids.list}
+      data={rows}
+      keyExtractor={(r) => r.id}
+      renderItem={({ item }) => <RowItem row={item} />}
+    />
+  );
 }

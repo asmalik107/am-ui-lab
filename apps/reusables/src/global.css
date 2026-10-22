@@ -1,0 +1,110 @@
+/*
+ * Uniwind entry. shared/tokens.ts mapped onto the shadcn/RNR variable names
+ * (from the minimal-uniwind template) plus a few extra lab tokens.
+ * Mapping:
+ *   background      <- background        foreground       <- text
+ *   card/popover    <- surfaceRaised     *-foreground     <- text
+ *   primary         <- primary           primary-fg       <- onPrimary
+ *   secondary/muted/accent <- surface    muted-foreground <- textMuted
+ *   destructive     <- danger            destructive-fg   <- onDanger
+ *   border/input    <- border            ring             <- focus
+ *   extra: surface, success, scrim
+ * Keep these values in sync with shared/tokens.ts (CSS can't import TS).
+ */
+@import 'tailwindcss';
+@import 'uniwind';
+
+@import 'tw-animate-css';
+
+@theme {
+  /* shared/tokens.ts radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Type scale is NOT defined as --text-* theme keys: tailwind-merge (used by
+     RNR's cn()) treats unknown text-<name> classes as colours and drops
+     text-foreground. src/lib/type.ts uses arbitrary values instead. */
+
+  --spacing-hairline: hairlineWidth();
+}
+
+@layer theme {
+  :root {
+    @variant light {
+      --color-background: #ffffff;
+      --color-foreground: #18181b;
+      --color-surface: #f4f4f5;
+      --color-card: #ffffff;
+      --color-card-foreground: #18181b;
+      --color-popover: #ffffff;
+      --color-popover-foreground: #18181b;
+      --color-primary: #1d4ed8;
+      --color-primary-foreground: #ffffff;
+      --color-secondary: #f4f4f5;
+      --color-secondary-foreground: #18181b;
+      --color-muted: #f4f4f5;
+      --color-muted-foreground: #52525b;
+      --color-accent: #f4f4f5;
+      --color-accent-foreground: #18181b;
+      --color-destructive: #b91c1c;
+      --color-destructive-foreground: #ffffff;
+      --color-success: #15803d;
+      --color-border: #71717a;
+      --color-input: #71717a;
+      --color-ring: #1d4ed8;
+      --color-scrim: rgba(0, 0, 0, 0.5);
+    }
+
+    @variant dark {
+      --color-background: #09090b;
+      --color-foreground: #fafafa;
+      --color-surface: #18181b;
+      --color-card: #27272a;
+      --color-card-foreground: #fafafa;
+      --color-popover: #27272a;
+      --color-popover-foreground: #fafafa;
+      --color-primary: #93c5fd;
+      --color-primary-foreground: #0b1b3a;
+      --color-secondary: #18181b;
+      --color-secondary-foreground: #fafafa;
+      --color-muted: #18181b;
+      --color-muted-foreground: #a1a1aa;
+      --color-accent: #18181b;
+      --color-accent-foreground: #fafafa;
+      --color-destructive: #fca5a5;
+      --color-destructive-foreground: #450a0a;
+      --color-success: #86efac;
+      --color-border: #a1a1aa;
+      --color-input: #a1a1aa;
+      --color-ring: #93c5fd;
+      --color-scrim: rgba(0, 0, 0, 0.7);
+    }
+
+    @variant brand {
+      --color-background: #fff7ed;
+      --color-foreground: #1c1917;
+      --color-surface: #ffedd5;
+      --color-card: #ffffff;
+      --color-card-foreground: #1c1917;
+      --color-popover: #ffffff;
+      --color-popover-foreground: #1c1917;
+      --color-primary: #c2410c;
+      --color-primary-foreground: #ffffff;
+      --color-secondary: #ffedd5;
+      --color-secondary-foreground: #1c1917;
+      --color-muted: #ffedd5;
+      --color-muted-foreground: #57534e;
+      --color-accent: #ffedd5;
+      --color-accent-foreground: #1c1917;
+      --color-destructive: #b91c1c;
+      --color-destructive-foreground: #ffffff;
+      --color-success: #15803d;
+      --color-border: #78716c;
+      --color-input: #78716c;
+      --color-ring: #9a3412;
+      --color-scrim: rgba(28, 25, 23, 0.5);
+    }
+  }
+}

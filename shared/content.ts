@@ -24,6 +24,8 @@ export const ids = {
   list: 'test-list',
   themeSwitcher: 'test-theme',
   nativeSwitch: 'test-native-switch',
+  perfTheme: 'perf-theme',
+  perfList: 'perf-list',
 } as const;
 
 export const copy = {

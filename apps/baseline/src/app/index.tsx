@@ -1,6 +1,6 @@
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { Host, Switch as NativeSwitch } from '@expo/ui';
-import { Link } from 'expo-router';
+import { router } from 'expo-router';
 import { useCallback, useRef, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
@@ -9,6 +9,7 @@ import type { ThemeName } from '@shared/tokens';
 
 import { Button, Checkbox, RadioGroup, Section, SwitchRow, Tabs, TextField, announce } from '../components/controls';
 import { Dialog, ExerciseSheet, Select, Toast } from '../components/overlays';
+import { mark, measure } from '../perf';
 import { useTheme } from '../theme';
 
 const themeNames: ThemeName[] = ['light', 'dark', 'brand'];
@@ -49,7 +50,11 @@ export default function TestScreen() {
             label={copy.themeLabel}
             options={copy.themes}
             value={copy.themes[themeNames.indexOf(theme.name)]}
-            onChange={(v) => setTheme(themeNames[copy.themes.indexOf(v as (typeof copy.themes)[number])])}
+            onChange={(v) => {
+              mark();
+              setTheme(themeNames[copy.themes.indexOf(v as (typeof copy.themes)[number])]);
+              measure('theme');
+            }}
           />
         </Section>
 
@@ -100,9 +105,9 @@ export default function TestScreen() {
         </Section>
 
         <Section title="List">
-          <Link href="/list" asChild>
-            <Button testID={ids.listLink} label={copy.listLink} variant="secondary" />
-          </Link>
+          <View onTouchStart={mark}>
+            <Button testID={ids.listLink} label={copy.listLink} variant="secondary" onPress={() => router.push('/list')} />
+          </View>
         </Section>
       </ScrollView>
 

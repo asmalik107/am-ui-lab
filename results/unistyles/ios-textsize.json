@@ -1,0 +1,96 @@
+{
+  "app": "unistyles",
+  "bundleId": "dev.asimmalik.uilab.unistyles",
+  "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
+  "date": "2026-10-22T19:25:32.747Z",
+  "growth": [
+    {
+      "id": "test-button",
+      "normal": 44,
+      "large": 71.6666259765625,
+      "ratio": 1.6287869540127842
+    },
+    {
+      "id": "test-textfield",
+      "normal": 42,
+      "large": 78.666748046875,
+      "ratio": 1.873017810639881
+    },
+    {
+      "id": "test-switch",
+      "normal": 44,
+      "large": 157.333251953125,
+      "ratio": 3.5757557262073862
+    },
+    {
+      "id": "test-checkbox",
+      "normal": 44,
+      "large": 157.3333740234375,
+      "ratio": 3.5757585005326704
+    },
+    {
+      "id": "test-radiogroup-0",
+      "normal": 44,
+      "large": 78.666748046875,
+      "ratio": 1.7878806374289773
+    },
+    {
+      "id": "test-select",
+      "normal": 44,
+      "large": 80.66650390625,
+      "ratio": 1.8333296342329546
+    },
+    {
+      "id": "test-dialog-open",
+      "normal": 44,
+      "large": 143,
+      "ratio": 3.25
+    },
+    {
+      "id": "test-sheet-open",
+      "normal": 44,
+      "large": 216.33349609375,
+      "ratio": 4.916670365767046
+    },
+    {
+      "id": "test-tabs-0",
+      "normal": 44,
+      "large": 146,
+      "ratio": 3.3181818181818183
+    },
+    {
+      "id": "test-tabs-1",
+      "normal": 44,
+      "large": 146,
+      "ratio": 3.3181818181818183
+    },
+    {
+      "id": "test-tabs-2",
+      "normal": 44,
+      "large": 146,
+      "ratio": 3.3181818181818183
+    },
+    {
+      "id": "test-native-switch",
+      "normal": 28,
+      "large": 63.33349609375,
+      "ratio": 2.2619105747767856
+    },
+    {
+      "id": "test-list-link",
+      "normal": 44,
+      "large": 145,
+      "ratio": 3.2954545454545454
+    }
+  ],
+  "offscreen": [
+    "test-native-switch"
+  ],
+  "overlaps": [],
+  "shots": [
+    "textsize-1.png",
+    "textsize-2.png",
+    "textsize-3.png",
+    "textsize-4.png"
+  ]
+}

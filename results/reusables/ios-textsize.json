@@ -1,0 +1,98 @@
+{
+  "app": "reusables",
+  "bundleId": "dev.asimmalik.uilab.reusables",
+  "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
+  "date": "2026-10-22T19:56:04.113Z",
+  "growth": [
+    {
+      "id": "test-button",
+      "normal": 40,
+      "large": 40,
+      "ratio": 1
+    },
+    {
+      "id": "test-textfield",
+      "normal": 38,
+      "large": 38,
+      "ratio": 1
+    },
+    {
+      "id": "test-switch",
+      "normal": 18.6666259765625,
+      "large": 18.3333740234375,
+      "ratio": 0.9821471778808112
+    },
+    {
+      "id": "test-checkbox",
+      "normal": 16,
+      "large": 16,
+      "ratio": 1
+    },
+    {
+      "id": "test-radiogroup-0",
+      "normal": 16,
+      "large": 16,
+      "ratio": 1
+    },
+    {
+      "id": "test-select",
+      "normal": 40,
+      "large": 40,
+      "ratio": 1
+    },
+    {
+      "id": "test-dialog-open",
+      "normal": 40,
+      "large": 40,
+      "ratio": 1
+    },
+    {
+      "id": "test-sheet-open",
+      "normal": 40,
+      "large": 40,
+      "ratio": 1
+    },
+    {
+      "id": "test-tabs-0",
+      "normal": 30,
+      "large": 30,
+      "ratio": 1
+    },
+    {
+      "id": "test-tabs-1",
+      "normal": 30,
+      "large": 30,
+      "ratio": 1
+    },
+    {
+      "id": "test-tabs-2",
+      "normal": 30,
+      "large": 30,
+      "ratio": 1
+    },
+    {
+      "id": "test-native-switch",
+      "normal": 28,
+      "large": 63.333251953125,
+      "ratio": 2.26190185546875
+    },
+    {
+      "id": "test-list-link",
+      "normal": 40,
+      "large": 40,
+      "ratio": 1
+    }
+  ],
+  "offscreen": [
+    "test-tabs-0",
+    "test-tabs-2",
+    "test-native-switch"
+  ],
+  "overlaps": [],
+  "shots": [
+    "textsize-1.png",
+    "textsize-2.png",
+    "textsize-3.png",
+    "textsize-4.png"
+  ]
+}

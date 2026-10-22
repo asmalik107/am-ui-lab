@@ -63,7 +63,10 @@ export function Select({ label, options, value, onChange, testID }: SelectProps)
         </Text>
       </Pressable>
       <Modal visible={open} transparent animationType={reduceMotion ? 'none' : 'fade'} onRequestClose={() => setOpen(false)}>
-        <Pressable accessibilityLabel="Close list" style={styles.scrim} onPress={() => setOpen(false)}>
+        {/* The backdrop is a sibling of the list, not its parent: aria-modal inside
+            an accessible Pressable did not hide the screen behind it from VoiceOver. */}
+        <View style={styles.menuWrap}>
+          <Pressable accessible={false} style={styles.backdrop} onPress={() => setOpen(false)} />
           <View aria-modal role="list" accessibilityLabel={label} style={styles.menu}>
             {options.map((opt, i) => (
               <Pressable
@@ -81,7 +84,7 @@ export function Select({ label, options, value, onChange, testID }: SelectProps)
               </Pressable>
             ))}
           </View>
-        </Pressable>
+        </View>
       </Modal>
     </View>
   );
@@ -140,6 +143,8 @@ export const ExerciseSheet = forwardRef<BottomSheetModal, { title: string; body:
 
 const styles = StyleSheet.create((theme) => ({
   scrim: { flex: 1, backgroundColor: theme.colors.scrim, justifyContent: 'center', padding: theme.space.xl },
+  menuWrap: { flex: 1, justifyContent: 'center', padding: theme.space.xl },
+  backdrop: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: theme.colors.scrim },
   card: { backgroundColor: theme.colors.surfaceRaised, borderRadius: theme.radius.lg, padding: theme.space.xl, gap: theme.space.md },
   title: { ...theme.type.title, color: theme.colors.text },
   body: { ...theme.type.body, color: theme.colors.textMuted },

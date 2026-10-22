@@ -1,7 +1,150 @@
 # am-ui-lab
 
-A side-by-side comparison of React Native UI libraries. Every library builds the same screen, which is then tested for accessibility, theming and performance.
+A side-by-side comparison of React Native UI libraries. Every library builds the same test screen from the same tokens and copy. Each app then goes through the same scripted checks on an iOS simulator: accessibility, largest text size, Reduce Motion, timings and bundle size.
 
-Stack: Expo SDK 57, React Native 0.86, React 19.2, New Architecture, Reanimated 4.5, expo-router.
+Every number below was measured. Where something couldn't be measured, this page says so.
 
-Libraries, method and results are added as each route is built.
+- **Stack:** Expo SDK 57, React Native 0.86.3, React 19.2.3, New Architecture, Reanimated 4.5.1, expo-router.
+- **Test device:** iPhone 17 Pro simulator, iOS 26.4. All results are from Release builds.
+- **Date:** 22 October 2026.
+
+## The apps
+
+| App | Library | What it is |
+| --- | --- | --- |
+| `apps/baseline` | none | Plain React Native with accessibility written by hand. The reference point. |
+| `apps/unistyles` | react-native-unistyles 3.6.0 | Styling engine only, so components are hand-built (the baseline's, restyled) |
+| `apps/tamagui` | tamagui 3.1.2 | Styling engine + compiler + UI kit |
+| `apps/gluestack` | gluestack-ui 5 (core 5.0.15) on Uniwind 1.13.0 | Copy-paste components on react-aria |
+| `apps/heroui` | heroui-native 1.0.11 on Uniwind 1.13.0 | Component kit |
+| `apps/reusables` | React Native Reusables (CLI 0.7.1, @rn-primitives 1.5.2) on Uniwind 1.13.0 | shadcn-style copy-paste components |
+
+Each app's `NOTES.md` records:
+- exact versions
+- every setup step and config file touched
+- every error hit and how it was fixed
+- the doc link for each API used
+- which items use library components and which are hand-built
+
+The spec for the test screen is in [docs/method.md](docs/method.md).
+
+## Results
+
+### Accessibility (iOS)
+
+`scripts/a11y-audit.mjs` checks:
+- name, role, state and touch-target size for every control
+- that a text-field error is reachable from the field
+- that the screen behind a dialog, bottom sheet or select is hidden from VoiceOver
+- that toasts reach the accessibility tree
+
+| App | Checks passed |
+| --- | --- |
+| baseline | 35 / 39 |
+| unistyles | 35 / 39 |
+| heroui | 22 / 39 |
+| gluestack | 19 / 39 |
+| tamagui | 19 / 31, with 8 checks unable to run (see below) |
+| reusables | 18 / 39 |
+
+Full tables are in `results/<app>/ios-a11y.md`. The raw trees are in `ios-a11y.json`.
+
+**Failures in every app, the baseline included:**
+- **Select and tab roles.** React Native maps `role="combobox"` and `role="tab"` to no iOS trait. In `ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h`, only `switch` and `tabbar` map to traits; `tab`, `tablist` and `combobox` fall through to `None`.
+- **The `@expo/ui` Switch** exposes a 28 pt tall frame, below Apple's 44 pt default.
+- **The @gorhom/bottom-sheet modal**, even with `aria-modal` on its content, leaves the screen behind it reachable in Release builds.
+
+**Failures specific to a library:**
+
+- **tamagui**
+  - Disabled and loading Buttons expose no button element at all, only their text.
+  - Switch has no name, role or state.
+  - Checkbox has no element at all.
+  - Radio circles carry "radio button, checked" but no name. Their `Label` is separate text with a link trait.
+  - The Select trigger is plain text.
+  - Dialog and Sheet leave the screen behind them reachable.
+  - Because of these, the Select test couldn't run.
+- **gluestack**
+  - Buttons, checkbox, radio and tabs are under 44 pt.
+  - The Switch has no name.
+  - The Checkbox is named after its `value` prop, not its visible label: `Checkbox.jsx` line 30, `aria-label || value || 'Checkbox'`.
+  - The Select trigger has no name, and its options have no role or checked state.
+  - The field error isn't linked to the field.
+  - Dialog, sheet and select leave the screen behind them reachable.
+- **heroui**
+  - `ControlField`, its labelled switch/checkbox row, is a bare `Pressable` with no role or state (`control-field.tsx` line 127). It swallows the inner Switch's `role="switch"` and `aria-checked`.
+  - The text field has no accessible name on iOS.
+  - Dialog containment is off by default. The prop is `unstable_accessibilityContainerViewIsModal`.
+  - Its own BottomSheet hides the sheet's title and body from the accessibility tree.
+- **reusables**
+  - Buttons are 40 pt; checkbox and radio are 16 pt.
+  - Controls have no accessible name on iOS, because React Native only honours `aria-labelledby` on Android.
+  - Select options have no role or checked state.
+  - The alert-dialog title isn't a heading.
+
+### Largest text size (AX5)
+
+`scripts/textsize-test.mjs` compares control heights at the default size against the largest accessibility size. Screenshots are saved in `results/<app>/textsize-*.png`.
+
+| App | Controls that grew | Clipping seen in screenshots |
+| --- | --- | --- |
+| baseline | 13 / 13 | none |
+| unistyles | 13 / 13 | none (radio circles also scale, via `rt.fontScale`) |
+| tamagui | 9 / 11 | none |
+| gluestack | 12 / 13 | none |
+| heroui | 9 / 13 | button labels partly cut off |
+| reusables | 1 / 13 | **button labels cut off completely** (fixed-height buttons) |
+
+The `@expo/ui` Switch is pushed past the screen edge in every app.
+
+### Reduce Motion
+
+`scripts/motion-test.mjs` measures how long the open transition takes, from a real-time screen recording. Reduce Motion was set before launch.
+
+| App | Dialog, off → on | Bottom sheet, off → on |
+| --- | --- | --- |
+| baseline | 367 → 133 ms (instant; the 133 includes the button press highlight) | 400 → 33 ms |
+| unistyles | 300 → 67 ms | 433 → 33 ms |
+| tamagui | instant either way (no open animation in this build) | 467 → 33 ms |
+| gluestack | 233 → 33 ms | 433 → 33 ms |
+| heroui | 200 → 33 ms | 533 → 33 ms |
+| reusables | 200 → 33 ms | 400 → 33 ms |
+
+Every animated overlay respected Reduce Motion when it was on at launch. Turning it on while the app runs was not tested.
+
+### Timings and bundle size
+
+`scripts/perf-run.mjs` measures from the tap to the second frame after the update, 10 runs each. Resolution is one frame (16.7 ms), so about 32 ms means "finished within a frame".
+
+| App | Theme switch, median | 200-row list mount, median (range) | iOS JS bundle |
+| --- | --- | --- | --- |
+| baseline | 32.3 ms | 97.5 ms (82–114) | 3.93 MB |
+| unistyles | 31.6 ms | 83.1 ms (82–115) | 4.13 MB |
+| tamagui | 82.4 ms | 115.1 ms (98–1798) | 5.43 MB |
+| gluestack | 31.8 ms | 82.8 ms (82–99) | 4.99 MB |
+| heroui | 32.0 ms | 82.5 ms (80–115) | 5.14 MB |
+| reusables | 32.5 ms | 96.5 ms (78–346) | 6.75 MB |
+
+Bundle sizes are the Hermes bytecode from `npx expo export --platform ios`, all measured on the same day. Reusables bundles every lucide icon (1,917 of them) although it uses 4.
+
+## Limits
+
+- Simulators expose the accessibility tree. They don't let you hear VoiceOver, check swipe order as spoken, or test Switch Control. Those need a device.
+- Android and TalkBack have not been tested yet.
+- The timing clock runs in JS. Libraries that apply styles natively (Unistyles, Tamagui's native runtime) may do work it doesn't see.
+- The Tamagui **Debug** build aborts on a React Native Yoga layout assertion when the `@expo/ui` Host sits below the form sections. Release builds are unaffected. The root cause has not been isolated.
+- Tamagui's RadioGroup doesn't draw its selected dot in this build, although the tree reports it as checked. This may come from the lab's theme setup (the `brand` theme renamed to `labBrand`) rather than from Tamagui.
+- The timing readout overlay scales with system text size and covers the header at AX5. It doesn't affect any check.
+- iOS 27 refuses to launch these Expo 57 builds ("UIScene life cycle is required for apps built with this SDK"), so all testing is on iOS 26.4.
+
+## Reproduce
+
+```bash
+scripts/build-ios.sh <app> Release
+```
+
+```bash
+scripts/run-all.sh <simulator-udid>
+```
+
+These need [argent](https://github.com/software-mansion/argent) for simulator control, plus ffmpeg. `scripts/contrast.mjs` checks the shared tokens against WCAG contrast.

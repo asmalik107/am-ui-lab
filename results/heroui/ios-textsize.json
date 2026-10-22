@@ -1,0 +1,97 @@
+{
+  "app": "heroui",
+  "bundleId": "dev.asimmalik.uilab.heroui",
+  "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
+  "date": "2026-10-22T19:40:31.842Z",
+  "growth": [
+    {
+      "id": "test-button",
+      "normal": 48,
+      "large": 48,
+      "ratio": 1
+    },
+    {
+      "id": "test-textfield",
+      "normal": 46,
+      "large": 59.6666259765625,
+      "ratio": 1.2971005647078804
+    },
+    {
+      "id": "test-switch",
+      "normal": 24,
+      "large": 171.6666259765625,
+      "ratio": 7.1527760823567705
+    },
+    {
+      "id": "test-checkbox",
+      "normal": 24,
+      "large": 171.666748046875,
+      "ratio": 7.152781168619792
+    },
+    {
+      "id": "test-radiogroup-0",
+      "normal": 24,
+      "large": 86,
+      "ratio": 3.5833333333333335
+    },
+    {
+      "id": "test-select",
+      "normal": 50,
+      "large": 112,
+      "ratio": 2.24
+    },
+    {
+      "id": "test-dialog-open",
+      "normal": 48,
+      "large": 48,
+      "ratio": 1
+    },
+    {
+      "id": "test-sheet-open",
+      "normal": 48,
+      "large": 48,
+      "ratio": 1
+    },
+    {
+      "id": "test-tabs-0",
+      "normal": 36,
+      "large": 98,
+      "ratio": 2.7222222222222223
+    },
+    {
+      "id": "test-tabs-1",
+      "normal": 36,
+      "large": 98,
+      "ratio": 2.7222222222222223
+    },
+    {
+      "id": "test-tabs-2",
+      "normal": 36,
+      "large": 98,
+      "ratio": 2.7222222222222223
+    },
+    {
+      "id": "test-native-switch",
+      "normal": 28,
+      "large": 63.333251953125,
+      "ratio": 2.26190185546875
+    },
+    {
+      "id": "test-list-link",
+      "normal": 48,
+      "large": 48,
+      "ratio": 1
+    }
+  ],
+  "offscreen": [
+    "test-tabs-2",
+    "test-native-switch"
+  ],
+  "overlaps": [],
+  "shots": [
+    "textsize-1.png",
+    "textsize-2.png",
+    "textsize-3.png",
+    "textsize-4.png"
+  ]
+}

@@ -29,9 +29,21 @@ const argent = (tool, args) =>
 // (what is exposed while an overlay is open) and for tap coordinates.
 let screen;
 function tree() {
-  const d = argent('native-describe-screen', { bundleId });
-  screen = d.screenFrame;
-  return d.elements;
+  // The inspector can return no elements while the app is still launching.
+  for (let i = 0; i < 20; i++) {
+    let d;
+    try {
+      d = argent('native-describe-screen', { bundleId });
+    } catch {
+      d = null;
+    }
+    if (d?.elements?.length) {
+      screen = d.screenFrame;
+      return d.elements;
+    }
+    execFileSync('sleep', ['1']);
+  }
+  throw new Error('native-describe-screen returned no elements');
 }
 function axTree() {
   const text = argent('describe', {}).description;
@@ -81,9 +93,14 @@ const add = (component, check, pass, detail) => findings.push({ component, check
 // Name, role and value of an element, read back the way the report prints it.
 const desc = (e) => (e ? `label="${e.label ?? ''}" value="${e.value ?? ''}" traits=[${e.traits.join(', ')}] ${Math.round(e.frame.width)}×${Math.round(e.frame.height)}pt` : 'missing');
 
-argent('restart-app', { bundleId });
-await waitFor((els) => hasLabel(els, 'Component test screen'), 60000);
-await sleep(800);
+// Each overlay test starts from a fresh launch, so an overlay that fails to
+// close can't affect the next test.
+async function fresh() {
+  argent('restart-app', { bundleId });
+  await waitFor((els) => hasLabel(els, 'Component test screen'), 60000);
+  await sleep(800);
+}
+await fresh();
 
 // 1. Main screen: name, role, state and target size of every control.
 const main = tree();
@@ -121,88 +138,120 @@ const axDesc = (e) => (e ? `${e.role} label="${e.label}"${e.value != null ? ` va
 const leakDetail = (l) => (l.length ? `still exposed: ${l.map((e) => e.identifier ?? e.label).join(', ')}` : 'nothing behind it in the system tree');
 
 // 2. Text field error: is the message present and linked to the field?
-await tapId('test-textfield');
-await sleep(400);
-argent('keyboard', { text: 'not-an-email' });
-await tapId('test-button'); // moves focus away so the field validates on blur
-const errEls = await waitFor((els) => hasLabel(els, 'Enter a valid email'));
-states.textFieldError = errEls ?? axTree();
-const field = byId(tree(), 'test-textfield');
-add('Text field', 'error shown', !!errEls, errEls ? 'error text in tree' : 'no error text after blur');
-add('Text field', 'error reachable from field', !!field && /valid email/i.test(`${field.label} ${field.value ?? ''} ${field.hint ?? ''}`), `${desc(field)} hint="${field?.hint ?? ''}"`);
-
-// 3. Dialog: opens, hides the screen behind it, closes.
-await tapId('test-dialog-open');
-let dlg = await waitFor((els) => hasLabel(els, 'Delete this workout?'));
-if (dlg) { await sleep(1000); dlg = axTree(); } // judge the settled state, not the open animation
-states.dialog = dlg ?? axTree();
-add('Dialog', 'opens', !!dlg, dlg ? 'title in tree' : 'title not found');
-if (dlg) {
-  const l = leaks(dlg, ['test-dialog', 'test-dialog-confirm', 'test-dialog-cancel']);
-  add('Dialog', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
-  const title = dlg.find((e) => e.label.includes('Delete this workout?'));
-  add('Dialog', 'title is a heading', title?.role === 'AXHeading', axDesc(title));
-  const cancel = dlg.find((e) => e.identifier === 'test-dialog-cancel' || e.label === 'Cancel');
-  add('Dialog', 'actions are buttons', cancel?.role === 'AXButton', axDesc(cancel));
-  if (cancel) tap(cancel);
-  const closed = await waitFor((els) => !hasLabel(els, 'Delete this workout?'));
-  add('Dialog', 'closes', !!closed, closed ? 'title gone' : 'still open');
+try {
+  await tapId('test-textfield');
+  await sleep(400);
+  argent('keyboard', { text: 'not-an-email' });
+  await tapId('test-button'); // moves focus away so the field validates on blur
+  const errEls = await waitFor((els) => hasLabel(els, 'Enter a valid email'));
+  states.textFieldError = errEls ?? axTree();
+  const field = byId(tree(), 'test-textfield');
+  add('Text field', 'error shown', !!errEls, errEls ? 'error text in tree' : 'no error text after blur');
+  add('Text field', 'error reachable from field', !!field && /valid email/i.test(`${field.label} ${field.value ?? ''} ${field.hint ?? ''}`), `${desc(field)} hint="${field?.hint ?? ''}"`);
+} catch (err) {
+  // A missing element is a result too: record it and carry on.
+  add('Text field', 'test could run', false, String(err.message ?? err));
 }
 
-// 4. Bottom sheet.
-await tapId('test-sheet-open');
-let sh = await waitFor((els) => hasLabel(els, 'Goblet squat'));
-if (sh) { await sleep(1000); sh = axTree(); }
-states.sheet = sh ?? axTree();
-add('Bottom sheet', 'opens', !!sh, sh ? 'title in tree' : 'title not found');
-if (sh) {
-  const l = leaks(sh, ['test-sheet', 'test-sheet-close']);
-  add('Bottom sheet', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
-  const close = sh.find((e) => e.identifier === 'test-sheet-close' || e.label === 'Close');
-  if (close) tap(close);
-  const gone = await waitFor((els) => !hasLabel(els, 'Goblet squat'));
-  add('Bottom sheet', 'closes', !!gone, gone ? 'title gone' : 'still open');
-  if (gone) {
-    await sleep(500);
-    const after = axTree();
-    const back = after.some((e) => e.identifier && mainIds.has(e.identifier));
-    add('Bottom sheet', 'screen reachable again after close', back, back ? 'screen controls back in system tree' : 'no screen controls in system tree after close');
-    states.afterSheet = after;
+// 3. Dialog: opens, hides the screen behind it, closes.
+try {
+  await fresh();
+  await tapId('test-dialog-open');
+  let dlg = await waitFor((els) => hasLabel(els, 'Delete this workout?'));
+  if (dlg) { await sleep(1000); dlg = axTree(); } // judge the settled state, not the open animation
+  states.dialog = dlg ?? axTree();
+  add('Dialog', 'opens', !!dlg, dlg ? 'title in tree' : 'title not found');
+  if (dlg) {
+    const l = leaks(dlg, ['test-dialog', 'test-dialog-confirm', 'test-dialog-cancel']);
+    add('Dialog', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
+    const title = dlg.find((e) => e.label.includes('Delete this workout?'));
+    add('Dialog', 'title is a heading', title?.role === 'AXHeading', axDesc(title));
+    const cancel = dlg.find((e) => e.identifier === 'test-dialog-cancel' || e.label === 'Cancel');
+    add('Dialog', 'actions are buttons', cancel?.role === 'AXButton', axDesc(cancel));
+    if (cancel) tap(cancel);
+    const closed = await waitFor((els) => !hasLabel(els, 'Delete this workout?'));
+    add('Dialog', 'closes', !!closed, closed ? 'title gone' : 'still open');
   }
+} catch (err) {
+  // A missing element is a result too: record it and carry on.
+  add('Dialog', 'test could run', false, String(err.message ?? err));
+}
+
+// 4. Bottom sheet. Open is detected by its title or its Close button, so a
+try {
+  // sheet whose text is hidden from VoiceOver still counts as open.
+  await fresh();
+  await tapId('test-sheet-open');
+  const isSheet = (els) => hasLabel(els, 'Goblet squat') || els.some((e) => e.identifier === 'test-sheet-close');
+  let sh = await waitFor(isSheet);
+  if (sh) { await sleep(1000); sh = axTree(); }
+  states.sheet = sh ?? axTree();
+  add('Bottom sheet', 'opens', !!sh, sh ? 'sheet content in tree' : 'neither title nor Close button found');
+  if (sh) {
+    add('Bottom sheet', 'title and body readable', hasLabel(sh, 'Goblet squat') && hasLabel(sh, 'kettlebell'), hasLabel(sh, 'Goblet squat') ? 'title in tree' : 'title and body text not in the system tree');
+    const l = leaks(sh, ['test-sheet', 'test-sheet-close']);
+    add('Bottom sheet', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
+    const close = sh.find((e) => e.identifier === 'test-sheet-close' || e.label === 'Close');
+    if (close) tap(close);
+    const gone = await waitFor((els) => !isSheet(els));
+    add('Bottom sheet', 'closes', !!gone, gone ? 'sheet gone' : 'still open');
+    if (gone) {
+      await sleep(500);
+      const after = axTree();
+      const back = after.some((e) => e.identifier && mainIds.has(e.identifier));
+      add('Bottom sheet', 'screen reachable again after close', back, back ? 'screen controls back in system tree' : 'no screen controls in system tree after close');
+      states.afterSheet = after;
+    }
+  }
+} catch (err) {
+  // A missing element is a result too: record it and carry on.
+  add('Bottom sheet', 'test could run', false, String(err.message ?? err));
 }
 
 // 5. Select: options exposed with role and state.
-await tapId('test-select');
-let sel = await waitFor((els) => hasLabel(els, '90 seconds'));
-if (sel) { await sleep(1000); sel = axTree(); }
-states.select = sel ?? axTree();
-add('Select', 'opens', !!sel, sel ? 'options in tree' : 'options not found');
-if (sel) {
-  const opts = sel.filter((e) => e.identifier !== 'test-select' && copyOptions.some((o) => e.label.includes(o)));
-  const current = opts.find((e) => e.label.includes('60 seconds'));
-  add('Select', 'current option marked', !!current && /selected|checked/i.test(`${current.value} ${current.role}`), axDesc(current));
-  add('Select', 'options are actionable', opts.length >= 5 && opts.every((e) => e.role === 'AXButton' || /radio|menu|option/i.test(`${e.value} ${e.role}`)), opts.map(axDesc).join(' | '));
-  const l = leaks(sel, ['test-select']);
-  add('Select', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
-  const pick = opts.find((e) => e.label.includes('90 seconds'));
-  if (pick) tap(pick);
-  await sleep(1000);
-  const s = byId(tree(), 'test-select');
-  add('Select', 'new value read on trigger', !!s && /90 seconds/.test(`${s.label} ${s.value}`), desc(s));
+try {
+  await fresh();
+  await tapId('test-select');
+  let sel = await waitFor((els) => hasLabel(els, '90 seconds'));
+  if (sel) { await sleep(1000); sel = axTree(); }
+  states.select = sel ?? axTree();
+  add('Select', 'opens', !!sel, sel ? 'options in tree' : 'options not found');
+  if (sel) {
+    const opts = sel.filter((e) => e.identifier !== 'test-select' && copyOptions.some((o) => e.label.includes(o)));
+    const current = opts.find((e) => e.label.includes('60 seconds'));
+    add('Select', 'current option marked', !!current && /selected|checked/i.test(`${current.value} ${current.role}`), axDesc(current));
+    add('Select', 'options are actionable', opts.length >= 5 && opts.every((e) => e.role === 'AXButton' || /radio|menu|option/i.test(`${e.value} ${e.role}`)), opts.map(axDesc).join(' | '));
+    const l = leaks(sel, ['test-select']);
+    add('Select', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
+    const pick = opts.find((e) => e.label.includes('90 seconds'));
+    if (pick) tap(pick);
+    await sleep(1000);
+    const s = byId(tree(), 'test-select');
+    add('Select', 'new value read on trigger', !!s && /90 seconds/.test(`${s.label} ${s.value}`), desc(s));
+  }
+} catch (err) {
+  // A missing element is a result too: record it and carry on.
+  add('Select', 'test could run', false, String(err.message ?? err));
 }
 
 // 6. Toast: present in the system tree while visible.
-await tapId('test-toast-show');
-const toast = await waitFor((els) => hasLabel(els, 'Set logged'), 3000);
-states.toast = toast ?? axTree();
-add('Toast', 'in accessibility tree', !!toast, toast ? axDesc(toast.find((e) => e.label.includes('Set logged'))) : 'not found within 3s');
+try {
+  await fresh();
+  await tapId('test-toast-show');
+  const toast = await waitFor((els) => hasLabel(els, 'Set logged'), 3000);
+  states.toast = toast ?? axTree();
+  add('Toast', 'in accessibility tree', !!toast, toast ? axDesc(toast.find((e) => e.label.includes('Set logged'))) : 'not found within 3s');
+} catch (err) {
+  // A missing element is a result too: record it and carry on.
+  add('Toast', 'test could run', false, String(err.message ?? err));
+}
 
 writeFileSync(new URL('ios-a11y.json', outDir), JSON.stringify({ app, bundleId, udid, date: new Date().toISOString(), findings, states }, null, 2));
 const passed = findings.filter((f) => f.pass).length;
 const md = [
   `# ${app}: iOS accessibility audit`,
   '',
-  `Run ${new Date().toISOString().slice(0, 10)} on simulator ${udid} with \`scripts/a11y-audit.mjs\`. ${passed}/${findings.length} checks passed.`,
+  `Run ${new Date().toISOString().slice(0, 10)} on simulator ${udid} (iOS 26.4, ${process.env.BUILD_CONFIG ?? "Release"} build) with \`scripts/a11y-audit.mjs\`. ${passed}/${findings.length} checks passed.`,
   '',
   'Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.',
   '',

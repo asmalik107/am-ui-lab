@@ -56,8 +56,11 @@ async function scrollTo(id) {
   }
   throw new Error(`could not reach ${id}`);
 }
+// The readout's testIDs are not exposed on text in the system tree, so the
+// value is found by its label prefix.
+const prefix = { 'perf-theme': 'Theme switch:', 'perf-list': 'List mount:' };
 const readMs = (els, id) => {
-  const e = byId(els, id);
+  const e = els.find((x) => x.label.startsWith(prefix[id]));
   const m = e?.label.match(/([\d.]+) ms/);
   return m ? Number(m[1]) : null;
 };

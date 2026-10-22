@@ -1,14 +1,15 @@
 {
   "expo": {
-    "name": "am-ui-lab",
-    "slug": "am-ui-lab",
+    "name": "UI Lab Baseline",
+    "slug": "am-ui-lab-baseline",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "amuilab",
+    "scheme": "amuilab-baseline",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/expo.icon",
+      "bundleIdentifier": "dev.asimmalik.uilab.baseline"
     },
     "android": {
       "adaptiveIcon": {
@@ -17,7 +18,8 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "dev.asimmalik.uilab.baseline"
     },
     "web": {
       "output": "static",

@@ -1,0 +1,68 @@
+// Copy, test IDs and fixture data shared by every app, so the accessibility
+// tree of each app can be compared label for label.
+
+export const ids = {
+  button: 'test-button',
+  buttonDisabled: 'test-button-disabled',
+  buttonLoading: 'test-button-loading',
+  textField: 'test-textfield',
+  switch: 'test-switch',
+  checkbox: 'test-checkbox',
+  radioGroup: 'test-radiogroup',
+  dialogOpen: 'test-dialog-open',
+  dialog: 'test-dialog',
+  dialogConfirm: 'test-dialog-confirm',
+  dialogCancel: 'test-dialog-cancel',
+  sheetOpen: 'test-sheet-open',
+  sheet: 'test-sheet',
+  sheetClose: 'test-sheet-close',
+  select: 'test-select',
+  tabs: 'test-tabs',
+  toastShow: 'test-toast-show',
+  toast: 'test-toast',
+  listLink: 'test-list-link',
+  list: 'test-list',
+  themeSwitcher: 'test-theme',
+  nativeSwitch: 'test-native-switch',
+} as const;
+
+export const copy = {
+  screenTitle: 'Component test screen',
+  button: 'Save workout',
+  buttonDisabled: 'Unavailable',
+  buttonLoading: 'Saving',
+  textFieldLabel: 'Email',
+  textFieldHelper: "We'll send your plan here.",
+  textFieldError: 'Enter a valid email address.',
+  switchLabel: 'Workout reminders',
+  checkboxLabel: 'I agree to the terms',
+  radioGroupLabel: 'Experience level',
+  radioOptions: ['Beginner', 'Intermediate', 'Advanced'],
+  dialogOpen: 'Delete workout',
+  dialogTitle: 'Delete this workout?',
+  dialogBody: 'This removes the workout and its logged sets. You cannot undo this.',
+  dialogConfirm: 'Delete',
+  dialogCancel: 'Cancel',
+  sheetOpen: 'Show exercise details',
+  sheetTitle: 'Goblet squat',
+  sheetBody: 'Hold the kettlebell at your chest, sit back and down, then drive up through your heels.',
+  sheetClose: 'Close',
+  selectLabel: 'Rest time',
+  selectOptions: ['30 seconds', '45 seconds', '60 seconds', '90 seconds', '2 minutes'],
+  tabs: ['Today', 'Plan', 'Progress'],
+  tabPanels: ['3 exercises left today.', 'Week 2 of 10.', '12 workouts completed.'],
+  toastShow: 'Log set',
+  toastMessage: 'Set logged',
+  listLink: 'Open 200-row list',
+  themeLabel: 'Theme',
+  themes: ['Light', 'Dark', 'Brand'],
+  nativeSwitchLabel: 'Sync with Health (native control)',
+} as const;
+
+export type Row = { id: string; title: string; subtitle: string };
+
+export const rows: Row[] = Array.from({ length: 200 }, (_, i) => ({
+  id: String(i + 1),
+  title: `Exercise ${i + 1}`,
+  subtitle: `${(i % 5) + 2} sets · ${8 + (i % 7)} reps`,
+}));

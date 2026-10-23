@@ -1,0 +1,103 @@
+/*
+ * NativeWind v5 RC entry stylesheet. Imports follow
+ * https://www.nativewind.dev/v5/getting-started/installation
+ * (split theme / preflight / unlayered utilities, then nativewind/theme).
+ *
+ * Tokens from shared/tokens.ts, copied by hand (CSS cannot import TS).
+ * Everything is in px: on native NativeWind's rem is 14, so Tailwind's
+ * numeric scale (p-4 = 1rem) would not match the shared tokens.
+ * https://www.nativewind.dev/v5/core-concepts/units
+ *
+ * Colours: the @theme values are the light theme and only exist so Tailwind
+ * generates the utilities and the variables have a default. At runtime the
+ * active theme is supplied by <VariableContextProvider> in src/theme.tsx,
+ * built from shared/tokens.ts, and the variables are excluded from inlining
+ * in metro.config.js. https://www.nativewind.dev/v5/guides/themes
+ */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css';
+
+@import 'nativewind/theme';
+
+@theme {
+  --color-background: #ffffff;
+  --color-surface: #f4f4f5;
+  --color-surface-raised: #ffffff;
+  --color-text: #18181b;
+  --color-text-muted: #52525b;
+  --color-border: #71717a;
+  --color-primary: #1d4ed8;
+  --color-on-primary: #ffffff;
+  --color-danger: #b91c1c;
+  --color-on-danger: #ffffff;
+  --color-success: #15803d;
+  --color-focus: #1d4ed8;
+  --color-scrim: rgba(0, 0, 0, 0.5);
+
+  /* shared/tokens space */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-xxl: 32px;
+
+  /* shared/tokens radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* shared/tokens type: size, line height and weight per step.
+     Line heights are unitless ratios as a workaround: with px values
+     (e.g. 22px) NativeWind 5.0.0-rc.0 rendered each line at size × value
+     (16 × 22 = 352pt). See NOTES.md. */
+  --text-caption: 13px;
+  --text-caption--line-height: 1.3846;
+  --text-body: 16px;
+  --text-body--line-height: 1.375;
+  --text-label: 15px;
+  --text-label--line-height: 1.3333;
+  --text-label--font-weight: 600;
+  --text-title: 20px;
+  --text-title--line-height: 1.3;
+  --text-title--font-weight: 700;
+  --text-heading: 28px;
+  --text-heading--line-height: 1.2143;
+  --text-heading--font-weight: 700;
+}
+
+:root {
+  --color-background: #ffffff;
+  --color-surface: #f4f4f5;
+  --color-surface-raised: #ffffff;
+  --color-text: #18181b;
+  --color-text-muted: #52525b;
+  --color-border: #71717a;
+  --color-primary: #1d4ed8;
+  --color-on-primary: #ffffff;
+  --color-danger: #b91c1c;
+  --color-on-danger: #ffffff;
+  --color-success: #15803d;
+  --color-focus: #1d4ed8;
+  --color-scrim: rgba(0, 0, 0, 0.5);
+}
+
+/* Minimum touch target from shared/tokens minTarget: 44pt iOS, 48dp Android.
+   Uses NativeWind's ios/android media queries (nativewind/theme). */
+@utility min-target {
+  min-height: 44px;
+  min-width: 44px;
+  @media android {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+@utility min-h-target {
+  min-height: 44px;
+  @media android {
+    min-height: 48px;
+  }
+}

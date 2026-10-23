@@ -1,0 +1,1202 @@
+{
+  "app": "nativewind",
+  "bundleId": "dev.asimmalik.uilab.nativewind",
+  "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
+  "date": "2026-10-23T07:43:55.113Z",
+  "findings": [
+    {
+      "component": "Button",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Save workout\" value=\"\" traits=[button] 370×300pt"
+    },
+    {
+      "component": "Button",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×300pt"
+    },
+    {
+      "component": "Button (disabled)",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Unavailable\" value=\"\" traits=[button, notEnabled] 370×300pt"
+    },
+    {
+      "component": "Button (disabled)",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×300pt"
+    },
+    {
+      "component": "Button (loading)",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"In progress, Saving\" value=\"busy\" traits=[button, notEnabled] 370×300pt"
+    },
+    {
+      "component": "Button (loading)",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×300pt"
+    },
+    {
+      "component": "Text field",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Email\" value=\"\" traits=[] 368×352pt"
+    },
+    {
+      "component": "Switch",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Workout reminders\" value=\"1\" traits=[button, toggleButton] 370×352pt"
+    },
+    {
+      "component": "Switch",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×352pt"
+    },
+    {
+      "component": "Checkbox",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"I agree to the terms\" value=\"checkbox, unchecked\" traits=[] 370×352pt"
+    },
+    {
+      "component": "Checkbox",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×352pt"
+    },
+    {
+      "component": "Radio option",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Beginner\" value=\"radio button, checked\" traits=[] 370×352pt"
+    },
+    {
+      "component": "Radio option",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×352pt"
+    },
+    {
+      "component": "Select trigger",
+      "check": "name, role, state",
+      "pass": false,
+      "detail": "label=\"Rest time, 60 seconds\" value=\"\" traits=[] 370×354pt"
+    },
+    {
+      "component": "Select trigger",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×354pt"
+    },
+    {
+      "component": "Tab (selected)",
+      "check": "name, role, state",
+      "pass": false,
+      "detail": "label=\"Today\" value=\"\" traits=[selected] 123×303pt"
+    },
+    {
+      "component": "Tab (selected)",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "123×303pt"
+    },
+    {
+      "component": "Native switch (@expo/ui)",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Sync with Health (native control)\" value=\"0\" traits=[button, toggleButton] 317×28pt"
+    },
+    {
+      "component": "Native switch (@expo/ui)",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "317×28pt"
+    },
+    {
+      "component": "Radio group",
+      "check": "all options exposed",
+      "pass": true,
+      "detail": "3 options found"
+    },
+    {
+      "component": "Radio group",
+      "check": "group label read",
+      "pass": true,
+      "detail": "label text \"Experience level\" in tree"
+    },
+    {
+      "component": "Text field",
+      "check": "test could run",
+      "pass": false,
+      "detail": "could not scroll test-textfield into view"
+    },
+    {
+      "component": "Dialog",
+      "check": "test could run",
+      "pass": false,
+      "detail": "could not scroll test-dialog-open into view"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "test could run",
+      "pass": false,
+      "detail": "could not scroll test-sheet-open into view"
+    },
+    {
+      "component": "Select",
+      "check": "test could run",
+      "pass": false,
+      "detail": "could not scroll test-select into view"
+    },
+    {
+      "component": "Toast",
+      "check": "test could run",
+      "pass": false,
+      "detail": "could not scroll test-toast-show into view"
+    }
+  ],
+  "states": {
+    "main": [
+      {
+        "frame": {
+          "x": 16,
+          "y": 132,
+          "width": 370,
+          "height": 952
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 608
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.15102974828375287,
+          "width": 0.9203980099502488,
+          "height": 1.0892448512585813
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.6956521739130435
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Component test screen"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1100,
+          "width": 370,
+          "height": 520
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1360
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.2585812356979404,
+          "width": 0.9203980099502488,
+          "height": 0.5949656750572082
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.5560640732265447
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Theme"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1632,
+          "width": 370,
+          "height": 300
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1782
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.8672768878718535,
+          "width": 0.9203980099502488,
+          "height": 0.34324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.0389016018306636
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Theme"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1936,
+          "width": 370,
+          "height": 352
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 2112
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.2151029748283753,
+          "width": 0.9203980099502488,
+          "height": 0.40274599542334094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.416475972540046
+        },
+        "traits": [],
+        "label": "Light",
+        "value": "radio button, checked",
+        "identifier": "test-theme-0",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 2292,
+          "width": 370,
+          "height": 352
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 2468
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.622425629290618,
+          "width": 0.9203980099502488,
+          "height": 0.40274599542334094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.8237986270022883
+        },
+        "traits": [],
+        "label": "Dark",
+        "value": "radio button, unchecked",
+        "identifier": "test-theme-1",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 2648,
+          "width": 370,
+          "height": 352
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 2824
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 3.0297482837528604,
+          "width": 0.9203980099502488,
+          "height": 0.40274599542334094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 3.2311212814645307
+        },
+        "traits": [],
+        "label": "Brand",
+        "value": "radio button, unchecked",
+        "identifier": "test-theme-2",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 3032,
+          "width": 370,
+          "height": 520
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 3292
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 3.469107551487414,
+          "width": 0.9203980099502488,
+          "height": 0.5949656750572082
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 3.7665903890160184
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Buttons"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 3564,
+          "width": 370,
+          "height": 300
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 3714
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 4.077803203661327,
+          "width": 0.9203980099502488,
+          "height": 0.34324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 4.249427917620137
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Save workout",
+        "identifier": "test-button",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 3876,
+          "width": 370,
+          "height": 300
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 4026
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 4.434782608695652,
+          "width": 0.9203980099502488,
+          "height": 0.34324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 4.606407322654462
+        },
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "label": "Unavailable",
+        "identifier": "test-button-disabled",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 4188,
+          "width": 370,
+          "height": 300
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 4338
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 4.7917620137299775,
+          "width": 0.9203980099502488,
+          "height": 0.34324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 4.963386727688787
+        },
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "label": "In progress, Saving",
+        "value": "busy",
+        "identifier": "test-button-loading",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 4520,
+          "width": 370,
+          "height": 520
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 4780
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 5.17162471395881,
+          "width": 0.9203980099502488,
+          "height": 0.5949656750572082
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 5.469107551487414
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Form"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 5052,
+          "width": 370,
+          "height": 300
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 5202
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 5.780320366132723,
+          "width": 0.9203980099502488,
+          "height": 0.34324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 5.951945080091533
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Email"
+      },
+      {
+        "frame": {
+          "x": 17,
+          "y": 5357,
+          "width": 368,
+          "height": 352
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 5533
+        },
+        "normalizedFrame": {
+          "x": 0.04228855721393035,
+          "y": 6.12929061784897,
+          "width": 0.9154228855721394,
+          "height": 0.40274599542334094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 6.330663615560641
+        },
+        "traits": [],
+        "label": "Email",
+        "hint": "We'll send your plan here.",
+        "identifier": "test-textfield",
+        "viewClassName": "RCTUITextField"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 5714,
+          "width": 370,
+          "height": 234
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 5831
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 6.537757437070939,
+          "width": 0.9203980099502488,
+          "height": 0.26773455377574373
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 6.67162471395881
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "We'll send your plan here."
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 5960,
+          "width": 370,
+          "height": 352
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 6136
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 6.8192219679633865,
+          "width": 0.9203980099502488,
+          "height": 0.40274599542334094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 7.020594965675057
+        },
+        "traits": [
+          "button",
+          "toggleButton"
+        ],
+        "label": "Workout reminders",
+        "value": "1",
+        "identifier": "test-switch",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 6324,
+          "width": 370,
+          "height": 352
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 6500
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 7.2356979405034325,
+          "width": 0.9203980099502488,
+          "height": 0.40274599542334094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 7.437070938215103
+        },
+        "traits": [],
+        "label": "I agree to the terms",
+        "value": "checkbox, unchecked",
+        "identifier": "test-checkbox",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 6688,
+          "width": 370,
+          "height": 300
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 6838
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 7.6521739130434785,
+          "width": 0.9203980099502488,
+          "height": 0.34324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 7.823798627002288
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Experience level"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 6992,
+          "width": 370,
+          "height": 352
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 7168
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 8,
+          "width": 0.9203980099502488,
+          "height": 0.40274599542334094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 8.20137299771167
+        },
+        "traits": [],
+        "label": "Beginner",
+        "value": "radio button, checked",
+        "identifier": "test-radiogroup-0",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 7348,
+          "width": 370,
+          "height": 352
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 7524
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 8.407322654462243,
+          "width": 0.9203980099502488,
+          "height": 0.40274599542334094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 8.608695652173912
+        },
+        "traits": [],
+        "label": "Intermediate",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-1",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 7704,
+          "width": 370,
+          "height": 352
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 7880
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 8.814645308924485,
+          "width": 0.9203980099502488,
+          "height": 0.40274599542334094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 9.016018306636155
+        },
+        "traits": [],
+        "label": "Advanced",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-2",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 8068,
+          "width": 370,
+          "height": 300
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 8218
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 9.231121281464532,
+          "width": 0.9203980099502488,
+          "height": 0.34324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 9.402745995423341
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Rest time"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 8372,
+          "width": 370,
+          "height": 354
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 8549
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 9.578947368421053,
+          "width": 0.9203980099502488,
+          "height": 0.40503432494279173
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 9.781464530892448
+        },
+        "traits": [],
+        "label": "Rest time, 60 seconds",
+        "identifier": "test-select",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 8758,
+          "width": 370,
+          "height": 520
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 9018
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 10.020594965675057,
+          "width": 0.9203980099502488,
+          "height": 0.5949656750572082
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 10.31807780320366
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Overlays"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 9290,
+          "width": 370,
+          "height": 300
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 9440
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 10.62929061784897,
+          "width": 0.9203980099502488,
+          "height": 0.34324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 10.800915331807781
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Delete workout",
+        "identifier": "test-dialog-open",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 9602,
+          "width": 370,
+          "height": 302
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 9753
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 10.986270022883295,
+          "width": 0.9203980099502488,
+          "height": 0.34553775743707094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 11.15903890160183
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Show exercise details",
+        "identifier": "test-sheet-open",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 9916,
+          "width": 370,
+          "height": 302
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 10067
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 11.345537757437071,
+          "width": 0.9203980099502488,
+          "height": 0.34553775743707094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 11.518306636155607
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Log set",
+        "identifier": "test-toast-show",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 10250,
+          "width": 370,
+          "height": 520
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 10510
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 11.727688787185354,
+          "width": 0.9203980099502488,
+          "height": 0.5949656750572082
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 12.025171624713959
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Tabs"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 10782,
+          "width": 123.33332824707031,
+          "height": 303
+        },
+        "tapPoint": {
+          "x": 77.66666412353516,
+          "y": 10933.5
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 12.336384439359268,
+          "width": 0.30679932399768733,
+          "height": 0.34668192219679633
+        },
+        "normalizedTapPoint": {
+          "x": 0.1932006570237193,
+          "y": 12.509725400457667
+        },
+        "traits": [
+          "selected"
+        ],
+        "label": "Today",
+        "hint": "Tab 1 of 3",
+        "identifier": "test-tabs-0",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 139.33333587646484,
+          "y": 10782,
+          "width": 123.33332824707031,
+          "height": 303
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 10933.5
+        },
+        "normalizedFrame": {
+          "x": 0.3466003380011563,
+          "y": 12.336384439359268,
+          "width": 0.30679932399768733,
+          "height": 0.34668192219679633
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 12.509725400457667
+        },
+        "traits": [],
+        "label": "Plan",
+        "hint": "Tab 2 of 3",
+        "identifier": "test-tabs-1",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 262.6666717529297,
+          "y": 10782,
+          "width": 123.33334350585938,
+          "height": 303
+        },
+        "tapPoint": {
+          "x": 324.3333435058594,
+          "y": 10933.5
+        },
+        "normalizedFrame": {
+          "x": 0.6533996809774371,
+          "y": 12.336384439359268,
+          "width": 0.30679936195487406,
+          "height": 0.34668192219679633
+        },
+        "normalizedTapPoint": {
+          "x": 0.8067993619548741,
+          "y": 12.509725400457667
+        },
+        "traits": [],
+        "label": "Progress",
+        "hint": "Tab 3 of 3",
+        "identifier": "test-tabs-2",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 11098,
+          "width": 370,
+          "height": 352
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 11274
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 12.697940503432495,
+          "width": 0.9203980099502488,
+          "height": 0.40274599542334094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 12.899313501144166
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "3 exercises left today."
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 11482,
+          "width": 370,
+          "height": 520
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 11742
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 13.137299771167047,
+          "width": 0.9203980099502488,
+          "height": 0.5949656750572082
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 13.434782608695652
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Native control (@expo/ui)"
+      },
+      {
+        "frame": {
+          "x": 15.999995231628418,
+          "y": 12000,
+          "width": 316.6666564941406,
+          "height": 28
+        },
+        "tapPoint": {
+          "x": 174.33332347869873,
+          "y": 12014
+        },
+        "normalizedFrame": {
+          "x": 0.03980098316325477,
+          "y": 13.729977116704806,
+          "width": 0.7877280012292055,
+          "height": 0.032036613272311214
+        },
+        "normalizedTapPoint": {
+          "x": 0.43366498377785756,
+          "y": 13.745995423340961
+        },
+        "traits": [
+          "button",
+          "toggleButton"
+        ],
+        "label": "Sync with Health (native control)",
+        "value": "0",
+        "identifier": "test-native-switch"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 12074,
+          "width": 370,
+          "height": 520
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 12334
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 13.814645308924485,
+          "width": 0.9203980099502488,
+          "height": 0.5949656750572082
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 14.11212814645309
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "List"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 12606,
+          "width": 370,
+          "height": 302
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 12757
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 14.423340961098399,
+          "width": 0.9203980099502488,
+          "height": 0.34553775743707094
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 14.596109839816934
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Open 200-row list",
+        "identifier": "test-list-link",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 130,
+          "y": 73.66666666666666,
+          "width": 142,
+          "height": 20.66666666666667
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 84
+        },
+        "normalizedFrame": {
+          "x": 0.32338308457711445,
+          "y": 0.08428680396643783,
+          "width": 0.35323383084577115,
+          "height": 0.023646071700991617
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.09610983981693363
+        },
+        "traits": [
+          "header"
+        ],
+        "label": "NativeWind v5 RC",
+        "viewClassName": "UILabel"
+      },
+      {
+        "frame": {
+          "x": 4,
+          "y": 54,
+          "width": 127,
+          "height": 11
+        },
+        "tapPoint": {
+          "x": 67.5,
+          "y": 59.5
+        },
+        "normalizedFrame": {
+          "x": 0.009950248756218905,
+          "y": 0.06178489702517163,
+          "width": 0.31592039800995025,
+          "height": 0.012585812356979404
+        },
+        "normalizedTapPoint": {
+          "x": 0.16791044776119404,
+          "y": 0.06807780320366133
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Theme switch: not measured"
+      },
+      {
+        "frame": {
+          "x": 4,
+          "y": 65,
+          "width": 127,
+          "height": 11
+        },
+        "tapPoint": {
+          "x": 67.5,
+          "y": 70.5
+        },
+        "normalizedFrame": {
+          "x": 0.009950248756218905,
+          "y": 0.07437070938215103,
+          "width": 0.31592039800995025,
+          "height": 0.012585812356979404
+        },
+        "normalizedTapPoint": {
+          "x": 0.16791044776119404,
+          "y": 0.08066361556064074
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "List mount: not measured"
+      }
+    ]
+  }
+}

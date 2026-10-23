@@ -6,7 +6,7 @@
 # Usage: scripts/run-all.sh <udid> [apps...]
 set -uo pipefail
 udid="$1"; shift
-apps=("${@:-baseline unistyles tamagui gluestack heroui reusables}")
+apps=("${@:-baseline unistyles uniwind nativewind tamagui gluestack heroui reusables}")
 root="$(cd "$(dirname "$0")/.." && pwd)"
 for app in ${apps[@]}; do
   bundle="dev.asimmalik.uilab.$app"

@@ -1,0 +1,96 @@
+{
+  "app": "nativewind",
+  "bundleId": "dev.asimmalik.uilab.nativewind",
+  "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
+  "date": "2026-10-23T07:56:50.544Z",
+  "growth": [
+    {
+      "id": "test-button",
+      "normal": 300,
+      "large": 1071.333984375,
+      "ratio": 3.57111328125
+    },
+    {
+      "id": "test-textfield",
+      "normal": 352,
+      "large": 1257,
+      "ratio": 3.571022727272727
+    },
+    {
+      "id": "test-switch",
+      "normal": 352,
+      "large": 2514.001953125,
+      "ratio": 7.1420510031960225
+    },
+    {
+      "id": "test-checkbox",
+      "normal": 352,
+      "large": 2514,
+      "ratio": 7.142045454545454
+    },
+    {
+      "id": "test-radiogroup-0",
+      "normal": 352,
+      "large": 1257,
+      "ratio": 3.571022727272727
+    },
+    {
+      "id": "test-select",
+      "normal": 354,
+      "large": 1259,
+      "ratio": 3.556497175141243
+    },
+    {
+      "id": "test-dialog-open",
+      "normal": 300,
+      "large": 2142.6640625,
+      "ratio": 7.142213541666667
+    },
+    {
+      "id": "test-sheet-open",
+      "normal": 302,
+      "large": 3216,
+      "ratio": 10.649006622516556
+    },
+    {
+      "id": "test-tabs-0",
+      "normal": 303,
+      "large": 2145.6640625,
+      "ratio": 7.08139954620462
+    },
+    {
+      "id": "test-tabs-1",
+      "normal": 303,
+      "large": 2145.6640625,
+      "ratio": 7.08139954620462
+    },
+    {
+      "id": "test-tabs-2",
+      "normal": 303,
+      "large": 2145.6640625,
+      "ratio": 7.08139954620462
+    },
+    {
+      "id": "test-native-switch",
+      "normal": 28,
+      "large": 63.3359375,
+      "ratio": 2.261997767857143
+    },
+    {
+      "id": "test-list-link",
+      "normal": 302,
+      "large": 2144.6640625,
+      "ratio": 7.101536630794702
+    }
+  ],
+  "offscreen": [
+    "test-native-switch"
+  ],
+  "overlaps": [],
+  "shots": [
+    "textsize-1.png",
+    "textsize-2.png",
+    "textsize-3.png",
+    "textsize-4.png"
+  ]
+}

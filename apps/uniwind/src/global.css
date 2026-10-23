@@ -1,0 +1,92 @@
+/*
+ * Uniwind entry stylesheet. https://docs.uniwind.dev/quickstart
+ *
+ * Every value below is copied by hand from shared/tokens.ts (CSS can't import
+ * TS). Colours are per-theme CSS variables; spacing, radii and type are
+ * theme-independent @theme tokens.
+ *
+ * `light` and `dark` are Uniwind's built-in themes; `brand` is registered via
+ * `extraThemes` in metro.config.js. Every theme declares the same variables,
+ * as Uniwind requires. https://docs.uniwind.dev/theming/custom-themes
+ * A `--color-*` variable becomes bg-*, text-*, border-*, accent-* utilities.
+ * https://docs.uniwind.dev/theming/global-css
+ */
+@import 'tailwindcss';
+@import 'uniwind';
+
+@theme {
+  /* space: xs 4, sm 8, md 12, lg 16, xl 24, xxl 32 -> Tailwind's 4px scale
+     (p-1, p-2, p-3, p-4, p-6, p-8). Set explicitly so it doesn't depend on rem. */
+  --spacing: 4px;
+
+  /* radius: sm 6, md 10, lg 16 (rounded-full is Tailwind's own). */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* type scale (font size + line height). Weights are font-semibold (label)
+     and font-bold (title, heading) on each element. RN Text scales these with
+     the system text size; nothing here disables that. */
+  --text-caption: 13px;
+  --text-caption--line-height: 18px;
+  --text-body: 16px;
+  --text-body--line-height: 22px;
+  --text-label: 15px;
+  --text-label--line-height: 20px;
+  --text-title: 20px;
+  --text-title--line-height: 26px;
+  --text-heading: 28px;
+  --text-heading--line-height: 34px;
+}
+
+@layer theme {
+  :root {
+    @variant light {
+      --color-background: #FFFFFF;
+      --color-surface: #F4F4F5;
+      --color-surface-raised: #FFFFFF;
+      --color-text: #18181B;
+      --color-text-muted: #52525B;
+      --color-border: #71717A;
+      --color-primary: #1D4ED8;
+      --color-on-primary: #FFFFFF;
+      --color-danger: #B91C1C;
+      --color-on-danger: #FFFFFF;
+      --color-success: #15803D;
+      --color-focus: #1D4ED8;
+      --color-scrim: rgba(0, 0, 0, 0.5);
+    }
+
+    @variant dark {
+      --color-background: #09090B;
+      --color-surface: #18181B;
+      --color-surface-raised: #27272A;
+      --color-text: #FAFAFA;
+      --color-text-muted: #A1A1AA;
+      --color-border: #A1A1AA;
+      --color-primary: #93C5FD;
+      --color-on-primary: #0B1B3A;
+      --color-danger: #FCA5A5;
+      --color-on-danger: #450A0A;
+      --color-success: #86EFAC;
+      --color-focus: #93C5FD;
+      --color-scrim: rgba(0, 0, 0, 0.7);
+    }
+
+    @variant brand {
+      --color-background: #FFF7ED;
+      --color-surface: #FFEDD5;
+      --color-surface-raised: #FFFFFF;
+      --color-text: #1C1917;
+      --color-text-muted: #57534E;
+      --color-border: #78716C;
+      --color-primary: #C2410C;
+      --color-on-primary: #FFFFFF;
+      --color-danger: #B91C1C;
+      --color-on-danger: #FFFFFF;
+      --color-success: #15803D;
+      --color-focus: #9A3412;
+      --color-scrim: rgba(28, 25, 23, 0.5);
+    }
+  }
+}

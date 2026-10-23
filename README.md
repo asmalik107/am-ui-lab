@@ -6,7 +6,7 @@ Every number below was measured. Where something couldn't be measured, this page
 
 - **Stack:** Expo SDK 57, React Native 0.86.3, React 19.2.3, New Architecture, Reanimated 4.5.1, expo-router.
 - **Test device:** iPhone 17 Pro simulator, iOS 26.4. All results are from Release builds.
-- **Date:** 22 October 2026.
+- **Date:** 22–23 October 2026 (Uniwind and NativeWind added on the 23rd).
 
 ## The apps
 
@@ -14,6 +14,8 @@ Every number below was measured. Where something couldn't be measured, this page
 | --- | --- | --- |
 | `apps/baseline` | none | Plain React Native with accessibility written by hand. The reference point. |
 | `apps/unistyles` | react-native-unistyles 3.6.0 | Styling engine only, so components are hand-built (the baseline's, restyled) |
+| `apps/uniwind` | uniwind 1.13.0 (free), Tailwind 4.3.3 | Styling engine only; the baseline's components restyled with `className` |
+| `apps/nativewind` | nativewind 5.0.0-rc.0 (react-native-css 3.1.0-rc.0), Tailwind 4.1.12 | Styling engine only, release candidate; the baseline's components restyled with `className` |
 | `apps/tamagui` | tamagui 3.1.2 | Styling engine + compiler + UI kit |
 | `apps/gluestack` | gluestack-ui 5 (core 5.0.15) on Uniwind 1.13.0 | Copy-paste components on react-aria |
 | `apps/heroui` | heroui-native 1.0.11 on Uniwind 1.13.0 | Component kit |
@@ -42,6 +44,8 @@ The spec for the test screen is in [docs/method.md](docs/method.md).
 | --- | --- |
 | baseline | 35 / 39 |
 | unistyles | 35 / 39 |
+| uniwind | 35 / 39 |
+| nativewind (v5 RC, with the line-height workaround) | 35 / 39 |
 | heroui | 22 / 39 |
 | gluestack | 19 / 39 |
 | tamagui | 19 / 31, with 8 checks unable to run (see below) |
@@ -49,12 +53,20 @@ The spec for the test screen is in [docs/method.md](docs/method.md).
 
 Full tables are in `results/<app>/ios-a11y.md`. The raw trees are in `ios-a11y.json`.
 
+The three styling engines (Unistyles, Uniwind, NativeWind) carry the baseline's hand-written accessibility, so they score the same. That's the point of comparison: what you get when you build the components yourself.
+
 **Failures in every app, the baseline included:**
 - **Select and tab roles.** React Native maps `role="combobox"` and `role="tab"` to no iOS trait. In `ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h`, only `switch` and `tabbar` map to traits; `tab`, `tablist` and `combobox` fall through to `None`.
 - **The `@expo/ui` Switch** exposes a 28 pt tall frame, below Apple's 44 pt default.
 - **The @gorhom/bottom-sheet modal**, even with `aria-modal` on its content, leaves the screen behind it reachable in Release builds.
 
 **Failures specific to a library:**
+
+- **nativewind (5.0.0-rc.0)**
+  - Tailwind v4 type tokens with px line-heights (`--text-body--line-height: 22px`) rendered each line at font size × value: 16 × 22 = 352 pt. Every text element matched size × line-height exactly. The page was 18 screens tall and the tests couldn't reach most controls. The as-found results are kept in `results/nativewind-px-line-height/`.
+  - Unitless ratios (`1.375`) fix it. `results/nativewind/` is with that workaround.
+  - `react-native-css` resolves `line-height` at runtime when it arrives through `var()`, which is how Tailwind v4's `text-*` utilities pass it; that runtime path is the likely cause, not confirmed. No matching upstream issue was found.
+  - A third (brand) theme needs `VariableContextProvider`; v5's built-in theming is light/dark only.
 
 - **tamagui**
   - Disabled and loading Buttons expose no button element at all, only their text.
@@ -90,6 +102,8 @@ Full tables are in `results/<app>/ios-a11y.md`. The raw trees are in `ios-a11y.j
 | --- | --- | --- |
 | baseline | 13 / 13 | none |
 | unistyles | 13 / 13 | none (radio circles also scale, via `rt.fontScale`) |
+| uniwind | 13 / 13 | none |
+| nativewind (workaround) | 13 / 13 | none |
 | tamagui | 9 / 11 | none |
 | gluestack | 12 / 13 | none |
 | heroui | 9 / 13 | button labels partly cut off |
@@ -105,6 +119,8 @@ The `@expo/ui` Switch is pushed past the screen edge in every app.
 | --- | --- | --- |
 | baseline | 367 → 133 ms (instant; the 133 includes the button press highlight) | 400 → 33 ms |
 | unistyles | 300 → 67 ms | 433 → 33 ms |
+| uniwind | 367 → 67 ms | 367 → 33 ms |
+| nativewind | 333 → 67 ms | 400 → 33 ms |
 | tamagui | instant either way (no open animation in this build) | 467 → 33 ms |
 | gluestack | 233 → 33 ms | 433 → 33 ms |
 | heroui | 200 → 33 ms | 533 → 33 ms |
@@ -120,12 +136,14 @@ Every animated overlay respected Reduce Motion when it was on at launch. Turning
 | --- | --- | --- | --- |
 | baseline | 32.3 ms | 97.5 ms (82–114) | 3.93 MB |
 | unistyles | 31.6 ms | 83.1 ms (82–115) | 4.13 MB |
+| uniwind | 32.5 ms | 96.3 ms (78–112) | 4.21 MB |
+| nativewind | 31.4 ms | 98.8 ms (82–100) | 4.45 MB |
 | tamagui | 82.4 ms | 115.1 ms (98–1798) | 5.43 MB |
 | gluestack | 31.8 ms | 82.8 ms (82–99) | 4.99 MB |
 | heroui | 32.0 ms | 82.5 ms (80–115) | 5.14 MB |
 | reusables | 32.5 ms | 96.5 ms (78–346) | 6.75 MB |
 
-Bundle sizes are the Hermes bytecode from `npx expo export --platform ios`, all measured on the same day. Reusables bundles every lucide icon (1,917 of them) although it uses 4.
+Bundle sizes are the Hermes bytecode from `npx expo export --platform ios`. The first six were measured on 22 October and Uniwind and NativeWind on 23 October, with the same versions. Reusables bundles every lucide icon (1,917 of them) although it uses 4.
 
 ## Limits
 

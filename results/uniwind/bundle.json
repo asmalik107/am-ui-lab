@@ -1,0 +1,6 @@
+{
+  "app": "uniwind",
+  "iosHbcBytes": 4214951,
+  "date": "2026-10-23",
+  "how": "npx expo export --platform ios, main Hermes bytecode file"
+}

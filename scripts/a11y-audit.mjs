@@ -177,35 +177,45 @@ try {
   add('Dialog', 'test could run', false, String(err.message ?? err));
 }
 
-// 4. Bottom sheet. Open is detected by its title or its Close button, so a
-try {
-  // sheet whose text is hidden from VoiceOver still counts as open.
-  await fresh();
-  await tapId('test-sheet-open');
-  const isSheet = (els) => hasLabel(els, 'Goblet squat') || els.some((e) => e.identifier === 'test-sheet-close');
-  let sh = await waitFor(isSheet);
-  if (sh) { await sleep(1000); sh = axTree(); }
-  states.sheet = sh ?? axTree();
-  add('Bottom sheet', 'opens', !!sh, sh ? 'sheet content in tree' : 'neither title nor Close button found');
-  if (sh) {
-    add('Bottom sheet', 'title and body readable', hasLabel(sh, 'Goblet squat') && hasLabel(sh, 'kettlebell'), hasLabel(sh, 'Goblet squat') ? 'title in tree' : 'title and body text not in the system tree');
-    const l = leaks(sh, ['test-sheet', 'test-sheet-close']);
-    add('Bottom sheet', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
-    const close = sh.find((e) => e.identifier === 'test-sheet-close' || e.label === 'Close');
-    if (close) tap(close);
-    const gone = await waitFor((els) => !isSheet(els));
-    add('Bottom sheet', 'closes', !!gone, gone ? 'sheet gone' : 'still open');
-    if (gone) {
-      await sleep(500);
-      const after = axTree();
-      const back = after.some((e) => e.identifier && mainIds.has(e.identifier));
-      add('Bottom sheet', 'screen reachable again after close', back, back ? 'screen controls back in system tree' : 'no screen controls in system tree after close');
-      states.afterSheet = after;
+// 4. Bottom sheets. Every sheet the app has gets the same five checks: the
+// shared one (test-sheet-*), plus @expo/ui's (baseline), Tamagui's own Sheet
+// and HeroUI's raw gorhom sheet where those apps have them. Open is detected by
+// the title or the Close button, so a sheet whose text is hidden from
+// VoiceOver still counts as open.
+const sheetVariants = [
+  { name: 'Bottom sheet', open: 'test-sheet-open', close: 'test-sheet-close' },
+  { name: 'Bottom sheet (@expo/ui)', open: 'test-sheet-open-expoui', close: 'test-sheet-expoui-close' },
+  { name: 'Bottom sheet (Tamagui Sheet)', open: 'test-sheet-open-tamagui', close: 'test-sheet-tamagui-close' },
+  { name: 'Bottom sheet (@gorhom, raw)', open: 'test-sheet-open-gorhom', close: 'test-sheet-gorhom-close' },
+];
+for (const v of sheetVariants) {
+  if (v.open !== 'test-sheet-open' && !byId(main, v.open)) continue; // app doesn't have this sheet
+  try {
+    await fresh();
+    await tapId(v.open);
+    const isSheet = (els) => hasLabel(els, 'Goblet squat') || els.some((e) => e.identifier === v.close);
+    let sh = await waitFor(isSheet);
+    if (sh) { await sleep(1000); sh = axTree(); }
+    states[`sheet:${v.open}`] = sh ?? axTree();
+    add(v.name, 'opens', !!sh, sh ? 'sheet content in tree' : 'neither title nor Close button found');
+    if (sh) {
+      add(v.name, 'title and body readable', hasLabel(sh, 'Goblet squat') && hasLabel(sh, 'kettlebell'), hasLabel(sh, 'Goblet squat') ? 'title in tree' : 'title and body text not in the system tree');
+      const l = leaks(sh, [v.open.replace('-open', ''), v.close]);
+      add(v.name, 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
+      const close = sh.find((e) => e.identifier === v.close) ?? sh.find((e) => e.label === 'Close');
+      if (close) tap(close);
+      const gone = await waitFor((els) => !isSheet(els));
+      add(v.name, 'closes', !!gone, gone ? 'sheet gone' : 'still open');
+      if (gone) {
+        await sleep(500);
+        const after = axTree();
+        const back = after.some((e) => e.identifier && mainIds.has(e.identifier));
+        add(v.name, 'screen reachable again after close', back, back ? 'screen controls back in system tree' : 'no screen controls in system tree after close');
+      }
     }
+  } catch (err) {
+    add(v.name, 'test could run', false, String(err.message ?? err));
   }
-} catch (err) {
-  // A missing element is a result too: record it and carry on.
-  add('Bottom sheet', 'test could run', false, String(err.message ?? err));
 }
 
 // 5. Select: options exposed with role and state.

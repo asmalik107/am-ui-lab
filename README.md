@@ -30,6 +30,8 @@ Each app's `NOTES.md` records:
 
 The spec for the test screen is in [docs/method.md](docs/method.md).
 
+**Every check, side by side:** [docs/checks.html](docs/checks.html) lists all 55 checks for all eight apps, with the measured detail for each cell. It's generated from `results/` by `scripts/report-html.mjs`.
+
 ## Results
 
 ### Accessibility (iOS)
@@ -40,16 +42,18 @@ The spec for the test screen is in [docs/method.md](docs/method.md).
 - that the screen behind a dialog, bottom sheet or select is hidden from VoiceOver
 - that toasts reach the accessibility tree
 
-| App | Checks passed |
-| --- | --- |
-| baseline | 35 / 39 |
-| unistyles | 35 / 39 |
-| uniwind | 35 / 39 |
-| nativewind (v5 RC, with the line-height workaround) | 35 / 39 |
-| heroui | 22 / 39 |
-| gluestack | 19 / 39 |
-| tamagui | 19 / 31, with 8 checks unable to run (see below) |
-| reusables | 18 / 39 |
+The 39 core checks are the same for every app. Apps with extra bottom sheets get 5 more checks per sheet, which is why some totals are higher.
+
+| App | Core checks passed | With extra sheet checks |
+| --- | --- | --- |
+| baseline | 35 / 39 | 40 / 44 (+ @expo/ui BottomSheet) |
+| unistyles | 35 / 39 | |
+| uniwind | 35 / 39 | |
+| nativewind (v5 RC, with the line-height workaround) | 35 / 39 | |
+| heroui | 22 / 39 | 25 / 44 (+ raw @gorhom sheet) |
+| gluestack | 19 / 39 | |
+| tamagui | 19 / 31, with 8 checks unable to run (see below) | 23 / 36 (+ Tamagui's own Sheet) |
+| reusables | 18 / 39 | |
 
 Full tables are in `results/<app>/ios-a11y.md`. The raw trees are in `ios-a11y.json`.
 
@@ -59,6 +63,18 @@ The three styling engines (Unistyles, Uniwind, NativeWind) carry the baseline's 
 - **Select and tab roles.** React Native maps `role="combobox"` and `role="tab"` to no iOS trait. In `ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h`, only `switch` and `tabbar` map to traits; `tab`, `tablist` and `combobox` fall through to `None`.
 - **The `@expo/ui` Switch** exposes a 28 pt tall frame, below Apple's 44 pt default.
 - **The @gorhom/bottom-sheet modal**, even with `aria-modal` on its content, leaves the screen behind it reachable in Release builds.
+
+**Bottom sheets compared** (5 checks each: opens, title and body readable, screen behind hidden from VoiceOver, closes, screen reachable after close):
+
+| Sheet | Passed | Screen behind hidden from VoiceOver |
+| --- | --- | --- |
+| `@expo/ui` BottomSheet (native SwiftUI sheet), built as Expo's docs show | 5 / 5 | yes |
+| @gorhom/bottom-sheet (baseline and five other apps) | 4 / 5 | no |
+| Tamagui `Sheet` | 4 / 5 | no |
+| HeroUI Native `BottomSheet` | 3 / 5 | no, and its title and body are hidden too |
+| @gorhom/bottom-sheet inside the HeroUI app | 3 / 5 | no, and its title and body are hidden too |
+
+`@expo/ui`'s sheet has to be filled with `@expo/ui`'s own `Column`, `Text` and `Button`, as in [its docs](https://docs.expo.dev/versions/v57.0.0/sdk/ui/universal/bottomsheet/). React Native views inside it don't receive touches unless wrapped in `RNHostView`, because the sheet presents in its own view controller (see `RNHostView.tsx` in `@expo/ui`). A first attempt with a React Native `Pressable` couldn't be tapped.
 
 **Failures specific to a library:**
 

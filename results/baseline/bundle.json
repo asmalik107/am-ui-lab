@@ -1,0 +1,6 @@
+{
+  "app": "baseline",
+  "iosHbcBytes": 3930080,
+  "date": "2026-10-24",
+  "how": "npx expo export --platform ios, main Hermes bytecode file (includes the @expo/ui BottomSheet test sheet)"
+}

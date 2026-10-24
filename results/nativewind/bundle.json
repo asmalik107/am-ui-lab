@@ -1,0 +1,6 @@
+{
+  "app": "nativewind",
+  "iosHbcBytes": 4454194,
+  "date": "2026-10-23",
+  "how": "npx expo export --platform ios, main Hermes bytecode file"
+}

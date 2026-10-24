@@ -1,0 +1,6 @@
+{
+  "app": "gluestack",
+  "iosHbcBytes": 4990207,
+  "date": "2026-10-22",
+  "how": "npx expo export --platform ios, main Hermes bytecode file"
+}

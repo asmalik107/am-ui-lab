@@ -1,0 +1,6 @@
+{
+  "app": "unistyles",
+  "iosHbcBytes": 4126589,
+  "date": "2026-10-22",
+  "how": "npx expo export --platform ios, main Hermes bytecode file"
+}

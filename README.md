@@ -153,7 +153,7 @@ Bundle sizes are the Hermes bytecode from `npx expo export --platform ios`. The 
 - The Tamagui **Debug** build aborts on a React Native Yoga layout assertion when the `@expo/ui` Host sits below the form sections. Release builds are unaffected. The root cause has not been isolated.
 - Tamagui's RadioGroup doesn't draw its selected dot in this build, although the tree reports it as checked. This may come from the lab's theme setup (the `brand` theme renamed to `labBrand`) rather than from Tamagui.
 - The timing readout overlay scales with system text size and covers the header at AX5. It doesn't affect any check.
-- iOS 27 refuses to launch these Expo 57 builds ("UIScene life cycle is required for apps built with this SDK"), so all testing is on iOS 26.4.
+- These apps don't set Expo SDK 57's opt-in `ios.enableSceneSupport` (expo-build-properties, expo 57.0.23+), which builds made with Xcode 27 need to launch on iOS 27. So they failed with "UIScene life cycle is required for apps built with this SDK", and all testing is on iOS 26.4. See [expo/expo#50205](https://github.com/expo/expo/pull/50205).
 
 ## Reproduce
 

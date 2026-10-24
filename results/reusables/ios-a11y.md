@@ -1,6 +1,6 @@
 # reusables: iOS accessibility audit
 
-Run 2026-10-22 on simulator 9B4311A6-178B-4879-9923-B2468FDE9675 (iOS 26.4, Release build) with `scripts/a11y-audit.mjs`. 18/39 checks passed.
+Run 2026-10-24 on simulator 9B4311A6-178B-4879-9923-B2468FDE9675 (iOS 26.4, Release build) with `scripts/a11y-audit.mjs`. 23/44 checks passed.
 
 Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.
 
@@ -28,17 +28,22 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Radio group | all options exposed | pass | 3 options found |
 | Radio group | group label read | pass | label text "Experience level" in tree |
 | Text field | error shown | pass | error text in tree |
-| Text field | error reachable from field | **fail** | label="" value="not-an-email" traits=[] 366×36pt hint="" |
+| Text field | error reachable from field | **fail** | label="" value="no-an-emailt" traits=[] 366×36pt hint="" |
 | Dialog | opens | pass | title in tree |
-| Dialog | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, Native control (@expo/ui) |
+| Dialog | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2 |
 | Dialog | title is a heading | **fail** | AXGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Cancel, Delete" |
 | Dialog | actions are buttons | pass | AXButton label="Cancel" |
 | Dialog | closes | pass | title gone |
 | Bottom sheet | opens | pass | sheet content in tree |
 | Bottom sheet | title and body readable | pass | title in tree |
-| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, Native control (@expo/ui), test-native-switch |
+| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2 |
 | Bottom sheet | closes | pass | sheet gone |
 | Bottom sheet | screen reachable again after close | pass | screen controls back in system tree |
+| Bottom sheet (@expo/ui) | opens | pass | sheet content in tree |
+| Bottom sheet (@expo/ui) | title and body readable | pass | title in tree |
+| Bottom sheet (@expo/ui) | screen behind is hidden from VoiceOver | pass | nothing behind it in the system tree |
+| Bottom sheet (@expo/ui) | closes | pass | sheet gone |
+| Bottom sheet (@expo/ui) | screen reachable again after close | pass | screen controls back in system tree |
 | Select | opens | pass | options in tree |
 | Select | current option marked | **fail** | AXGroup label="60 seconds" |
 | Select | options are actionable | **fail** | AXGroup label="30 seconds" \| AXGroup label="45 seconds" \| AXGroup label="60 seconds" \| AXGroup label="90 seconds" \| AXGroup label="2 minutes" |

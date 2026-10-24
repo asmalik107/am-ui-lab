@@ -113,6 +113,14 @@ const [accent] = useThemeColor(['accent']);        // heroui-native/hooks, reads
 
 The hex token values survive into the bundle (for example `#1D4ED8`, `#C2410C`), so `useThemeColor` should return hex. **Unverified at runtime.**
 
+### @expo/ui BottomSheet
+
+Added after the first round of tests, to check whether `@expo/ui`'s universal `BottomSheet` behaves the same outside the baseline. It is filled with `@expo/ui`'s own `Column`, `Text` and `Button`, as [Expo's docs](https://docs.expo.dev/versions/v57.0.0/sdk/ui/universal/bottomsheet/) show: React Native views inside it don't receive touches unless wrapped in `RNHostView`. The Close button carries `accessibilityIdentifier('test-sheet-expoui-close')` and the title `accessibilityAddTraits(['isHeader'])`, both from `@expo/ui/swift-ui/modifiers`.
+
+**Result (2026-10-24, iPhone 17 Pro simulator, iOS 26.4, Release):** 5 / 5 sheet checks in `scripts/a11y-audit.mjs`, including the screen behind being hidden from VoiceOver. Opened by hand in the dark theme: the sheet showed the theme's surface and text colours.
+
+`src/components/expo-sheet.tsx`. Colours come from HeroUI's `useThemeColor(['overlay', 'overlay-foreground', 'muted'])`, as for the Host, and are the same tokens as the gorhom sheet. Spacing and font sizes come from the shared `space` / `type` tokens, as in the gorhom sheet.
+
 ## Accessibility: what the library provides (from source, unverified)
 
 - **Reduce Motion:** `GlobalAnimationSettingsProvider` disables all HeroUI animations when Reanimated's `useReducedMotion()` is true. The Reanimated docs and its types say that hook returns the value "when the app started", and changing the setting "doesn't cause your components to rerender". **Expect the at-launch check to pass and the switched-on-while-running check to fail.**

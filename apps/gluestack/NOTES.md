@@ -155,6 +155,14 @@ const primary = useTokenColor('primary'); // useResolveClassNames('accent-primar
 </Host>
 ```
 
+### @expo/ui BottomSheet
+
+Added after the first round of tests, to check whether `@expo/ui`'s universal `BottomSheet` behaves the same outside the baseline. It is filled with `@expo/ui`'s own `Column`, `Text` and `Button`, as [Expo's docs](https://docs.expo.dev/versions/v57.0.0/sdk/ui/universal/bottomsheet/) show: React Native views inside it don't receive touches unless wrapped in `RNHostView`. The Close button carries `accessibilityIdentifier('test-sheet-expoui-close')` and the title `accessibilityAddTraits(['isHeader'])`, both from `@expo/ui/swift-ui/modifiers`.
+
+**Result (2026-10-24, iPhone 17 Pro simulator, iOS 26.4, Release):** 5 / 5 sheet checks in `scripts/a11y-audit.mjs`, including the screen behind being hidden from VoiceOver. Opened by hand in the dark theme: the sheet showed the theme's surface and text colours.
+
+`containerColor` is `useTokenColor('card')`, as for the Host. The text colours, font sizes and the `Column` gap come from the gorhom sheet's own classes, resolved with Uniwind's `useResolveClassNames` (`'text-title text-foreground'`, `'text-body text-muted-foreground'`, `'gap-md'`).
+
 ### tailwind-merge mismatch (theming friction)
 
 gluestack's `tva()` wraps tailwind-variants 0.1.20, which uses **tailwind-merge 1.14**, a merger written for Tailwind v3, while the styles themselves are Tailwind v4. tailwind-merge doesn't know the token font sizes, so it classifies `text-heading` as a text *colour*. When `text-heading text-foreground` both reach a gluestack component, one of them gets dropped.

@@ -123,6 +123,23 @@ const ThemedHost = withUnistyles(Host, (theme) => ({
 </ThemedHost>
 ```
 
+## @expo/ui BottomSheet
+
+Added after the first round of tests, to check whether `@expo/ui`'s universal `BottomSheet` behaves the same outside the baseline. It is filled with `@expo/ui`'s own `Column`, `Text` and `Button`, as [Expo's docs](https://docs.expo.dev/versions/v57.0.0/sdk/ui/universal/bottomsheet/) show: React Native views inside it don't receive touches unless wrapped in `RNHostView`. The Close button carries `accessibilityIdentifier('test-sheet-expoui-close')` and the title `accessibilityAddTraits(['isHeader'])`, both from `@expo/ui/swift-ui/modifiers`.
+
+**Result (2026-10-24, iPhone 17 Pro simulator, iOS 26.4, Release):** 5 / 5 sheet checks in `scripts/a11y-audit.mjs`, including the screen behind being hidden from VoiceOver. Opened by hand in the dark theme: the sheet showed the theme's surface and text colours.
+
+`containerColor` and `textStyle` are plain props, so they go through `withUnistyles`, like gorhom's props:
+
+```tsx
+// src/components/overlays.tsx
+const ThemedNativeSheet = withUnistyles(NativeSheet, (theme) => ({ containerColor: theme.colors.surfaceRaised }));
+const ThemedNativeText = withUnistyles(NativeText);
+<ThemedNativeText uniProps={(theme) => ({ textStyle: { color: theme.colors.text, fontSize: theme.type.title.fontSize, fontWeight: '700' } })}>
+```
+
+`uniProps` is the per-instance form of the mapping, so the title and body can share one wrapped `Text`.
+
 ## Could not make work / deviations
 
 - **Header title:** `'Unistyles'`, where the baseline has `'Baseline (React Native)'`. This is intentional.

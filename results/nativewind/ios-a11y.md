@@ -1,6 +1,6 @@
 # nativewind: iOS accessibility audit
 
-Run 2026-10-23 on simulator 9B4311A6-178B-4879-9923-B2468FDE9675 (iOS 26.4, Release build) with `scripts/a11y-audit.mjs`. 35/39 checks passed.
+Run 2026-10-24 on simulator 9B4311A6-178B-4879-9923-B2468FDE9675 (iOS 26.4, Release build) with `scripts/a11y-audit.mjs`. 40/44 checks passed.
 
 Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.
 
@@ -36,9 +36,14 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Dialog | closes | pass | title gone |
 | Bottom sheet | opens | pass | sheet content in tree |
 | Bottom sheet | title and body readable | pass | title in tree |
-| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-toast-show |
+| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show |
 | Bottom sheet | closes | pass | sheet gone |
 | Bottom sheet | screen reachable again after close | pass | screen controls back in system tree |
+| Bottom sheet (@expo/ui) | opens | pass | sheet content in tree |
+| Bottom sheet (@expo/ui) | title and body readable | pass | title in tree |
+| Bottom sheet (@expo/ui) | screen behind is hidden from VoiceOver | pass | nothing behind it in the system tree |
+| Bottom sheet (@expo/ui) | closes | pass | sheet gone |
+| Bottom sheet (@expo/ui) | screen reachable again after close | pass | screen controls back in system tree |
 | Select | opens | pass | options in tree |
 | Select | current option marked | pass | AXGroup label="60 seconds" value="radio button, checked" |
 | Select | options are actionable | pass | AXGroup label="30 seconds" value="radio button, unchecked" \| AXGroup label="45 seconds" value="radio button, unchecked" \| AXGroup label="60 seconds" value="radio button, checked" \| AXGroup label="90 seconds" value="radio button, unchecked" \| AXGroup label="2 minutes" value="radio button, unchecked" |

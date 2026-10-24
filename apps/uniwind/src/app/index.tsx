@@ -9,7 +9,7 @@ import { copy, ids } from '@shared/content';
 import type { ThemeName } from '@shared/tokens';
 
 import { Button, Checkbox, RadioGroup, Section, SwitchRow, Tabs, TextField, announce } from '../components/controls';
-import { Dialog, ExerciseSheet, Select, Toast } from '../components/overlays';
+import { Dialog, ExerciseSheet, ExpoExerciseSheet, Select, Toast } from '../components/overlays';
 import { mark, measure } from '../perf';
 import { View as PerfTouch } from 'react-native';
 
@@ -60,6 +60,7 @@ export default function TestScreen() {
   const [toast, setToast] = useState(false);
   const [saving, setSaving] = useState(false);
   const [sync, setSync] = useState(false);
+  const [expoSheet, setExpoSheet] = useState(false);
   const sheet = useRef<BottomSheetModal<unknown>>(null);
   const hideToast = useCallback(() => setToast(false), []);
 
@@ -113,6 +114,7 @@ export default function TestScreen() {
         <Section title="Overlays">
           <Button testID={ids.dialogOpen} label={copy.dialogOpen} variant="danger" onPress={() => setDialogOpen(true)} />
           <Button testID={ids.sheetOpen} label={copy.sheetOpen} variant="secondary" onPress={() => sheet.current?.present()} />
+          <Button testID={ids.expoSheetOpen} label={copy.expoSheetOpen} variant="secondary" onPress={() => setExpoSheet(true)} />
           <Button testID={ids.toastShow} label={copy.toastShow} variant="secondary" onPress={() => setToast(true)} />
         </Section>
 
@@ -146,6 +148,7 @@ export default function TestScreen() {
         onClose={() => setDialogOpen(false)}
       />
       <ExerciseSheet ref={sheet} testID={ids.sheet} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
+      <ExpoExerciseSheet open={expoSheet} onClose={() => setExpoSheet(false)} testID={ids.expoSheet} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
       <Toast testID={ids.toast} message={copy.toastMessage} visible={toast} onHide={hideToast} />
     </View>
   );

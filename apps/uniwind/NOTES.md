@@ -128,6 +128,14 @@ function ThemedHost({ children }: { children: ReactNode }) {
 }
 ```
 
+## @expo/ui BottomSheet
+
+Added after the first round of tests, to check whether `@expo/ui`'s universal `BottomSheet` behaves the same outside the baseline. It is filled with `@expo/ui`'s own `Column`, `Text` and `Button`, as [Expo's docs](https://docs.expo.dev/versions/v57.0.0/sdk/ui/universal/bottomsheet/) show: React Native views inside it don't receive touches unless wrapped in `RNHostView`. The Close button carries `accessibilityIdentifier('test-sheet-expoui-close')` and the title `accessibilityAddTraits(['isHeader'])`, both from `@expo/ui/swift-ui/modifiers`.
+
+**Result (2026-10-24, iPhone 17 Pro simulator, iOS 26.4, Release):** 5 / 5 sheet checks in `scripts/a11y-audit.mjs`, including the screen behind being hidden from VoiceOver. Opened by hand in the dark theme: the sheet showed the theme's surface and text colours.
+
+`containerColor`, `textStyle` and `Column`'s `spacing` are plain props. The values come from `useCSSVariable`, as for the Host: `--color-surface-raised`, `--color-text`, `--color-text-muted`, `--text-title`, `--text-body` and `--spacing` (× 3 for `gap-3`, the gorhom sheet's gap). The hook returns `string | number | undefined`, so colours are narrowed to strings and sizes to numbers.
+
 ## Could not make work / deviations
 
 - **Header title:** `'Uniwind'`, where the baseline has `'Baseline (React Native)'`. Intentional.

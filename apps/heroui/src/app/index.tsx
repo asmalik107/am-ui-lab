@@ -26,6 +26,7 @@ import { ScrollView, Text, View } from 'react-native';
 import { copy, ids } from '@shared/content';
 import type { ThemeName } from '@shared/tokens';
 
+import { ExpoSheet } from '../components/expo-sheet';
 import { GorhomSheet } from '../components/gorhom-sheet';
 import { Section } from '../components/section';
 import { setTheme, space, themeNames, type, useThemeName } from '../theme';
@@ -52,6 +53,7 @@ export default function TestScreen() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const [saving, setSaving] = useState(false);
   const [sync, setSync] = useState(false);
+  const [expoSheet, setExpoSheet] = useState(false);
   const gorhomSheet = useRef<BottomSheetModal<unknown>>(null);
 
   // No announcement call here: HeroUI's FieldError has no live region, and the
@@ -237,6 +239,11 @@ export default function TestScreen() {
           {`${copy.sheetOpen} (@gorhom)`}
         </Button>
 
+        {/* @expo/ui's universal BottomSheet, coloured from HeroUI theme tokens. */}
+        <Button testID={ids.expoSheetOpen} variant="outline" onPress={() => setExpoSheet(true)}>
+          {copy.expoSheetOpen}
+        </Button>
+
         {/* 10. Toast via useToast(). */}
         <Button testID={ids.toastShow} variant="outline" onPress={showToast}>
           {copy.toastShow}
@@ -287,6 +294,7 @@ export default function TestScreen() {
         body={copy.sheetBody}
         close={copy.sheetClose}
       />
+      <ExpoSheet open={expoSheet} onClose={() => setExpoSheet(false)} testID={ids.expoSheet} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
     </ScrollView>
   );
 }

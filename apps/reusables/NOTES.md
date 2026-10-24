@@ -152,6 +152,14 @@ const primary = useCSSVariable('--color-primary'); // https://docs.uniwind.dev/a
 
 The Stack header colours use the same approach: `useCSSVariable(['--color-surface', '--color-foreground', '--color-background'])` in `_layout.tsx`.
 
+### @expo/ui BottomSheet
+
+Added after the first round of tests, to check whether `@expo/ui`'s universal `BottomSheet` behaves the same outside the baseline. It is filled with `@expo/ui`'s own `Column`, `Text` and `Button`, as [Expo's docs](https://docs.expo.dev/versions/v57.0.0/sdk/ui/universal/bottomsheet/) show: React Native views inside it don't receive touches unless wrapped in `RNHostView`. The Close button carries `accessibilityIdentifier('test-sheet-expoui-close')` and the title `accessibilityAddTraits(['isHeader'])`, both from `@expo/ui/swift-ui/modifiers`.
+
+**Result (2026-10-24, iPhone 17 Pro simulator, iOS 26.4, Release):** 5 / 5 sheet checks in `scripts/a11y-audit.mjs`, including the screen behind being hidden from VoiceOver. Opened by hand in the dark theme: the sheet showed the theme's surface and text colours.
+
+Colours come from `useCSSVariable(['--color-card', '--color-foreground', '--color-muted-foreground'])`, as for the Host. The gap and font sizes are the gorhom sheet's classes (`gap-3`, `type.title`, `type.body`), resolved with Uniwind's `useResolveClassNames`.
+
 ## What didn't work or is unverified
 
 - **Loading spinner probably won't spin.** `animate-spin` compiles to an `animation: spin 1s linear infinite` style entry. Uniwind's docs list `animate-*` / Reanimated animations as a **Pro** feature, so on Free (native) the icon is likely static. Not tested.

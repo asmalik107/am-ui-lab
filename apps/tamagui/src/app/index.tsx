@@ -9,7 +9,7 @@ import { copy, ids } from '@shared/content'
 import type { ThemeName } from '@shared/tokens'
 
 import { Button, Checkbox, RadioGroup, Section, SwitchRow, Tabs, TextField } from '../components/controls'
-import { Dialog, ExerciseSheet, Select, TamaguiSheet } from '../components/overlays'
+import { Dialog, ExerciseSheet, ExpoExerciseSheet, Select, TamaguiSheet } from '../components/overlays'
 import { useThemeSwitch } from '../theme'
 import { mark, measure } from '../perf'
 import { View as PerfTouch } from 'react-native'
@@ -29,6 +29,7 @@ export default function TestScreen() {
   const [rest, setRest] = useState<string>(copy.selectOptions[2])
   const [dialogOpen, setDialogOpen] = useState(false)
   const [tamaguiSheetOpen, setTamaguiSheetOpen] = useState(false)
+  const [expoSheet, setExpoSheet] = useState(false)
   const [saving, setSaving] = useState(false)
   const [sync, setSync] = useState(false)
   const sheet = useRef<BottomSheetModal>(null)
@@ -95,6 +96,7 @@ export default function TestScreen() {
             variant="secondary"
             onPress={() => setTamaguiSheetOpen(true)}
           />
+          <Button testID={ids.expoSheetOpen} label={copy.expoSheetOpen} variant="secondary" onPress={() => setExpoSheet(true)} />
           <Button testID={ids.toastShow} label={copy.toastShow} variant="secondary" onPress={() => toast(copy.toastMessage)} />
         </Section>
 
@@ -127,6 +129,7 @@ export default function TestScreen() {
         close={copy.sheetClose}
         onClose={() => setTamaguiSheetOpen(false)}
       />
+      <ExpoExerciseSheet open={expoSheet} onClose={() => setExpoSheet(false)} testID={ids.expoSheet} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
     </View>
   )
 }

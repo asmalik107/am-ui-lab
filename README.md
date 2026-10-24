@@ -42,18 +42,18 @@ The spec for the test screen is in [docs/method.md](docs/method.md).
 - that the screen behind a dialog, bottom sheet or select is hidden from VoiceOver
 - that toasts reach the accessibility tree
 
-The 39 core checks are the same for every app. Apps with extra bottom sheets get 5 more checks per sheet, which is why some totals are higher.
+The 39 core checks are the same for every app. Every app also has `@expo/ui`'s BottomSheet, and some have a further sheet of their own; each extra sheet adds 5 checks, which is why the totals differ.
 
 | App | Core checks passed | With extra sheet checks |
 | --- | --- | --- |
 | baseline | 35 / 39 | 40 / 44 (+ @expo/ui BottomSheet) |
-| unistyles | 35 / 39 | |
-| uniwind | 35 / 39 | |
-| nativewind (v5 RC, with the line-height workaround) | 35 / 39 | |
-| heroui | 22 / 39 | 25 / 44 (+ raw @gorhom sheet) |
-| gluestack | 19 / 39 | |
-| tamagui | 19 / 31, with 8 checks unable to run (see below) | 23 / 36 (+ Tamagui's own Sheet) |
-| reusables | 18 / 39 | |
+| unistyles | 35 / 39 | 40 / 44 (+ @expo/ui BottomSheet) |
+| uniwind | 35 / 39 | 40 / 44 (+ @expo/ui BottomSheet) |
+| nativewind (v5 RC, with the line-height workaround) | 35 / 39 | 40 / 44 (+ @expo/ui BottomSheet) |
+| heroui | 22 / 39 | 30 / 49 (+ raw @gorhom sheet, + @expo/ui BottomSheet) |
+| gluestack | 19 / 39 | 24 / 44 (+ @expo/ui BottomSheet) |
+| tamagui | 19 / 31, with 8 checks unable to run (see below) | 28 / 41 (+ Tamagui's own Sheet, + @expo/ui BottomSheet) |
+| reusables | 18 / 39 | 23 / 44 (+ @expo/ui BottomSheet) |
 
 Full tables are in `results/<app>/ios-a11y.md`. The raw trees are in `ios-a11y.json`.
 
@@ -68,13 +68,15 @@ The three styling engines (Unistyles, Uniwind, NativeWind) carry the baseline's 
 
 | Sheet | Passed | Screen behind hidden from VoiceOver |
 | --- | --- | --- |
-| `@expo/ui` BottomSheet (native SwiftUI sheet), built as Expo's docs show | 5 / 5 | yes |
+| `@expo/ui` BottomSheet (native SwiftUI sheet), built as Expo's docs show | 5 / 5 in all eight apps | yes |
 | @gorhom/bottom-sheet (baseline and five other apps) | 4 / 5 | no |
 | Tamagui `Sheet` | 4 / 5 | no |
 | HeroUI Native `BottomSheet` | 3 / 5 | no, and its title and body are hidden too |
 | @gorhom/bottom-sheet inside the HeroUI app | 3 / 5 | no, and its title and body are hidden too |
 
 `@expo/ui`'s sheet has to be filled with `@expo/ui`'s own `Column`, `Text` and `Button`, as in [its docs](https://docs.expo.dev/versions/v57.0.0/sdk/ui/universal/bottomsheet/). React Native views inside it don't receive touches unless wrapped in `RNHostView`, because the sheet presents in its own view controller (see `RNHostView.tsx` in `@expo/ui`). A first attempt with a React Native `Pressable` couldn't be tapped.
+
+Each app colours the sheet through its own theming (`withUnistyles`, `useCSSVariable`, NativeWind `styled()`, Tamagui `useTheme`, `useResolveClassNames`, HeroUI `useThemeColor`; see each app's `NOTES.md`). In every app the sheet was opened in the dark theme on the simulator and showed the theme's surface and text colours. Inside the HeroUI app it is the only sheet whose title and body VoiceOver can read.
 
 **Failures specific to a library:**
 

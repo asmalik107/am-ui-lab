@@ -117,6 +117,14 @@ const themeName = useThemeName()
 
 `styled()` accepts any component that takes `style`, but non-Tamagui components aren't optimised by the compiler (styled docs). `BottomSheetModalProvider` sits inside `TamaguiProvider`, so gorhom's portal still sees the Tamagui theme. The expo-router `Stack` header colours also come from `useTheme().*.val`.
 
+### @expo/ui BottomSheet
+
+Added after the first round of tests, to check whether `@expo/ui`'s universal `BottomSheet` behaves the same outside the baseline. It is filled with `@expo/ui`'s own `Column`, `Text` and `Button`, as [Expo's docs](https://docs.expo.dev/versions/v57.0.0/sdk/ui/universal/bottomsheet/) show: React Native views inside it don't receive touches unless wrapped in `RNHostView`. The Close button carries `accessibilityIdentifier('test-sheet-expoui-close')` and the title `accessibilityAddTraits(['isHeader'])`, both from `@expo/ui/swift-ui/modifiers`.
+
+**Result (2026-10-24, iPhone 17 Pro simulator, iOS 26.4, Release):** 5 / 5 sheet checks in `scripts/a11y-audit.mjs`, including the screen behind being hidden from VoiceOver. Opened by hand in the dark theme: the sheet showed the theme's surface and text colours.
+
+Like gorhom's props, `containerColor` and `textStyle` aren't `style`, so they read `useTheme()` values (`surface-raised`, `color`, `text-muted`). `Column`'s `spacing` is `getTokens().space.md.val`. Font sizes are the same literals (20 / 16) as the Tamagui sheets.
+
 ## Accessibility: what was passed, what was added by hand
 
 Props passed **because Tamagui's docs or demos pass them**: `Label htmlFor` + control `id`, `aria-labelledby` on `RadioGroup`, `aria-label` on `Tabs.List`, the `Field` parts, and `Dialog.Title`/`Description` (required by the docs).

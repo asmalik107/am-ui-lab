@@ -189,6 +189,31 @@ function ThemedHost({ children }) {
 - `BottomSheetModal<never>` is the same TS instantiation expression the Unistyles app needed. It keeps gorhom's generic ref type through the wrapper. tsc passed without trying the plain form.
 - `colorScheme` is not a style value, so no className mapping applies. It comes from the theme-name context.
 
+## @expo/ui BottomSheet
+
+Added after the first round of tests, to check whether `@expo/ui`'s universal `BottomSheet` behaves the same outside the baseline. It is filled with `@expo/ui`'s own `Column`, `Text` and `Button`, as [Expo's docs](https://docs.expo.dev/versions/v57.0.0/sdk/ui/universal/bottomsheet/) show: React Native views inside it don't receive touches unless wrapped in `RNHostView`. The Close button carries `accessibilityIdentifier('test-sheet-expoui-close')` and the title `accessibilityAddTraits(['isHeader'])`, both from `@expo/ui/swift-ui/modifiers`.
+
+**Result (2026-10-24, iPhone 17 Pro simulator, iOS 26.4, Release):** 5 / 5 sheet checks in `scripts/a11y-audit.mjs`, including the screen behind being hidden from VoiceOver. Opened by hand in the dark theme: the sheet showed the theme's surface and text colours.
+
+Themed with `styled()`, like the Host:
+
+```tsx
+// src/components/overlays.tsx
+const StyledNativeSheet = styled(NativeSheet, {
+  className: { target: false, nativeStyleMapping: { backgroundColor: 'containerColor' } },
+});
+const StyledNativeColumn = styled(NativeColumn, {
+  className: { target: false, nativeStyleMapping: { gap: 'spacing' } },
+});
+const StyledNativeText = styled(NativeText, { className: 'textStyle' }); // whole resolved style -> textStyle
+
+<StyledNativeSheet className="bg-surface-raised" …>
+  <StyledNativeColumn className="gap-md">
+    <StyledNativeText className="text-title font-bold text-text">…</StyledNativeText>
+```
+
+Because the whole text style goes to `textStyle`, the title and body also get a `lineHeight` (from the unitless ratio), which the baseline's sheet doesn't set.
+
 ## Could not make work / deviations / findings
 
 - **No built-in multi-theme switch.** The documented class/variant route covers light and dark only (Appearance + `prefers-color-scheme`), and named theme selectors (`:root.dark`, a `.brand` class) are rejected by the native compiler. Three themes need `VariableContextProvider` plus `inlineVariables.exclude`. The hex values sit in `@theme` / `:root` (light defaults, copied by hand) and the runtime maps come from `shared/tokens`.

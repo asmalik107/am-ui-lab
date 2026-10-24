@@ -12,7 +12,7 @@ import { copy, ids } from '@shared/content';
 import type { ThemeName } from '@shared/tokens';
 
 import { announce } from '@/a11y';
-import { ExerciseSheet, Toast } from '@/components/overlays';
+import { ExerciseSheet, ExpoExerciseSheet, Toast } from '@/components/overlays';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -91,6 +91,7 @@ export default function TestScreen() {
   const [toast, setToast] = useState(false);
   const [saving, setSaving] = useState(false);
   const [sync, setSync] = useState(false);
+  const [expoSheet, setExpoSheet] = useState(false);
   const sheet = useRef<BottomSheetModal<unknown>>(null);
   const hideToast = useCallback(() => setToast(false), []);
 
@@ -242,6 +243,9 @@ export default function TestScreen() {
           <Button testID={ids.sheetOpen} variant="outline" onPress={() => sheet.current?.present()}>
             <Text>{copy.sheetOpen}</Text>
           </Button>
+          <Button testID={ids.expoSheetOpen} variant="outline" onPress={() => setExpoSheet(true)}>
+            <Text>{copy.expoSheetOpen}</Text>
+          </Button>
           <Button testID={ids.toastShow} variant="outline" onPress={() => setToast(true)}>
             <Text>{copy.toastShow}</Text>
           </Button>
@@ -283,6 +287,7 @@ export default function TestScreen() {
       </ScrollView>
 
       <ExerciseSheet sheetRef={sheet} testID={ids.sheet} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
+      <ExpoExerciseSheet open={expoSheet} onClose={() => setExpoSheet(false)} testID={ids.expoSheet} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
       <Toast testID={ids.toast} message={copy.toastMessage} visible={toast} onHide={hideToast} />
     </View>
   );

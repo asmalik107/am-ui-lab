@@ -67,11 +67,62 @@ const score = (a) => {
   return `${f.filter((x) => x.pass).length} / ${f.length}`;
 };
 
+// Bottom sheets: every sheet gets the same five checks, but listing each
+// sheet as its own block gave 25 mostly empty rows. Instead there is one row
+// per kind of sheet, and each cell holds that app's score out of 5 plus the
+// checks it failed. The audit names the sheets by test ID, so this maps them
+// to kinds: in the HeroUI app the shared sheet slot holds HeroUI's own sheet
+// and gorhom is the extra one.
+const sheetChecks = ['opens', 'title and body readable', 'screen behind is hidden from VoiceOver', 'closes', 'screen reachable again after close'];
+const failLabel = {
+  opens: "doesn't open",
+  'title and body readable': 'title and body hidden',
+  'screen behind is hidden from VoiceOver': 'screen behind exposed',
+  closes: "doesn't close",
+  'screen reachable again after close': 'screen not back after close',
+};
+const shortName = { opens: 'opens', 'title and body readable': 'title and body', 'screen behind is hidden from VoiceOver': 'screen behind', closes: 'closes', 'screen reachable again after close': 'screen after close' };
+const ownSheet = {
+  heroui: ['Bottom sheet', 'HeroUI BottomSheet'],
+  tamagui: ['Bottom sheet (Tamagui Sheet)', 'Tamagui Sheet'],
+  gluestack: ['Bottom sheet (gluestack BottomSheet)', 'gluestack BottomSheet'],
+};
+const noOwnSheet = { baseline: 'none (plain React Native)', unistyles: 'none (styling engine)', uniwind: 'none (styling engine)', nativewind: 'none (styling engine)', reusables: 'none in the library' };
+const sheetKinds = [
+  { label: '@gorhom/bottom-sheet', what: 'The raw third-party sheet, themed with the library’s tokens.', pick: (a) => (a === 'heroui' ? 'Bottom sheet (@gorhom, raw)' : 'Bottom sheet') },
+  { label: '@expo/ui BottomSheet', what: 'Native SwiftUI sheet on iOS, filled with @expo/ui’s own Text and Button.', pick: () => 'Bottom sheet (@expo/ui)' },
+  { label: 'The library’s own sheet', what: 'The sheet component the library ships, set up as its docs show.', pick: (a) => ownSheet[a]?.[0], name: (a) => ownSheet[a]?.[1] },
+];
+const sheetCell = (a, kind) => {
+  const comp = kind.pick(a);
+  const fs = comp ? sheetChecks.map((c) => result(a, `${comp} | ${c}`)).filter(Boolean) : [];
+  if (!fs.length) return `<td class="na sheet" title="Not applicable"><span class="sr">not applicable: </span>${esc(noOwnSheet[a] ?? '–')}</td>`;
+  const passed = fs.filter((f) => f.pass).length;
+  const name = kind.name ? `<span class="name">${esc(kind.name(a))}</span>` : '';
+  const fails = fs.filter((f) => !f.pass).map((f) => `<span class="why">✗ ${esc(failLabel[f.check] ?? f.check)}</span>`).join('');
+  // A check that couldn't run (e.g. nothing to check after a failed close) is named, not counted.
+  const untested = sheetChecks.filter((c) => !fs.some((f) => f.check === c)).map((c) => `<span class="why untested">– ${esc(shortName[c])} not tested</span>`).join('');
+  const title = fs.map((f) => `${f.pass ? '✓' : '✗'} ${f.check}: ${f.detail}`).join('\n');
+  return `<td class="${passed === fs.length ? 'pass' : 'fail'} sheet" title="${esc(title)}">${name}<strong>${passed} / ${fs.length}</strong>${fails}${untested}</td>`;
+};
+const isSheet = (r) => r.component.startsWith('Bottom sheet');
+const sheetSection = () => `<tr class="group"><th colspan="${apps.length + 2}" scope="colgroup"><span>Bottom sheets</span></th></tr>`
+  + `<tr class="note"><td></td><th scope="row" colspan="${apps.length + 1}"><span class="what">Each sheet gets the same five checks: ${sheetChecks.join(', ')}. A cell shows how many passed and names any that failed.</span></th></tr>`
+  + sheetKinds.map((k) => `<tr><td class="num"></td><th scope="row">${esc(k.label)}<span class="what">${esc(k.what)}</span></th>${apps.map(([a]) => sheetCell(a, k)).join('')}</tr>`).join('\n');
+
 let group = '';
-const checkRows = rows.map((r, i) => {
+let n = 0;
+let sheetsShown = false;
+const checkRows = rows.map((r) => {
+  if (isSheet(r)) {
+    if (sheetsShown) return '';
+    sheetsShown = true;
+    group = 'Bottom sheets';
+    return sheetSection();
+  }
   const head = r.component !== group ? (group = r.component, `<tr class="group"><th colspan="${apps.length + 2}" scope="colgroup"><span>${esc(r.component)}</span></th></tr>`) : '';
-  return `${head}<tr><td class="num">${i + 1}</td><th scope="row">${esc(r.check)}<span class="what">${esc(what[r.check] ?? '')}</span></th>${apps.map(([a]) => cell(result(a, r.key))).join('')}</tr>`;
-}).join('\n');
+  return `${head}<tr><td class="num">${++n}</td><th scope="row">${esc(r.check)}<span class="what">${esc(what[r.check] ?? '')}</span></th>${apps.map(([a]) => cell(result(a, r.key))).join('')}</tr>`;
+}).filter(Boolean).join('\n');
 
 const motion = (a, comp, rm) => data[a].motion?.runs.find((r) => r.component === comp && r.reduceMotion === rm)?.ms;
 const ms = (v) => (v == null ? '–' : `${v} ms`);
@@ -125,6 +176,12 @@ td.pass, td.fail, td.na { text-align: center; font-weight: 700; font-size: 16px;
 td.pass { color: var(--pass); background: var(--pass-bg); }
 td.fail { color: var(--fail); background: var(--fail-bg); }
 td.na { color: var(--na); }
+td.sheet { text-align: left; font-size: 13px; font-weight: 400; }
+td.sheet strong { display: block; font-size: 16px; }
+td.sheet .name { display: block; font-size: 12px; color: var(--muted); }
+td.sheet .why { display: block; }
+td.sheet .untested { color: var(--muted); }
+tr.note th { font-weight: 400; }
 tr.score td, tr.score th { font-weight: 700; background: var(--bg); }
 tr.score th[scope="row"] { background: var(--bg); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
@@ -159,4 +216,4 @@ ${otherRows}
 </html>
 `;
 writeFileSync(new URL('docs/checks.html', root), html);
-console.log(`docs/checks.html: ${rows.length} checks × ${apps.length} apps`);
+console.log(`docs/checks.html: ${rows.length} checks × ${apps.length} apps (${rows.filter(isSheet).length} of them sheet checks, shown as ${sheetKinds.length} rows)`);

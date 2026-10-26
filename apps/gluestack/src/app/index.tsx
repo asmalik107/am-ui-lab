@@ -1,4 +1,5 @@
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
+import type { BottomSheetRef } from '@/components/ui/bottomsheet';
 import { Host, Switch as NativeSwitch } from '@expo/ui';
 import { Link } from 'expo-router';
 import { useRef, useState } from 'react';
@@ -10,7 +11,7 @@ import type { ThemeName } from '@shared/tokens';
 import { Heading } from '@/components/ui/heading';
 
 import { AppButton, EmailField, RadioField, Section, SwitchRow, TermsCheckbox, TestTabs } from '../components/controls';
-import { Dialog, ExerciseSheet, ExpoExerciseSheet, RestSelect, useLogSetToast } from '../components/overlays';
+import { Dialog, ExerciseSheet, ExpoExerciseSheet, GluestackSheet, RestSelect, useLogSetToast } from '../components/overlays';
 import { useThemeName, useTokenColor } from '../theme';
 import { mark, measure } from '../perf';
 import { View as PerfTouch } from 'react-native';
@@ -32,6 +33,7 @@ export default function TestScreen() {
   const [sync, setSync] = useState(false);
   const [expoSheet, setExpoSheet] = useState(false);
   const sheet = useRef<BottomSheetModal>(null);
+  const gluestackSheet = useRef<BottomSheetRef>(null);
   const showToast = useLogSetToast(copy.toastMessage, ids.toast);
 
   // No manual announcement of the error: gluestack's FormControl does not
@@ -91,6 +93,7 @@ export default function TestScreen() {
           <AppButton testID={ids.dialogOpen} label={copy.dialogOpen} variant="danger" onPress={() => setDialogOpen(true)} />
           <AppButton testID={ids.sheetOpen} label={copy.sheetOpen} variant="secondary" onPress={() => sheet.current?.present()} />
           <AppButton testID={ids.expoSheetOpen} label={copy.expoSheetOpen} variant="secondary" onPress={() => setExpoSheet(true)} />
+          <AppButton testID={`${ids.sheetOpen}-gluestack`} label={`${copy.sheetOpen} (gluestack BottomSheet)`} variant="secondary" onPress={() => gluestackSheet.current?.open()} />
           <AppButton testID={ids.toastShow} label={copy.toastShow} variant="secondary" onPress={showToast} />
         </Section>
 
@@ -124,6 +127,7 @@ export default function TestScreen() {
         onClose={() => setDialogOpen(false)}
       />
       <ExerciseSheet sheetRef={sheet} testID={ids.sheet} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
+      <GluestackSheet sheetRef={gluestackSheet} testID={`${ids.sheet}-gluestack`} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
       <ExpoExerciseSheet open={expoSheet} onClose={() => setExpoSheet(false)} testID={ids.expoSheet} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
     </View>
   );

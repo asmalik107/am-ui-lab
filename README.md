@@ -30,7 +30,7 @@ Each app's `NOTES.md` records:
 
 The spec for the test screen is in [docs/method.md](docs/method.md).
 
-**Every check, side by side:** [docs/checks.html](docs/checks.html) lists all 55 checks for all eight apps, with the measured detail for each cell. It's generated from `results/` by `scripts/report-html.mjs`.
+**Every check, side by side:** [docs/checks.html](docs/checks.html) lists all 59 checks for all eight apps, with the measured detail for each cell. The bottom sheets are one row per kind of sheet (gorhom, `@expo/ui`, the library's own), each cell showing the score out of 5 and the checks that failed. It's generated from `results/` by `scripts/report-html.mjs`.
 
 ## Results
 
@@ -51,7 +51,7 @@ The 39 core checks are the same for every app. Every app also has `@expo/ui`'s B
 | uniwind | 35 / 39 | 40 / 44 (+ @expo/ui BottomSheet) |
 | nativewind (v5 RC, with the line-height workaround) | 35 / 39 | 40 / 44 (+ @expo/ui BottomSheet) |
 | heroui | 22 / 39 | 30 / 49 (+ raw @gorhom sheet, + @expo/ui BottomSheet) |
-| gluestack | 19 / 39 | 24 / 44 (+ @expo/ui BottomSheet) |
+| gluestack | 19 / 39 | 25 / 48 (+ @expo/ui BottomSheet, + gluestack's own BottomSheet, 4 of its 5 checks could run) |
 | tamagui | 19 / 31, with 8 checks unable to run (see below) | 28 / 41 (+ Tamagui's own Sheet, + @expo/ui BottomSheet) |
 | reusables | 18 / 39 | 23 / 44 (+ @expo/ui BottomSheet) |
 
@@ -73,6 +73,7 @@ The three styling engines (Unistyles, Uniwind, NativeWind) carry the baseline's 
 | Tamagui `Sheet` | 4 / 5 | no |
 | HeroUI Native `BottomSheet` | 3 / 5 | no, and its title and body are hidden too |
 | @gorhom/bottom-sheet inside the HeroUI app | 3 / 5 | no, and its title and body are hidden too |
+| gluestack-ui `BottomSheet` | 1 / 4 (its Close didn't close it, so the fifth check couldn't run) | no, and its title and body are hidden too |
 
 `@expo/ui`'s sheet has to be filled with `@expo/ui`'s own `Column`, `Text` and `Button`, as in [its docs](https://docs.expo.dev/versions/v57.0.0/sdk/ui/universal/bottomsheet/). React Native views inside it don't receive touches unless wrapped in `RNHostView`, because the sheet presents in its own view controller (see `RNHostView.tsx` in `@expo/ui`). A first attempt with a React Native `Pressable` couldn't be tapped.
 
@@ -157,7 +158,7 @@ Every animated overlay respected Reduce Motion when it was on at launch. Turning
 | uniwind | 32.5 ms | 96.3 ms (78–112) | 4.21 MB |
 | nativewind | 31.4 ms | 98.8 ms (82–100) | 4.45 MB |
 | tamagui | 82.4 ms | 115.1 ms (98–1798) | 5.43 MB |
-| gluestack | 31.8 ms | 82.8 ms (82–99) | 4.99 MB |
+| gluestack | 31.8 ms | 82.8 ms (82–99) | 5.01 MB (re-measured 26 Oct, after adding its BottomSheet) |
 | heroui | 32.0 ms | 82.5 ms (80–115) | 5.14 MB |
 | reusables | 32.5 ms | 96.5 ms (78–346) | 6.75 MB |
 

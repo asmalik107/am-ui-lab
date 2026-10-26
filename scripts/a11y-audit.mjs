@@ -178,15 +178,16 @@ try {
 }
 
 // 4. Bottom sheets. Every sheet the app has gets the same five checks: the
-// shared one (test-sheet-*), plus @expo/ui's (baseline), Tamagui's own Sheet
-// and HeroUI's raw gorhom sheet where those apps have them. Open is detected by
-// the title or the Close button, so a sheet whose text is hidden from
-// VoiceOver still counts as open.
+// shared one (test-sheet-*), plus @expo/ui's, Tamagui's own Sheet, gluestack's
+// own BottomSheet and HeroUI's raw gorhom sheet where those apps have them.
+// Open is detected by the title or the Close button, so a sheet whose text is
+// hidden from VoiceOver still counts as open.
 const sheetVariants = [
   { name: 'Bottom sheet', open: 'test-sheet-open', close: 'test-sheet-close' },
   { name: 'Bottom sheet (@expo/ui)', open: 'test-sheet-open-expoui', close: 'test-sheet-expoui-close' },
   { name: 'Bottom sheet (Tamagui Sheet)', open: 'test-sheet-open-tamagui', close: 'test-sheet-tamagui-close' },
   { name: 'Bottom sheet (@gorhom, raw)', open: 'test-sheet-open-gorhom', close: 'test-sheet-gorhom-close' },
+  { name: 'Bottom sheet (gluestack BottomSheet)', open: 'test-sheet-open-gluestack', close: 'test-sheet-gluestack-close' },
 ];
 for (const v of sheetVariants) {
   if (v.open !== 'test-sheet-open' && !byId(main, v.open)) continue; // app doesn't have this sheet

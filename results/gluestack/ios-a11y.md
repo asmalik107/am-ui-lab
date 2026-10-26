@@ -1,6 +1,6 @@
 # gluestack: iOS accessibility audit
 
-Run 2026-10-24 on simulator 9B4311A6-178B-4879-9923-B2468FDE9675 (iOS 26.4, Release build) with `scripts/a11y-audit.mjs`. 24/44 checks passed.
+Run 2026-10-26 on simulator 9B4311A6-178B-4879-9923-B2468FDE9675 (iOS 26.4, Release build) with `scripts/a11y-audit.mjs`. 25/48 checks passed.
 
 Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.
 
@@ -30,13 +30,13 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Text field | error shown | pass | error text in tree |
 | Text field | error reachable from field | **fail** | label="Email" value="not-an-email" traits=[] 344×34pt hint="" |
 | Dialog | opens | pass | title in tree |
-| Dialog | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2 |
+| Dialog | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs |
 | Dialog | title is a heading | pass | AXHeading label="Delete this workout?" |
 | Dialog | actions are buttons | pass | AXButton label="Cancel" |
 | Dialog | closes | pass | title gone |
 | Bottom sheet | opens | pass | sheet content in tree |
 | Bottom sheet | title and body readable | pass | title in tree |
-| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2 |
+| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2 |
 | Bottom sheet | closes | pass | sheet gone |
 | Bottom sheet | screen reachable again after close | pass | screen controls back in system tree |
 | Bottom sheet (@expo/ui) | opens | pass | sheet content in tree |
@@ -44,6 +44,10 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Bottom sheet (@expo/ui) | screen behind is hidden from VoiceOver | pass | nothing behind it in the system tree |
 | Bottom sheet (@expo/ui) | closes | pass | sheet gone |
 | Bottom sheet (@expo/ui) | screen reachable again after close | pass | screen controls back in system tree |
+| Bottom sheet (gluestack BottomSheet) | opens | pass | sheet content in tree |
+| Bottom sheet (gluestack BottomSheet) | title and body readable | **fail** | title and body text not in the system tree |
+| Bottom sheet (gluestack BottomSheet) | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs |
+| Bottom sheet (gluestack BottomSheet) | closes | **fail** | still open |
 | Select | opens | pass | options in tree |
 | Select | current option marked | **fail** | AXGroup label="60 seconds" |
 | Select | options are actionable | **fail** | AXGroup label="30 seconds" \| AXGroup label="45 seconds" \| AXGroup label="60 seconds" \| AXGroup label="90 seconds" \| AXGroup label="2 minutes" |

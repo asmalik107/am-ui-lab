@@ -2,7 +2,7 @@
   "app": "gluestack",
   "bundleId": "dev.asimmalik.uilab.gluestack",
   "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
-  "date": "2026-10-24T14:43:30.293Z",
+  "date": "2026-10-26T13:44:21.985Z",
   "findings": [
     {
       "component": "Button",
@@ -152,7 +152,7 @@
       "component": "Dialog",
       "check": "screen behind is hidden from VoiceOver",
       "pass": false,
-      "detail": "still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2"
+      "detail": "still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs"
     },
     {
       "component": "Dialog",
@@ -188,7 +188,7 @@
       "component": "Bottom sheet",
       "check": "screen behind is hidden from VoiceOver",
       "pass": false,
-      "detail": "still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2"
+      "detail": "still exposed: test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2"
     },
     {
       "component": "Bottom sheet",
@@ -231,6 +231,30 @@
       "check": "screen reachable again after close",
       "pass": true,
       "detail": "screen controls back in system tree"
+    },
+    {
+      "component": "Bottom sheet (gluestack BottomSheet)",
+      "check": "opens",
+      "pass": true,
+      "detail": "sheet content in tree"
+    },
+    {
+      "component": "Bottom sheet (gluestack BottomSheet)",
+      "check": "title and body readable",
+      "pass": false,
+      "detail": "title and body text not in the system tree"
+    },
+    {
+      "component": "Bottom sheet (gluestack BottomSheet)",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": false,
+      "detail": "still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs"
+    },
+    {
+      "component": "Bottom sheet (gluestack BottomSheet)",
+      "check": "closes",
+      "pass": false,
+      "detail": "still open"
     },
     {
       "component": "Select",
@@ -1008,21 +1032,49 @@
           "x": 16,
           "y": 1174,
           "width": 370,
-          "height": 38
+          "height": 58
         },
         "tapPoint": {
           "x": 201,
-          "y": 1193
+          "y": 1203
         },
         "normalizedFrame": {
           "x": 0.03980099502487562,
           "y": 1.3432494279176201,
           "width": 0.9203980099502488,
+          "height": 0.06636155606407322
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.3764302059496567
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Show exercise details (gluestack BottomSheet)",
+        "identifier": "test-sheet-open-gluestack",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1244,
+          "width": 370,
+          "height": 38
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1263
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.4233409610983982,
+          "width": 0.9203980099502488,
           "height": 0.043478260869565216
         },
         "normalizedTapPoint": {
           "x": 0.5,
-          "y": 1.3649885583524028
+          "y": 1.4450800915331807
         },
         "traits": [
           "button"
@@ -1034,23 +1086,23 @@
       {
         "frame": {
           "x": 16,
-          "y": 1244,
+          "y": 1314,
           "width": 370,
           "height": 26
         },
         "tapPoint": {
           "x": 201,
-          "y": 1257
+          "y": 1327
         },
         "normalizedFrame": {
           "x": 0.03980099502487562,
-          "y": 1.4233409610983982,
+          "y": 1.5034324942791761,
           "width": 0.9203980099502488,
           "height": 0.029748283752860413
         },
         "normalizedTapPoint": {
           "x": 0.5,
-          "y": 1.4382151029748285
+          "y": 1.5183066361556063
         },
         "traits": [
           "header",
@@ -1061,23 +1113,23 @@
       {
         "frame": {
           "x": 24,
-          "y": 1331,
+          "y": 1401,
           "width": 354,
           "height": 46
         },
         "tapPoint": {
           "x": 201,
-          "y": 1354
+          "y": 1424
         },
         "normalizedFrame": {
           "x": 0.05970149253731343,
-          "y": 1.522883295194508,
+          "y": 1.602974828375286,
           "width": 0.8805970149253731,
           "height": 0.05263157894736842
         },
         "normalizedTapPoint": {
           "x": 0.5,
-          "y": 1.5491990846681922
+          "y": 1.6292906178489703
         },
         "traits": [
           "staticText"
@@ -1087,23 +1139,23 @@
       {
         "frame": {
           "x": 16,
-          "y": 1417,
+          "y": 1487,
           "width": 370,
           "height": 26
         },
         "tapPoint": {
           "x": 201,
-          "y": 1430
+          "y": 1500
         },
         "normalizedFrame": {
           "x": 0.03980099502487562,
-          "y": 1.6212814645308924,
+          "y": 1.7013729977116705,
           "width": 0.9203980099502488,
           "height": 0.029748283752860413
         },
         "normalizedTapPoint": {
           "x": 0.5,
-          "y": 1.6361556064073226
+          "y": 1.7162471395881007
         },
         "traits": [
           "header",
@@ -1114,23 +1166,23 @@
       {
         "frame": {
           "x": 15.999995231628418,
-          "y": 1441,
+          "y": 1511,
           "width": 316.6666564941406,
           "height": 28
         },
         "tapPoint": {
           "x": 174.33332347869873,
-          "y": 1455
+          "y": 1525
         },
         "normalizedFrame": {
           "x": 0.03980098316325477,
-          "y": 1.6487414187643021,
+          "y": 1.72883295194508,
           "width": 0.7877280012292055,
           "height": 0.032036613272311214
         },
         "normalizedTapPoint": {
           "x": 0.43366498377785756,
-          "y": 1.6647597254004576
+          "y": 1.7448512585812357
         },
         "traits": [
           "button",
@@ -1143,23 +1195,23 @@
       {
         "frame": {
           "x": 16,
-          "y": 1515,
+          "y": 1585,
           "width": 370,
           "height": 26
         },
         "tapPoint": {
           "x": 201,
-          "y": 1528
+          "y": 1598
         },
         "normalizedFrame": {
           "x": 0.03980099502487562,
-          "y": 1.7334096109839816,
+          "y": 1.8135011441647597,
           "width": 0.9203980099502488,
           "height": 0.029748283752860413
         },
         "normalizedTapPoint": {
           "x": 0.5,
-          "y": 1.7482837528604118
+          "y": 1.82837528604119
         },
         "traits": [
           "header",
@@ -1170,23 +1222,23 @@
       {
         "frame": {
           "x": 16,
-          "y": 1553,
+          "y": 1623,
           "width": 370,
           "height": 38
         },
         "tapPoint": {
           "x": 201,
-          "y": 1572
+          "y": 1642
         },
         "normalizedFrame": {
           "x": 0.03980099502487562,
-          "y": 1.776887871853547,
+          "y": 1.856979405034325,
           "width": 0.9203980099502488,
           "height": 0.043478260869565216
         },
         "normalizedTapPoint": {
           "x": 0.5,
-          "y": 1.7986270022883295
+          "y": 1.8787185354691076
         },
         "traits": [
           "button"
@@ -1198,23 +1250,23 @@
       {
         "frame": {
           "x": 20,
-          "y": 1286,
+          "y": 1356,
           "width": 64,
           "height": 29
         },
         "tapPoint": {
           "x": 52,
-          "y": 1300.5
+          "y": 1370.5
         },
         "normalizedFrame": {
           "x": 0.04975124378109453,
-          "y": 1.471395881006865,
+          "y": 1.551487414187643,
           "width": 0.15920398009950248,
           "height": 0.03318077803203661
         },
         "normalizedTapPoint": {
           "x": 0.12935323383084577,
-          "y": 1.4879862700228832
+          "y": 1.5680778032036613
         },
         "traits": [
           "selected"
@@ -1226,23 +1278,23 @@
       {
         "frame": {
           "x": 84,
-          "y": 1286,
+          "y": 1356,
           "width": 52.66667175292969,
           "height": 29
         },
         "tapPoint": {
           "x": 110.33333587646484,
-          "y": 1300.5
+          "y": 1370.5
         },
         "normalizedFrame": {
           "x": 0.208955223880597,
-          "y": 1.471395881006865,
+          "y": 1.551487414187643,
           "width": 0.13101162127594448,
           "height": 0.03318077803203661
         },
         "normalizedTapPoint": {
           "x": 0.27446103451856924,
-          "y": 1.4879862700228832
+          "y": 1.5680778032036613
         },
         "traits": [],
         "label": "Plan",
@@ -1252,23 +1304,23 @@
       {
         "frame": {
           "x": 136.66666412353516,
-          "y": 1286,
+          "y": 1356,
           "width": 83,
           "height": 29
         },
         "tapPoint": {
           "x": 178.16666412353516,
-          "y": 1300.5
+          "y": 1370.5
         },
         "normalizedFrame": {
           "x": 0.33996682617794816,
-          "y": 1.471395881006865,
+          "y": 1.551487414187643,
           "width": 0.2064676616915423,
           "height": 0.03318077803203661
         },
         "normalizedTapPoint": {
           "x": 0.4432006570237193,
-          "y": 1.4879862700228832
+          "y": 1.5680778032036613
         },
         "traits": [],
         "label": "Progress",
@@ -1636,8 +1688,17 @@
         "label": "Unavailable",
         "identifier": "test-button-disabled",
         "nx": 0.5,
-        "ny": 0.0275,
-        "y": 0.007,
+        "ny": 0.0005,
+        "y": 0,
+        "h": 0.001
+      },
+      {
+        "role": "AXButton",
+        "label": "In progress, Saving",
+        "identifier": "test-button-loading",
+        "nx": 0.5,
+        "ny": 0.035500000000000004,
+        "y": 0.015,
         "h": 0.041
       },
       {
@@ -1647,15 +1708,6 @@
         "ny": 0.0685,
         "y": 0.062,
         "h": 0.013
-      },
-      {
-        "role": "AXButton",
-        "label": "In progress, Saving",
-        "identifier": "test-button-loading",
-        "nx": 0.5,
-        "ny": 0.0825,
-        "y": 0.062,
-        "h": 0.041
       },
       {
         "role": "AXStaticText",
@@ -1677,42 +1729,42 @@
         "role": "AXHeading",
         "label": "Form",
         "nx": 0.5,
-        "ny": 0.15500000000000003,
-        "y": 0.14,
+        "ny": 0.108,
+        "y": 0.093,
         "h": 0.03
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Email",
+        "nx": 0.0875,
+        "ny": 0.14750000000000002,
+        "y": 0.136,
+        "h": 0.023
       },
       {
         "role": "AXAdjustable",
         "label": "Vertical scroll bar, 3 pages",
-        "value": "51%",
+        "value": "52%",
         "nx": 0.9555,
         "ny": 0.547,
         "y": 0.165,
         "h": 0.764
       },
       {
-        "role": "AXStaticText",
-        "label": "Email",
-        "nx": 0.0875,
-        "ny": 0.1945,
-        "y": 0.183,
-        "h": 0.023
-      },
-      {
         "role": "AXTextField",
         "label": "Email",
         "identifier": "test-textfield",
         "nx": 0.5,
-        "ny": 0.2355,
-        "y": 0.216,
+        "ny": 0.1885,
+        "y": 0.169,
         "h": 0.039
       },
       {
         "role": "AXStaticText",
         "label": "We'll send your plan here.",
         "nx": 0.23500000000000001,
-        "ny": 0.2755,
-        "y": 0.265,
+        "ny": 0.2295,
+        "y": 0.219,
         "h": 0.021
       },
       {
@@ -1721,16 +1773,16 @@
         "value": "1",
         "identifier": "test-switch",
         "nx": 0.8815000000000001,
-        "ny": 0.316,
-        "y": 0.3,
+        "ny": 0.269,
+        "y": 0.253,
         "h": 0.032
       },
       {
         "role": "AXStaticText",
         "label": "Workout reminders",
         "nx": 0.407,
-        "ny": 0.3155,
-        "y": 0.303,
+        "ny": 0.2685,
+        "y": 0.256,
         "h": 0.025
       },
       {
@@ -1739,16 +1791,16 @@
         "value": "checkbox, unchecked",
         "identifier": "test-checkbox",
         "nx": 0.5,
-        "ny": 0.3585,
-        "y": 0.346,
+        "ny": 0.3115,
+        "y": 0.299,
         "h": 0.025
       },
       {
         "role": "AXStaticText",
         "label": "Experience level",
         "nx": 0.5,
-        "ny": 0.3955,
-        "y": 0.384,
+        "ny": 0.34950000000000003,
+        "y": 0.338,
         "h": 0.023
       },
       {
@@ -1757,8 +1809,8 @@
         "value": "radio button, checked",
         "identifier": "test-radiogroup-0",
         "nx": 0.5,
-        "ny": 0.4245,
-        "y": 0.412,
+        "ny": 0.3775,
+        "y": 0.365,
         "h": 0.025
       },
       {
@@ -1766,9 +1818,19 @@
         "label": "RadioGroup",
         "identifier": "test-radiogroup",
         "nx": 0.5,
-        "ny": 0.45899999999999996,
-        "y": 0.412,
+        "ny": 0.412,
+        "y": 0.365,
         "h": 0.094
+      },
+      {
+        "role": "AXGroup",
+        "label": "Intermediate",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-1",
+        "nx": 0.5,
+        "ny": 0.41150000000000003,
+        "y": 0.399,
+        "h": 0.025
       },
       {
         "role": "AXHeading",
@@ -1780,12 +1842,12 @@
       },
       {
         "role": "AXGroup",
-        "label": "Intermediate",
+        "label": "Advanced",
         "value": "radio button, unchecked",
-        "identifier": "test-radiogroup-1",
+        "identifier": "test-radiogroup-2",
         "nx": 0.5,
-        "ny": 0.4585,
-        "y": 0.446,
+        "ny": 0.4465,
+        "y": 0.434,
         "h": 0.025
       },
       {
@@ -1806,14 +1868,12 @@
         "h": 0.05
       },
       {
-        "role": "AXGroup",
-        "label": "Advanced",
-        "value": "radio button, unchecked",
-        "identifier": "test-radiogroup-2",
-        "nx": 0.5,
-        "ny": 0.4935,
-        "y": 0.481,
-        "h": 0.025
+        "role": "AXStaticText",
+        "label": "Rest time",
+        "nx": 0.1225,
+        "ny": 0.4845,
+        "y": 0.473,
+        "h": 0.023
       },
       {
         "role": "AXAdjustable",
@@ -1825,12 +1885,13 @@
         "h": 0.025
       },
       {
-        "role": "AXStaticText",
-        "label": "Rest time",
-        "nx": 0.1225,
-        "ny": 0.5305,
-        "y": 0.519,
-        "h": 0.023
+        "role": "AXButton",
+        "label": "",
+        "identifier": "test-select",
+        "nx": 0.5,
+        "ny": 0.523,
+        "y": 0.5,
+        "h": 0.046
       },
       {
         "role": "AXButton",
@@ -1851,20 +1912,11 @@
         "h": 0.041
       },
       {
-        "role": "AXButton",
-        "label": "",
-        "identifier": "test-select",
-        "nx": 0.5,
-        "ny": 0.5700000000000001,
-        "y": 0.547,
-        "h": 0.046
-      },
-      {
         "role": "AXHeading",
         "label": "Overlays",
         "nx": 0.5,
-        "ny": 0.644,
-        "y": 0.629,
+        "ny": 0.597,
+        "y": 0.582,
         "h": 0.03
       },
       {
@@ -1872,8 +1924,8 @@
         "label": "Delete workout",
         "identifier": "test-dialog-open",
         "nx": 0.5,
-        "ny": 0.6935,
-        "y": 0.673,
+        "ny": 0.6465,
+        "y": 0.626,
         "h": 0.041
       },
       {
@@ -1881,8 +1933,8 @@
         "label": "Show exercise details",
         "identifier": "test-sheet-open",
         "nx": 0.5,
-        "ny": 0.7494999999999999,
-        "y": 0.728,
+        "ny": 0.7025,
+        "y": 0.681,
         "h": 0.043
       },
       {
@@ -1890,25 +1942,34 @@
         "label": "Show exercise details (@expo/ui)",
         "identifier": "test-sheet-open-expoui",
         "nx": 0.5,
-        "ny": 0.8065,
-        "y": 0.785,
+        "ny": 0.7595,
+        "y": 0.738,
         "h": 0.043
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details (gluestack BottomSheet)",
+        "identifier": "test-sheet-open-gluestack",
+        "nx": 0.5,
+        "ny": 0.8280000000000001,
+        "y": 0.795,
+        "h": 0.066
       },
       {
         "role": "AXButton",
         "label": "Log set",
         "identifier": "test-toast-show",
         "nx": 0.5,
-        "ny": 0.8634999999999999,
-        "y": 0.842,
+        "ny": 0.8965,
+        "y": 0.875,
         "h": 0.043
       },
       {
         "role": "AXHeading",
         "label": "Tabs",
         "nx": 0.5,
-        "ny": 0.937,
-        "y": 0.922,
+        "ny": 0.97,
+        "y": 0.955,
         "h": 0.03
       },
       {
@@ -1919,42 +1980,6 @@
         "ny": 0.979,
         "y": 0.962,
         "h": 0.034
-      },
-      {
-        "role": "AXGroup",
-        "label": "Today",
-        "identifier": "test-tabs-0",
-        "nx": 0.1295,
-        "ny": 0.985,
-        "y": 0.97,
-        "h": 0.03
-      },
-      {
-        "role": "AXGroup",
-        "label": "Plan",
-        "identifier": "test-tabs-1",
-        "nx": 0.27449999999999997,
-        "ny": 0.985,
-        "y": 0.97,
-        "h": 0.03
-      },
-      {
-        "role": "AXGroup",
-        "label": "Progress",
-        "identifier": "test-tabs-2",
-        "nx": 0.443,
-        "ny": 0.985,
-        "y": 0.97,
-        "h": 0.03
-      },
-      {
-        "role": "AXAdjustable",
-        "label": "Vertical scroll bar, 1 page",
-        "value": "0%",
-        "nx": 0.9055,
-        "ny": 0.985,
-        "y": 0.97,
-        "h": 0.03
       }
     ],
     "sheet:test-sheet-open": [
@@ -1968,12 +1993,20 @@
       },
       {
         "role": "AXButton",
-        "label": "Unavailable",
-        "identifier": "test-button-disabled",
+        "label": "In progress, Saving",
+        "identifier": "test-button-loading",
         "nx": 0.5,
-        "ny": 0.0275,
-        "y": 0.007,
-        "h": 0.041
+        "ny": 0.0045,
+        "y": 0,
+        "h": 0.009
+      },
+      {
+        "role": "AXHeading",
+        "label": "Form",
+        "nx": 0.5,
+        "ny": 0.061,
+        "y": 0.046,
+        "h": 0.03
       },
       {
         "role": "AXStaticText",
@@ -1983,15 +2016,6 @@
         "ny": 0.0685,
         "y": 0.062,
         "h": 0.013
-      },
-      {
-        "role": "AXButton",
-        "label": "In progress, Saving",
-        "identifier": "test-button-loading",
-        "nx": 0.5,
-        "ny": 0.0825,
-        "y": 0.062,
-        "h": 0.041
       },
       {
         "role": "AXStaticText",
@@ -2011,28 +2035,11 @@
         "h": 0.024
       },
       {
-        "role": "AXHeading",
-        "label": "Form",
-        "nx": 0.5,
-        "ny": 0.15500000000000003,
-        "y": 0.14,
-        "h": 0.03
-      },
-      {
-        "role": "AXAdjustable",
-        "label": "Vertical scroll bar, 3 pages",
-        "value": "51%",
-        "nx": 0.9555,
-        "ny": 0.547,
-        "y": 0.165,
-        "h": 0.764
-      },
-      {
         "role": "AXStaticText",
         "label": "Email",
         "nx": 0.0875,
-        "ny": 0.1945,
-        "y": 0.183,
+        "ny": 0.10049999999999999,
+        "y": 0.089,
         "h": 0.023
       },
       {
@@ -2040,16 +2047,25 @@
         "label": "Email",
         "identifier": "test-textfield",
         "nx": 0.5,
-        "ny": 0.2355,
-        "y": 0.216,
+        "ny": 0.1415,
+        "y": 0.122,
         "h": 0.039
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Vertical scroll bar, 3 pages",
+        "value": "56%",
+        "nx": 0.9555,
+        "ny": 0.547,
+        "y": 0.165,
+        "h": 0.764
       },
       {
         "role": "AXStaticText",
         "label": "We'll send your plan here.",
         "nx": 0.23500000000000001,
-        "ny": 0.2755,
-        "y": 0.265,
+        "ny": 0.1825,
+        "y": 0.172,
         "h": 0.021
       },
       {
@@ -2058,16 +2074,16 @@
         "value": "1",
         "identifier": "test-switch",
         "nx": 0.8815000000000001,
-        "ny": 0.316,
-        "y": 0.3,
+        "ny": 0.22199999999999998,
+        "y": 0.206,
         "h": 0.032
       },
       {
         "role": "AXStaticText",
         "label": "Workout reminders",
         "nx": 0.407,
-        "ny": 0.3155,
-        "y": 0.303,
+        "ny": 0.2215,
+        "y": 0.209,
         "h": 0.025
       },
       {
@@ -2076,16 +2092,16 @@
         "value": "checkbox, unchecked",
         "identifier": "test-checkbox",
         "nx": 0.5,
-        "ny": 0.3585,
-        "y": 0.346,
+        "ny": 0.2645,
+        "y": 0.252,
         "h": 0.025
       },
       {
         "role": "AXStaticText",
         "label": "Experience level",
         "nx": 0.5,
-        "ny": 0.3955,
-        "y": 0.384,
+        "ny": 0.3025,
+        "y": 0.291,
         "h": 0.023
       },
       {
@@ -2094,8 +2110,8 @@
         "value": "radio button, checked",
         "identifier": "test-radiogroup-0",
         "nx": 0.5,
-        "ny": 0.4245,
-        "y": 0.412,
+        "ny": 0.3305,
+        "y": 0.318,
         "h": 0.025
       },
       {
@@ -2103,8 +2119,8 @@
         "label": "RadioGroup",
         "identifier": "test-radiogroup",
         "nx": 0.5,
-        "ny": 0.45899999999999996,
-        "y": 0.412,
+        "ny": 0.365,
+        "y": 0.318,
         "h": 0.094
       },
       {
@@ -2113,8 +2129,8 @@
         "value": "radio button, unchecked",
         "identifier": "test-radiogroup-1",
         "nx": 0.5,
-        "ny": 0.4585,
-        "y": 0.446,
+        "ny": 0.3645,
+        "y": 0.352,
         "h": 0.025
       },
       {
@@ -2123,16 +2139,16 @@
         "value": "radio button, unchecked",
         "identifier": "test-radiogroup-2",
         "nx": 0.5,
-        "ny": 0.4935,
-        "y": 0.481,
+        "ny": 0.3995,
+        "y": 0.387,
         "h": 0.025
       },
       {
         "role": "AXStaticText",
         "label": "Rest time",
         "nx": 0.1225,
-        "ny": 0.5305,
-        "y": 0.519,
+        "ny": 0.4375,
+        "y": 0.426,
         "h": 0.023
       },
       {
@@ -2140,16 +2156,16 @@
         "label": "",
         "identifier": "test-select",
         "nx": 0.5,
-        "ny": 0.5700000000000001,
-        "y": 0.547,
+        "ny": 0.47600000000000003,
+        "y": 0.453,
         "h": 0.046
       },
       {
         "role": "AXHeading",
         "label": "Overlays",
         "nx": 0.5,
-        "ny": 0.644,
-        "y": 0.629,
+        "ny": 0.55,
+        "y": 0.535,
         "h": 0.03
       },
       {
@@ -2157,8 +2173,8 @@
         "label": "Delete workout",
         "identifier": "test-dialog-open",
         "nx": 0.5,
-        "ny": 0.6935,
-        "y": 0.673,
+        "ny": 0.5994999999999999,
+        "y": 0.579,
         "h": 0.041
       },
       {
@@ -2166,9 +2182,27 @@
         "label": "Show exercise details",
         "identifier": "test-sheet-open",
         "nx": 0.5,
-        "ny": 0.7494999999999999,
-        "y": 0.728,
+        "ny": 0.6555,
+        "y": 0.634,
         "h": 0.043
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details (@expo/ui)",
+        "identifier": "test-sheet-open-expoui",
+        "nx": 0.5,
+        "ny": 0.7124999999999999,
+        "y": 0.691,
+        "h": 0.043
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details (gluestack BottomSheet)",
+        "identifier": "test-sheet-open-gluestack",
+        "nx": 0.5,
+        "ny": 0.781,
+        "y": 0.748,
+        "h": 0.066
       },
       {
         "role": "AXAdjustable",
@@ -2195,15 +2229,6 @@
         "h": 0.215
       },
       {
-        "role": "AXButton",
-        "label": "Show exercise details (@expo/ui)",
-        "identifier": "test-sheet-open-expoui",
-        "nx": 0.5,
-        "ny": 0.8065,
-        "y": 0.785,
-        "h": 0.043
-      },
-      {
         "role": "AXHeading",
         "label": "Goblet squat",
         "nx": 0.5005,
@@ -2216,8 +2241,8 @@
         "label": "Log set",
         "identifier": "test-toast-show",
         "nx": 0.5,
-        "ny": 0.8634999999999999,
-        "y": 0.842,
+        "ny": 0.8494999999999999,
+        "y": 0.828,
         "h": 0.043
       },
       {
@@ -2229,6 +2254,14 @@
         "h": 0.05
       },
       {
+        "role": "AXHeading",
+        "label": "Tabs",
+        "nx": 0.5,
+        "ny": 0.923,
+        "y": 0.908,
+        "h": 0.03
+      },
+      {
         "role": "AXButton",
         "label": "Close",
         "identifier": "test-sheet-close",
@@ -2238,12 +2271,40 @@
         "h": 0.043
       },
       {
-        "role": "AXHeading",
-        "label": "Tabs",
-        "nx": 0.5,
-        "ny": 0.937,
-        "y": 0.922,
-        "h": 0.03
+        "role": "AXGroup",
+        "label": "Today",
+        "identifier": "test-tabs-0",
+        "nx": 0.1295,
+        "ny": 0.9734999999999999,
+        "y": 0.957,
+        "h": 0.033
+      },
+      {
+        "role": "AXGroup",
+        "label": "Plan",
+        "identifier": "test-tabs-1",
+        "nx": 0.27449999999999997,
+        "ny": 0.9734999999999999,
+        "y": 0.957,
+        "h": 0.033
+      },
+      {
+        "role": "AXGroup",
+        "label": "Progress",
+        "identifier": "test-tabs-2",
+        "nx": 0.443,
+        "ny": 0.9734999999999999,
+        "y": 0.957,
+        "h": 0.033
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Vertical scroll bar, 1 page",
+        "value": "0%",
+        "nx": 0.9055,
+        "ny": 0.9734999999999999,
+        "y": 0.957,
+        "h": 0.033
       },
       {
         "role": "AXAdjustable",
@@ -2253,42 +2314,6 @@
         "ny": 0.979,
         "y": 0.962,
         "h": 0.034
-      },
-      {
-        "role": "AXGroup",
-        "label": "Today",
-        "identifier": "test-tabs-0",
-        "nx": 0.1295,
-        "ny": 0.985,
-        "y": 0.97,
-        "h": 0.03
-      },
-      {
-        "role": "AXGroup",
-        "label": "Plan",
-        "identifier": "test-tabs-1",
-        "nx": 0.27449999999999997,
-        "ny": 0.985,
-        "y": 0.97,
-        "h": 0.03
-      },
-      {
-        "role": "AXGroup",
-        "label": "Progress",
-        "identifier": "test-tabs-2",
-        "nx": 0.443,
-        "ny": 0.985,
-        "y": 0.97,
-        "h": 0.03
-      },
-      {
-        "role": "AXAdjustable",
-        "label": "Vertical scroll bar, 1 page",
-        "value": "0%",
-        "nx": 0.9055,
-        "ny": 0.985,
-        "y": 0.97,
-        "h": 0.03
       }
     ],
     "sheet:test-sheet-open-expoui": [
@@ -2334,6 +2359,295 @@
         "ny": 0.935,
         "y": 0.916,
         "h": 0.038
+      }
+    ],
+    "sheet:test-sheet-open-gluestack": [
+      {
+        "role": "AXButton",
+        "label": "Bottom sheet backdrop",
+        "nx": 0.5,
+        "ny": 0.5,
+        "y": 0,
+        "h": 1
+      },
+      {
+        "role": "AXButton",
+        "label": "Unavailable",
+        "identifier": "test-button-disabled",
+        "nx": 0.5,
+        "ny": 0.0005,
+        "y": 0,
+        "h": 0.001
+      },
+      {
+        "role": "AXButton",
+        "label": "In progress, Saving",
+        "identifier": "test-button-loading",
+        "nx": 0.5,
+        "ny": 0.035500000000000004,
+        "y": 0.015,
+        "h": 0.041
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Theme switch: not measured",
+        "nx": 0.168,
+        "ny": 0.0685,
+        "y": 0.062,
+        "h": 0.013
+      },
+      {
+        "role": "AXStaticText",
+        "label": "List mount: not measured",
+        "nx": 0.168,
+        "ny": 0.0805,
+        "y": 0.074,
+        "h": 0.013
+      },
+      {
+        "role": "AXHeading",
+        "label": "gluestack-ui v5",
+        "nx": 0.49949999999999994,
+        "ny": 0.096,
+        "y": 0.084,
+        "h": 0.024
+      },
+      {
+        "role": "AXHeading",
+        "label": "Form",
+        "nx": 0.5,
+        "ny": 0.108,
+        "y": 0.093,
+        "h": 0.03
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Email",
+        "nx": 0.0875,
+        "ny": 0.14750000000000002,
+        "y": 0.136,
+        "h": 0.023
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Vertical scroll bar, 3 pages",
+        "value": "52%",
+        "nx": 0.9555,
+        "ny": 0.547,
+        "y": 0.165,
+        "h": 0.764
+      },
+      {
+        "role": "AXTextField",
+        "label": "Email",
+        "identifier": "test-textfield",
+        "nx": 0.5,
+        "ny": 0.1885,
+        "y": 0.169,
+        "h": 0.039
+      },
+      {
+        "role": "AXStaticText",
+        "label": "We'll send your plan here.",
+        "nx": 0.23500000000000001,
+        "ny": 0.2295,
+        "y": 0.219,
+        "h": 0.021
+      },
+      {
+        "role": "AXButton",
+        "label": "",
+        "value": "1",
+        "identifier": "test-switch",
+        "nx": 0.8815000000000001,
+        "ny": 0.269,
+        "y": 0.253,
+        "h": 0.032
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Workout reminders",
+        "nx": 0.407,
+        "ny": 0.2685,
+        "y": 0.256,
+        "h": 0.025
+      },
+      {
+        "role": "AXGroup",
+        "label": "terms",
+        "value": "checkbox, unchecked",
+        "identifier": "test-checkbox",
+        "nx": 0.5,
+        "ny": 0.3115,
+        "y": 0.299,
+        "h": 0.025
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Experience level",
+        "nx": 0.5,
+        "ny": 0.34950000000000003,
+        "y": 0.338,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "Beginner",
+        "value": "radio button, checked",
+        "identifier": "test-radiogroup-0",
+        "nx": 0.5,
+        "ny": 0.3775,
+        "y": 0.365,
+        "h": 0.025
+      },
+      {
+        "role": "AXGroup",
+        "label": "RadioGroup",
+        "identifier": "test-radiogroup",
+        "nx": 0.5,
+        "ny": 0.412,
+        "y": 0.365,
+        "h": 0.094
+      },
+      {
+        "role": "AXGroup",
+        "label": "Intermediate",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-1",
+        "nx": 0.5,
+        "ny": 0.41150000000000003,
+        "y": 0.399,
+        "h": 0.025
+      },
+      {
+        "role": "AXGroup",
+        "label": "Advanced",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-2",
+        "nx": 0.5,
+        "ny": 0.4465,
+        "y": 0.434,
+        "h": 0.025
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Rest time",
+        "nx": 0.1225,
+        "ny": 0.4845,
+        "y": 0.473,
+        "h": 0.023
+      },
+      {
+        "role": "AXButton",
+        "label": "",
+        "identifier": "test-select",
+        "nx": 0.5,
+        "ny": 0.523,
+        "y": 0.5,
+        "h": 0.046
+      },
+      {
+        "role": "AXHeading",
+        "label": "Overlays",
+        "nx": 0.5,
+        "ny": 0.597,
+        "y": 0.582,
+        "h": 0.03
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Bottom sheet handle",
+        "nx": 0.5,
+        "ny": 0.616,
+        "y": 0.6,
+        "h": 0.032
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Bottom Sheet",
+        "nx": 0.5,
+        "ny": 0.8,
+        "y": 0.6,
+        "h": 0.4
+      },
+      {
+        "role": "AXButton",
+        "label": "Delete workout",
+        "identifier": "test-dialog-open",
+        "nx": 0.5,
+        "ny": 0.6465,
+        "y": 0.626,
+        "h": 0.041
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Bottom Sheet",
+        "nx": 0.5,
+        "ny": 0.8160000000000001,
+        "y": 0.632,
+        "h": 0.368
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details",
+        "identifier": "test-sheet-open",
+        "nx": 0.5,
+        "ny": 0.7025,
+        "y": 0.681,
+        "h": 0.043
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details (@expo/ui)",
+        "identifier": "test-sheet-open-expoui",
+        "nx": 0.5,
+        "ny": 0.7595,
+        "y": 0.738,
+        "h": 0.043
+      },
+      {
+        "role": "AXButton",
+        "label": "Close",
+        "identifier": "test-sheet-gluestack-close",
+        "nx": 0.5,
+        "ny": 0.7885,
+        "y": 0.767,
+        "h": 0.043
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details (gluestack BottomSheet)",
+        "identifier": "test-sheet-open-gluestack",
+        "nx": 0.5,
+        "ny": 0.8280000000000001,
+        "y": 0.795,
+        "h": 0.066
+      },
+      {
+        "role": "AXButton",
+        "label": "Log set",
+        "identifier": "test-toast-show",
+        "nx": 0.5,
+        "ny": 0.8965,
+        "y": 0.875,
+        "h": 0.043
+      },
+      {
+        "role": "AXHeading",
+        "label": "Tabs",
+        "nx": 0.5,
+        "ny": 0.97,
+        "y": 0.955,
+        "h": 0.03
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Horizontal scroll bar, 1 page",
+        "value": "0%",
+        "nx": 0.5,
+        "ny": 0.979,
+        "y": 0.962,
+        "h": 0.034
       }
     ],
     "select": [
@@ -2420,7 +2734,7 @@
       {
         "role": "AXAdjustable",
         "label": "Vertical scroll bar, 3 pages",
-        "value": "30%",
+        "value": "28%",
         "nx": 0.9555,
         "ny": 0.547,
         "y": 0.165,
@@ -2721,7 +3035,7 @@
       {
         "role": "AXAdjustable",
         "label": "Vertical scroll bar, 3 pages",
-        "value": "56%",
+        "value": "52%",
         "nx": 0.9555,
         "ny": 0.547,
         "y": 0.165,
@@ -2873,20 +3187,21 @@
       },
       {
         "role": "AXButton",
+        "label": "Show exercise details (gluestack BottomSheet)",
+        "identifier": "test-sheet-open-gluestack",
+        "nx": 0.5,
+        "ny": 0.8280000000000001,
+        "y": 0.795,
+        "h": 0.066
+      },
+      {
+        "role": "AXButton",
         "label": "Log set",
         "identifier": "test-toast-show",
         "nx": 0.5,
-        "ny": 0.8165,
-        "y": 0.795,
-        "h": 0.043
-      },
-      {
-        "role": "AXHeading",
-        "label": "Tabs",
-        "nx": 0.5,
-        "ny": 0.89,
+        "ny": 0.8965,
         "y": 0.875,
-        "h": 0.03
+        "h": 0.043
       },
       {
         "role": "AXStaticText",
@@ -2897,40 +3212,12 @@
         "h": 0.025
       },
       {
-        "role": "AXGroup",
-        "label": "Today",
-        "identifier": "test-tabs-0",
-        "nx": 0.1295,
-        "ny": 0.9395,
-        "y": 0.923,
-        "h": 0.033
-      },
-      {
-        "role": "AXGroup",
-        "label": "Plan",
-        "identifier": "test-tabs-1",
-        "nx": 0.27449999999999997,
-        "ny": 0.9395,
-        "y": 0.923,
-        "h": 0.033
-      },
-      {
-        "role": "AXGroup",
-        "label": "Progress",
-        "identifier": "test-tabs-2",
-        "nx": 0.443,
-        "ny": 0.9395,
-        "y": 0.923,
-        "h": 0.033
-      },
-      {
-        "role": "AXAdjustable",
-        "label": "Vertical scroll bar, 1 page",
-        "value": "0%",
-        "nx": 0.9055,
-        "ny": 0.9395,
-        "y": 0.923,
-        "h": 0.033
+        "role": "AXHeading",
+        "label": "Tabs",
+        "nx": 0.5,
+        "ny": 0.97,
+        "y": 0.955,
+        "h": 0.03
       },
       {
         "role": "AXAdjustable",
@@ -2940,14 +3227,6 @@
         "ny": 0.979,
         "y": 0.962,
         "h": 0.034
-      },
-      {
-        "role": "AXStaticText",
-        "label": "3 exercises left today.",
-        "nx": 0.5005,
-        "ny": 0.9874999999999999,
-        "y": 0.975,
-        "h": 0.025
       }
     ]
   }

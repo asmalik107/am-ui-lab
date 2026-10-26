@@ -143,7 +143,26 @@ const StyledBottomSheetView = withUniwind(BottomSheetView);
 
 The `withUniwind` wrapper is a plain function component with no `forwardRef`. Refs reach gorhom only because React 19 passes `ref` as an ordinary prop.
 
-gluestack also ships its own `BottomSheet` component, a wrapper around @gorhom/bottom-sheet. I didn't use it, because item 13 asks for the raw third-party component themed with the library's tokens.
+gluestack also ships its own `BottomSheet` component, a wrapper around @gorhom/bottom-sheet. It isn't used for item 13, because that item asks for the raw third-party component themed with the library's tokens. It was added later as an extra sheet; see "gluestack BottomSheet" below.
+
+### gluestack BottomSheet
+
+Added on 26 Oct 2026 as an extra sheet, to test the sheet gluestack itself ships.
+
+- **Install.** `npx gluestack-ui@5.0.3 add bottomsheet -y` copied `components/ui/bottomsheet/index.tsx` from the same repo commit as the other components (`b712c85`). `package.json` and the lockfile didn't change: it uses @gorhom/bottom-sheet, which the app already had.
+- **What it is.** It wraps gorhom's `BottomSheet` (not `BottomSheetModal`) in gluestack's `Overlay`. It colours itself from the theme (`bg-background`, `bg-primary` handle), so no colours are passed in. On native it adds no accessibility props; the only accessibility code is a web-only `FocusScope`.
+- **How it's built.** As in [gluestack's docs](https://gluestack.io/ui/docs/components/bottomsheet): `BottomSheet` > `BottomSheetPortal` (`snapPoints`, `backdropComponent={BottomSheetBackdrop}`, `handleComponent={BottomSheetDragIndicator}`) > `BottomSheetContent`. It's opened and closed through its documented ref (`open()` / `close()`) from the app's own buttons, like the other sheets. No accessibility props were added by hand.
+- **Type errors.** The generated file has 11 TypeScript errors against this stack (gorhom 5.2.14, React 19), on top of the 6 already in `components/ui`. They're type-only: the app builds and the sheet opens.
+
+**Result (26 Oct 2026, iPhone 17 Pro simulator, iOS 26.4, Release):** 1 of the 4 checks that could run passed.
+
+- Opens: pass.
+- Title and body readable: **fail**. The tree shows gorhom's "Bottom Sheet" adjustable element and the Close button, but not the title or body text. HeroUI's gorhom-based sheets show the same.
+- Screen behind hidden from VoiceOver: **fail**. The whole screen stays reachable.
+- Closes: **fail**. Tapping Close (`ref.close()`) leaves the sheet open; checked by hand as well. Tapping the backdrop does close it.
+- Screen reachable after close: not run, because the sheet didn't close.
+
+Why Close fails, from the source: gluestack's `close()` only sets the sheet's index state to -1 and passes it to gorhom's `index` prop. Gorhom reacts to that prop with `handleSnapToIndex(-1)`, which looks up `detents[-1]` (`undefined`) and so has no position to animate to (`@gorhom/bottom-sheet` 5.2.14, `src/components/bottomSheet/BottomSheet.tsx`, `handleSnapToIndex`). Gorhom's own close goes through its `close()` method, which the backdrop uses and gluestack's ref doesn't call.
 
 ### @expo/ui Host
 

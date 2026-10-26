@@ -61,7 +61,11 @@ The three styling engines (Unistyles, Uniwind, NativeWind) carry the baseline's 
 
 **Failures in every app, the baseline included:**
 - **Select and tab roles.** React Native maps `role="combobox"` and `role="tab"` to no iOS trait. In `ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h`, only `switch` and `tabbar` map to traits; `tab`, `tablist` and `combobox` fall through to `None`.
-- **The `@expo/ui` Switch** exposes a 28 pt tall frame, below Apple's 44 pt default.
+- **The `@expo/ui` Switch fails the 44 pt check at the system switch's own size.**
+  - It's a plain SwiftUI `Toggle` with nothing added (`ios/Toggle/ToggleView.swift` in `@expo/ui` 57.0.26), and iOS 26.4 draws it 28 pt tall. UIKit's `UISwitch` measures the same: gluestack's Switch, which is React Native's `Switch`, is 63×28 pt.
+  - 28 pt meets Apple's minimum control size (28x28 pt) but not its default (44x44 pt), which this check uses ([HIG: Accessibility](https://developer.apple.com/design/human-interface-guidelines/accessibility)).
+  - Apple says to "use the switch toggle style only in a list row", where the row provides the height ([HIG: Toggles](https://developer.apple.com/design/human-interface-guidelines/toggles)). The lab places it on its own.
+  - On its own, only the switch track responds to taps. Taps 8 pt above or below its frame, or on its label, didn't toggle it (baseline app, simulator).
 - **The @gorhom/bottom-sheet modal**, even with `aria-modal` on its content, leaves the screen behind it reachable in Release builds.
 
 **Bottom sheets compared** (5 checks each: opens, title and body readable, screen behind hidden from VoiceOver, closes, screen reachable after close):

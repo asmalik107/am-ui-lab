@@ -14,4 +14,9 @@ if [ "$config" = "Debug" ]; then
   for _ in $(seq 1 60); do curl -s -m 1 localhost:8081/status | grep -q running && break; sleep 1; done
 fi
 argent run reinstall-app --json --args "{\"udid\":\"$udid\",\"bundleId\":\"$bundle\",\"appPath\":\"$appPath\"}" >/dev/null
+# Warm-up: the first launch after an install does one-off work, and audits
+# that started straight after it couldn't scroll (seen on Uniwind, 27 Oct).
+argent run launch-app --json --args "{\"udid\":\"$udid\",\"bundleId\":\"$bundle\"}" >/dev/null
+argent run await-ui-element --json --args "{\"udid\":\"$udid\",\"condition\":\"visible\",\"selector\":{\"text\":\"Component test screen\"},\"timeoutMs\":60000}" >/dev/null || true
+sleep 5
 BUILD_CONFIG="$config" node "$root/scripts/a11y-audit.mjs" "$app" "$bundle" "$udid" --theme "$theme"

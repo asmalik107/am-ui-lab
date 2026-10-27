@@ -271,3 +271,23 @@ What was checked:
 - No matching issue was found in nativewind/nativewind or nativewind/react-native-css (searched 23 Oct 2026).
 
 **Workaround in this app:** unitless ratios (`--text-body--line-height: 1.375` and so on), which NativeWind treats as em multipliers. All results in `results/nativewind/` use the workaround.
+
+## iOS 27 setup (27 October 2026)
+
+The lab moved from the iPhone 17 Pro simulator on iOS 26.4 to the iPhone 17 simulator on iOS 27.0 (Xcode 27.1). Expo SDK 57 apps built with the iOS 27 SDK need the UIKit scene life cycle, which SDK 57 adds as an opt-in:
+
+1. `npx expo install expo-build-properties` (57.0.22).
+2. In `app.json` plugins: `["expo-build-properties", { "ios": { "enableSceneSupport": true } }]`. The option is documented in `node_modules/expo-build-properties/build/pluginConfig.d.ts` ("Adopt the UIKit scene lifecycle in an Expo SDK 57 iOS project, as required by the iOS 27 SDK"; needs expo 57.0.23 or newer; this app is on 57.0.31). Source: expo/expo PR #50205.
+3. `npx expo install --check`: clean.
+
+## Items 15–19 (added 27 October 2026)
+
+All five are the baseline's hand-built components, restyled with NativeWind `className`; accessibility is the baseline's, unchanged. NativeWind ships no components.
+
+| # | Item | Built with |
+| --- | --- | --- |
+| 15 | Slider | Hand-built `View`: `accessible`, `accessibilityRole="adjustable"` (`role` has no such value), `aria-value*`, increment/decrement actions, responder-system drag. Fill width and thumb position are inline styles (Tailwind classes can't be built at runtime). |
+| 16 | Progress | Hand-built `View`: `accessible`, `role="progressbar"`, `aria-value*` |
+| 17 | Accordion | Hand-built: header `Pressable` `role="button"` + `aria-expanded` |
+| 18 | Menu | Hand-built: button + RN `Modal`, list `aria-modal`, items `role="button"` (same structure as the Select) |
+| 19 | Segmented control | Hand-built: row of `Pressable` `role="button"` + `aria-selected` |

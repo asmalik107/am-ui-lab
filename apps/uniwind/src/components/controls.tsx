@@ -213,4 +213,117 @@ export function Tabs({ tabs, panels, testID }: { tabs: readonly string[]; panels
   );
 }
 
+type SliderProps = { label: string; unit: string; value: number; min: number; max: number; step: number; onChange: (v: number) => void; testID?: string };
+
+// React Native has no slider, so this is the baseline's, built from a View.
+// accessibilityRole="adjustable" (role has no such value) gives the iOS
+// adjustable trait; VoiceOver's swipe up/down fires increment/decrement.
+// The fill width and thumb position depend on the value, so they stay inline
+// styles; Tailwind classes can't be built at runtime.
+export function Slider({ label, unit, value, min, max, step, onChange, testID }: SliderProps) {
+  const [width, setWidth] = useState(0);
+  const clamp = (v: number) => Math.min(max, Math.max(min, Math.round(v / step) * step));
+  const fromX = (x: number) => (width ? onChange(clamp(min + (x / width) * (max - min))) : undefined);
+  const pct = (value - min) / (max - min);
+  return (
+    <View className="gap-1">
+      <Text className="text-label font-semibold text-text">
+        {label}: {value} {unit}
+      </Text>
+      <View
+        testID={testID}
+        accessible
+        accessibilityRole="adjustable"
+        accessibilityLabel={label}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value}
+        aria-valuetext={`${value} ${unit}`}
+        accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
+        onAccessibilityAction={(e) => onChange(clamp(value + (e.nativeEvent.actionName === 'increment' ? step : -step)))}
+        onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
+        onStartShouldSetResponder={() => true}
+        onResponderTerminationRequest={() => false}
+        onResponderGrant={(e) => fromX(e.nativeEvent.locationX)}
+        onResponderMove={(e) => fromX(e.nativeEvent.locationX)}
+        className={`${targetH} justify-center`}>
+        <View pointerEvents="none" className="h-1.5 rounded-full bg-border">
+          <View className="h-1.5 rounded-full bg-primary" style={{ width: `${pct * 100}%` }} />
+        </View>
+        <View pointerEvents="none" className="absolute size-7 rounded-full border-2 border-primary bg-surface-raised" style={{ left: pct * width - 14 }} />
+      </View>
+    </View>
+  );
+}
+
+// role="progressbar" with aria-value*: the value text is what VoiceOver reads.
+export function Progress({ label, value, max, valueText, testID }: { label: string; value: number; max: number; valueText: string; testID?: string }) {
+  return (
+    <View className="gap-1">
+      <Text className="text-label font-semibold text-text">{label}</Text>
+      <View testID={testID} accessible role="progressbar" accessibilityLabel={label} aria-valuemin={0} aria-valuemax={max} aria-valuenow={value} aria-valuetext={valueText} className="h-2 rounded-full bg-border">
+        <View className="h-2 rounded-full bg-primary" style={{ width: `${(value / max) * 100}%` }} />
+      </View>
+      <Text className="text-caption text-text-muted">{valueText}</Text>
+    </View>
+  );
+}
+
+// Each header is a button with aria-expanded. On iOS, React Native adds
+// "expanded" to the value when open and nothing when closed.
+export function Accordion({ sections, panels, testID }: { sections: readonly string[]; panels: readonly string[]; testID?: string }) {
+  const [open, setOpen] = useState<number[]>([]);
+  return (
+    <View className="rounded-md border border-border">
+      {sections.map((s, i) => {
+        const expanded = open.includes(i);
+        return (
+          <View key={s} className={i > 0 ? 'border-t border-border' : ''}>
+            <Pressable
+              testID={`${testID}-${i}`}
+              role="button"
+              aria-expanded={expanded}
+              accessibilityLabel={s}
+              onPress={() => setOpen(expanded ? open.filter((x) => x !== i) : [...open, i])}
+              className={`${targetH} flex-row items-center justify-between px-3`}>
+              <Text className="text-label font-semibold text-text">{s}</Text>
+              <Text importantForAccessibility="no" accessibilityElementsHidden className="text-text-muted">
+                {expanded ? '▴' : '▾'}
+              </Text>
+            </Pressable>
+            {expanded && <Text className="text-body text-text-muted px-3 pb-3">{panels[i]}</Text>}
+          </View>
+        );
+      })}
+    </View>
+  );
+}
+
+// A row of buttons; aria-selected gives the iOS selected trait, as UIKit's
+// segmented control does.
+export function Segmented({ label, options, value, onChange, testID }: { label: string; options: readonly string[]; value: string; onChange: (v: string) => void; testID?: string }) {
+  return (
+    <View className="gap-1">
+      <Text className="text-label font-semibold text-text">{label}</Text>
+      <View testID={testID} accessibilityLabel={label} className="flex-row rounded-md border border-border p-0.5">
+        {options.map((o, i) => {
+          const selected = o === value;
+          return (
+            <Pressable
+              key={o}
+              testID={`${testID}-${i}`}
+              role="button"
+              aria-selected={selected}
+              accessibilityLabel={o}
+              onPress={() => onChange(o)}
+              className={`${targetH} flex-1 items-center justify-center rounded-sm ${selected ? 'bg-primary' : 'bg-transparent'}`}>
+              <Text className={selected ? 'text-label font-semibold text-on-primary' : 'text-label font-semibold text-text'}>{o}</Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
 export { announce };

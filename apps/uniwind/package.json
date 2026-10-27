@@ -6,6 +6,7 @@
     "@expo/ui": "~57.0.26",
     "@gorhom/bottom-sheet": "^5.2.14",
     "expo": "~57.0.31",
+    "expo-build-properties": "~57.0.22",
     "expo-constants": "~57.0.22",
     "expo-device": "~57.0.2",
     "expo-font": "~57.0.4",

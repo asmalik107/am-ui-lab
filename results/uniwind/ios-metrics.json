@@ -1,0 +1,112 @@
+{
+  "app": "uniwind",
+  "bundleId": "dev.asimmalik.uilab.uniwind",
+  "udid": "11A84A8F-FDB1-4921-8105-D7B17EC3CBC1",
+  "device": {
+    "name": "iPhone 17",
+    "runtime": "iOS 27.0"
+  },
+  "date": "2026-10-27T20:31:48.884Z",
+  "poll": {
+    "n": 5,
+    "median": 259.8766659999999,
+    "min": 258.128416,
+    "max": 267.30804200000006,
+    "samples": [
+      267.30804200000006,
+      259.2060409999999,
+      258.128416,
+      264.8989170000002,
+      259.8766659999999
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 8628.0912915,
+    "min": 8516.418250000002,
+    "max": 9308.807083,
+    "samples": [
+      9308.807083,
+      8759.919167,
+      8636.858625,
+      8619.323958,
+      8580.746666000006,
+      8600.479,
+      8541.725583000007,
+      8516.418250000002,
+      8657.303417000003,
+      8678.702208000002
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 360.60416700000223,
+    "min": 350.61008300000685,
+    "max": 379.8277499999999,
+    "samples": [
+      379.8277499999999,
+      362.2100420000006,
+      370.06324999999924,
+      363.76904099999956,
+      367.2023330000011,
+      354.3086250000051,
+      358.00999999999476,
+      351.1210839999985,
+      358.99829200000386,
+      350.61008300000685
+    ]
+  },
+  "memory": {
+    "idle": {
+      "physFootprint": 67537392,
+      "footprint": 67422704
+    },
+    "used": {
+      "physFootprint": 139987512,
+      "footprint": 139872824
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 7542,
+    "cpuMs": {
+      "main": 1057,
+      "js": 958,
+      "other": 45,
+      "total": 2060
+    },
+    "hangs": 0
+  }
+}

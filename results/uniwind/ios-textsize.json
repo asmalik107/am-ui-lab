@@ -1,8 +1,12 @@
 {
   "app": "uniwind",
   "bundleId": "dev.asimmalik.uilab.uniwind",
-  "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
-  "date": "2026-10-23T03:53:37.859Z",
+  "udid": "11A84A8F-FDB1-4921-8105-D7B17EC3CBC1",
+  "device": {
+    "name": "iPhone 17",
+    "runtime": "iOS 27.0"
+  },
+  "date": "2026-10-27T20:23:39.616Z",
   "growth": [
     {
       "id": "test-button",
@@ -81,6 +85,30 @@
       "normal": 44,
       "large": 145,
       "ratio": 3.2954545454545454
+    },
+    {
+      "id": "test-slider",
+      "normal": 44,
+      "large": 44,
+      "ratio": 1
+    },
+    {
+      "id": "test-accordion-0",
+      "normal": 44,
+      "large": 71.66650390625,
+      "ratio": 1.6287841796875
+    },
+    {
+      "id": "test-menu-open",
+      "normal": 44,
+      "large": 145,
+      "ratio": 3.2954545454545454
+    },
+    {
+      "id": "test-segmented-0",
+      "normal": 44,
+      "large": 143,
+      "ratio": 3.25
     }
   ],
   "offscreen": [

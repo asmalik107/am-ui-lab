@@ -8,8 +8,8 @@ import { StyleSheet, UnistylesRuntime, useUnistyles, withUnistyles } from 'react
 import { copy, ids } from '@shared/content';
 import { space, type ThemeName } from '@shared/tokens';
 
-import { Button, Checkbox, RadioGroup, Section, SwitchRow, Tabs, TextField, announce } from '../components/controls';
-import { Dialog, ExerciseSheet, ExpoExerciseSheet, Select, Toast } from '../components/overlays';
+import { Accordion, Button, Checkbox, Progress, RadioGroup, Section, Segmented, Slider, SwitchRow, Tabs, TextField, announce } from '../components/controls';
+import { Dialog, ExerciseSheet, ExpoExerciseSheet, Menu, Select, Toast } from '../components/overlays';
 import { mark, measure } from '../perf';
 import { View as PerfTouch } from 'react-native';
 
@@ -56,6 +56,8 @@ export default function TestScreen() {
   const [saving, setSaving] = useState(false);
   const [sync, setSync] = useState(false);
   const [expoSheet, setExpoSheet] = useState(false);
+  const [weight, setWeight] = useState<number>(copy.slider.initial);
+  const [range, setRange] = useState<string>(copy.segmentedOptions[0]);
   const sheet = useRef<BottomSheetModal>(null);
   const hideToast = useCallback(() => setToast(false), []);
 
@@ -115,6 +117,14 @@ export default function TestScreen() {
 
         <Section title="Tabs">
           <Tabs testID={ids.tabs} tabs={copy.tabs} panels={copy.tabPanels} />
+        </Section>
+
+        <Section title={copy.moreTitle}>
+          <Slider testID={ids.slider} label={copy.sliderLabel} unit={copy.sliderUnit} min={copy.slider.min} max={copy.slider.max} step={copy.slider.step} value={weight} onChange={setWeight} />
+          <Progress testID={ids.progress} label={copy.progressLabel} value={copy.progress.value} max={copy.progress.max} valueText={copy.progressText} />
+          <Accordion testID={ids.accordion} sections={copy.accordionSections} panels={copy.accordionPanels} />
+          <Menu testID={ids.menu} label={copy.menuOpen} items={copy.menuItems} onSelect={() => {}} />
+          <Segmented testID={ids.segmented} label={copy.segmentedLabel} options={copy.segmentedOptions} value={range} onChange={setRange} />
         </Section>
 
         <Section title="Native control (@expo/ui)">

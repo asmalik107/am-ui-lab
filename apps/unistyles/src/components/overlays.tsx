@@ -168,6 +168,39 @@ export function ExpoExerciseSheet({ open, onClose, title, body, close, testID }:
   );
 }
 
+// A button that opens a modal list of actions, built like the Select: the
+// backdrop is a sibling of the list so aria-modal hides the screen behind it.
+export function Menu({ label, items, onSelect, testID }: { label: string; items: readonly string[]; onSelect: (item: string) => void; testID?: string }) {
+  const reduceMotion = useReduceMotion();
+  const [open, setOpen] = useState(false);
+  return (
+    <View>
+      <Button testID={`${testID}-open`} label={label} variant="secondary" onPress={() => setOpen(true)} />
+      <Modal visible={open} transparent animationType={reduceMotion ? 'none' : 'fade'} onRequestClose={() => setOpen(false)}>
+        <View style={styles.menuWrap}>
+          <Pressable accessible={false} style={styles.backdrop} onPress={() => setOpen(false)} />
+          <View testID={testID} aria-modal role="menu" accessibilityLabel={label} style={styles.menu}>
+            {items.map((item, i) => (
+              <Pressable
+                key={item}
+                testID={`${testID}-item-${i}`}
+                role="button"
+                accessibilityLabel={item}
+                onPress={() => {
+                  onSelect(item);
+                  setOpen(false);
+                }}
+                style={styles.option}>
+                <Text style={styles.optionText(false)}>{item}</Text>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create((theme) => ({
   scrim: { flex: 1, backgroundColor: theme.colors.scrim, justifyContent: 'center', padding: theme.space.xl },
   menuWrap: { flex: 1, justifyContent: 'center', padding: theme.space.xl },

@@ -1,10 +1,8 @@
 // Startup, memory and scrolling smoothness for one app on a booted simulator,
 // against a Release build. Nothing else should be running while it does.
 //
-// - Startup: the app is terminated, then launched with argent launch-app, and
-//   the clock stops when "Component test screen" is in the system
-//   accessibility tree. Median of N runs. The resolution is the time one
-//   describe poll takes, which is measured and reported with the result.
+// - Startup: cold launches until the screen is in the accessibility tree;
+//   see the comment at that step. Median of N runs.
 // - Memory: `footprint` on the app's process (the simulator runs it as a
 //   process on the Mac), once at idle after launch and again after scrolling
 //   the 200-row list and opening every overlay once.
@@ -35,6 +33,7 @@ const work = join(tmpdir(), `uilab-metrics-${app}`);
 mkdirSync(work, { recursive: true });
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const step = (msg) => console.error(`[metrics ${new Date().toISOString().slice(11, 19)}] ${msg}`);
 const argent = (tool, args) =>
   JSON.parse(execFileSync('argent', ['run', tool, '--json', '--args', JSON.stringify({ udid, ...args })], { encoding: 'utf8', maxBuffer: 64 << 20 }));
 
@@ -126,32 +125,36 @@ function hangs(file, p) {
   return rows.filter((r) => r.includes(`pid: ${p})`) || r.includes(`(${p})`)).length;
 }
 
-// --- Startup
-// One describe poll's duration is the clock's resolution.
+// --- Startup: from the launch-app call until "Component test screen" is in
+// the system accessibility tree, i.e. when VoiceOver can read the screen.
+// This is later than first paint: Unistyles' screen was visible 4–6 s after
+// launch in screenshots but readable at ~8 s. Recording the screen to time
+// first paint was tried and dropped, because the recorder itself slowed the
+// launches down (8.0 s became 7.7–12.1 s). The clock's resolution is one
+// describe poll, measured here.
 const polls = [];
 for (let i = 0; i < 5; i++) {
   const t = performance.now();
   axTree();
   polls.push(performance.now() - t);
 }
-// launch-app returns once the app is launched; how long that call itself
-// takes is recorded too, so argent's own overhead is visible.
 const startup = [];
 const launchCall = [];
 for (let i = 0; i < runs; i++) {
+  step(`startup run ${i + 1}`);
   terminate();
   await sleep(1500);
   const t0 = performance.now();
   argent('launch-app', { bundleId });
   const t1 = performance.now();
-  const ok = await waitFor((els) => hasLabel(els, 'Component test screen'), 60000);
-  if (ok) {
+  if (await waitFor((els) => hasLabel(els, 'Component test screen'), 60000)) {
     startup.push(performance.now() - t0);
     launchCall.push(t1 - t0);
   }
   await sleep(1000);
 }
 
+step('memory at idle');
 // --- Memory at idle: 5 s after a fresh launch.
 terminate();
 await sleep(1500);
@@ -166,26 +169,35 @@ const idle = footprint();
 // with "Hitches is not supported on this platform". What is reported instead
 // is main-thread hangs (Instruments' potential-hangs table) and the CPU time
 // the app's own threads used during the flings.
+step('scrolling');
 tap(await scrollTo('test-list-link'));
 await waitFor((els) => hasLabel(els, 'Exercise 1,'));
 await sleep(1000);
 const appPid = pid();
+// The profiler's export sometimes comes back without the CPU table, so a
+// recording is retried once; the attempts are kept in the results.
 let scroll;
-try {
-  const exe = execFileSync('ps', ['-p', String(appPid), '-o', 'comm='], { encoding: 'utf8' }).trim().split('/').pop();
-  argent('native-profiler-start', { device_id: udid, app_process: exe, udid: undefined });
-  await sleep(3000);
-  const t0 = performance.now();
-  for (let i = 0; i < 5; i++) {
-    argent('gesture-swipe', { fromX: 0.5, fromY: i % 2 ? 0.25 : 0.8, toX: 0.5, toY: i % 2 ? 0.8 : 0.25, durationMs: 150 });
-    await sleep(1200);
+const attempts = [];
+for (let attempt = 0; attempt < 2 && !scroll?.cpuMs; attempt++) {
+  try {
+    const exe = execFileSync('ps', ['-p', String(appPid), '-o', 'comm='], { encoding: 'utf8' }).trim().split('/').pop();
+    argent('native-profiler-start', { device_id: udid, app_process: exe, udid: undefined });
+    await sleep(3000);
+    const t0 = performance.now();
+    for (let i = 0; i < 5; i++) {
+      argent('gesture-swipe', { fromX: 0.5, fromY: i % 2 ? 0.25 : 0.8, toX: 0.5, toY: i % 2 ? 0.8 : 0.25, durationMs: 150 });
+      await sleep(1200);
+    }
+    const windowMs = Math.round(performance.now() - t0);
+    const { exportedFiles, exportDiagnostics } = argent('native-profiler-stop', { device_id: udid, udid: undefined });
+    if (!exportedFiles?.cpu) throw new Error(`no CPU export (${JSON.stringify(exportDiagnostics?.errors ?? {})})`);
+    scroll = { flings: 5, windowMs, ...cpuByThread(exportedFiles.cpu, appPid), hangs: hangs(exportedFiles.hangs, appPid) };
+  } catch (err) {
+    attempts.push(String(err.message ?? err).split('\n')[0]);
+    scroll = { error: attempts.at(-1) };
   }
-  const window = performance.now() - t0;
-  const { exportedFiles } = argent('native-profiler-stop', { device_id: udid, udid: undefined });
-  scroll = { flings: 5, windowMs: Math.round(window), ...cpuByThread(exportedFiles.cpu, appPid), hangs: hangs(exportedFiles.hangs, appPid) };
-} catch (err) {
-  scroll = { error: String(err.message ?? err) };
 }
+if (attempts.length) scroll.failedAttempts = attempts;
 
 // More list scrolling for the memory figure, then back.
 for (let i = 0; i < 4; i++) argent('gesture-swipe', { fromX: 0.5, fromY: 0.8, toX: 0.5, toY: 0.2, durationMs: 150 });
@@ -208,6 +220,7 @@ const overlays = [
   ['test-menu-open', 'Duplicate', null, 'Duplicate'],
   ['test-toast-show', 'Set logged', null, null],
 ];
+step('overlays');
 const opened = [];
 for (const [open, sign, closeId, closeLabel] of overlays) {
   try {

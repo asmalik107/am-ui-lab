@@ -17,7 +17,7 @@ export function writeMetrics(app, m) {
       '',
       '| Measure | Result |',
       '| --- | --- |',
-      `| Startup, launch-app to title in the accessibility tree, median of ${m.startup.n} | ${m.startup.median.toFixed(0)} ms (${m.startup.min.toFixed(0)}–${m.startup.max.toFixed(0)}) |`,
+      `| Startup until readable: launch-app call to the title in the accessibility tree, median of ${m.startup.n} | ${m.startup.median.toFixed(0)} ms (${m.startup.min.toFixed(0)}–${m.startup.max.toFixed(0)}) |`,
       m.launchCall ? `| of which the launch-app call itself, median | ${m.launchCall.median.toFixed(0)} ms |` : null,
       `| Clock resolution (one describe poll, median) | ${m.poll.median.toFixed(0)} ms |`,
       `| Memory at idle, 5 s after launch (phys_footprint) | ${mb(m.memory.idle.physFootprint)} |`,
@@ -29,7 +29,7 @@ export function writeMetrics(app, m) {
       '',
       `Overlays opened for the memory figure: ${m.memory.overlays.map((o) => `${o.overlay} ${o.error ? `(error: ${o.error})` : o.closed ? '' : '(did not close)'}`.trim()).join(', ')}.`,
       '',
-      'Frame hitches were not measured: xctrace\'s Animation Hitches template fails on the simulator ("Hitches is not supported on this platform"). The startup time includes argent\'s launch-app call, which also prepares its native-devtools injection, so it is comparable between apps but larger than the app\'s own launch.',
+      'Frame hitches were not measured: xctrace\'s Animation Hitches template fails on the simulator ("Hitches is not supported on this platform"). Startup is when VoiceOver could first read the screen, not first paint, which can be seconds earlier; timing first paint with a screen recording slowed the launches down, so it isn\'t reported.',
       '',
     );
   }

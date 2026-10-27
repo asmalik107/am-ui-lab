@@ -1,8 +1,13 @@
 {
   "app": "unistyles",
   "bundleId": "dev.asimmalik.uilab.unistyles",
-  "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
-  "date": "2026-10-24T11:19:15.353Z",
+  "udid": "11A84A8F-FDB1-4921-8105-D7B17EC3CBC1",
+  "device": {
+    "name": "iPhone 17",
+    "runtime": "iOS 27.0"
+  },
+  "theme": "light",
+  "date": "2026-10-27T15:35:46.840Z",
   "findings": [
     {
       "component": "Button",
@@ -267,6 +272,114 @@
       "check": "in accessibility tree",
       "pass": true,
       "detail": "AXStaticText label=\"Set logged\""
+    },
+    {
+      "component": "Slider",
+      "check": "name, role, value",
+      "pass": true,
+      "detail": "label=\"Weight\" value=\"60 kg\" traits=[adjustable] 370×44pt"
+    },
+    {
+      "component": "Slider",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×44pt"
+    },
+    {
+      "component": "Slider",
+      "check": "dragging changes the value",
+      "pass": true,
+      "detail": "value \"60 kg\" → \"180 kg\""
+    },
+    {
+      "component": "Progress",
+      "check": "name and value",
+      "pass": true,
+      "detail": "label=\"Workout progress\" value=\"3 of 8 exercises\" traits=[updatesFrequently] 370×8pt"
+    },
+    {
+      "component": "Accordion",
+      "check": "header is a button",
+      "pass": true,
+      "detail": "label=\"Warm-up\" value=\"\" traits=[button] 368×44pt"
+    },
+    {
+      "component": "Accordion",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "368×44pt"
+    },
+    {
+      "component": "Accordion",
+      "check": "expanded state exposed",
+      "pass": true,
+      "detail": "closed: label=\"Warm-up\" value=\"\" traits=[button] 368×44pt; open: label=\"Warm-up\" value=\"expanded\" traits=[button] 368×44pt"
+    },
+    {
+      "component": "Accordion",
+      "check": "content shows and hides",
+      "pass": true,
+      "detail": "panel text appeared; gone after second tap"
+    },
+    {
+      "component": "Menu",
+      "check": "trigger name and role",
+      "pass": true,
+      "detail": "label=\"Workout options\" value=\"\" traits=[button] 370×44pt"
+    },
+    {
+      "component": "Menu",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×44pt"
+    },
+    {
+      "component": "Menu",
+      "check": "opens",
+      "pass": true,
+      "detail": "all three actions in tree"
+    },
+    {
+      "component": "Menu",
+      "check": "items are buttons",
+      "pass": true,
+      "detail": "AXButton label=\"Duplicate\" | AXButton label=\"Share\" | AXButton label=\"Archive\""
+    },
+    {
+      "component": "Menu",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": true,
+      "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Menu",
+      "check": "closes after an action",
+      "pass": true,
+      "detail": "actions gone"
+    },
+    {
+      "component": "Segmented control",
+      "check": "options have name and role",
+      "pass": true,
+      "detail": "label=\"Week\" value=\"\" traits=[button, selected] 121×44pt | label=\"Month\" value=\"\" traits=[button] 121×44pt | label=\"Year\" value=\"\" traits=[button] 121×44pt"
+    },
+    {
+      "component": "Segmented control",
+      "check": "selected option marked",
+      "pass": true,
+      "detail": "label=\"Week\" value=\"\" traits=[button, selected] 121×44pt | label=\"Month\" value=\"\" traits=[button] 121×44pt | label=\"Year\" value=\"\" traits=[button] 121×44pt"
+    },
+    {
+      "component": "Segmented control",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "121×44pt"
+    },
+    {
+      "component": "Segmented control",
+      "check": "selection moves on tap",
+      "pass": true,
+      "detail": "label=\"Week\" value=\"\" traits=[button] 121×44pt | label=\"Month\" value=\"\" traits=[button, selected] 121×44pt"
     }
   ],
   "states": {
@@ -1168,28 +1281,414 @@
           "header",
           "staticText"
         ],
+        "label": "More components"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1639,
+          "width": 370,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1649
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.8752860411899313,
+          "width": 0.9203980099502488,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.8867276887871853
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Weight: 60 kg"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1663,
+          "width": 370,
+          "height": 44
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1685
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.902745995423341,
+          "width": 0.9203980099502488,
+          "height": 0.05034324942791762
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.9279176201372998
+        },
+        "traits": [
+          "adjustable"
+        ],
+        "label": "Weight",
+        "value": "60 kg",
+        "identifier": "test-slider",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1719,
+          "width": 370,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1729
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.9668192219679634,
+          "width": 0.9203980099502488,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.9782608695652173
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Workout progress"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1743,
+          "width": 370,
+          "height": 8
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1747
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.994279176201373,
+          "width": 0.9203980099502488,
+          "height": 0.009153318077803204
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.9988558352402745
+        },
+        "traits": [
+          "updatesFrequently"
+        ],
+        "label": "Workout progress",
+        "value": "3 of 8 exercises",
+        "identifier": "test-progress",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1755,
+          "width": 370,
+          "height": 18
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1764
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.0080091533180777,
+          "width": 0.9203980099502488,
+          "height": 0.020594965675057208
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.0183066361556063
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "3 of 8 exercises"
+      },
+      {
+        "frame": {
+          "x": 17,
+          "y": 1786,
+          "width": 368,
+          "height": 44
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1808
+        },
+        "normalizedFrame": {
+          "x": 0.04228855721393035,
+          "y": 2.0434782608695654,
+          "width": 0.9154228855721394,
+          "height": 0.05034324942791762
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.068649885583524
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Warm-up",
+        "identifier": "test-accordion-0",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 17,
+          "y": 1831,
+          "width": 368,
+          "height": 44
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1853
+        },
+        "normalizedFrame": {
+          "x": 0.04228855721393035,
+          "y": 2.094965675057208,
+          "width": 0.9154228855721394,
+          "height": 0.05034324942791762
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.120137299771167
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Main set",
+        "identifier": "test-accordion-1",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 17,
+          "y": 1876,
+          "width": 368,
+          "height": 44
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1898
+        },
+        "normalizedFrame": {
+          "x": 0.04228855721393035,
+          "y": 2.1464530892448512,
+          "width": 0.9154228855721394,
+          "height": 0.05034324942791762
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.17162471395881
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Cool-down",
+        "identifier": "test-accordion-2",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1933,
+          "width": 370,
+          "height": 44
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1955
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.211670480549199,
+          "width": 0.9203980099502488,
+          "height": 0.05034324942791762
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.236842105263158
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Workout options",
+        "identifier": "test-menu-open",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1989,
+          "width": 370,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1999
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.2757437070938216,
+          "width": 0.9203980099502488,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.2871853546910756
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Chart range"
+      },
+      {
+        "frame": {
+          "x": 19,
+          "y": 2016,
+          "width": 121.33332824707031,
+          "height": 44
+        },
+        "tapPoint": {
+          "x": 79.66666412353516,
+          "y": 2038
+        },
+        "normalizedFrame": {
+          "x": 0.0472636815920398,
+          "y": 2.3066361556064074,
+          "width": 0.3018241996195779,
+          "height": 0.05034324942791762
+        },
+        "normalizedTapPoint": {
+          "x": 0.19817578140182876,
+          "y": 2.331807780320366
+        },
+        "traits": [
+          "button",
+          "selected"
+        ],
+        "label": "Week",
+        "identifier": "test-segmented-0",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 140.33333587646484,
+          "y": 2016,
+          "width": 121.33332824707031,
+          "height": 44
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 2038
+        },
+        "normalizedFrame": {
+          "x": 0.3490879001902111,
+          "y": 2.3066361556064074,
+          "width": 0.3018241996195779,
+          "height": 0.05034324942791762
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.331807780320366
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Month",
+        "identifier": "test-segmented-1",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 261.6666717529297,
+          "y": 2016,
+          "width": 121.33334350585938,
+          "height": 44
+        },
+        "tapPoint": {
+          "x": 322.3333435058594,
+          "y": 2038
+        },
+        "normalizedFrame": {
+          "x": 0.6509121187883823,
+          "y": 2.3066361556064074,
+          "width": 0.30182423757676463,
+          "height": 0.05034324942791762
+        },
+        "normalizedTapPoint": {
+          "x": 0.8018242375767646,
+          "y": 2.331807780320366
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Year",
+        "identifier": "test-segmented-2",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 2095,
+          "width": 370,
+          "height": 26
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 2108
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.397025171624714,
+          "width": 0.9203980099502488,
+          "height": 0.029748283752860413
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.411899313501144
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
         "label": "Native control (@expo/ui)"
       },
       {
         "frame": {
           "x": 15.999995231628418,
-          "y": 1625,
+          "y": 2119,
           "width": 316.6666564941406,
           "height": 28
         },
         "tapPoint": {
           "x": 174.33332347869873,
-          "y": 1639
+          "y": 2133
         },
         "normalizedFrame": {
           "x": 0.03980098316325477,
-          "y": 1.8592677345537758,
+          "y": 2.4244851258581237,
           "width": 0.7877280012292055,
           "height": 0.032036613272311214
         },
         "normalizedTapPoint": {
           "x": 0.43366498377785756,
-          "y": 1.8752860411899313
+          "y": 2.440503432494279
         },
         "traits": [
           "button",
@@ -1202,23 +1701,23 @@
       {
         "frame": {
           "x": 16,
-          "y": 1699,
+          "y": 2193,
           "width": 370,
           "height": 26
         },
         "tapPoint": {
           "x": 201,
-          "y": 1712
+          "y": 2206
         },
         "normalizedFrame": {
           "x": 0.03980099502487562,
-          "y": 1.9439359267734553,
+          "y": 2.509153318077803,
           "width": 0.9203980099502488,
           "height": 0.029748283752860413
         },
         "normalizedTapPoint": {
           "x": 0.5,
-          "y": 1.9588100686498855
+          "y": 2.5240274599542336
         },
         "traits": [
           "header",
@@ -1229,23 +1728,23 @@
       {
         "frame": {
           "x": 16,
-          "y": 1737,
+          "y": 2231,
           "width": 370,
           "height": 44
         },
         "tapPoint": {
           "x": 201,
-          "y": 1759
+          "y": 2253
         },
         "normalizedFrame": {
           "x": 0.03980099502487562,
-          "y": 1.9874141876430207,
+          "y": 2.5526315789473686,
           "width": 0.9203980099502488,
           "height": 0.05034324942791762
         },
         "normalizedTapPoint": {
           "x": 0.5,
-          "y": 2.0125858123569795
+          "y": 2.577803203661327
         },
         "traits": [
           "button"
@@ -1360,11 +1859,24 @@
     ],
     "textFieldError": [
       {
+        "role": "AXGroup",
+        "label": "Toolbar",
+        "identifier": "Toolbar",
+        "nx": 0.5,
+        "ny": 0.5,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      {
         "role": "AXStaticText",
         "label": "Theme switch: not measured",
         "nx": 0.168,
         "ny": 0.0685,
+        "x": 0.01,
         "y": 0.062,
+        "w": 0.316,
         "h": 0.013
       },
       {
@@ -1372,7 +1884,9 @@
         "label": "List mount: not measured",
         "nx": 0.168,
         "ny": 0.0805,
+        "x": 0.01,
         "y": 0.074,
+        "w": 0.316,
         "h": 0.013
       },
       {
@@ -1380,32 +1894,40 @@
         "label": "Unistyles",
         "nx": 0.5,
         "ny": 0.096,
+        "x": 0.408,
         "y": 0.084,
+        "w": 0.184,
         "h": 0.024
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Vertical scroll bar, 4 pages",
+        "value": "0%",
+        "nx": 0.9555,
+        "ny": 0.531,
+        "x": 0.918,
+        "y": 0.133,
+        "w": 0.075,
+        "h": 0.796
       },
       {
         "role": "AXHeading",
         "label": "Component test screen",
         "nx": 0.5,
         "ny": 0.17049999999999998,
+        "x": 0.04,
         "y": 0.151,
+        "w": 0.92,
         "h": 0.039
-      },
-      {
-        "role": "AXAdjustable",
-        "label": "Vertical scroll bar, 3 pages",
-        "value": "0%",
-        "nx": 0.9555,
-        "ny": 0.547,
-        "y": 0.165,
-        "h": 0.764
       },
       {
         "role": "AXHeading",
         "label": "Theme",
         "nx": 0.5,
         "ny": 0.22299999999999998,
+        "x": 0.04,
         "y": 0.208,
+        "w": 0.92,
         "h": 0.03
       },
       {
@@ -1413,7 +1935,9 @@
         "label": "Theme",
         "nx": 0.5,
         "ny": 0.2635,
+        "x": 0.04,
         "y": 0.252,
+        "w": 0.92,
         "h": 0.023
       },
       {
@@ -1422,7 +1946,9 @@
         "identifier": "test-theme",
         "nx": 0.5,
         "ny": 0.346,
+        "x": 0.04,
         "y": 0.252,
+        "w": 0.92,
         "h": 0.188
       },
       {
@@ -1432,7 +1958,9 @@
         "identifier": "test-theme-0",
         "nx": 0.5,
         "ny": 0.30400000000000005,
+        "x": 0.04,
         "y": 0.279,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1442,7 +1970,9 @@
         "identifier": "test-theme-1",
         "nx": 0.5,
         "ny": 0.35900000000000004,
+        "x": 0.04,
         "y": 0.334,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1452,7 +1982,9 @@
         "identifier": "test-theme-2",
         "nx": 0.5,
         "ny": 0.41400000000000003,
+        "x": 0.04,
         "y": 0.389,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1460,7 +1992,9 @@
         "label": "Buttons",
         "nx": 0.5,
         "ny": 0.491,
+        "x": 0.04,
         "y": 0.476,
+        "w": 0.92,
         "h": 0.03
       },
       {
@@ -1469,7 +2003,9 @@
         "identifier": "test-button",
         "nx": 0.5,
         "ny": 0.544,
+        "x": 0.04,
         "y": 0.519,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1478,7 +2014,9 @@
         "identifier": "test-button-disabled",
         "nx": 0.5,
         "ny": 0.609,
+        "x": 0.04,
         "y": 0.584,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1488,7 +2026,9 @@
         "identifier": "test-button-loading",
         "nx": 0.5,
         "ny": 0.673,
+        "x": 0.04,
         "y": 0.648,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1496,7 +2036,9 @@
         "label": "Form",
         "nx": 0.5,
         "ny": 0.75,
+        "x": 0.04,
         "y": 0.735,
+        "w": 0.92,
         "h": 0.03
       },
       {
@@ -1504,7 +2046,9 @@
         "label": "Email",
         "nx": 0.5,
         "ny": 0.7895,
+        "x": 0.04,
         "y": 0.778,
+        "w": 0.92,
         "h": 0.023
       },
       {
@@ -1514,15 +2058,30 @@
         "identifier": "test-textfield",
         "nx": 0.5,
         "ny": 0.8310000000000001,
+        "x": 0.045,
         "y": 0.808,
+        "w": 0.91,
         "h": 0.046
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Horizontal scroll bar, 1 page",
+        "value": "0%",
+        "nx": 0.5,
+        "ny": 0.847,
+        "x": 0.154,
+        "y": 0.83,
+        "w": 0.692,
+        "h": 0.034
       },
       {
         "role": "AXStaticText",
         "label": "Enter a valid email address.",
         "nx": 0.5,
         "ny": 0.8704999999999999,
+        "x": 0.04,
         "y": 0.86,
+        "w": 0.92,
         "h": 0.021
       },
       {
@@ -1532,17 +2091,10 @@
         "identifier": "test-switch",
         "nx": 0.5,
         "ny": 0.92,
+        "x": 0.04,
         "y": 0.895,
+        "w": 0.92,
         "h": 0.05
-      },
-      {
-        "role": "AXAdjustable",
-        "label": "Horizontal scroll bar, 1 page",
-        "value": "0%",
-        "nx": 0.5,
-        "ny": 0.9400000000000001,
-        "y": 0.923,
-        "h": 0.034
       },
       {
         "role": "AXGroup",
@@ -1551,7 +2103,9 @@
         "identifier": "test-checkbox",
         "nx": 0.5,
         "ny": 0.9794999999999999,
+        "x": 0.04,
         "y": 0.959,
+        "w": 0.92,
         "h": 0.041
       }
     ],
@@ -1561,7 +2115,9 @@
         "label": "Delete this workout?",
         "nx": 0.4995,
         "ny": 0.436,
+        "x": 0.119,
         "y": 0.421,
+        "w": 0.761,
         "h": 0.03
       },
       {
@@ -1569,7 +2125,9 @@
         "label": "This removes the workout and its logged sets. You cannot undo this.",
         "nx": 0.4995,
         "ny": 0.49000000000000005,
+        "x": 0.119,
         "y": 0.465,
+        "w": 0.761,
         "h": 0.05
       },
       {
@@ -1578,7 +2136,9 @@
         "identifier": "test-dialog-cancel",
         "nx": 0.5625,
         "ny": 0.554,
+        "x": 0.459,
         "y": 0.529,
+        "w": 0.207,
         "h": 0.05
       },
       {
@@ -1587,7 +2147,9 @@
         "identifier": "test-dialog-confirm",
         "nx": 0.7835000000000001,
         "ny": 0.554,
+        "x": 0.686,
         "y": 0.529,
+        "w": 0.195,
         "h": 0.05
       }
     ],
@@ -1597,7 +2159,20 @@
         "label": "Bottom sheet backdrop",
         "nx": 0.5,
         "ny": 0.5,
+        "x": 0,
         "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "role": "AXGroup",
+        "label": "Toolbar",
+        "identifier": "Toolbar",
+        "nx": 0.5,
+        "ny": 0.5,
+        "x": 0,
+        "y": 0,
+        "w": 1,
         "h": 1
       },
       {
@@ -1605,7 +2180,9 @@
         "label": "Email",
         "nx": 0.5,
         "ny": 0.001,
+        "x": 0.04,
         "y": 0,
+        "w": 0.92,
         "h": 0.002
       },
       {
@@ -1614,7 +2191,9 @@
         "identifier": "test-textfield",
         "nx": 0.4995,
         "ny": 0.032,
+        "x": 0.042,
         "y": 0.008,
+        "w": 0.915,
         "h": 0.048
       },
       {
@@ -1623,7 +2202,9 @@
         "identifier": "perf-theme",
         "nx": 0.168,
         "ny": 0.0685,
+        "x": 0.01,
         "y": 0.062,
+        "w": 0.316,
         "h": 0.013
       },
       {
@@ -1631,7 +2212,9 @@
         "label": "We'll send your plan here.",
         "nx": 0.5,
         "ny": 0.0725,
+        "x": 0.04,
         "y": 0.062,
+        "w": 0.92,
         "h": 0.021
       },
       {
@@ -1640,7 +2223,9 @@
         "identifier": "perf-list",
         "nx": 0.168,
         "ny": 0.0805,
+        "x": 0.01,
         "y": 0.074,
+        "w": 0.316,
         "h": 0.013
       },
       {
@@ -1648,7 +2233,9 @@
         "label": "Unistyles",
         "nx": 0.5,
         "ny": 0.096,
+        "x": 0.408,
         "y": 0.084,
+        "w": 0.184,
         "h": 0.024
       },
       {
@@ -1658,8 +2245,21 @@
         "identifier": "test-switch",
         "nx": 0.5,
         "ny": 0.121,
+        "x": 0.04,
         "y": 0.096,
+        "w": 0.92,
         "h": 0.05
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Vertical scroll bar, 4 pages",
+        "value": "45%",
+        "nx": 0.9555,
+        "ny": 0.531,
+        "x": 0.918,
+        "y": 0.133,
+        "w": 0.075,
+        "h": 0.796
       },
       {
         "role": "AXGroup",
@@ -1668,24 +2268,19 @@
         "identifier": "test-checkbox",
         "nx": 0.5,
         "ny": 0.185,
+        "x": 0.04,
         "y": 0.16,
+        "w": 0.92,
         "h": 0.05
-      },
-      {
-        "role": "AXAdjustable",
-        "label": "Vertical scroll bar, 3 pages",
-        "value": "67%",
-        "nx": 0.9555,
-        "ny": 0.547,
-        "y": 0.165,
-        "h": 0.764
       },
       {
         "role": "AXStaticText",
         "label": "Experience level",
         "nx": 0.5,
         "ny": 0.23550000000000001,
+        "x": 0.04,
         "y": 0.224,
+        "w": 0.92,
         "h": 0.023
       },
       {
@@ -1694,7 +2289,9 @@
         "identifier": "test-radiogroup",
         "nx": 0.5,
         "ny": 0.318,
+        "x": 0.04,
         "y": 0.224,
+        "w": 0.92,
         "h": 0.188
       },
       {
@@ -1704,7 +2301,9 @@
         "identifier": "test-radiogroup-0",
         "nx": 0.5,
         "ny": 0.277,
+        "x": 0.04,
         "y": 0.252,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1714,7 +2313,9 @@
         "identifier": "test-radiogroup-1",
         "nx": 0.5,
         "ny": 0.332,
+        "x": 0.04,
         "y": 0.307,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1724,7 +2325,9 @@
         "identifier": "test-radiogroup-2",
         "nx": 0.5,
         "ny": 0.387,
+        "x": 0.04,
         "y": 0.362,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1732,7 +2335,9 @@
         "label": "Rest time",
         "nx": 0.5,
         "ny": 0.4375,
+        "x": 0.04,
         "y": 0.426,
+        "w": 0.92,
         "h": 0.023
       },
       {
@@ -1741,7 +2346,9 @@
         "identifier": "test-select",
         "nx": 0.5,
         "ny": 0.47800000000000004,
+        "x": 0.04,
         "y": 0.453,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1749,7 +2356,9 @@
         "label": "Overlays",
         "nx": 0.5,
         "ny": 0.555,
+        "x": 0.04,
         "y": 0.54,
+        "w": 0.92,
         "h": 0.03
       },
       {
@@ -1758,7 +2367,9 @@
         "identifier": "test-dialog-open",
         "nx": 0.5,
         "ny": 0.609,
+        "x": 0.04,
         "y": 0.584,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1767,7 +2378,9 @@
         "identifier": "test-sheet-open",
         "nx": 0.5,
         "ny": 0.673,
+        "x": 0.04,
         "y": 0.648,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1776,7 +2389,9 @@
         "identifier": "test-sheet-open-expoui",
         "nx": 0.5,
         "ny": 0.737,
+        "x": 0.04,
         "y": 0.712,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1784,7 +2399,9 @@
         "label": "Bottom sheet handle",
         "nx": 0.5,
         "ny": 0.7645,
+        "x": 0,
         "y": 0.751,
+        "w": 1,
         "h": 0.027
       },
       {
@@ -1792,7 +2409,9 @@
         "label": "Bottom Sheet",
         "nx": 0.5,
         "ny": 0.8755,
+        "x": 0,
         "y": 0.751,
+        "w": 1,
         "h": 0.249
       },
       {
@@ -1801,7 +2420,9 @@
         "identifier": "test-toast-show",
         "nx": 0.5,
         "ny": 0.801,
+        "x": 0.04,
         "y": 0.776,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -1809,7 +2430,9 @@
         "label": "Bottom Sheet",
         "nx": 0.5,
         "ny": 0.889,
+        "x": 0,
         "y": 0.778,
+        "w": 1,
         "h": 0.222
       },
       {
@@ -1817,7 +2440,9 @@
         "label": "Goblet squat",
         "nx": 0.5005,
         "ny": 0.8200000000000001,
+        "x": 0.06,
         "y": 0.805,
+        "w": 0.881,
         "h": 0.03
       },
       {
@@ -1825,7 +2450,9 @@
         "label": "Hold the kettlebell at your chest, sit back and down, then drive up through your heels.",
         "nx": 0.5005,
         "ny": 0.874,
+        "x": 0.06,
         "y": 0.849,
+        "w": 0.881,
         "h": 0.05
       },
       {
@@ -1833,7 +2460,9 @@
         "label": "Tabs",
         "nx": 0.5,
         "ny": 0.878,
+        "x": 0.04,
         "y": 0.863,
+        "w": 0.92,
         "h": 0.03
       },
       {
@@ -1842,7 +2471,9 @@
         "identifier": "test-tabs-0",
         "nx": 0.1935,
         "ny": 0.931,
+        "x": 0.04,
         "y": 0.906,
+        "w": 0.307,
         "h": 0.05
       },
       {
@@ -1851,7 +2482,9 @@
         "identifier": "test-tabs-1",
         "nx": 0.5005,
         "ny": 0.931,
+        "x": 0.347,
         "y": 0.906,
+        "w": 0.307,
         "h": 0.05
       },
       {
@@ -1860,7 +2493,9 @@
         "identifier": "test-tabs-2",
         "nx": 0.8065,
         "ny": 0.931,
+        "x": 0.653,
         "y": 0.906,
+        "w": 0.307,
         "h": 0.05
       },
       {
@@ -1869,7 +2504,9 @@
         "identifier": "test-sheet-close",
         "nx": 0.5005,
         "ny": 0.9380000000000001,
+        "x": 0.06,
         "y": 0.913,
+        "w": 0.881,
         "h": 0.05
       },
       {
@@ -1878,7 +2515,9 @@
         "value": "0%",
         "nx": 0.5,
         "ny": 0.979,
+        "x": 0.154,
         "y": 0.962,
+        "w": 0.692,
         "h": 0.034
       },
       {
@@ -1886,7 +2525,9 @@
         "label": "3 exercises left today.",
         "nx": 0.5,
         "ny": 0.9834999999999999,
+        "x": 0.04,
         "y": 0.971,
+        "w": 0.92,
         "h": 0.025
       }
     ],
@@ -1897,24 +2538,30 @@
         "identifier": "PopoverDismissRegion",
         "nx": 0.5,
         "ny": 0.5,
+        "x": 0,
         "y": 0,
+        "w": 1,
         "h": 1
       },
       {
         "role": "AXButton",
         "label": "Sheet Grabber",
         "value": "Collapsed",
-        "nx": 0.5,
-        "ny": 0.8115,
-        "y": 0.798,
-        "h": 0.027
+        "nx": 0.5005,
+        "ny": 0.812,
+        "x": 0.381,
+        "y": 0.799,
+        "w": 0.239,
+        "h": 0.026
       },
       {
         "role": "AXHeading",
         "label": "Goblet squat",
         "nx": 0.20199999999999999,
         "ny": 0.834,
+        "x": 0.058,
         "y": 0.821,
+        "w": 0.288,
         "h": 0.026
       },
       {
@@ -1922,7 +2569,9 @@
         "label": "Hold the kettlebell at your chest, sit back and down, then drive up through your heels.",
         "nx": 0.4535,
         "ny": 0.881,
+        "x": 0.058,
         "y": 0.86,
+        "w": 0.791,
         "h": 0.042
       },
       {
@@ -1931,7 +2580,9 @@
         "identifier": "test-sheet-expoui-close",
         "nx": 0.138,
         "ny": 0.935,
+        "x": 0.058,
         "y": 0.916,
+        "w": 0.16,
         "h": 0.038
       }
     ],
@@ -1941,7 +2592,9 @@
         "label": "Rest time",
         "nx": 0.5005,
         "ny": 0.5,
+        "x": 0.06,
         "y": 0.365,
+        "w": 0.881,
         "h": 0.27
       },
       {
@@ -1951,7 +2604,9 @@
         "identifier": "test-select-option-0",
         "nx": 0.5005,
         "ny": 0.399,
+        "x": 0.06,
         "y": 0.374,
+        "w": 0.881,
         "h": 0.05
       },
       {
@@ -1961,7 +2616,9 @@
         "identifier": "test-select-option-1",
         "nx": 0.5005,
         "ny": 0.449,
+        "x": 0.06,
         "y": 0.424,
+        "w": 0.881,
         "h": 0.05
       },
       {
@@ -1971,7 +2628,9 @@
         "identifier": "test-select-option-2",
         "nx": 0.5005,
         "ny": 0.5,
+        "x": 0.06,
         "y": 0.475,
+        "w": 0.881,
         "h": 0.05
       },
       {
@@ -1981,7 +2640,9 @@
         "identifier": "test-select-option-3",
         "nx": 0.5005,
         "ny": 0.55,
+        "x": 0.06,
         "y": 0.525,
+        "w": 0.881,
         "h": 0.05
       },
       {
@@ -1991,17 +2652,32 @@
         "identifier": "test-select-option-4",
         "nx": 0.5005,
         "ny": 0.601,
+        "x": 0.06,
         "y": 0.576,
+        "w": 0.881,
         "h": 0.05
       }
     ],
     "toast": [
       {
+        "role": "AXGroup",
+        "label": "Toolbar",
+        "identifier": "Toolbar",
+        "nx": 0.5,
+        "ny": 0.5,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      {
         "role": "AXStaticText",
         "label": "Email",
         "nx": 0.5,
         "ny": 0.001,
+        "x": 0.04,
         "y": 0,
+        "w": 0.92,
         "h": 0.002
       },
       {
@@ -2010,7 +2686,9 @@
         "identifier": "test-textfield",
         "nx": 0.4995,
         "ny": 0.032,
+        "x": 0.042,
         "y": 0.008,
+        "w": 0.915,
         "h": 0.048
       },
       {
@@ -2018,7 +2696,9 @@
         "label": "Theme switch: not measured",
         "nx": 0.168,
         "ny": 0.0685,
+        "x": 0.01,
         "y": 0.062,
+        "w": 0.316,
         "h": 0.013
       },
       {
@@ -2026,7 +2706,9 @@
         "label": "We'll send your plan here.",
         "nx": 0.5,
         "ny": 0.0725,
+        "x": 0.04,
         "y": 0.062,
+        "w": 0.92,
         "h": 0.021
       },
       {
@@ -2034,7 +2716,9 @@
         "label": "List mount: not measured",
         "nx": 0.168,
         "ny": 0.0805,
+        "x": 0.01,
         "y": 0.074,
+        "w": 0.316,
         "h": 0.013
       },
       {
@@ -2042,7 +2726,9 @@
         "label": "Unistyles",
         "nx": 0.5,
         "ny": 0.096,
+        "x": 0.408,
         "y": 0.084,
+        "w": 0.184,
         "h": 0.024
       },
       {
@@ -2052,8 +2738,21 @@
         "identifier": "test-switch",
         "nx": 0.5,
         "ny": 0.121,
+        "x": 0.04,
         "y": 0.096,
+        "w": 0.92,
         "h": 0.05
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Vertical scroll bar, 4 pages",
+        "value": "45%",
+        "nx": 0.9555,
+        "ny": 0.531,
+        "x": 0.918,
+        "y": 0.133,
+        "w": 0.075,
+        "h": 0.796
       },
       {
         "role": "AXGroup",
@@ -2062,24 +2761,19 @@
         "identifier": "test-checkbox",
         "nx": 0.5,
         "ny": 0.185,
+        "x": 0.04,
         "y": 0.16,
+        "w": 0.92,
         "h": 0.05
-      },
-      {
-        "role": "AXAdjustable",
-        "label": "Vertical scroll bar, 3 pages",
-        "value": "67%",
-        "nx": 0.9555,
-        "ny": 0.547,
-        "y": 0.165,
-        "h": 0.764
       },
       {
         "role": "AXStaticText",
         "label": "Experience level",
         "nx": 0.5,
         "ny": 0.23550000000000001,
+        "x": 0.04,
         "y": 0.224,
+        "w": 0.92,
         "h": 0.023
       },
       {
@@ -2088,7 +2782,9 @@
         "identifier": "test-radiogroup",
         "nx": 0.5,
         "ny": 0.318,
+        "x": 0.04,
         "y": 0.224,
+        "w": 0.92,
         "h": 0.188
       },
       {
@@ -2098,7 +2794,9 @@
         "identifier": "test-radiogroup-0",
         "nx": 0.5,
         "ny": 0.277,
+        "x": 0.04,
         "y": 0.252,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -2108,7 +2806,9 @@
         "identifier": "test-radiogroup-1",
         "nx": 0.5,
         "ny": 0.332,
+        "x": 0.04,
         "y": 0.307,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -2118,7 +2818,9 @@
         "identifier": "test-radiogroup-2",
         "nx": 0.5,
         "ny": 0.387,
+        "x": 0.04,
         "y": 0.362,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -2126,7 +2828,9 @@
         "label": "Rest time",
         "nx": 0.5,
         "ny": 0.4375,
+        "x": 0.04,
         "y": 0.426,
+        "w": 0.92,
         "h": 0.023
       },
       {
@@ -2135,7 +2839,9 @@
         "identifier": "test-select",
         "nx": 0.5,
         "ny": 0.47800000000000004,
+        "x": 0.04,
         "y": 0.453,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -2143,7 +2849,9 @@
         "label": "Overlays",
         "nx": 0.5,
         "ny": 0.555,
+        "x": 0.04,
         "y": 0.54,
+        "w": 0.92,
         "h": 0.03
       },
       {
@@ -2152,7 +2860,9 @@
         "identifier": "test-dialog-open",
         "nx": 0.5,
         "ny": 0.609,
+        "x": 0.04,
         "y": 0.584,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -2161,7 +2871,9 @@
         "identifier": "test-sheet-open",
         "nx": 0.5,
         "ny": 0.673,
+        "x": 0.04,
         "y": 0.648,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -2170,7 +2882,9 @@
         "identifier": "test-sheet-open-expoui",
         "nx": 0.5,
         "ny": 0.737,
+        "x": 0.04,
         "y": 0.712,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -2179,7 +2893,9 @@
         "identifier": "test-toast-show",
         "nx": 0.5,
         "ny": 0.801,
+        "x": 0.04,
         "y": 0.776,
+        "w": 0.92,
         "h": 0.05
       },
       {
@@ -2187,7 +2903,9 @@
         "label": "Tabs",
         "nx": 0.5,
         "ny": 0.878,
+        "x": 0.04,
         "y": 0.863,
+        "w": 0.92,
         "h": 0.03
       },
       {
@@ -2196,7 +2914,9 @@
         "identifier": "test-tabs-0",
         "nx": 0.1935,
         "ny": 0.931,
+        "x": 0.04,
         "y": 0.906,
+        "w": 0.307,
         "h": 0.05
       },
       {
@@ -2205,7 +2925,9 @@
         "identifier": "test-tabs-1",
         "nx": 0.5005,
         "ny": 0.931,
+        "x": 0.347,
         "y": 0.906,
+        "w": 0.307,
         "h": 0.05
       },
       {
@@ -2214,7 +2936,9 @@
         "identifier": "test-tabs-2",
         "nx": 0.8065,
         "ny": 0.931,
+        "x": 0.653,
         "y": 0.906,
+        "w": 0.307,
         "h": 0.05
       },
       {
@@ -2222,7 +2946,9 @@
         "label": "Set logged",
         "nx": 0.5005,
         "ny": 0.9325,
+        "x": 0.08,
         "y": 0.92,
+        "w": 0.841,
         "h": 0.025
       },
       {
@@ -2231,7 +2957,9 @@
         "value": "0%",
         "nx": 0.5,
         "ny": 0.979,
+        "x": 0.154,
         "y": 0.962,
+        "w": 0.692,
         "h": 0.034
       },
       {
@@ -2239,8 +2967,56 @@
         "label": "3 exercises left today.",
         "nx": 0.5,
         "ny": 0.9834999999999999,
+        "x": 0.04,
         "y": 0.971,
+        "w": 0.92,
         "h": 0.025
+      }
+    ],
+    "menu": [
+      {
+        "role": "AXGroup",
+        "label": "Workout options",
+        "identifier": "test-menu",
+        "nx": 0.5005,
+        "ny": 0.4995,
+        "x": 0.06,
+        "y": 0.415,
+        "w": 0.881,
+        "h": 0.169
+      },
+      {
+        "role": "AXButton",
+        "label": "Duplicate",
+        "identifier": "test-menu-item-0",
+        "nx": 0.5005,
+        "ny": 0.449,
+        "x": 0.06,
+        "y": 0.424,
+        "w": 0.881,
+        "h": 0.05
+      },
+      {
+        "role": "AXButton",
+        "label": "Share",
+        "identifier": "test-menu-item-1",
+        "nx": 0.5005,
+        "ny": 0.5,
+        "x": 0.06,
+        "y": 0.475,
+        "w": 0.881,
+        "h": 0.05
+      },
+      {
+        "role": "AXButton",
+        "label": "Archive",
+        "identifier": "test-menu-item-2",
+        "nx": 0.5005,
+        "ny": 0.55,
+        "x": 0.06,
+        "y": 0.525,
+        "w": 0.881,
+        "h": 0.05
       }
     ]
   }

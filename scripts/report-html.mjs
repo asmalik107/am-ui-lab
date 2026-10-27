@@ -65,10 +65,18 @@ const cell = (f) => {
   if (!f) return '<td class="na" title="Not applicable: this app has no such element"><span aria-hidden="true">–</span><span class="sr">not applicable</span></td>';
   return `<td class="${f.pass ? 'pass' : 'fail'}" title="${esc(f.detail)}"><span aria-hidden="true">${f.pass ? '✓' : '✗'}</span><span class="sr">${f.pass ? 'pass' : 'fail'}</span></td>`;
 };
-const score = (a) => {
-  const f = data[a].a11y?.findings ?? [];
-  return `${f.filter((x) => x.pass).length} / ${f.length}`;
+const score = (a, key = 'a11y') => {
+  const f = data[a][key]?.findings;
+  return f ? `${f.filter((x) => x.pass).length} / ${f.length}` : 'not run';
 };
+// Checks whose result in the dark or brand theme differs from light.
+const themeDiffs = apps.flatMap(([a, name]) => ['dark', 'brand'].flatMap((t) => (data[a][t]?.findings ?? []).filter((f) => {
+  const l = result(a, `${f.component} | ${f.check}`);
+  return l && l.pass !== f.pass;
+}).map((f) => ({ name, theme: t, f }))));
+const themeDiffHtml = themeDiffs.length
+  ? `<ul>${themeDiffs.map((d) => `<li><strong>${esc(d.name)}, ${d.theme}:</strong> ${esc(d.f.component)} – ${esc(d.f.check)}: ${d.f.pass ? 'passes' : 'fails'} (light: ${d.f.pass ? 'fails' : 'passes'}). <span class="what">${esc(d.f.detail)}</span></li>`).join('')}</ul>`
+  : '<p>No check gave a different result in the dark or brand theme than in light.</p>';
 
 // Bottom sheets: every sheet gets the same five checks, but listing each
 // sheet as its own block gave 25 mostly empty rows. Instead there is one row
@@ -215,6 +223,22 @@ const metricCharts = [
   return figure(`metric-${i}`, title, note, rows, max, title);
 }).join('\n');
 
+// Developer cost, from results/devcost.json (scripts/devcost.mjs).
+const devcostFile = new URL('results/devcost.json', root);
+const devcost = existsSync(devcostFile) ? JSON.parse(readFileSync(devcostFile, 'utf8')) : null;
+const devRow = (label, fn, note) => `<tr><th scope="row">${label}<span class="what">${esc(note)}</span></th>${apps.map(([a]) => `<td>${esc(fn(devcost.rows.find((r) => r.app === a)))}</td>`).join('')}</tr>`;
+const devcostRows = devcost
+  ? [
+      devRow('Own source lines', (r) => r.screenLines, devcost.how.screenLines),
+      devRow('Copied kit lines', (r) => r.copiedLines, devcost.how.copiedLines),
+      devRow('Config files', (r) => r.configFiles.length, devcost.how.configFiles),
+      devRow('Setup steps', (r) => r.setupSteps ?? 'no NOTES.md', devcost.how.setupSteps),
+      devRow('Errors hit', (r) => r.errorsHit ?? 'no NOTES.md', devcost.how.errorsHit),
+      devRow('tsc errors, src/ / all', (r) => `${r.tsc.src} / ${r.tsc.all}`, devcost.how.tsc),
+      devRow('Hand-written accessibility props', (r) => r.a11yProps, devcost.how.a11yProps),
+    ].join('\n')
+  : '';
+
 // The device each app's audit actually ran on, as recorded in its results.
 const devices = [...new Set(apps.map(([a]) => data[a].a11y?.device).filter(Boolean).map((d) => `an ${d.name} simulator running ${d.runtime}`))];
 const deviceText = devices.length ? devices.join(' and ') : 'a simulator (device not recorded in these results)';
@@ -289,10 +313,16 @@ ${scoreCharts}
 <div class="wrap"><table>
 <thead><tr><th>#</th><th scope="col" class="check">Check</th>${apps.map(([, name, kind]) => `<th scope="col">${esc(name)}<small>${esc(kind)}</small></th>`).join('')}</tr></thead>
 <tbody>
-<tr class="score"><td></td><th scope="row">Checks passed</th>${apps.map(([a]) => `<td>${score(a)}</td>`).join('')}</tr>
+<tr class="score"><td></td><th scope="row">Checks passed, light theme</th>${apps.map(([a]) => `<td>${score(a)}</td>`).join('')}</tr>
+<tr class="score"><td></td><th scope="row">Checks passed, dark theme</th>${apps.map(([a]) => `<td>${score(a, 'dark')}</td>`).join('')}</tr>
+<tr class="score"><td></td><th scope="row">Checks passed, brand theme</th>${apps.map(([a]) => `<td>${score(a, 'brand')}</td>`).join('')}</tr>
 ${checkRows}
 </tbody>
 </table></div>
+
+<h2>Dark and brand themes</h2>
+<p>Every check also ran with the app switched to its dark and brand themes. The grid above shows light; this lists every check whose result changed.</p>
+${themeDiffHtml}
 
 <h2>Startup, memory, scrolling, timings and size</h2>
 <p>Bars compare the eight apps on one measure; shorter is better on every chart here. Frame hitches couldn’t be measured on the simulator (xctrace: “Hitches is not supported on this platform”), so scrolling is shown as the app’s CPU time while flinging the list.</p>
@@ -306,6 +336,14 @@ ${metricCharts}
 <thead><tr><th scope="col" class="check">Measure</th>${apps.map(([, name]) => `<th scope="col">${esc(name)}</th>`).join('')}</tr></thead>
 <tbody>
 ${otherRows}
+</tbody>
+</table></div>
+<h2>Developer cost</h2>
+<p>Counted with <code>scripts/devcost.mjs</code>${devcost ? ` on ${esc(devcost.date)}` : ''}. Each row says how it was counted.</p>
+<div class="wrap"><table>
+<thead><tr><th scope="col" class="check">Count</th>${apps.map(([, name]) => `<th scope="col">${esc(name)}</th>`).join('')}</tr></thead>
+<tbody>
+${devcostRows}
 </tbody>
 </table></div>
 </main>

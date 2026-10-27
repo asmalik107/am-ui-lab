@@ -243,3 +243,135 @@ export function Tabs({ tabs, panels, testID }: { tabs: readonly string[]; panels
 }
 
 export { announce };
+
+type SliderProps = { label: string; unit: string; value: number; min: number; max: number; step: number; onChange: (v: number) => void; testID?: string };
+
+// React Native has no slider, so this one is built from a View.
+// accessibilityRole="adjustable" (role has no such value) gives the iOS adjustable trait; VoiceOver's swipe up/down fires the
+// increment/decrement actions, and aria-valuetext is what it reads. Touch uses
+// the responder system: the thumb follows the finger along the track.
+export function Slider({ label, unit, value, min, max, step, onChange, testID }: SliderProps) {
+  const { theme } = useTheme();
+  const c = theme.colors;
+  const [width, setWidth] = useState(0);
+  const clamp = (v: number) => Math.min(max, Math.max(min, Math.round(v / step) * step));
+  const fromX = (x: number) => (width ? onChange(clamp(min + (x / width) * (max - min))) : undefined);
+  const pct = (value - min) / (max - min);
+  return (
+    <View style={{ gap: theme.space.xs }}>
+      <Text style={[theme.type.label, { color: c.text }]}>
+        {label}: {value} {unit}
+      </Text>
+      <View
+        testID={testID}
+        accessible
+        accessibilityRole="adjustable"
+        accessibilityLabel={label}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value}
+        aria-valuetext={`${value} ${unit}`}
+        accessibilityActions={[{ name: 'increment' }, { name: 'decrement' }]}
+        onAccessibilityAction={(e) => onChange(clamp(value + (e.nativeEvent.actionName === 'increment' ? step : -step)))}
+        onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
+        onStartShouldSetResponder={() => true}
+        onResponderTerminationRequest={() => false}
+        onResponderGrant={(e) => fromX(e.nativeEvent.locationX)}
+        onResponderMove={(e) => fromX(e.nativeEvent.locationX)}
+        style={{ height: target, justifyContent: 'center' }}>
+        <View pointerEvents="none" style={{ height: 6, borderRadius: 3, backgroundColor: c.border }}>
+          <View style={{ width: `${pct * 100}%`, height: 6, borderRadius: 3, backgroundColor: c.primary }} />
+        </View>
+        <View
+          pointerEvents="none"
+          style={{ position: 'absolute', left: pct * width - 14, width: 28, height: 28, borderRadius: 14, backgroundColor: c.surfaceRaised, borderWidth: 2, borderColor: c.primary }}
+        />
+      </View>
+    </View>
+  );
+}
+
+// role="progressbar" with aria-value*: the value text is what VoiceOver reads.
+export function Progress({ label, value, max, valueText, testID }: { label: string; value: number; max: number; valueText: string; testID?: string }) {
+  const { theme } = useTheme();
+  const c = theme.colors;
+  return (
+    <View style={{ gap: theme.space.xs }}>
+      <Text style={[theme.type.label, { color: c.text }]}>{label}</Text>
+      <View
+        testID={testID}
+        accessible
+        role="progressbar"
+        accessibilityLabel={label}
+        aria-valuemin={0}
+        aria-valuemax={max}
+        aria-valuenow={value}
+        aria-valuetext={valueText}
+        style={{ height: 8, borderRadius: 4, backgroundColor: c.border }}>
+        <View style={{ width: `${(value / max) * 100}%`, height: 8, borderRadius: 4, backgroundColor: c.primary }} />
+      </View>
+      <Text style={[theme.type.caption, { color: c.textMuted }]}>{valueText}</Text>
+    </View>
+  );
+}
+
+// Each header is a button with aria-expanded. On iOS, React Native adds
+// "expanded" to the value when open and nothing when closed.
+export function Accordion({ sections, panels, testID }: { sections: readonly string[]; panels: readonly string[]; testID?: string }) {
+  const { theme } = useTheme();
+  const c = theme.colors;
+  const [open, setOpen] = useState<number[]>([]);
+  return (
+    <View style={{ borderWidth: 1, borderColor: c.border, borderRadius: theme.radius.md }}>
+      {sections.map((s, i) => {
+        const expanded = open.includes(i);
+        return (
+          <View key={s} style={{ borderTopWidth: i ? 1 : 0, borderColor: c.border }}>
+            <Pressable
+              testID={`${testID}-${i}`}
+              role="button"
+              aria-expanded={expanded}
+              accessibilityLabel={s}
+              onPress={() => setOpen(expanded ? open.filter((x) => x !== i) : [...open, i])}
+              style={{ minHeight: target, paddingHorizontal: theme.space.md, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Text style={[theme.type.label, { color: c.text }]}>{s}</Text>
+              <Text importantForAccessibility="no" accessibilityElementsHidden style={{ color: c.textMuted }}>
+                {expanded ? '▴' : '▾'}
+              </Text>
+            </Pressable>
+            {expanded && <Text style={[theme.type.body, { color: c.textMuted, paddingHorizontal: theme.space.md, paddingBottom: theme.space.md }]}>{panels[i]}</Text>}
+          </View>
+        );
+      })}
+    </View>
+  );
+}
+
+// A row of buttons; aria-selected gives the iOS selected trait, as UIKit's
+// segmented control does.
+export function Segmented({ label, options, value, onChange, testID }: { label: string; options: readonly string[]; value: string; onChange: (v: string) => void; testID?: string }) {
+  const { theme } = useTheme();
+  const c = theme.colors;
+  return (
+    <View style={{ gap: theme.space.xs }}>
+      <Text style={[theme.type.label, { color: c.text }]}>{label}</Text>
+      <View testID={testID} accessibilityLabel={label} style={{ flexDirection: 'row', borderWidth: 1, borderColor: c.border, borderRadius: theme.radius.md, padding: 2 }}>
+        {options.map((o, i) => {
+          const selected = o === value;
+          return (
+            <Pressable
+              key={o}
+              testID={`${testID}-${i}`}
+              role="button"
+              aria-selected={selected}
+              accessibilityLabel={o}
+              onPress={() => onChange(o)}
+              style={{ flex: 1, minHeight: target, alignItems: 'center', justifyContent: 'center', borderRadius: theme.radius.sm, backgroundColor: selected ? c.primary : 'transparent' }}>
+              <Text style={[theme.type.label, { color: selected ? c.onPrimary : c.text }]}>{o}</Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+}

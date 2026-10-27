@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Installs one app's build on the simulator and runs the accessibility audit.
-# Usage: scripts/audit-app.sh <app> <udid> [Release|Debug]
+# Usage: scripts/audit-app.sh <app> <udid> [Release|Debug] [light|dark|brand]
 # Release is the default: the JS bundle is embedded, so no Metro is needed.
 set -euo pipefail
-app="$1"; udid="$2"; config="${3:-Release}"
+app="$1"; udid="$2"; config="${3:-Release}"; theme="${4:-light}"
 root="$(cd "$(dirname "$0")/.." && pwd)"
 bundle="dev.asimmalik.uilab.$app"
 appPath=$(ls -d "$root/apps/$app/ios/build/Build/Products/$config-iphonesimulator/"*.app | head -1)
@@ -14,4 +14,4 @@ if [ "$config" = "Debug" ]; then
   for _ in $(seq 1 60); do curl -s -m 1 localhost:8081/status | grep -q running && break; sleep 1; done
 fi
 argent run reinstall-app --json --args "{\"udid\":\"$udid\",\"bundleId\":\"$bundle\",\"appPath\":\"$appPath\"}" >/dev/null
-BUILD_CONFIG="$config" node "$root/scripts/a11y-audit.mjs" "$app" "$bundle" "$udid"
+BUILD_CONFIG="$config" node "$root/scripts/a11y-audit.mjs" "$app" "$bundle" "$udid" --theme "$theme"

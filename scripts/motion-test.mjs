@@ -12,11 +12,14 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
+import { deviceInfo } from './device.mjs';
+
 const [app, bundleId, udid] = process.argv.slice(2);
 if (!app || !bundleId || !udid) {
   console.error('Usage: node scripts/motion-test.mjs <app> <bundleId> <udid>');
   process.exit(1);
 }
+const device = deviceInfo(udid);
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
 
@@ -103,11 +106,11 @@ try {
   setReduceMotion(false); // never leave the simulator with Reduce Motion on
 }
 
-writeFileSync(new URL('ios-motion.json', outDir), JSON.stringify({ app, bundleId, udid, date: new Date().toISOString(), runs }, null, 2));
+writeFileSync(new URL('ios-motion.json', outDir), JSON.stringify({ app, bundleId, udid, device, date: new Date().toISOString(), runs }, null, 2));
 const md = [
   `# ${app}: Reduce Motion`,
   '',
-  `Run ${new Date().toISOString().slice(0, 10)} with \`scripts/motion-test.mjs\`. Transition duration of the open, from a real-time 30 fps screen recording: the run of visibly changing frames (mean luma difference above 1.0) around the largest change, which is the overlay appearing. An instant change is one frame (33 ms); an animation lasts as long as it runs. Reduce Motion was set before launch; switching it while the app runs was not tested.`,
+  `Run ${new Date().toISOString().slice(0, 10)} on the ${device.name} simulator (${device.runtime}) with \`scripts/motion-test.mjs\`. Transition duration of the open, from a real-time 30 fps screen recording: the run of visibly changing frames (mean luma difference above 1.0) around the largest change, which is the overlay appearing. An instant change is one frame (33 ms); an animation lasts as long as it runs. Reduce Motion was set before launch; switching it while the app runs was not tested.`,
   '',
   '| Component | Reduce Motion off | Reduce Motion on |',
   '| --- | --- | --- |',

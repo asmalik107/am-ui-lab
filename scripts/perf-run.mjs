@@ -6,12 +6,15 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
+import { deviceInfo } from './device.mjs';
+
 const [app, bundleId, udid, runsArg] = process.argv.slice(2);
 const runs = Number(runsArg ?? 10);
 if (!app || !bundleId || !udid) {
   console.error('Usage: node scripts/perf-run.mjs <app> <bundleId> <udid> [runs]');
   process.exit(1);
 }
+const device = deviceInfo(udid);
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
 
@@ -103,13 +106,13 @@ for (let i = 0; i < runs; i++) {
   await sleep(700);
 }
 
-const result = { app, bundleId, udid, date: new Date().toISOString(), theme: stats(theme), list: stats(list) };
+const result = { app, bundleId, udid, device, date: new Date().toISOString(), theme: stats(theme), list: stats(list) };
 writeFileSync(new URL('ios-perf.json', outDir), JSON.stringify(result, null, 2));
 const row = (name, s) => `| ${name} | ${s.n} | ${s.median.toFixed(1)} | ${s.min.toFixed(1)}–${s.max.toFixed(1)} |`;
 const md = [
   `# ${app}: iOS timings`,
   '',
-  `Run ${result.date.slice(0, 10)} on simulator ${udid} with \`scripts/perf-run.mjs\`, Release build. Times are from the tap to the second frame after the update (\`src/perf.ts\`).`,
+  `Run ${result.date.slice(0, 10)} on the ${device.name} simulator (${device.runtime}, ${udid}) with \`scripts/perf-run.mjs\`, Release build. Times are from the tap to the second frame after the update (\`src/perf.ts\`).`,
   '',
   '| Measure | Runs | Median (ms) | Range (ms) |',
   '| --- | --- | --- | --- |',

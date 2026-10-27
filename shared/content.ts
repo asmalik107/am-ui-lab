@@ -27,6 +27,12 @@ export const ids = {
   list: 'test-list',
   themeSwitcher: 'test-theme',
   nativeSwitch: 'test-native-switch',
+  slider: 'test-slider',
+  progress: 'test-progress',
+  accordion: 'test-accordion',
+  menuOpen: 'test-menu-open',
+  menu: 'test-menu',
+  segmented: 'test-segmented',
   perfTheme: 'perf-theme',
   perfList: 'perf-list',
 } as const;
@@ -63,6 +69,19 @@ export const copy = {
   themeLabel: 'Theme',
   themes: ['Light', 'Dark', 'Brand'],
   nativeSwitchLabel: 'Sync with Health (native control)',
+  moreTitle: 'More components',
+  sliderLabel: 'Weight',
+  sliderUnit: 'kg',
+  slider: { min: 0, max: 200, step: 2.5, initial: 60 },
+  progressLabel: 'Workout progress',
+  progress: { value: 3, max: 8 },
+  progressText: '3 of 8 exercises',
+  accordionSections: ['Warm-up', 'Main set', 'Cool-down'],
+  accordionPanels: ['Five minutes of easy cycling.', 'Four rounds of goblet squats and rows.', 'Stretch your hips and hamstrings.'],
+  menuOpen: 'Workout options',
+  menuItems: ['Duplicate', 'Share', 'Archive'],
+  segmentedLabel: 'Chart range',
+  segmentedOptions: ['Week', 'Month', 'Year'],
 } as const;
 
 export type Row = { id: string; title: string; subtitle: string };

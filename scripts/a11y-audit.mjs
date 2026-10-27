@@ -2,18 +2,32 @@
 // through the argent CLI. Every app is put through the same states and the
 // same rules, and the raw accessibility trees are saved next to the report.
 //
-// Usage: node scripts/a11y-audit.mjs <app> <bundleId> <udid>
-// Output: results/<app>/ios-a11y.json and results/<app>/ios-a11y.md
+// Usage: node scripts/a11y-audit.mjs <app> <bundleId> <udid> [--theme light|dark|brand]
+// Output: results/<app>/ios-a11y.json and .md for light (the default), and
+// ios-a11y-<theme>.json and .md for dark and brand.
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-const [app, bundleId, udid] = process.argv.slice(2);
-if (!app || !bundleId || !udid) {
-  console.error('Usage: node scripts/a11y-audit.mjs <app> <bundleId> <udid>');
+import { deviceInfo } from './device.mjs';
+
+const argv = process.argv.slice(2);
+const ti = argv.indexOf('--theme');
+const themeName = ti >= 0 ? argv.splice(ti, 2)[1] : 'light';
+const [app, bundleId, udid] = argv;
+const themes = ['light', 'dark', 'brand'];
+if (!app || !bundleId || !udid || !themes.includes(themeName)) {
+  console.error('Usage: node scripts/a11y-audit.mjs <app> <bundleId> <udid> [--theme light|dark|brand]');
   process.exit(1);
 }
+const suffix = themeName === 'light' ? '' : `-${themeName}`;
+const device = deviceInfo(udid);
 
 const copyOptions = ['30 seconds', '45 seconds', '60 seconds', '90 seconds', '2 minutes'];
+// Items 15–19, as in shared/content.ts.
+const copyPanel = 'Five minutes of easy cycling';
+const menuItems = ['Duplicate', 'Share', 'Archive'];
+const segOptions = ['Week', 'Month', 'Year'];
 const MIN_TARGET = 44; // Apple HIG default control size, in points
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
@@ -52,7 +66,7 @@ function axTree() {
     const m = line.match(/^\s+(AX\w+)(?: "((?:[^"\\]|\\.)*)")?(?: value="((?:[^"\\]|\\.)*)")?(?: id="([^"]*)")?\s+\(([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\)/);
     if (!m) continue;
     const [x, y, w, h] = m.slice(5, 9).map(Number);
-    els.push({ role: m[1], label: m[2] ?? '', value: m[3], identifier: m[4], nx: x + w / 2, ny: y + h / 2, y, h });
+    els.push({ role: m[1], label: m[2] ?? '', value: m[3], identifier: m[4], nx: x + w / 2, ny: y + h / 2, x, y, w, h });
   }
   return els;
 }
@@ -60,14 +74,11 @@ const byId = (els, id) => els.find((e) => e.identifier === id);
 const tap = (e) => argent('gesture-tap', { x: e.nx, y: e.ny });
 const swipe = (dy) => argent('gesture-swipe', { fromX: 0.5, fromY: 0.5 + dy / 2, toX: 0.5, toY: 0.5 - dy / 2, momentum: false, durationMs: 300 });
 
-// Scrolls until the element is comfortably on screen in the system tree, then taps it.
-async function tapId(id) {
+// Scrolls until the element is comfortably on screen in the system tree.
+async function reach(id) {
   for (let i = 0; i < 14; i++) {
     const e = byId(axTree(), id);
-    if (e && e.y > 0.12 && e.y + e.h < 0.92) {
-      tap(e);
-      return;
-    }
+    if (e && e.y > 0.12 && e.y + e.h < 0.92) return e;
     const n = byId(tree(), id);
     if (!n) throw new Error(`element ${id} not in tree`);
     swipe(n.frame.y / screen.height <= 0.12 ? -0.35 : 0.35);
@@ -75,6 +86,7 @@ async function tapId(id) {
   }
   throw new Error(`could not scroll ${id} into view`);
 }
+const tapId = async (id) => tap(await reach(id));
 async function waitFor(pred, ms = 4000) {
   const end = Date.now() + ms;
   while (Date.now() < end) {
@@ -94,12 +106,25 @@ const add = (component, check, pass, detail) => findings.push({ component, check
 const desc = (e) => (e ? `label="${e.label ?? ''}" value="${e.value ?? ''}" traits=[${e.traits.join(', ')}] ${Math.round(e.frame.width)}×${Math.round(e.frame.height)}pt` : 'missing');
 
 // Each overlay test starts from a fresh launch, so an overlay that fails to
-// close can't affect the next test.
+// close can't affect the next test. A restart resets the app to the light
+// theme, so for dark and brand the theme radio is tapped after every launch,
+// and the screen is scrolled back to the top so every test starts the same way.
 async function fresh() {
   argent('restart-app', { bundleId });
   await waitFor((els) => hasLabel(els, 'Component test screen'), 60000);
   await sleep(800);
+  if (themeName === 'light') return;
+  await tapId(`test-theme-${themes.indexOf(themeName)}`);
+  await sleep(800);
+  for (let i = 0; i < 3; i++) swipe(-0.6);
+  await sleep(600);
+  // One screenshot per run shows the theme really was applied.
+  if (!shot) {
+    shot = `a11y-${themeName}.png`;
+    execFileSync('argent', ['run', 'screenshot', '--udid', udid, '--scale', '0.5', '--out', fileURLToPath(new URL(shot, outDir))]);
+  }
 }
+let shot;
 await fresh();
 
 // 1. Main screen: name, role, state and target size of every control.
@@ -132,7 +157,7 @@ add('Radio group', 'group label read', hasLabel(main, 'Experience level'), 'labe
 // Anything from the main screen that is still in the system tree while an
 // overlay is open can be reached by VoiceOver behind it.
 const mainIds = new Set(main.filter((e) => e.identifier).map((e) => e.identifier));
-const headings = ['Buttons', 'Form', 'Overlays', 'Tabs', 'List', 'Native control (@expo/ui)', 'Component test screen'];
+const headings = ['Buttons', 'Form', 'Overlays', 'Tabs', 'More components', 'List', 'Native control (@expo/ui)', 'Component test screen'];
 const leaks = (els, own) => els.filter((e) => (e.identifier && mainIds.has(e.identifier) && !own.includes(e.identifier)) || headings.includes(e.label));
 const axDesc = (e) => (e ? `${e.role} label="${e.label}"${e.value != null ? ` value="${e.value}"` : ''}` : 'missing');
 const leakDetail = (l) => (l.length ? `still exposed: ${l.map((e) => e.identifier ?? e.label).join(', ')}` : 'nothing behind it in the system tree');
@@ -257,12 +282,94 @@ try {
   add('Toast', 'test could run', false, String(err.message ?? err));
 }
 
-writeFileSync(new URL('ios-a11y.json', outDir), JSON.stringify({ app, bundleId, udid, date: new Date().toISOString(), findings, states }, null, 2));
+// 7. Items 15–19: slider, progress, accordion, menu and segmented control.
+// They run after the 39 core checks so those keep their order.
+const target = (name, e) => e && add(name, `target ≥ ${MIN_TARGET}pt`, Math.min(e.frame.width, e.frame.height) >= MIN_TARGET, `${Math.round(e.frame.width)}×${Math.round(e.frame.height)}pt`);
+const valueOf = (id) => byId(tree(), id)?.value;
+try {
+  await fresh();
+  const sl = byId(main, 'test-slider');
+  add('Slider', 'name, role, value', !!sl && sl.traits.includes('adjustable') && /Weight/.test(sl.label ?? '') && /\d/.test(sl.value ?? ''), desc(sl));
+  target('Slider', sl);
+  // VoiceOver's swipe up (the increment action) can't be performed on the
+  // simulator without VoiceOver running, so the thumb is dragged instead.
+  const e = await reach('test-slider');
+  const before = valueOf('test-slider');
+  argent('gesture-swipe', { fromX: e.x + e.w * 0.1, fromY: e.ny, toX: e.x + e.w * 0.9, toY: e.ny, momentum: false, durationMs: 600 });
+  await sleep(600);
+  const after = valueOf('test-slider');
+  add('Slider', 'dragging changes the value', before !== after && after != null, `value "${before ?? ''}" → "${after ?? ''}"`);
+} catch (err) {
+  add('Slider', 'test could run', false, String(err.message ?? err));
+}
+
+const pr = byId(main, 'test-progress');
+add('Progress', 'name and value', !!pr && /Workout progress/.test(pr.label ?? '') && !!pr.value, desc(pr));
+
+try {
+  await fresh();
+  const h0 = byId(main, 'test-accordion-0');
+  add('Accordion', 'header is a button', !!h0 && h0.traits.includes('button'), desc(h0));
+  target('Accordion', h0);
+  const shut = (v) => !/\bexpanded/i.test(v ?? '');
+  await tapId('test-accordion-0');
+  const shown = await waitFor((els) => hasLabel(els, copyPanel));
+  await sleep(500);
+  const open = byId(tree(), 'test-accordion-0');
+  add('Accordion', 'expanded state exposed', !!h0 && shut(`${h0.value} ${h0.label}`) && !shut(`${open?.value} ${open?.label}`), `closed: ${desc(h0)}; open: ${desc(open)}`);
+  await tapId('test-accordion-0');
+  const hidden = await waitFor((els) => !hasLabel(els, copyPanel));
+  add('Accordion', 'content shows and hides', !!shown && !!hidden, `${shown ? 'panel text appeared' : 'panel text never appeared'}; ${hidden ? 'gone after second tap' : 'still there after second tap'}`);
+} catch (err) {
+  add('Accordion', 'test could run', false, String(err.message ?? err));
+}
+
+try {
+  await fresh();
+  const trig = byId(main, 'test-menu-open');
+  add('Menu', 'trigger name and role', !!trig && trig.traits.includes('button') && /Workout options/.test(trig.label ?? ''), desc(trig));
+  target('Menu', trig);
+  await tapId('test-menu-open');
+  let mn = await waitFor((els) => menuItems.every((m) => hasLabel(els, m)));
+  if (mn) { await sleep(1000); mn = axTree(); }
+  states.menu = mn ?? axTree();
+  add('Menu', 'opens', !!mn, mn ? 'all three actions in tree' : 'actions not found');
+  if (mn) {
+    const items = menuItems.map((m) => mn.find((e) => e.label.includes(m)));
+    add('Menu', 'items are buttons', items.every((e) => e && (e.role === 'AXButton' || /menu/i.test(e.role))), items.map(axDesc).join(' | '));
+    const l = leaks(mn, ['test-menu-open', 'test-menu']);
+    add('Menu', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
+    if (items[0]) tap(items[0]);
+    const closed = await waitFor((els) => !hasLabel(els, menuItems[2]));
+    add('Menu', 'closes after an action', !!closed, closed ? 'actions gone' : 'still open');
+  }
+} catch (err) {
+  add('Menu', 'test could run', false, String(err.message ?? err));
+}
+
+try {
+  await fresh();
+  const opts = [0, 1, 2].map((i) => byId(main, `test-segmented-${i}`));
+  const role = (e) => e.traits.includes('button') || /radio|tab|segment/i.test(`${e.value} ${e.traits}`);
+  const sel = (e) => !!e && (e.traits.includes('selected') || /selected|checked/i.test(e.value ?? ''));
+  add('Segmented control', 'options have name and role', opts.every((e, i) => e && e.label?.includes(segOptions[i]) && role(e)), opts.map(desc).join(' | '));
+  add('Segmented control', 'selected option marked', sel(opts[0]) && !sel(opts[1]), opts.map(desc).join(' | '));
+  target('Segmented control', opts[0]);
+  await tapId('test-segmented-1');
+  await sleep(600);
+  const t = tree();
+  const now = [0, 1].map((i) => byId(t, `test-segmented-${i}`));
+  add('Segmented control', 'selection moves on tap', sel(now[1]) && !sel(now[0]), now.map(desc).join(' | '));
+} catch (err) {
+  add('Segmented control', 'test could run', false, String(err.message ?? err));
+}
+
+writeFileSync(new URL(`ios-a11y${suffix}.json`, outDir), JSON.stringify({ app, bundleId, udid, device, theme: themeName, date: new Date().toISOString(), findings, states }, null, 2));
 const passed = findings.filter((f) => f.pass).length;
 const md = [
-  `# ${app}: iOS accessibility audit`,
+  `# ${app}: iOS accessibility audit, ${themeName} theme`,
   '',
-  `Run ${new Date().toISOString().slice(0, 10)} on simulator ${udid} (iOS 26.4, ${process.env.BUILD_CONFIG ?? "Release"} build) with \`scripts/a11y-audit.mjs\`. ${passed}/${findings.length} checks passed.`,
+  `Run ${new Date().toISOString().slice(0, 10)} on the ${device.name} simulator (${device.runtime}, ${udid}), ${process.env.BUILD_CONFIG ?? 'Release'} build, ${themeName} theme, with \`scripts/a11y-audit.mjs\`. ${passed}/${findings.length} checks passed.`,
   '',
   'Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.',
   '',
@@ -271,5 +378,5 @@ const md = [
   ...findings.map((f) => `| ${f.component} | ${f.check} | ${f.pass ? 'pass' : '**fail**'} | ${String(f.detail).replace(/\|/g, '\\|')} |`),
   '',
 ].join('\n');
-writeFileSync(new URL('ios-a11y.md', outDir), md);
+writeFileSync(new URL(`ios-a11y${suffix}.md`, outDir), md);
 console.log(md);

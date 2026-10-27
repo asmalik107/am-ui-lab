@@ -9,11 +9,14 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
+import { deviceInfo } from './device.mjs';
+
 const [app, bundleId, udid] = process.argv.slice(2);
 if (!app || !bundleId || !udid) {
   console.error('Usage: node scripts/textsize-test.mjs <app> <bundleId> <udid>');
   process.exit(1);
 }
+const device = deviceInfo(udid);
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
 
@@ -26,14 +29,14 @@ async function launch() {
   argent('restart-app', { bundleId });
   for (let i = 0; i < 120; i++) {
     const d = argent('native-describe-screen', { bundleId });
-    if (d.elements.some((e) => (e.label ?? '').includes('Component test screen'))) break;
+    if (d.elements?.some((e) => (e.label ?? '').includes('Component test screen'))) break;
     await sleep(500);
   }
   await sleep(1200);
   return argent('native-describe-screen', { bundleId });
 }
 
-const ids = ['test-button', 'test-textfield', 'test-switch', 'test-checkbox', 'test-radiogroup-0', 'test-select', 'test-dialog-open', 'test-sheet-open', 'test-tabs-0', 'test-tabs-1', 'test-tabs-2', 'test-native-switch', 'test-list-link'];
+const ids = ['test-button', 'test-textfield', 'test-switch', 'test-checkbox', 'test-radiogroup-0', 'test-select', 'test-dialog-open', 'test-sheet-open', 'test-tabs-0', 'test-tabs-1', 'test-tabs-2', 'test-native-switch', 'test-list-link', 'test-slider', 'test-accordion-0', 'test-menu-open', 'test-segmented-0'];
 const frame = (d, id) => d.elements.find((e) => e.identifier === id)?.frame;
 const overlap = (a, b) => {
   const w = Math.min(a.x + a.width, b.x + b.width) - Math.max(a.x, b.x);
@@ -76,12 +79,12 @@ for (let i = 0; i < 4; i++) {
 contentSize('large');
 
 const grew = growth.filter((g) => g.ratio && g.ratio > 1.2).length;
-const result = { app, bundleId, udid, date: new Date().toISOString(), growth, offscreen, overlaps, shots };
+const result = { app, bundleId, udid, device, date: new Date().toISOString(), growth, offscreen, overlaps, shots };
 writeFileSync(new URL('ios-textsize.json', outDir), JSON.stringify(result, null, 2));
 const md = [
   `# ${app}: largest text size (AX5)`,
   '',
-  `Run ${result.date.slice(0, 10)} with \`scripts/textsize-test.mjs\`. Control heights at the default size (large) against the largest accessibility size (accessibility-extra-extra-extra-large).`,
+  `Run ${result.date.slice(0, 10)} on the ${device.name} simulator (${device.runtime}) with \`scripts/textsize-test.mjs\`. Control heights at the default size (large) against the largest accessibility size (accessibility-extra-extra-extra-large).`,
   '',
   `- Controls that grew by more than 20%: ${grew} of ${growth.filter((g) => g.ratio).length}`,
   `- Controls pushed past the screen edge: ${offscreen.length ? offscreen.join(', ') : 'none'}`,

@@ -10,8 +10,24 @@ import type { ThemeName } from '@shared/tokens';
 
 import { Heading } from '@/components/ui/heading';
 
-import { AppButton, EmailField, RadioField, Section, SectionsAccordion, Segmented, SwitchRow, TermsCheckbox, TestTabs, WeightSlider, WorkoutProgress } from '../components/controls';
-import { Dialog, ExerciseSheet, ExpoExerciseSheet, GluestackSheet, RestSelect, useLogSetToast, WorkoutMenu } from '../components/overlays';
+import { Accordion } from '../components/accordion';
+import { Button } from '../components/button';
+import { Checkbox } from '../components/checkbox';
+import { Dialog } from '../components/dialog';
+import { ExerciseSheet } from '../components/exercise-sheet';
+import { ExpoExerciseSheet } from '../components/expo-exercise-sheet';
+import { GluestackSheet } from '../components/gluestack-sheet';
+import { Menu } from '../components/menu';
+import { Progress } from '../components/progress';
+import { RadioGroup } from '../components/radio-group';
+import { Section } from '../components/section';
+import { Segmented } from '../components/segmented';
+import { Select } from '../components/select';
+import { Slider } from '../components/slider';
+import { SwitchRow } from '../components/switch-row';
+import { Tabs } from '../components/tabs';
+import { TextField } from '../components/text-field';
+import { useLogSetToast } from '../components/toast';
 import { useThemeName, useTokenColor } from '../theme';
 import { mark, measure } from '../perf';
 import { View as PerfTouch } from 'react-native';
@@ -48,7 +64,7 @@ export default function TestScreen() {
         <Heading className="text-heading text-foreground">{copy.screenTitle}</Heading>
 
         <Section title={copy.themeLabel}>
-          <RadioField
+          <RadioGroup
             testID={ids.themeSwitcher}
             label={copy.themeLabel}
             options={copy.themes}
@@ -62,7 +78,7 @@ export default function TestScreen() {
         </Section>
 
         <Section title="Buttons">
-          <AppButton
+          <Button
             testID={ids.button}
             label={copy.button}
             loading={saving}
@@ -71,12 +87,12 @@ export default function TestScreen() {
               setTimeout(() => setSaving(false), 1500);
             }}
           />
-          <AppButton testID={ids.buttonDisabled} label={copy.buttonDisabled} disabled />
-          <AppButton testID={ids.buttonLoading} label={copy.buttonLoading} loading />
+          <Button testID={ids.buttonDisabled} label={copy.buttonDisabled} disabled />
+          <Button testID={ids.buttonLoading} label={copy.buttonLoading} loading />
         </Section>
 
         <Section title="Form">
-          <EmailField
+          <TextField
             testID={ids.textField}
             label={copy.textFieldLabel}
             helper={copy.textFieldHelper}
@@ -86,28 +102,28 @@ export default function TestScreen() {
             onBlur={validate}
           />
           <SwitchRow testID={ids.switch} label={copy.switchLabel} value={reminders} onValueChange={setReminders} />
-          <TermsCheckbox testID={ids.checkbox} label={copy.checkboxLabel} checked={agree} onChange={setAgree} />
-          <RadioField testID={ids.radioGroup} label={copy.radioGroupLabel} options={copy.radioOptions} value={level} onChange={setLevel} />
-          <RestSelect testID={ids.select} label={copy.selectLabel} options={copy.selectOptions} value={rest} onChange={setRest} />
+          <Checkbox testID={ids.checkbox} label={copy.checkboxLabel} checked={agree} onChange={setAgree} />
+          <RadioGroup testID={ids.radioGroup} label={copy.radioGroupLabel} options={copy.radioOptions} value={level} onChange={setLevel} />
+          <Select testID={ids.select} label={copy.selectLabel} options={copy.selectOptions} value={rest} onChange={setRest} />
         </Section>
 
         <Section title="Overlays">
-          <AppButton testID={ids.dialogOpen} label={copy.dialogOpen} variant="danger" onPress={() => setDialogOpen(true)} />
-          <AppButton testID={ids.sheetOpen} label={copy.sheetOpen} variant="secondary" onPress={() => sheet.current?.present()} />
-          <AppButton testID={ids.expoSheetOpen} label={copy.expoSheetOpen} variant="secondary" onPress={() => setExpoSheet(true)} />
-          <AppButton testID={`${ids.sheetOpen}-gluestack`} label={`${copy.sheetOpen} (gluestack BottomSheet)`} variant="secondary" onPress={() => gluestackSheet.current?.open()} />
-          <AppButton testID={ids.toastShow} label={copy.toastShow} variant="secondary" onPress={showToast} />
+          <Button testID={ids.dialogOpen} label={copy.dialogOpen} variant="danger" onPress={() => setDialogOpen(true)} />
+          <Button testID={ids.sheetOpen} label={copy.sheetOpen} variant="secondary" onPress={() => sheet.current?.present()} />
+          <Button testID={ids.expoSheetOpen} label={copy.expoSheetOpen} variant="secondary" onPress={() => setExpoSheet(true)} />
+          <Button testID={`${ids.sheetOpen}-gluestack`} label={`${copy.sheetOpen} (gluestack BottomSheet)`} variant="secondary" onPress={() => gluestackSheet.current?.open()} />
+          <Button testID={ids.toastShow} label={copy.toastShow} variant="secondary" onPress={showToast} />
         </Section>
 
         <Section title="Tabs">
-          <TestTabs testID={ids.tabs} tabs={copy.tabs} panels={copy.tabPanels} />
+          <Tabs testID={ids.tabs} tabs={copy.tabs} panels={copy.tabPanels} />
         </Section>
 
         <Section title={copy.moreTitle}>
-          <WeightSlider testID={ids.slider} label={copy.sliderLabel} unit={copy.sliderUnit} min={copy.slider.min} max={copy.slider.max} step={copy.slider.step} value={weight} onChange={setWeight} />
-          <WorkoutProgress testID={ids.progress} label={copy.progressLabel} value={copy.progress.value} max={copy.progress.max} valueText={copy.progressText} />
-          <SectionsAccordion testID={ids.accordion} sections={copy.accordionSections} panels={copy.accordionPanels} />
-          <WorkoutMenu testID={ids.menu} label={copy.menuOpen} items={copy.menuItems} onSelect={() => {}} />
+          <Slider testID={ids.slider} label={copy.sliderLabel} unit={copy.sliderUnit} min={copy.slider.min} max={copy.slider.max} step={copy.slider.step} value={weight} onChange={setWeight} />
+          <Progress testID={ids.progress} label={copy.progressLabel} value={copy.progress.value} max={copy.progress.max} valueText={copy.progressText} />
+          <Accordion testID={ids.accordion} sections={copy.accordionSections} panels={copy.accordionPanels} />
+          <Menu testID={ids.menu} label={copy.menuOpen} items={copy.menuItems} onSelect={() => {}} />
           <Segmented testID={ids.segmented} label={copy.segmentedLabel} options={copy.segmentedOptions} value={range} onChange={setRange} />
         </Section>
 
@@ -120,7 +136,7 @@ export default function TestScreen() {
         <Section title="List">
           <PerfTouch onTouchStart={mark}>
             <Link href="/list" asChild>
-              <AppButton testID={ids.listLink} label={copy.listLink} variant="secondary" />
+              <Button testID={ids.listLink} label={copy.listLink} variant="secondary" />
             </Link>
           </PerfTouch>
         </Section>

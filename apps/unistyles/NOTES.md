@@ -31,7 +31,7 @@ Not installed:
    - Adds module augmentation (`UnistylesThemes extends AppThemes`) so themes are typed.
    - `initialTheme` and `adaptiveThemes` are mutually exclusive. Like the baseline, the app starts on light and switches manually.
 7. Deleted `src/theme.tsx`, the baseline's React-context provider. There is no provider any more.
-8. Rewrote the styling in `src/app/_layout.tsx`, `src/app/index.tsx`, `src/app/list.tsx`, `src/components/controls.tsx` and `src/components/overlays.tsx`:
+8. Rewrote the styling in `src/app/_layout.tsx`, `src/app/index.tsx`, `src/app/list.tsx` and the components in `src/components/` (one file per component; the shared StyleSheet is `src/components/styles.ts`):
    - All styles now use `StyleSheet.create((theme, rt) => ...)`.
    - The theme switcher calls `UnistylesRuntime.setTheme(name)`.
    - `src/a11y.ts` is unchanged.
@@ -105,7 +105,7 @@ Following the 3rd-party views algorithm:
 - `withUnistyles` re-renders only the wrapped component when its theme dependency changes.
 
 ```tsx
-// src/components/overlays.tsx
+// src/components/exercise-sheet.tsx
 const ThemedBottomSheetModal = withUnistyles(BottomSheetModal<never>, (theme) => ({
   backgroundStyle: { backgroundColor: theme.colors.surfaceRaised },
   handleIndicatorStyle: { backgroundColor: theme.colors.border },
@@ -113,7 +113,7 @@ const ThemedBottomSheetModal = withUnistyles(BottomSheetModal<never>, (theme) =>
 // The sheet content sits in an RN <View style={styles.sheet}> inside
 // BottomSheetView, so the plugin binds those styles normally.
 
-// src/app/index.tsx
+// src/components/themed-host.tsx
 const ThemedHost = withUnistyles(Host, (theme) => ({
   colorScheme: theme.name === 'dark' ? ('dark' as const) : ('light' as const),
   seedColor: theme.colors.primary,
@@ -132,7 +132,7 @@ Added after the first round of tests, to check whether `@expo/ui`'s universal `B
 `containerColor` and `textStyle` are plain props, so they go through `withUnistyles`, like gorhom's props:
 
 ```tsx
-// src/components/overlays.tsx
+// src/components/expo-exercise-sheet.tsx
 const ThemedNativeSheet = withUnistyles(NativeSheet, (theme) => ({ containerColor: theme.colors.surfaceRaised }));
 const ThemedNativeText = withUnistyles(NativeText);
 <ThemedNativeText uniProps={(theme) => ({ textStyle: { color: theme.colors.text, fontSize: theme.type.title.fontSize, fontWeight: '700' } })}>
@@ -149,7 +149,7 @@ const ThemedNativeText = withUnistyles(NativeText);
 ## Verification
 
 - `npx tsc --noEmit`: clean.
-- I ran the Babel transform on `controls.tsx`. Its `react-native` imports are rewritten to `react-native-unistyles/components/native/{View,Text,TextInput,Switch,Pressable,ActivityIndicator}`, which confirms the plugin is active.
+- I ran the Babel transform on `controls.tsx` (since split into one file per component in `src/components/`). Its `react-native` imports are rewritten to `react-native-unistyles/components/native/{View,Text,TextInput,Switch,Pressable,ActivityIndicator}`, which confirms the plugin is active.
 - `npx expo export --platform ios --output-dir $TMPDIR/uilab-export-unistyles`: succeeded, 1965 modules.
 - **iOS bundle size:** `_expo/static/js/ios/index-9dc75babd57037e2cc0bea13d6f4575a.hbc` is **4,123,140 bytes** (4.1 MB, Hermes bytecode).
 

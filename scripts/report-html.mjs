@@ -201,16 +201,16 @@ function bars(rows, max) {
     })
     .join('')}</svg>`;
 }
-function figure(id, title, note, rows, max, head) {
+function figure(id, title, note, rows, max, head, read) {
   const table = `<table class="sr"><caption>${esc(title)}</caption><thead><tr><th scope="col">App</th><th scope="col">${esc(head)}</th></tr></thead><tbody>${rows.map((r) => `<tr><th scope="row">${esc(r.label)}</th><td>${esc(r.text)}</td></tr>`).join('')}</tbody></table>`;
-  return `<figure class="fig" aria-labelledby="${id}"><figcaption id="${id}"><strong>${esc(title)}</strong>${note ? ` <span>${esc(note)}</span>` : ''}</figcaption>${bars(rows, max)}${table}</figure>`;
+  return `<figure class="fig" aria-labelledby="${id}"><figcaption id="${id}"><strong>${esc(title)}</strong>${note ? ` <span>${esc(note)}</span>` : ''}</figcaption>${bars(rows, max)}${read ? `<p class="read"><strong>How to read it:</strong> ${esc(read)}</p>` : ''}${table}</figure>`;
 }
 const scoreCharts = scoreParts.map(([title, note, fn], i) => {
   const rows = apps.map(([a, name]) => {
     const t = fn(a);
     return { label: name, value: t ? (t.pass / t.total) * 100 : null, text: t ? `${t.pass} / ${t.total}` : 'not run', cls: t && t.pass === t.total ? 'full' : '' };
   });
-  return figure(`score-${i}`, title, note, rows, 100, 'Checks passed');
+  return figure(`score-${i}`, title, note, rows, 100, 'Checks passed', 'The baseline and the three engines are the same hand-built components, so their bar is what careful hand-built accessibility reaches; a library’s gap to it is what you would have to fix yourself. Every failure was checked by hand on the simulator.');
 }).join('\n');
 const num = (a, f) => {
   try {
@@ -219,22 +219,25 @@ const num = (a, f) => {
     return null;
   }
 };
+// Each metric chart says what one unit means and how much the same app moved
+// when measured twice (the baseline on 27 and 28 Oct), so a reader can tell a
+// real gap from noise.
 const metricCharts = [
-  ['Startup until readable by VoiceOver, median of 10', 'launch-app call until the title is in the accessibility tree; not first paint, and varies by day', (d) => d.metrics.startup.median, (v) => `${v.toFixed(0)} ms`],
-  ['Memory at idle', 'phys_footprint 5 s after launch; lower is better', (d) => d.metrics.memory.idle.physFootprint / 1048576, (v) => `${v.toFixed(1)} MiB`],
-  ['Memory after use', 'after the 200-row list and every overlay; lower is better', (d) => d.metrics.memory.used.physFootprint / 1048576, (v) => `${v.toFixed(1)} MiB`],
-  ['App CPU time during 5 list flings', 'all of the app’s threads; lower is better', (d) => d.metrics.scroll.cpuMs.total, (v) => `${v.toFixed(0)} ms`],
-  ['Theme switch, median', 'tap to second frame after the update; one frame is 16.7 ms', (d) => d.perf.theme.median, (v) => `${v.toFixed(1)} ms`],
-  ['200-row list mount, median', 'tap to second frame after first layout', (d) => d.perf.list.median, (v) => `${v.toFixed(1)} ms`],
-  ['iOS JS bundle', 'Hermes bytecode from expo export', (d) => d.bundle.iosHbcBytes / 1e6, (v) => `${v.toFixed(2)} MB`],
-  ['Components rendered on one theme switch', 'light → dark, Debug build, argent React profiler', (d) => d.metrics.rerenders.switches[0].renders, (v) => `${v}`],
-].map(([title, note, get, fmt], i) => {
+  ['Startup until readable by VoiceOver, median of 10', 'From the launch-app call until the screen title is in the accessibility tree. Not first paint.', 'Not meaningful between apps: every app is 7.8–9.4 s, and the baseline measured 4.8 s one day and 8.1 s the next.', (d) => d.metrics.startup.median, (v) => `${v.toFixed(0)} ms`],
+  ['Memory at idle', 'phys_footprint 5 s after launch. Lower is better.', 'The baseline measured twice differed by 0.3 MiB, so the kits’ 12–28 MiB more than the baseline’s 63 MiB is real.', (d) => d.metrics.memory.idle.physFootprint / 1048576, (v) => `${v.toFixed(1)} MiB`],
+  ['Memory after use', 'After scrolling the 200-row list and opening every overlay once. Lower is better.', 'The baseline measured twice differed by 2.4 MiB; Tamagui (162 MiB) stands out; the rest are within about 20 MiB of the baseline’s 122–124.', (d) => d.metrics.memory.used.physFootprint / 1048576, (v) => `${v.toFixed(1)} MiB`],
+  ['App CPU time during 5 list flings', 'CPU used by all of the app’s threads over 7.5 s of flinging. Lower is better.', 'The baseline measured twice differed by 0.2 s (1.95 and 2.16 s), so only HeroUI (2.5 s) stands apart. No app had a main-thread hang.', (d) => d.metrics.scroll.cpuMs.total, (v) => `${v.toFixed(0)} ms`],
+  ['Theme switch, median', 'From the tap to the second frame after the update.', 'One frame is 16.7 ms, so about 32 ms means it finished within a frame. Only Tamagui (6 frames) and HeroUI (depends on direction, 32–65 ms) take longer.', (d) => d.perf.theme.median, (v) => `${v.toFixed(1)} ms`],
+  ['200-row list mount, median', 'From the tap to the second frame after the list’s first layout.', 'Results land on frame steps (about 82, 98 and 115 ms) and each app’s 10 runs span two to four of them, so a one-step difference is noise.', (d) => d.perf.list.median, (v) => `${v.toFixed(1)} ms`],
+  ['iOS JS bundle', 'Hermes bytecode from expo export, with all 19 items.', 'Exact, with no run-to-run noise. The baseline is plain React Native, so the gap to it is what the library adds.', (d) => d.bundle.iosHbcBytes / 1e6, (v) => `${v.toFixed(2)} MB`],
+  ['Components re-rendered on one theme switch', 'Light → dark, counted by argent’s React profiler on a Debug build. Fewer means less work for React.', 'Counts repeat closely for light → dark and dark → brand in every app, but brand → light can be lower (Uniwind 302 against 507). Tamagui isn’t measured: its Debug build aborts.', (d) => d.metrics.rerenders.switches[0].renders, (v) => `${v}`],
+].map(([title, note, read, get, fmt], i) => {
   const rows = apps.map(([a, name]) => {
     const v = num(a, get);
     return { label: name, value: v, text: v == null ? 'not measured' : fmt(v) };
   });
   const max = Math.max(...rows.map((r) => r.value ?? 0)) || 1;
-  return figure(`metric-${i}`, title, note, rows, max, title);
+  return figure(`metric-${i}`, title, note, rows, max, title, read);
 }).join('\n');
 
 // Developer cost, from results/devcost.json (scripts/devcost.mjs).
@@ -303,6 +306,7 @@ tr.score th[scope="row"] { background: var(--bg); }
 .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 16px; }
 .fig { position: relative; overflow: hidden; margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .fig figcaption { font-size: 14px; margin-bottom: 4px; }
+.fig .read { font-size: 13px; color: var(--muted); margin: 6px 0 0; max-width: none; }
 .fig figcaption span { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
 .chart .lbl, .chart .val { font-size: 12px; fill: var(--fg); }
 .chart .val { fill: var(--muted); }
@@ -339,7 +343,7 @@ ${checkRows}
 ${themeDiffHtml}
 
 <h2>Startup, memory, scrolling, timings and size</h2>
-<p>Bars compare the eight apps on one measure; shorter is better on every chart here. Frame hitches couldn’t be measured on the simulator (xctrace: “Hitches is not supported on this platform”), so scrolling is shown as the app’s CPU time while flinging the list.</p>
+<p>Bars compare the eight apps on one measure; shorter is better on every chart here. Under each chart, “How to read it” says how much the same app moved when measured twice, so you can tell a real gap from noise. Frame hitches couldn’t be measured on the simulator (xctrace: “Hitches is not supported on this platform”), so scrolling is shown as the app’s CPU time while flinging the list.</p>
 <div class="charts">
 ${metricCharts}
 </div>

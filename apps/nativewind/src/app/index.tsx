@@ -1,55 +1,33 @@
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { Host, Switch as NativeSwitch } from '@expo/ui';
+import { Switch as NativeSwitch } from '@expo/ui';
 import { Link } from 'expo-router';
-import { styled } from 'nativewind';
 import { useCallback, useRef, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 
 import { copy, ids } from '@shared/content';
 
-import { Accordion, Button, Checkbox, Progress, RadioGroup, Section, Segmented, Slider, SwitchRow, Tabs, TextField, announce } from '../components/controls';
-import { Dialog, ExerciseSheet, ExpoExerciseSheet, Menu, Select, Toast } from '../components/overlays';
-import { mark, measure } from '../perf';
+import { announce } from '../a11y';
+import { Accordion } from '../components/accordion';
+import { Button } from '../components/button';
+import { Checkbox } from '../components/checkbox';
+import { Dialog } from '../components/dialog';
+import { ExerciseSheet } from '../components/exercise-sheet';
+import { ExpoExerciseSheet } from '../components/expo-exercise-sheet';
+import { Menu } from '../components/menu';
+import { Progress } from '../components/progress';
+import { RadioGroup } from '../components/radio-group';
+import { Section } from '../components/section';
+import { Segmented } from '../components/segmented';
+import { Select } from '../components/select';
+import { Slider } from '../components/slider';
+import { SwitchRow } from '../components/switch-row';
+import { Tabs } from '../components/tabs';
+import { TextField } from '../components/text-field';
+import { ThemeSwitcher } from '../components/theme-switcher';
+import { ThemedHost } from '../components/themed-host';
+import { Toast } from '../components/toast';
+import { mark } from '../perf';
 import { View as PerfTouch } from 'react-native';
-import { themeNames, useThemeName } from '../theme';
-
-// The switcher needs the current theme name as a value (for aria-checked),
-// so it reads it from the theme-name context. Kept in its own component so
-// a switch re-renders only the switcher and the VariableContextProvider
-// consumers, not this screen's state.
-function ThemeSwitcher() {
-  const { name, setTheme } = useThemeName();
-  return (
-    <RadioGroup
-      testID={ids.themeSwitcher}
-      label={copy.themeLabel}
-      options={copy.themes}
-      value={copy.themes[themeNames.indexOf(name)]}
-      onChange={(v) => {
-        mark();
-        setTheme(themeNames[copy.themes.indexOf(v as (typeof copy.themes)[number])]);
-        measure('theme');
-      }}
-    />
-  );
-}
-
-// @expo/ui Host takes seedColor as a prop. styled() sends the colour of a
-// className (text-primary, a theme variable) to that prop. colorScheme is
-// not a style value, so it comes from the theme name.
-// https://www.nativewind.dev/v5/guides/third-party-components
-const StyledHost = styled(Host, {
-  className: { target: false, nativeStyleMapping: { color: 'seedColor' } },
-});
-
-function ThemedHost({ children }: { children: React.ReactNode }) {
-  const { name } = useThemeName();
-  return (
-    <StyledHost matchContents colorScheme={name === 'dark' ? 'dark' : 'light'} className="text-primary">
-      {children}
-    </StyledHost>
-  );
-}
 
 export default function TestScreen() {
   const [email, setEmail] = useState('');

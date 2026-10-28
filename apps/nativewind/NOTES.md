@@ -47,7 +47,7 @@ The RC was tested upstream on Expo 57.0.22, RN 0.86.3, React 19.2.3, Reanimated 
     - `ThemeProvider` wraps children in `VariableContextProvider value={themeVars[name]}`.
     - The theme name is also kept in a small React context, `useThemeName()`, for the places that need it as a value (see below).
 11. **`src/app/_layout.tsx`:** imports `../global.css` once, as the Expo Router install step says. It puts `ThemeProvider` above `BottomSheetModalProvider` so the sheet portal inherits the variables.
-12. Rewrote the styling in `src/app/index.tsx`, `src/app/list.tsx`, `src/components/controls.tsx` and `src/components/overlays.tsx`:
+12. Rewrote the styling in `src/app/index.tsx`, `src/app/list.tsx` and the components in `src/components/` (one file per component):
     - All `StyleSheet` and inline styles are replaced with `className`. The exceptions are `GestureHandlerRootView style={{ flex: 1 }}` and `PerfReadout`.
     - Every accessibility prop, testID and piece of copy is unchanged from baseline: roles, aria-*, accessibilityLabel/Hint, nativeID, `announce()`, `useReduceMotion`.
     - The Select modal keeps the backdrop `Pressable accessible={false}` as a sibling of the `aria-modal` list.
@@ -160,7 +160,7 @@ v5 RC0 removed `cssInterop` / `remapProps`. `styled()` is the documented replace
 - `target: false` with `nativeStyleMapping` sends one resolved style value to a plain prop (`color` -> `seedColor`).
 
 ```tsx
-// src/components/overlays.tsx
+// src/components/exercise-sheet.tsx
 const ThemedBottomSheetModal = styled(BottomSheetModal<never>, {
   backgroundClassName: 'backgroundStyle',
   handleIndicatorClassName: 'handleIndicatorStyle',
@@ -172,7 +172,7 @@ const SheetView = styled(BottomSheetView, { className: 'style' });
   <SheetView testID={testID} aria-modal className="gap-md p-xl pb-xxl">...</SheetView>
 </ThemedBottomSheetModal>
 
-// src/app/index.tsx
+// src/components/themed-host.tsx
 const StyledHost = styled(Host, {
   className: { target: false, nativeStyleMapping: { color: 'seedColor' } },
 });
@@ -198,7 +198,7 @@ Added after the first round of tests, to check whether `@expo/ui`'s universal `B
 Themed with `styled()`, like the Host:
 
 ```tsx
-// src/components/overlays.tsx
+// src/components/expo-exercise-sheet.tsx
 const StyledNativeSheet = styled(NativeSheet, {
   className: { target: false, nativeStyleMapping: { backgroundColor: 'containerColor' } },
 });

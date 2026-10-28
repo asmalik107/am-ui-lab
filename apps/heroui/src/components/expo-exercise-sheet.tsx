@@ -12,7 +12,7 @@ import { space, type } from '../theme';
 
 type Props = { open: boolean; onClose: () => void; title: string; body: string; close: string; testID: string };
 
-export function ExpoSheet({ open, onClose, title, body, close, testID }: Props) {
+export function ExpoExerciseSheet({ open, onClose, title, body, close, testID }: Props) {
   const [overlay, overlayForeground, muted] = useThemeColor(['overlay', 'overlay-foreground', 'muted']);
   return (
     <NativeSheet testID={testID} isPresented={open} onDismiss={onClose} containerColor={overlay}>

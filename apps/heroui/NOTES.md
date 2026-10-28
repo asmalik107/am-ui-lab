@@ -119,7 +119,7 @@ Added after the first round of tests, to check whether `@expo/ui`'s universal `B
 
 **Result (2026-10-24, iPhone 17 Pro simulator, iOS 26.4, Release):** 5 / 5 sheet checks in `scripts/a11y-audit.mjs`, including the screen behind being hidden from VoiceOver. Opened by hand in the dark theme: the sheet showed the theme's surface and text colours.
 
-`src/components/expo-sheet.tsx`. Colours come from HeroUI's `useThemeColor(['overlay', 'overlay-foreground', 'muted'])`, as for the Host, and are the same tokens as the gorhom sheet. Spacing and font sizes come from the shared `space` / `type` tokens, as in the gorhom sheet.
+`src/components/expo-exercise-sheet.tsx` (`ExpoExerciseSheet`). Colours come from HeroUI's `useThemeColor(['overlay', 'overlay-foreground', 'muted'])`, as for the Host, and are the same tokens as the gorhom sheet. Spacing and font sizes come from the shared `space` / `type` tokens, as in the gorhom sheet.
 
 ## Accessibility: what the library provides (from source, unverified)
 
@@ -176,7 +176,7 @@ The lab moved from the iPhone 17 Pro simulator on iOS 26.4 to the iPhone 17 simu
 
 ## Items 15–19 (added 27 October 2026)
 
-In `src/components/more.tsx`. HeroUI Native 1.0.11 has no progress bar and no segmented control (`lib/typescript/src/components` has no such folder), so those two are hand-built.
+In `src/components/` (`slider.tsx`, `progress.tsx`, `accordion.tsx`, `menu.tsx`, `segmented.tsx`). HeroUI Native 1.0.11 has no progress bar and no segmented control (`lib/typescript/src/components` has no such folder), so those two are hand-built.
 
 | # | Item | Component | Docs | Accessibility passed by hand |
 | --- | --- | --- | --- | --- |

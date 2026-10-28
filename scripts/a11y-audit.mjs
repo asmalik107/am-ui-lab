@@ -80,7 +80,12 @@ async function reach(id) {
     const e = byId(axTree(), id);
     if (e && e.y > 0.12 && e.y + e.h < 0.92) return e;
     const n = byId(tree(), id);
-    if (!n) throw new Error(`element ${id} not in tree`);
+    if (!n) {
+      // Not in the view-hierarchy walk: look for it in the system tree instead.
+      const a = typeof scan === 'function' ? await scan(id) : null;
+      if (a) return a;
+      throw new Error(`element ${id} not in tree`);
+    }
     swipe(n.frame.y / screen.height <= 0.12 ? -0.35 : 0.35);
     await sleep(400);
   }
@@ -284,39 +289,76 @@ try {
 
 // 7. Items 15–19: slider, progress, accordion, menu and segmented control.
 // They run after the 39 core checks so those keep their order.
-const target = (name, e) => e && add(name, `target ≥ ${MIN_TARGET}pt`, Math.min(e.frame.width, e.frame.height) >= MIN_TARGET, `${Math.round(e.frame.width)}×${Math.round(e.frame.height)}pt`);
-const valueOf = (id) => byId(tree(), id)?.value;
+// System-tree frames come as 3-decimal fractions of the screen, so their
+// sizes are only good to half a step (about ±0.4 pt on this screen); the
+// check allows that much and says so.
+const target = (name, e) => {
+  if (!e) return;
+  const tol = e.source ? 0.0005 * Math.max(screen.width, screen.height) : 0;
+  const min = Math.min(e.frame.width, e.frame.height);
+  add(name, `target ≥ ${MIN_TARGET}pt`, min >= MIN_TARGET - tol, `${Math.round(e.frame.width)}×${Math.round(e.frame.height)}pt${tol ? ` (system tree, ±${tol.toFixed(1)} pt)` : ''}`);
+};
+// Some kits' elements are in the system accessibility tree (what VoiceOver
+// gets) but not in the view-hierarchy walk, e.g. Tamagui's Progress and its
+// native SwiftUI menu button. For items 15–19 the system tree is used then:
+// it gives role, label, value and frame, but not the selected state, and the
+// detail says "(system tree)".
+const axTraits = { AXButton: ['button'], AXAdjustable: ['adjustable'], AXHeading: ['header'], AXLink: ['link'], AXStaticText: ['staticText'], AXImage: ['image'] };
+async function scan(id) {
+  for (const dir of [0.35, -0.35]) {
+    for (let i = 0; i < 14; i++) {
+      const e = byId(axTree(), id);
+      if (e) return e;
+      swipe(dir);
+      await sleep(400);
+    }
+  }
+  return null;
+}
+async function element(id) {
+  const n = byId(tree(), id);
+  if (n) return n;
+  const a = await scan(id);
+  return a && { label: a.label, value: a.value, traits: axTraits[a.role] ?? [], frame: { width: a.w * screen.width, height: a.h * screen.height }, source: 'system tree' };
+}
+const desc2 = (e) => (e ? `${desc(e)}${e.source ? ` (${e.source})` : ''}` : 'missing');
+const valueOf = async (id) => (await element(id))?.value;
 try {
   await fresh();
-  const sl = byId(main, 'test-slider');
-  add('Slider', 'name, role, value', !!sl && sl.traits.includes('adjustable') && /Weight/.test(sl.label ?? '') && /\d/.test(sl.value ?? ''), desc(sl));
+  const sl = await element('test-slider');
+  add('Slider', 'name, role, value', !!sl && sl.traits.includes('adjustable') && /Weight/.test(sl.label ?? '') && /\d/.test(sl.value ?? ''), desc2(sl));
   target('Slider', sl);
   // VoiceOver's swipe up (the increment action) can't be performed on the
   // simulator without VoiceOver running, so the thumb is dragged instead.
   const e = await reach('test-slider');
-  const before = valueOf('test-slider');
+  const before = await valueOf('test-slider');
   argent('gesture-swipe', { fromX: e.x + e.w * 0.1, fromY: e.ny, toX: e.x + e.w * 0.9, toY: e.ny, momentum: false, durationMs: 600 });
   await sleep(600);
-  const after = valueOf('test-slider');
+  const after = await valueOf('test-slider');
   add('Slider', 'dragging changes the value', before !== after && after != null, `value "${before ?? ''}" → "${after ?? ''}"`);
 } catch (err) {
   add('Slider', 'test could run', false, String(err.message ?? err));
 }
 
-const pr = byId(main, 'test-progress');
-add('Progress', 'name and value', !!pr && /Workout progress/.test(pr.label ?? '') && !!pr.value, desc(pr));
+try {
+  await fresh();
+  const pr = await element('test-progress');
+  add('Progress', 'name and value', !!pr && /Workout progress/.test(pr.label ?? '') && !!pr.value, desc2(pr));
+} catch (err) {
+  add('Progress', 'test could run', false, String(err.message ?? err));
+}
 
 try {
   await fresh();
-  const h0 = byId(main, 'test-accordion-0');
-  add('Accordion', 'header is a button', !!h0 && h0.traits.includes('button'), desc(h0));
+  const h0 = await element('test-accordion-0');
+  add('Accordion', 'header is a button', !!h0 && h0.traits.includes('button'), desc2(h0));
   target('Accordion', h0);
   const shut = (v) => !/\bexpanded/i.test(v ?? '');
   await tapId('test-accordion-0');
   const shown = await waitFor((els) => hasLabel(els, copyPanel));
   await sleep(500);
-  const open = byId(tree(), 'test-accordion-0');
-  add('Accordion', 'expanded state exposed', !!h0 && shut(`${h0.value} ${h0.label}`) && !shut(`${open?.value} ${open?.label}`), `closed: ${desc(h0)}; open: ${desc(open)}`);
+  const open = await element('test-accordion-0');
+  add('Accordion', 'expanded state exposed', !!h0 && shut(`${h0.value} ${h0.label}`) && !shut(`${open?.value} ${open?.label}`), `closed: ${desc2(h0)}; open: ${desc2(open)}`);
   await tapId('test-accordion-0');
   const hidden = await waitFor((els) => !hasLabel(els, copyPanel));
   add('Accordion', 'content shows and hides', !!shown && !!hidden, `${shown ? 'panel text appeared' : 'panel text never appeared'}; ${hidden ? 'gone after second tap' : 'still there after second tap'}`);
@@ -326,8 +368,8 @@ try {
 
 try {
   await fresh();
-  const trig = byId(main, 'test-menu-open');
-  add('Menu', 'trigger name and role', !!trig && trig.traits.includes('button') && /Workout options/.test(trig.label ?? ''), desc(trig));
+  const trig = await element('test-menu-open');
+  add('Menu', 'trigger name and role', !!trig && trig.traits.includes('button') && /Workout options/.test(trig.label ?? ''), desc2(trig));
   target('Menu', trig);
   await tapId('test-menu-open');
   let mn = await waitFor((els) => menuItems.every((m) => hasLabel(els, m)));
@@ -349,17 +391,17 @@ try {
 
 try {
   await fresh();
-  const opts = [0, 1, 2].map((i) => byId(main, `test-segmented-${i}`));
+  const opts = [];
+  for (const i of [0, 1, 2]) opts.push(await element(`test-segmented-${i}`));
   const role = (e) => e.traits.includes('button') || /radio|tab|segment/i.test(`${e.value} ${e.traits}`);
   const sel = (e) => !!e && (e.traits.includes('selected') || /selected|checked/i.test(e.value ?? ''));
-  add('Segmented control', 'options have name and role', opts.every((e, i) => e && e.label?.includes(segOptions[i]) && role(e)), opts.map(desc).join(' | '));
-  add('Segmented control', 'selected option marked', sel(opts[0]) && !sel(opts[1]), opts.map(desc).join(' | '));
+  add('Segmented control', 'options have name and role', opts.every((e, i) => e && e.label?.includes(segOptions[i]) && role(e)), opts.map(desc2).join(' | '));
+  add('Segmented control', 'selected option marked', sel(opts[0]) && !sel(opts[1]), opts.map(desc2).join(' | '));
   target('Segmented control', opts[0]);
   await tapId('test-segmented-1');
   await sleep(600);
-  const t = tree();
-  const now = [0, 1].map((i) => byId(t, `test-segmented-${i}`));
-  add('Segmented control', 'selection moves on tap', sel(now[1]) && !sel(now[0]), now.map(desc).join(' | '));
+  const now = [await element('test-segmented-0'), await element('test-segmented-1')];
+  add('Segmented control', 'selection moves on tap', sel(now[1]) && !sel(now[0]), now.map(desc2).join(' | '));
 } catch (err) {
   add('Segmented control', 'test could run', false, String(err.message ?? err));
 }

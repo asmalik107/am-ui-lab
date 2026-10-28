@@ -170,3 +170,30 @@ One `expo export` run hung for more than 25 minutes with no output and was kille
 ## Lines of code (test screen)
 
 `src/app/*.tsx` + `src/components/*.tsx` + `src/theme.tsx` = 652 lines, plus `tamagui.config.ts` 165.
+
+## iOS 27 setup (27 October 2026)
+
+The lab moved from the iPhone 17 Pro simulator on iOS 26.4 to the iPhone 17 simulator on iOS 27.0 (Xcode 27.1). Expo SDK 57 apps built with the iOS 27 SDK need the UIKit scene life cycle, which SDK 57 adds as an opt-in:
+
+1. `npx expo install expo-build-properties` (57.0.22).
+2. In `app.json` plugins: `["expo-build-properties", { "ios": { "enableSceneSupport": true } }]`. The option is documented in `node_modules/expo-build-properties/build/pluginConfig.d.ts` ("Adopt the UIKit scene lifecycle in an Expo SDK 57 iOS project, as required by the iOS 27 SDK"; needs expo 57.0.23 or newer; this app is on 57.0.31). Source: expo/expo PR #50205.
+3. `npx expo install --check`: clean.
+
+## Items 15–19 (added 27 October 2026)
+
+All five use Tamagui's own components (all exported from `tamagui` 3.1.2: `export * from '@tamagui/slider'`, `progress`, `accordion`, `menu`, `toggle-group` in `node_modules/tamagui/src/index.ts`).
+
+| # | Item | Component | Docs | Accessibility passed by hand |
+| --- | --- | --- | --- | --- |
+| 15 | Slider | `Slider` + `Track`, `TrackActive`, `Thumb` (thumb has `role="slider"` and `aria-value*` in `@tamagui/slider/src/Slider.tsx`) | https://tamagui.dev/ui/slider | `aria-label` on the thumb |
+| 16 | Progress | `Progress` + `Indicator` (`role="progressbar"`, `aria-valuetext` from `getValueLabel`) | https://tamagui.dev/ui/progress | `aria-label` |
+| 17 | Accordion | `Accordion type="multiple"`, `Item`, `Header`, `Trigger`, `Content` | https://tamagui.dev/ui/accordion | none |
+| 18 | Menu | `Menu`, `Trigger asChild`, `Portal`, `Content`, `Item`, `ItemTitle`; native on iOS through `@expo/ui` after `import '@tamagui/native/setup-expo-ui-menu'` in `index.js` | https://tamagui.dev/ui/menu | none |
+| 19 | Segmented control | `ToggleGroup type="single" disableDeactivation`, `ToggleGroup.Item` | https://tamagui.dev/ui/toggle-group | `aria-label` on group and items |
+
+Two setup mistakes of mine, found by hand on the simulator and fixed before the recorded runs:
+
+- **Menu crashed the app** on the first tap of its trigger: `TypeError: Cannot read property 'contentId' of undefined` in `MenuContent` (simulator log, three crash reports on 27 Oct). The Menu docs say that on Expo 57 / RN 0.86 menus are native on mobile and need `import '@tamagui/native/setup-expo-ui-menu'` at the app entry, before `expo-router/entry`. With that import (added to `index.js`) the trigger opens iOS's own context menu and nothing crashes. Without it, the non-native fallback crashed.
+- **Accordion without `Accordion.Header`.** The source says the Trigger "should always be nested inside of an AccordionHeader" (`@tamagui/accordion/src/Accordion.tsx`), so it is now.
+
+Also fixed: the ToggleGroup stacked its items vertically until `flexDirection="row"` was set (layout only).

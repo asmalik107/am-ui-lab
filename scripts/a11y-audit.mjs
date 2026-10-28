@@ -308,8 +308,9 @@ async function scan(id) {
   for (const dir of [0.35, -0.35]) {
     for (let i = 0; i < 14; i++) {
       const e = byId(axTree(), id);
-      if (e) return e;
-      swipe(dir);
+      // Only once it's fully on screen, or its frame is clipped by the edge.
+      if (e && e.y > 0.12 && e.y + e.h < 0.92) return e;
+      swipe(e ? (e.y <= 0.12 ? -0.2 : 0.2) : dir);
       await sleep(400);
     }
   }

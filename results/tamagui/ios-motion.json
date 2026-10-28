@@ -1,72 +1,73 @@
 {
   "app": "tamagui",
   "bundleId": "dev.asimmalik.uilab.tamagui",
-  "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
-  "date": "2026-10-22T19:31:44.540Z",
+  "udid": "11A84A8F-FDB1-4921-8105-D7B17EC3CBC1",
+  "device": {
+    "name": "iPhone 17",
+    "runtime": "iOS 27.0"
+  },
+  "date": "2026-10-28T08:06:03.663Z",
   "runs": [
     {
       "reduceMotion": false,
       "component": "Dialog",
       "label": "Dialog",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-9B4311A6-178B-4879-9923-B2468FDE9675-1792697438764.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793174702155.mp4",
       "fps": 30,
-      "peak": 100,
-      "ms": 100,
+      "peak": 102,
+      "ms": 67,
       "frames": [
         2.4,
-        2.4,
-        100
+        102
       ]
     },
     {
       "reduceMotion": false,
       "component": "Bottom sheet",
       "label": "Bottom sheet",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-9B4311A6-178B-4879-9923-B2468FDE9675-1792697455776.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793174720930.mp4",
       "fps": 30,
-      "peak": 25,
-      "ms": 467,
+      "peak": 26.1,
+      "ms": 433,
       "frames": [
-        4.7,
-        21.9,
-        25,
+        26.1,
+        25.3,
         22.9,
-        18,
-        13.4,
-        10.1,
+        18.3,
+        0,
+        19.9,
         7.8,
+        0,
         5.6,
-        4.2,
-        3.4,
-        3,
-        2.5,
-        1.1
+        5.6,
+        0,
+        2.4,
+        1.7
       ]
     },
     {
       "reduceMotion": true,
       "component": "Dialog",
       "label": "Dialog",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-9B4311A6-178B-4879-9923-B2468FDE9675-1792697481372.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793174740202.mp4",
       "fps": 30,
-      "peak": 100,
-      "ms": 100,
+      "peak": 101.6,
+      "ms": 67,
       "frames": [
         2.4,
-        2.4,
-        100
+        101.6
       ]
     },
     {
       "reduceMotion": true,
       "component": "Bottom sheet",
       "label": "Bottom sheet",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-9B4311A6-178B-4879-9923-B2468FDE9675-1792697499785.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793174759063.mp4",
       "fps": 30,
-      "peak": 92,
+      "peak": 91.3,
       "ms": 33,
       "frames": [
-        92
+        91.3
       ]
     }
   ]

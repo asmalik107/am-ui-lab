@@ -5,7 +5,7 @@ import { Button as NativeButton, Column as NativeColumn, BottomSheet as NativeSh
 import { accessibilityAddTraits, accessibilityIdentifier } from '@expo/ui/swift-ui/modifiers'
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet'
 import { forwardRef, type ReactNode } from 'react'
-import { Adapt, Dialog as TDialog, getTokens, H3, Label, Paragraph, Select as TSelect, Sheet, styled, Text, useTheme, XStack, YStack } from 'tamagui'
+import { Adapt, Dialog as TDialog, getTokens, H3, Label, Menu as TMenu, Paragraph, Select as TSelect, Sheet, styled, Text, useTheme, XStack, YStack } from 'tamagui'
 
 import { Button } from './controls'
 
@@ -188,5 +188,28 @@ export function ExpoExerciseSheet({ open, onClose, title, body, close, testID }:
         <NativeButton label={close} variant="outlined" onPress={onClose} modifiers={[accessibilityIdentifier(`${testID}-close`)]} />
       </NativeColumn>
     </NativeSheet>
+  )
+}
+
+// Menu: Tamagui's non-native menu (the default), opened from a Button.
+// https://tamagui.dev/ui/menu
+export function Menu({ label, items, onSelect, testID }: { label: string; items: readonly string[]; onSelect: (item: string) => void; testID?: string }) {
+  return (
+    <TMenu>
+      <TMenu.Trigger asChild>
+        <Button testID={`${testID}-open`} label={label} variant="secondary" />
+      </TMenu.Trigger>
+      <TMenu.Portal>
+        <TMenu.Content testID={testID} bg="surface-raised" borderColor="border-color" borderWidth={1} rounded="md" py="sm">
+          {items.map((item, i) => (
+            <TMenu.Item key={item} testID={`${testID}-item-${i}`} onSelect={() => onSelect(item)} minH={44} px="lg" justify="center">
+              <TMenu.ItemTitle color="color" fontSize={16}>
+                {item}
+              </TMenu.ItemTitle>
+            </TMenu.Item>
+          ))}
+        </TMenu.Content>
+      </TMenu.Portal>
+    </TMenu>
   )
 }

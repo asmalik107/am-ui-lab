@@ -236,25 +236,28 @@ A theme-switch run is only counted when the readout changes. Two runs in a row t
 
 ### Developer cost
 
-`scripts/devcost.mjs` counts each column with a command that can be re-run; `results/devcost.md` has the method for each.
+What it would cost a developer to build the same test screen with each library. `scripts/devcost.mjs` counts every row with a command that can be re-run; `results/devcost.md` has the raw output.
 
-| App | Own source lines | Copied kit lines | Config files | Setup steps | Errors hit | tsc errors (src/ / all) | Hand-written a11y props |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| baseline | 840 | 0 | 0 | no NOTES | no NOTES | 0 / 0 | 75 |
-| unistyles | 957 | 0 | 2 | 8 | 2 | 0 / 0 | 75 |
-| uniwind | 814 | 0 | 3 | 11 | 0 | 0 / 0 | 75 |
-| nativewind | 819 | 0 | 6 | 14 | 0 | 0 / 0 | 75 |
-| heroui | 641 | 0 | 3 | 10 | 4 | 0 / 0 | 20 |
-| gluestack | 770 | 7488 | 8 | 5 | 8 | 0 / 18 | 11 |
-| tamagui | 812 | 0 | 5 | 11 | 6 | 0 / 0 | 12 |
-| reusables | 654 | 1519 | 4 | 12 | 6 | 0 / 0 | 21 |
+| What it counts | baseline | unistyles | uniwind | nativewind | heroui | gluestack | tamagui | reusables |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Lines of screen code you write | 840 | 957 | 814 | 819 | 641 | 770 | 812 | 654 |
+| Kit code copied into your app (lines) | 0 | 0 | 0 | 0 | 0 | 7,488 | 0 | 1,519 |
+| Config files added or changed | 0 | 2 | 3 | 6 | 3 | 8 | 5 | 4 |
+| Setup steps | n/a | 8 | 11 | 14 | 10 | 5 | 11 | 12 |
+| Setup problems hit | n/a | 2 | 0 | 0 | 4 | 8 | 6 | 6 |
+| Type errors in your own code | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Type errors in copied kit code | 0 | 0 | 0 | 0 | 0 | 17 | 0 | 0 |
+| Accessibility props written by hand | 75 | 75 | 75 | 75 | 20 | 11 | 12 | 21 |
 
-- **Own source lines:** non-blank lines in the app's own `src/` TypeScript.
-- **Copied kit lines:** what the kit's CLI copied into the app.
-- **Config files:** files at the app root, plus CSS and `.d.ts` files in `src/`, that are new or differ from the baseline's.
-- **Setup steps and errors:** numbered entries in each `NOTES.md`, as written. Each app's notes break steps up differently, so compare them loosely. The iOS 27 section is left out, because it's the same in every app.
-- **gluestack's 18 tsc errors** are all in the components its CLI copied (`components/ui`), one of them in the new Menu.
-- **Hand-written a11y props:** `role`, `aria-*` and `accessibility*` props in the app's own source. The engines repeat the baseline's 75; the kits pass 11–21.
+What each row means:
+
+- **Lines of screen code you write:** non-blank lines of TypeScript in the app's own `src/` folder: the test screen, any components built by hand and the theme setup. Code a kit's CLI copied in isn't counted here.
+- **Kit code copied into your app:** gluestack and Reusables don't ship as npm packages. Their CLI copies each component's source into the app (`components/ui`, `src/components/ui`), and from then on it's yours to maintain and fix. The other kits are npm packages, so they show 0.
+- **Config files added or changed:** files at the app root, plus `.css` and `.d.ts` files in `src/`, that are new or differ from the baseline app's (Babel, Metro, Tailwind, theme and type files). `package.json`, the lockfile and `app.json` are left out, because every app changes them.
+- **Setup steps:** how many numbered steps the setup section of the app's `NOTES.md` lists. A rough guide only, because each app's notes split steps differently. The baseline is the plain React Native reference, so it has none. The iOS 27 step is the same in every app, so it's left out.
+- **Setup problems hit:** how many problems came up while setting the app up and had to be worked around, as listed under "Errors hit" in the app's `NOTES.md`. Examples are a CLI that hung or overwrote files, docs that disagree with the code, and package versions Expo 57 doesn't support. It's a count, not a measure of effort: one took two minutes, another twenty.
+- **Type errors:** what `npx tsc --noEmit` reports, split into the app's own files and the files a kit's CLI copied in. All 17 of gluestack's are in its copied components: 11 in the bottom sheet, 4 in the checkbox, and 1 each in the menu and the alert dialog. The app still builds and runs, because Metro doesn't type-check. But the project's type-check fails until someone fixes code they didn't write. (An earlier run on 28 October counted 18 with no source change; the extra one wasn't in the app's or the kit's source.)
+- **Accessibility props written by hand:** `role`, `aria-*`, `accessibility*` and `importantForAccessibility` props in the app's own code. Higher means more accessibility written by hand. The styling engines repeat the baseline's 75, while the kits supply some of it themselves and need 11–21.
 
 ### iOS 27 against iOS 26.4
 

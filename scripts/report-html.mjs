@@ -253,13 +253,14 @@ const devcost = existsSync(devcostFile) ? JSON.parse(readFileSync(devcostFile, '
 const devRow = (label, fn, note) => `<tr><th scope="row">${label}<span class="what">${esc(note)}</span></th>${apps.map(([a]) => `<td>${esc(fn(devcost.rows.find((r) => r.app === a)))}</td>`).join('')}</tr>`;
 const devcostRows = devcost
   ? [
-      devRow('Own source lines', (r) => r.screenLines, devcost.how.screenLines),
-      devRow('Copied kit lines', (r) => r.copiedLines, devcost.how.copiedLines),
-      devRow('Config files', (r) => r.configFiles.length, devcost.how.configFiles),
-      devRow('Setup steps', (r) => r.setupSteps ?? 'no NOTES.md', devcost.how.setupSteps),
-      devRow('Errors hit', (r) => r.errorsHit ?? 'no NOTES.md', devcost.how.errorsHit),
-      devRow('tsc errors, src/ / all', (r) => `${r.tsc.src} / ${r.tsc.all}`, devcost.how.tsc),
-      devRow('Hand-written accessibility props', (r) => r.a11yProps, devcost.how.a11yProps),
+      devRow('Lines of screen code you write', (r) => r.screenLines, devcost.how.screenLines),
+      devRow('Kit code copied into your app (lines)', (r) => r.copiedLines, devcost.how.copiedLines),
+      devRow('Config files added or changed', (r) => r.configFiles.length, devcost.how.configFiles),
+      devRow('Setup steps', (r) => r.setupSteps ?? 'n/a (reference app)', devcost.how.setupSteps),
+      devRow('Setup problems hit', (r) => r.errorsHit ?? 'n/a (reference app)', devcost.how.errorsHit),
+      devRow('Type errors in your own code', (r) => r.tsc.src, devcost.how.tscOwn),
+      devRow('Type errors in copied kit code', (r) => r.tsc.all - r.tsc.src, devcost.how.tscKit),
+      devRow('Accessibility props written by hand', (r) => r.a11yProps, devcost.how.a11yProps),
     ].join('\n')
   : '';
 
@@ -364,7 +365,7 @@ ${otherRows}
 </tbody>
 </table></div>
 <h2>Developer cost</h2>
-<p>Counted with <code>scripts/devcost.mjs</code>${devcost ? ` on ${esc(devcost.date)}` : ''}. Each row says how it was counted.</p>
+<p>Counted with <code>scripts/devcost.mjs</code>${devcost ? ` on ${esc(devcost.date)}` : ''}. What it would cost a developer to build the same screen with each library. Each row says what it counts and how.</p>
 <div class="wrap"><table>
 <thead><tr><th scope="col" class="check">Count</th>${apps.map(([, name]) => `<th scope="col">${esc(name)}</th>`).join('')}</tr></thead>
 <tbody>

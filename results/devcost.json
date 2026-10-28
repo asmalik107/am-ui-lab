@@ -1,0 +1,156 @@
+{
+  "date": "2026-10-28",
+  "how": {
+    "screenLines": "Non-blank lines in the app's own src/ .ts/.tsx files (kit components copied by a CLI excluded)",
+    "copiedLines": "Non-blank lines the kit's CLI copied into the app (gluestack components/ui, Reusables src/components/ui)",
+    "configFiles": "Files at the app root, plus .css and .d.ts files in src/, that are new or differ from the baseline's (package.json, lockfile, app.json and generated uniwind-types.d.ts left out)",
+    "setupSteps": "Numbered steps under the setup heading of NOTES.md (as written; each app's notes break steps up differently; the iOS 27 section, identical in every app, left out)",
+    "errorsHit": "Numbered entries under the errors heading of NOTES.md",
+    "tsc": "`npx tsc --noEmit` errors: all, and those in src/ outside copied kit code",
+    "a11yProps": "role=, aria-*=, accessibility*= and importantForAccessibility= props in the app's own src/ (kit components excluded)"
+  },
+  "rows": [
+    {
+      "app": "baseline",
+      "screenLines": 840,
+      "copiedLines": 0,
+      "configFiles": [],
+      "setupSteps": null,
+      "errorsHit": null,
+      "tsc": {
+        "all": 0,
+        "src": 0
+      },
+      "a11yProps": 75
+    },
+    {
+      "app": "unistyles",
+      "screenLines": 957,
+      "copiedLines": 0,
+      "configFiles": [
+        "babel.config.js",
+        "index.ts"
+      ],
+      "setupSteps": 8,
+      "errorsHit": 2,
+      "tsc": {
+        "all": 0,
+        "src": 0
+      },
+      "a11yProps": 75
+    },
+    {
+      "app": "uniwind",
+      "screenLines": 814,
+      "copiedLines": 0,
+      "configFiles": [
+        "metro.config.js",
+        "src/css.d.ts",
+        "src/global.css"
+      ],
+      "setupSteps": 11,
+      "errorsHit": 0,
+      "tsc": {
+        "all": 0,
+        "src": 0
+      },
+      "a11yProps": 75
+    },
+    {
+      "app": "nativewind",
+      "screenLines": 819,
+      "copiedLines": 0,
+      "configFiles": [
+        "metro.config.js",
+        "nativewind-env.d.ts",
+        "postcss.config.mjs",
+        "tsconfig.json",
+        "src/css.d.ts",
+        "src/global.css"
+      ],
+      "setupSteps": 14,
+      "errorsHit": 0,
+      "tsc": {
+        "all": 0,
+        "src": 0
+      },
+      "a11yProps": 75
+    },
+    {
+      "app": "tamagui",
+      "screenLines": 812,
+      "copiedLines": 0,
+      "configFiles": [
+        ".gitignore",
+        "index.js",
+        "metro.config.js",
+        "tamagui.build.ts",
+        "tamagui.config.ts"
+      ],
+      "setupSteps": 11,
+      "errorsHit": 6,
+      "tsc": {
+        "all": 0,
+        "src": 0
+      },
+      "a11yProps": 12
+    },
+    {
+      "app": "gluestack",
+      "screenLines": 770,
+      "copiedLines": 7488,
+      "configFiles": [
+        ".npmrc",
+        "babel.config.js",
+        "css.d.ts",
+        "global.css",
+        "index.js",
+        "metro.config.js",
+        "theme.generated.css",
+        "tsconfig.json"
+      ],
+      "setupSteps": 5,
+      "errorsHit": 8,
+      "tsc": {
+        "all": 18,
+        "src": 0
+      },
+      "a11yProps": 11
+    },
+    {
+      "app": "heroui",
+      "screenLines": 641,
+      "copiedLines": 0,
+      "configFiles": [
+        "metro.config.js",
+        "src/css.d.ts",
+        "src/global.css"
+      ],
+      "setupSteps": 10,
+      "errorsHit": 4,
+      "tsc": {
+        "all": 0,
+        "src": 0
+      },
+      "a11yProps": 20
+    },
+    {
+      "app": "reusables",
+      "screenLines": 654,
+      "copiedLines": 1519,
+      "configFiles": [
+        "components.json",
+        "metro.config.js",
+        "src/expo-types.d.ts",
+        "src/global.css"
+      ],
+      "setupSteps": 12,
+      "errorsHit": 6,
+      "tsc": {
+        "all": 0,
+        "src": 0
+      },
+      "a11yProps": 21
+    }
+  ]
+}

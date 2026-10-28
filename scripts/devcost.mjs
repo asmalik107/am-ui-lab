@@ -42,7 +42,8 @@ const notesCount = (app, heading) => {
   let on = false;
   let n = 0;
   for (const l of readFileSync(f, 'utf8').split('\n')) {
-    if (/^## /.test(l)) on = heading.test(l);
+    // The iOS 27 section is the same three steps in every app, so it's left out.
+    if (/^## /.test(l)) on = heading.test(l) && !/iOS 27/.test(l);
     else if (on && /^(\d+\. |\| *\d+ *\|)/.test(l)) n++;
   }
   return n;
@@ -86,7 +87,7 @@ const how = {
   screenLines: "Non-blank lines in the app's own src/ .ts/.tsx files (kit components copied by a CLI excluded)",
   copiedLines: "Non-blank lines the kit's CLI copied into the app (gluestack components/ui, Reusables src/components/ui)",
   configFiles: "Files at the app root, plus .css and .d.ts files in src/, that are new or differ from the baseline's (package.json, lockfile, app.json and generated uniwind-types.d.ts left out)",
-  setupSteps: 'Numbered steps under the setup heading of NOTES.md (as written; each app\'s notes break steps up differently)',
+  setupSteps: 'Numbered steps under the setup heading of NOTES.md (as written; each app\'s notes break steps up differently; the iOS 27 section, identical in every app, left out)',
   errorsHit: 'Numbered entries under the errors heading of NOTES.md',
   tsc: '`npx tsc --noEmit` errors: all, and those in src/ outside copied kit code',
   a11yProps: "role=, aria-*=, accessibility*= and importantForAccessibility= props in the app's own src/ (kit components excluded)",

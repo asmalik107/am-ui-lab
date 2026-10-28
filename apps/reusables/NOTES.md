@@ -215,3 +215,11 @@ Added with `npx @react-native-reusables/cli@0.7.1 add progress accordion dropdow
 | 17 | Accordion | `Accordion type="multiple"`, `AccordionItem`, `AccordionTrigger`, `AccordionContent` | none |
 | 18 | Menu | `DropdownMenu`, `DropdownMenuTrigger asChild` on an outline `Button`, `DropdownMenuContent`, `DropdownMenuItem` | none |
 | 19 | Segmented control | `ToggleGroup type="single" variant="outline"`, `ToggleGroupItem` | `aria-label` on each item |
+
+### Results on iOS 27 (28 October 2026)
+
+14 of 18 checks for items 15–19 pass, the same in light, dark and brand (37/62 overall). Each failure was checked by hand on the simulator:
+- Progress: reads "0%" with no name while the bar shows 3 of 8. `src/components/ui/progress.tsx` (as the CLI copied it) takes `value` out of the props and passes it only to the indicator, never to `ProgressPrimitive.Root`, which then reports its default of 0.
+- Menu: trigger 40 pt tall; items are plain groups, not buttons. The screen behind is hidden.
+- Segmented control (ToggleGroup): read as "radio button, checked/unchecked", which passes; options are 40 pt tall.
+- Slider (hand-built) and Accordion: all pass.

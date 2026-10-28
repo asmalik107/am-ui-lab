@@ -59,6 +59,18 @@ const what = {
   'new value read on trigger': 'After picking, the trigger announces the new value.',
   'in accessibility tree': 'The toast appears in the tree while it is on screen.',
   'test could run': 'The element the test needs was missing, so the test could not run.',
+  'name, role, value': 'VoiceOver gets a label, the adjustable trait and the current value.',
+  'dragging changes the value': 'Dragging the thumb changes the value in the accessibility tree (stands in for VoiceOver’s swipe up, which needs VoiceOver).',
+  'name and value': 'VoiceOver gets a label and the current value.',
+  'header is a button': 'The section header has the button trait.',
+  'expanded state exposed': 'The header reads as expanded when open and not when closed.',
+  'content shows and hides': 'The section text appears on the first tap and goes on the second.',
+  'trigger name and role': 'The menu button has a label and the button trait.',
+  'items are buttons': 'Each menu action has the button trait.',
+  'closes after an action': 'Choosing an action closes the menu.',
+  'options have name and role': 'Each option has a label and a button, radio or tab role.',
+  'selected option marked': 'The selected option is marked as selected or checked, and the others aren’t.',
+  'selection moves on tap': 'Tapping another option moves the selected state to it.',
 };
 
 const cell = (f) => {
@@ -158,25 +170,27 @@ const otherRows = [
 // figure with a visible caption; the numbers are also in a table that screen
 // readers get instead of the drawing (the SVG is aria-hidden).
 const newItems = ['Slider', 'Progress', 'Accordion', 'Menu', 'Segmented control'];
-const part = (f) => (f.component.startsWith('Bottom sheet') ? 'sheets' : newItems.includes(f.component) ? 'new' : 'core');
+// Groups as in the README: items 1–14 include the shared sheet slot; the
+// extra sheets are the named variants, e.g. "Bottom sheet (@expo/ui)".
+const part = (f) => (f.component.startsWith('Bottom sheet (') ? 'sheets' : newItems.includes(f.component) ? 'new' : 'core');
 const tally = (findings, which) => {
   const fs = (findings ?? []).filter((f) => !which || part(f) === which);
   return fs.length ? { pass: fs.filter((f) => f.pass).length, total: fs.length } : null;
 };
 const scoreParts = [
-  ['Core checks (items 1–14)', (a) => tally(data[a].a11y?.findings, 'core')],
-  ['Bottom sheets', (a) => tally(data[a].a11y?.findings, 'sheets')],
+  ['Items 1–14', (a) => tally(data[a].a11y?.findings, 'core')],
+  ['Extra bottom sheets', (a) => tally(data[a].a11y?.findings, 'sheets')],
   ['New items (15–19)', (a) => tally(data[a].a11y?.findings, 'new')],
   ['All checks, dark theme', (a) => tally(data[a].dark?.findings)],
   ['All checks, brand theme', (a) => tally(data[a].brand?.findings)],
 ];
-const W = 640;
-const LABEL = 150;
+const W = 400;
+const LABEL = 118;
 const ROW = 26;
 // One horizontal bar per app. rows: [{ label, value, text }]; value null = not measured.
 function bars(rows, max) {
   const h = rows.length * ROW + 8;
-  const inner = W - LABEL - 90;
+  const inner = W - LABEL - 78;
   return `<svg viewBox="0 0 ${W} ${h}" width="100%" aria-hidden="true" focusable="false" class="chart">${rows
     .map((r, i) => {
       const y = 4 + i * ROW;
@@ -206,7 +220,7 @@ const num = (a, f) => {
   }
 };
 const metricCharts = [
-  ['Startup, median of 10', 'launch-app call until the title is in the accessibility tree; lower is better', (d) => d.metrics.startup.median, (v) => `${v.toFixed(0)} ms`],
+  ['Startup until readable by VoiceOver, median of 10', 'launch-app call until the title is in the accessibility tree; not first paint, and varies by day', (d) => d.metrics.startup.median, (v) => `${v.toFixed(0)} ms`],
   ['Memory at idle', 'phys_footprint 5 s after launch; lower is better', (d) => d.metrics.memory.idle.physFootprint / 1048576, (v) => `${v.toFixed(1)} MiB`],
   ['Memory after use', 'after the 200-row list and every overlay; lower is better', (d) => d.metrics.memory.used.physFootprint / 1048576, (v) => `${v.toFixed(1)} MiB`],
   ['App CPU time during 5 list flings', 'all of the app’s threads; lower is better', (d) => d.metrics.scroll.cpuMs.total, (v) => `${v.toFixed(0)} ms`],
@@ -285,12 +299,12 @@ td.sheet .untested { color: var(--muted); }
 tr.note th { font-weight: 400; }
 tr.score td, tr.score th { font-weight: 700; background: var(--bg); }
 tr.score th[scope="row"] { background: var(--bg); }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.sr { position: absolute; top: 0; left: 0; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 16px; }
-.fig { margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.fig { position: relative; overflow: hidden; margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .fig figcaption { font-size: 14px; margin-bottom: 4px; }
 .fig figcaption span { color: var(--muted); }
-.chart .lbl, .chart .val { font-size: 13px; fill: var(--fg); }
+.chart .lbl, .chart .val { font-size: 12px; fill: var(--fg); }
 .chart .val { fill: var(--muted); }
 .chart .bar { fill: var(--accent); }
 .chart .bar.full { fill: var(--pass); }

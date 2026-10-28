@@ -108,5 +108,59 @@
       "total": 1948
     },
     "hangs": 0
+  },
+  "rerenders": {
+    "date": "2026-10-28T10:31:14.140Z",
+    "build": "Debug",
+    "switches": [
+      {
+        "from": "light",
+        "to": "dark",
+        "commits": 4,
+        "renders": 128,
+        "raw": {
+          "duration_ms": 2834.603,
+          "sample_count": 234,
+          "fiber_renders_captured": 128,
+          "total_react_commits": 4,
+          "hot_commit_indices": [],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 0,
+          "selection_note": "All commits below 16ms — app appears smooth (all-clear)"
+        }
+      },
+      {
+        "from": "dark",
+        "to": "brand",
+        "commits": 5,
+        "renders": 128,
+        "raw": {
+          "duration_ms": 2837.093,
+          "sample_count": 230,
+          "fiber_renders_captured": 128,
+          "total_react_commits": 5,
+          "hot_commit_indices": [],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 0,
+          "selection_note": "All commits below 16ms — app appears smooth (all-clear)"
+        }
+      },
+      {
+        "from": "brand",
+        "to": "light",
+        "commits": 5,
+        "renders": 126,
+        "raw": {
+          "duration_ms": 2819.047,
+          "sample_count": 225,
+          "fiber_renders_captured": 126,
+          "total_react_commits": 5,
+          "hot_commit_indices": [],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 0,
+          "selection_note": "All commits below 16ms — app appears smooth (all-clear)"
+        }
+      }
+    ]
   }
 }

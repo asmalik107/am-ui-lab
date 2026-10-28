@@ -106,5 +106,10 @@
       "total": 1977
     },
     "hangs": 0
+  },
+  "rerenders": {
+    "date": "2026-10-28T10:50:38.405Z",
+    "build": "Debug",
+    "error": "the Debug build aborts on a React Native Yoga layout assertion (__assert_rtn in YogaLayoutableShadowNode::layout, crash report UILabTamagui-2026-10-28-105109.ips), as it did on iOS 26.4; Release builds are unaffected"
   }
 }

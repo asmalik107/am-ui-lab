@@ -320,3 +320,12 @@ Added with `npx gluestack-ui@5.0.3 add slider progress accordion menu -y`. It co
 | 17 | Accordion | `Accordion type="multiple" isCollapsible`, `AccordionItem`, `AccordionHeader`, `AccordionTrigger`, `AccordionTitleText`, `AccordionIcon`, `AccordionContent` | https://gluestack.io/ui/docs/components/accordion | none |
 | 18 | Menu | `Menu` with a `trigger` render prop on a `Button`, `MenuItem`, `MenuItemLabel` | https://gluestack.io/ui/docs/components/menu | none |
 | 19 | Segmented control | **Hand-built**: gluestack-ui ships no segmented control. Row of `Pressable` with `role="button"` + `aria-selected`, styled with the app's Uniwind classes | – | all of it |
+
+### Results on iOS 27 (28 October 2026)
+
+10 of 18 checks for items 15–19 pass, the same in light, dark and brand (35/66 overall). Each failure was checked by hand on the simulator:
+- Slider: moves on screen (60 → 175 kg in a drag) but its accessibility element is a group named "Slider" with no value and no trait, 370×6 pt.
+- Progress: value "38%" but no name.
+- Accordion: headers are buttons with an expanded state, but 20 pt tall.
+- Menu: trigger 38 pt tall; items are plain groups, not buttons; the screen behind stays exposed.
+- Segmented control (hand-built): all 4 pass.

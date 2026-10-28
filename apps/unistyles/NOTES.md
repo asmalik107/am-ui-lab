@@ -182,3 +182,7 @@ All five are the baseline's hand-built components, restyled with `StyleSheet.cre
 | 17 | Accordion | Hand-built: header `Pressable` `role="button"` + `aria-expanded` |
 | 18 | Menu | Hand-built: button + RN `Modal`, list `aria-modal`, items `role="button"` (same structure as the Select) |
 | 19 | Segmented control | Hand-built: row of `Pressable` `role="button"` + `aria-selected` |
+
+### Results on iOS 27 (28 October 2026)
+
+All 18 checks for items 15–19 pass, in light, dark and brand (58/62 overall, the same 4 failures as the baseline).

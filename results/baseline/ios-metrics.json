@@ -6,64 +6,64 @@
     "name": "iPhone 17",
     "runtime": "iOS 27.0"
   },
-  "date": "2026-10-27T15:23:22.744Z",
+  "date": "2026-10-28T11:34:56.316Z",
   "poll": {
     "n": 5,
-    "median": 190.38420900000006,
-    "min": 185.971584,
-    "max": 323.965959,
+    "median": 319.2855000000004,
+    "min": 215.0276670000003,
+    "max": 3221.932584,
     "samples": [
-      323.965959,
-      193.14437499999997,
-      185.971584,
-      186.78691600000002,
-      190.38420900000006
+      3221.932584,
+      215.0276670000003,
+      319.2855000000004,
+      357.9646670000002,
+      316.66012500000033
     ]
   },
   "startup": {
     "n": 10,
-    "median": 4826.408833500003,
-    "min": 4586.92375,
-    "max": 5190.023083,
+    "median": 8065.496563000004,
+    "min": 1938.0243339999988,
+    "max": 8417.260833999997,
     "samples": [
-      4590.470042,
-      4586.92375,
-      4872.942708999999,
-      4694.929666,
-      4801.2930000000015,
-      4851.524667000005,
-      5025.703083,
-      5190.023083,
-      4877.847541999996,
-      4741.040083
+      1938.0243339999988,
+      8022.767750000001,
+      8417.260833999997,
+      8062.729708999999,
+      8157.509749999997,
+      8124.896500000003,
+      8143.763166999997,
+      8068.263417000009,
+      8011.169417000012,
+      8034.368457999997
     ]
   },
   "launchCall": {
     "n": 10,
-    "median": 338.0841460000006,
-    "min": 320.85008299999754,
-    "max": 461.3137499999939,
+    "median": 339.89341700000296,
+    "min": 313.0576250000013,
+    "max": 995.2302919999993,
     "samples": [
-      336.7713329999997,
-      328.83254099999976,
-      331.7079999999987,
-      352.6319999999978,
-      339.3969590000015,
-      324.4625420000011,
-      402.03166699999565,
-      461.3137499999939,
-      340.9707920000001,
-      320.85008299999754
+      995.2302919999993,
+      380.86824999999953,
+      421.18254199999865,
+      359.26750000000175,
+      336.9579169999997,
+      342.8289170000062,
+      313.9968329999974,
+      336.6848750000063,
+      313.0576250000013,
+      324.11820799999987
     ]
   },
   "memory": {
     "idle": {
-      "physFootprint": 65620440,
-      "footprint": 65505752
+      "physFootprint": 65964528,
+      "footprint": 65849840
     },
     "used": {
-      "physFootprint": 127928888,
-      "footprint": 127814200
+      "physFootprint": 130435616,
+      "footprint": 130320928
     },
     "overlays": [
       {
@@ -93,20 +93,80 @@
       },
       {
         "overlay": "test-toast-show",
-        "opened": true,
+        "opened": false,
         "closed": true
       }
     ]
   },
   "scroll": {
     "flings": 5,
-    "windowMs": 7522,
+    "windowMs": 7532,
     "cpuMs": {
-      "main": 943,
-      "js": 953,
-      "other": 49,
-      "total": 1945
+      "main": 1123,
+      "js": 995,
+      "other": 42,
+      "total": 2160
     },
     "hangs": 0
+  },
+  "rerenders": {
+    "date": "2026-10-28T10:23:37.078Z",
+    "build": "Debug",
+    "switches": [
+      {
+        "from": "light",
+        "to": "dark",
+        "commits": 3,
+        "renders": 298,
+        "raw": {
+          "duration_ms": 2843.949,
+          "sample_count": 221,
+          "fiber_renders_captured": 298,
+          "total_react_commits": 3,
+          "hot_commit_indices": [
+            0
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 295,
+          "selection_note": "1 of 3 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "dark",
+        "to": "brand",
+        "commits": 2,
+        "renders": 298,
+        "raw": {
+          "duration_ms": 2815.997,
+          "sample_count": 229,
+          "fiber_renders_captured": 298,
+          "total_react_commits": 2,
+          "hot_commit_indices": [
+            0
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 298,
+          "selection_note": "1 of 2 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "brand",
+        "to": "light",
+        "commits": 2,
+        "renders": 288,
+        "raw": {
+          "duration_ms": 2801.337,
+          "sample_count": 232,
+          "fiber_renders_captured": 288,
+          "total_react_commits": 2,
+          "hot_commit_indices": [
+            0
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 288,
+          "selection_note": "1 of 2 commits at ≥16ms absolute floor"
+        }
+      }
+    ]
   }
 }

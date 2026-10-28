@@ -15,3 +15,9 @@ Run 2026-10-28 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B
 Overlays opened for the memory figure: test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-select (error: test-select not in view hierarchy), test-menu-open (error: test-menu-open not in view hierarchy), test-toast-show.
 
 Frame hitches were not measured: xctrace's Animation Hitches template fails on the simulator ("Hitches is not supported on this platform"). Startup is when VoiceOver could first read the screen, not first paint, which can be seconds earlier; timing first paint with a screen recording slowed the launches down, so it isn't reported.
+
+## Re-renders on theme switch
+
+Run 2026-10-28, Debug build with Metro, argent React profiler (`scripts/rerender-run.mjs`). Counts only: Debug timings aren't representative.
+
+Not measured: the Debug build aborts on a React Native Yoga layout assertion (__assert_rtn in YogaLayoutableShadowNode::layout, crash report UILabTamagui-2026-10-28-105109.ips), as it did on iOS 26.4; Release builds are unaffected

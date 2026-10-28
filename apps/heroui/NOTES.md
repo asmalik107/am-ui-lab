@@ -185,3 +185,10 @@ In `src/components/more.tsx`. HeroUI Native 1.0.11 has no progress bar and no se
 | 17 | Accordion | `Accordion selectionMode="multiple"`, `Item`, `Trigger`, `Indicator`, `Content` | https://heroui.com/docs/native/components/accordion | none |
 | 18 | Menu | `Menu`, `Trigger asChild`, `Portal`, `Overlay`, `Content presentation="popover"`, `Item`, `ItemTitle` | https://heroui.com/docs/native/components/menu | none |
 | 19 | Segmented control | **Hand-built**: row of `Pressable` `role="button"` + `aria-selected` | – | all of it |
+
+### Results on iOS 27 (28 October 2026)
+
+14 of 18 checks for items 15–19 pass, the same in light, dark and brand (44/67 overall). Each failure was checked by hand on the simulator:
+- Slider: the thumb has `role="slider"`, which React Native 0.86 maps to no iOS trait; it reads "60" with no unit and is 28×20 pt. Dragging changes the value.
+- Menu: items are plain groups, not buttons; the screen behind stays exposed.
+- Accordion: all 4 pass. Progress and segmented control (both hand-built): pass.

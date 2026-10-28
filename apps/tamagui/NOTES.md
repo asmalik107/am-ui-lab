@@ -197,3 +197,12 @@ Two setup mistakes of mine, found by hand on the simulator and fixed before the 
 - **Accordion without `Accordion.Header`.** The source says the Trigger "should always be nested inside of an AccordionHeader" (`@tamagui/accordion/src/Accordion.tsx`), so it is now.
 
 Also fixed: the ToggleGroup stacked its items vertically until `flexDirection="row"` was set (layout only).
+
+### Results on iOS 27 (28 October 2026)
+
+8 of 16 checks for items 15–19 pass, the same in light, dark and brand (36/57 overall). Each failure was checked by hand on the simulator:
+- Slider: the thumb has `role="slider"`, which React Native 0.86 maps to no iOS trait (the trait table in `accessibilityPropsConversions.h` has `adjustable`, not `slider`). It reads "30%" and is 28×28 pt. Dragging does change the value.
+- Progress: in the system accessibility tree with name and value ("3 of 8 exercises"); argent's view-hierarchy walk doesn't list it, so the audit read it from the system tree.
+- Accordion: `Accordion.Header` is an `H1` around the trigger (`@tamagui/accordion/src/Accordion.tsx` line 462). VoiceOver gets a heading read as "￼" and no button or expanded state.
+- Menu: with the documented `setup-expo-ui-menu` import it opens iOS's own context menu. Items are buttons; the screen behind stays in the system tree beside a "Dismiss context menu" button (needs a device check, as it's iOS's own menu).
+- Segmented control (ToggleGroup): options expose a name but no role and no selected state.

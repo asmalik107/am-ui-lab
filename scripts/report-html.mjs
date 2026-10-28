@@ -178,11 +178,11 @@ const tally = (findings, which) => {
   return fs.length ? { pass: fs.filter((f) => f.pass).length, total: fs.length } : null;
 };
 const scoreParts = [
-  ['Items 1–14', (a) => tally(data[a].a11y?.findings, 'core')],
-  ['Extra bottom sheets', (a) => tally(data[a].a11y?.findings, 'sheets')],
-  ['New items (15–19)', (a) => tally(data[a].a11y?.findings, 'new')],
-  ['All checks, dark theme', (a) => tally(data[a].dark?.findings)],
-  ['All checks, brand theme', (a) => tally(data[a].brand?.findings)],
+  ['Original test screen (items 1–14)', 'Buttons, text field, switch, checkbox, radio group, select, dialog, bottom sheet, tabs, toast and the @expo/ui switch: 39 checks, light theme.', (a) => tally(data[a].a11y?.findings, 'core')],
+  ['Extra bottom sheets', 'The @expo/ui sheet in every app, plus Tamagui’s and gluestack’s own sheets, and a raw @gorhom sheet in the HeroUI app (whose own sheet is in the original screen): 5 checks per sheet.', (a) => tally(data[a].a11y?.findings, 'sheets')],
+  ['Newer components (items 15–19)', 'Slider, progress bar, accordion, menu and segmented control, added 27 Oct: 18 checks.', (a) => tally(data[a].a11y?.findings, 'new')],
+  ['Everything, dark theme', 'All the checks above, re-run with the app switched to its dark theme.', (a) => tally(data[a].dark?.findings)],
+  ['Everything, brand theme', 'All the checks above, re-run with the app switched to its brand theme.', (a) => tally(data[a].brand?.findings)],
 ];
 const W = 400;
 const LABEL = 118;
@@ -205,12 +205,12 @@ function figure(id, title, note, rows, max, head) {
   const table = `<table class="sr"><caption>${esc(title)}</caption><thead><tr><th scope="col">App</th><th scope="col">${esc(head)}</th></tr></thead><tbody>${rows.map((r) => `<tr><th scope="row">${esc(r.label)}</th><td>${esc(r.text)}</td></tr>`).join('')}</tbody></table>`;
   return `<figure class="fig" aria-labelledby="${id}"><figcaption id="${id}"><strong>${esc(title)}</strong>${note ? ` <span>${esc(note)}</span>` : ''}</figcaption>${bars(rows, max)}${table}</figure>`;
 }
-const scoreCharts = scoreParts.map(([title, fn], i) => {
+const scoreCharts = scoreParts.map(([title, note, fn], i) => {
   const rows = apps.map(([a, name]) => {
     const t = fn(a);
     return { label: name, value: t ? (t.pass / t.total) * 100 : null, text: t ? `${t.pass} / ${t.total}` : 'not run', cls: t && t.pass === t.total ? 'full' : '' };
   });
-  return figure(`score-${i}`, title, 'share of checks passed', rows, 100, 'Checks passed');
+  return figure(`score-${i}`, title, note, rows, 100, 'Checks passed');
 }).join('\n');
 const num = (a, f) => {
   try {
@@ -303,7 +303,7 @@ tr.score th[scope="row"] { background: var(--bg); }
 .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 16px; }
 .fig { position: relative; overflow: hidden; margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .fig figcaption { font-size: 14px; margin-bottom: 4px; }
-.fig figcaption span { color: var(--muted); }
+.fig figcaption span { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
 .chart .lbl, .chart .val { font-size: 12px; fill: var(--fg); }
 .chart .val { fill: var(--muted); }
 .chart .bar { fill: var(--accent); }
@@ -318,7 +318,7 @@ tr.score th[scope="row"] { background: var(--bg); }
 <div class="legend"><span>✓ pass</span><span>✗ fail</span><span>– not applicable (the app has no such element)</span><span>* NativeWind results use a line-height workaround; see apps/nativewind/NOTES.md</span></div>
 
 <h2>Scores at a glance</h2>
-<p>Green bars mean every check in that group passed. The same numbers are in the tables below.</p>
+<p>Each chart is one group of accessibility checks; a bar is the share of that group's checks the app passed, with the count at its end. Green means it passed every check in the group. The full spec is in <code>docs/method.md</code>, and every check is listed in the table below.</p>
 <div class="charts">
 ${scoreCharts}
 </div>

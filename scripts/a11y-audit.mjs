@@ -378,7 +378,7 @@ try {
   states.menu = mn ?? axTree();
   add('Menu', 'opens', !!mn, mn ? 'all three actions in tree' : 'actions not found');
   if (mn) {
-    const items = menuItems.map((m) => mn.find((e) => e.label.includes(m)));
+    const items = menuItems.map((m) => mn.find((e) => e.label === m) ?? mn.find((e) => e.label.includes(m)));
     add('Menu', 'items are buttons', items.every((e) => e && (e.role === 'AXButton' || /menu/i.test(e.role))), items.map(axDesc).join(' | '));
     const l = leaks(mn, ['test-menu-open', 'test-menu']);
     add('Menu', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));

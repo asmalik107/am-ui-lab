@@ -25,7 +25,9 @@ import {
 } from '@/components/ui/bottomsheet';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
+import { Button, ButtonText } from '@/components/ui/button';
 import { ChevronDownIcon } from '@/components/ui/icon';
+import { Menu, MenuItem, MenuItemLabel } from '@/components/ui/menu';
 import {
   Select,
   SelectBackdrop,
@@ -200,5 +202,27 @@ export function ExpoExerciseSheet({ open, onClose, title, body, close, testID }:
         <NativeButton label={close} variant="outlined" onPress={onClose} modifiers={[accessibilityIdentifier(`${testID}-close`)]} />
       </NativeColumn>
     </NativeSheet>
+  );
+}
+
+// Menu as in the gluestack docs: the trigger is a render prop that spreads
+// the trigger props onto a Button. https://gluestack.io/ui/docs/components/menu
+export function WorkoutMenu({ label, items, onSelect, testID }: { label: string; items: readonly string[]; onSelect: (item: string) => void; testID?: string }) {
+  return (
+    <Menu
+      testID={testID}
+      placement="bottom"
+      offset={5}
+      trigger={(triggerProps) => (
+        <Button {...triggerProps} testID={`${testID}-open`} variant="outline">
+          <ButtonText className="text-label">{label}</ButtonText>
+        </Button>
+      )}>
+      {items.map((item, i) => (
+        <MenuItem key={item} textValue={item} testID={`${testID}-item-${i}`} onPress={() => onSelect(item)}>
+          <MenuItemLabel>{item}</MenuItemLabel>
+        </MenuItem>
+      ))}
+    </Menu>
   );
 }

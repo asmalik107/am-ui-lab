@@ -4,7 +4,18 @@
 // Accessibility: only props the gluestack docs ask for are passed. Nothing
 // here adds roles, states or announcements by hand; see NOTES.md.
 import type { ReactNode } from 'react';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionContentText,
+  AccordionHeader,
+  AccordionIcon,
+  AccordionItem,
+  AccordionTitleText,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
 import { Checkbox, CheckboxIcon, CheckboxIndicator, CheckboxLabel } from '@/components/ui/checkbox';
@@ -18,9 +29,11 @@ import {
   FormControlLabelText,
 } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
-import { CheckIcon, CircleIcon } from '@/components/ui/icon';
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon, CircleIcon } from '@/components/ui/icon';
 import { Input, InputField } from '@/components/ui/input';
+import { Progress, ProgressFilledTrack } from '@/components/ui/progress';
 import { Radio, RadioGroup, RadioIcon, RadioIndicator, RadioLabel } from '@/components/ui/radio';
+import { Slider, SliderFilledTrack, SliderThumb, SliderTrack } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsContentWrapper, TabsIndicator, TabsList, TabsTrigger, TabsTriggerText } from '@/components/ui/tabs';
 
@@ -171,5 +184,91 @@ export function TestTabs({ tabs, panels, testID }: { tabs: readonly string[]; pa
         ))}
       </TabsContentWrapper>
     </Tabs>
+  );
+}
+
+// Slider as in the gluestack docs: Track, FilledTrack, Thumb. The docs pass
+// no label, so none is added here. https://gluestack.io/ui/docs/components/slider
+export function WeightSlider({ label, unit, value, min, max, step, onChange, testID }: { label: string; unit: string; value: number; min: number; max: number; step: number; onChange: (v: number) => void; testID?: string }) {
+  return (
+    <View className="gap-xs">
+      <Text className="text-label text-foreground">
+        {label}: {value} {unit}
+      </Text>
+      <Slider testID={testID} value={value} minValue={min} maxValue={max} step={step} onChange={onChange} className="my-md">
+        <SliderTrack>
+          <SliderFilledTrack />
+        </SliderTrack>
+        <SliderThumb />
+      </Slider>
+    </View>
+  );
+}
+
+// Progress as in the docs; the library sets role="progressbar" and a
+// percentage value text. https://gluestack.io/ui/docs/components/progress
+export function WorkoutProgress({ label, value, max, valueText, testID }: { label: string; value: number; max: number; valueText: string; testID?: string }) {
+  return (
+    <View className="gap-xs">
+      <Text className="text-label text-foreground">{label}</Text>
+      <Progress testID={testID} value={value} max={max}>
+        <ProgressFilledTrack />
+      </Progress>
+      <Text className="text-caption text-muted-foreground">{valueText}</Text>
+    </View>
+  );
+}
+
+// Accordion as in the docs, several sections open at once.
+// https://gluestack.io/ui/docs/components/accordion
+export function SectionsAccordion({ sections, panels, testID }: { sections: readonly string[]; panels: readonly string[]; testID?: string }) {
+  return (
+    <Accordion type="multiple" isCollapsible className="border border-border">
+      {sections.map((s, i) => (
+        <AccordionItem key={s} value={s}>
+          <AccordionHeader>
+            <AccordionTrigger testID={`${testID}-${i}`}>
+              {({ isExpanded }: { isExpanded: boolean }) => (
+                <>
+                  <AccordionTitleText>{s}</AccordionTitleText>
+                  <AccordionIcon as={isExpanded ? ChevronUpIcon : ChevronDownIcon} />
+                </>
+              )}
+            </AccordionTrigger>
+          </AccordionHeader>
+          <AccordionContent>
+            <AccordionContentText>{panels[i]}</AccordionContentText>
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
+  );
+}
+
+// gluestack-ui ships no segmented control, so this is built on Pressable with
+// gluestack's classNames and the baseline's hand-written accessibility:
+// role="button" + aria-selected (the iOS selected trait).
+export function Segmented({ label, options, value, onChange, testID }: { label: string; options: readonly string[]; value: string; onChange: (v: string) => void; testID?: string }) {
+  return (
+    <View className="gap-xs">
+      <Text className="text-label text-foreground">{label}</Text>
+      <View testID={testID} accessibilityLabel={label} className="flex-row rounded-md border border-border p-0.5">
+        {options.map((o, i) => {
+          const selected = o === value;
+          return (
+            <Pressable
+              key={o}
+              testID={`${testID}-${i}`}
+              role="button"
+              aria-selected={selected}
+              accessibilityLabel={o}
+              onPress={() => onChange(o)}
+              className={`min-h-11 flex-1 items-center justify-center rounded-sm ${selected ? 'bg-primary' : 'bg-transparent'}`}>
+              <Text className={selected ? 'text-label text-primary-foreground' : 'text-label text-foreground'}>{o}</Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
   );
 }

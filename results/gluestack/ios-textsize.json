@@ -1,8 +1,12 @@
 {
   "app": "gluestack",
   "bundleId": "dev.asimmalik.uilab.gluestack",
-  "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
-  "date": "2026-10-22T19:35:48.477Z",
+  "udid": "11A84A8F-FDB1-4921-8105-D7B17EC3CBC1",
+  "device": {
+    "name": "iPhone 17",
+    "runtime": "iOS 27.0"
+  },
+  "date": "2026-10-28T08:35:20.687Z",
   "growth": [
     {
       "id": "test-button",
@@ -81,6 +85,30 @@
       "normal": 38,
       "large": 161,
       "ratio": 4.2368421052631575
+    },
+    {
+      "id": "test-slider",
+      "normal": null,
+      "large": null,
+      "ratio": null
+    },
+    {
+      "id": "test-accordion-0",
+      "normal": 20,
+      "large": 71.6669921875,
+      "ratio": 3.583349609375
+    },
+    {
+      "id": "test-menu-open",
+      "normal": 38,
+      "large": 161,
+      "ratio": 4.2368421052631575
+    },
+    {
+      "id": "test-segmented-0",
+      "normal": 44,
+      "large": 143,
+      "ratio": 3.25
     }
   ],
   "offscreen": [

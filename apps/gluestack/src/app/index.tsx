@@ -10,8 +10,8 @@ import type { ThemeName } from '@shared/tokens';
 
 import { Heading } from '@/components/ui/heading';
 
-import { AppButton, EmailField, RadioField, Section, SwitchRow, TermsCheckbox, TestTabs } from '../components/controls';
-import { Dialog, ExerciseSheet, ExpoExerciseSheet, GluestackSheet, RestSelect, useLogSetToast } from '../components/overlays';
+import { AppButton, EmailField, RadioField, Section, SectionsAccordion, Segmented, SwitchRow, TermsCheckbox, TestTabs, WeightSlider, WorkoutProgress } from '../components/controls';
+import { Dialog, ExerciseSheet, ExpoExerciseSheet, GluestackSheet, RestSelect, useLogSetToast, WorkoutMenu } from '../components/overlays';
 import { useThemeName, useTokenColor } from '../theme';
 import { mark, measure } from '../perf';
 import { View as PerfTouch } from 'react-native';
@@ -32,6 +32,8 @@ export default function TestScreen() {
   const [saving, setSaving] = useState(false);
   const [sync, setSync] = useState(false);
   const [expoSheet, setExpoSheet] = useState(false);
+  const [weight, setWeight] = useState<number>(copy.slider.initial);
+  const [range, setRange] = useState<string>(copy.segmentedOptions[0]);
   const sheet = useRef<BottomSheetModal>(null);
   const gluestackSheet = useRef<BottomSheetRef>(null);
   const showToast = useLogSetToast(copy.toastMessage, ids.toast);
@@ -99,6 +101,14 @@ export default function TestScreen() {
 
         <Section title="Tabs">
           <TestTabs testID={ids.tabs} tabs={copy.tabs} panels={copy.tabPanels} />
+        </Section>
+
+        <Section title={copy.moreTitle}>
+          <WeightSlider testID={ids.slider} label={copy.sliderLabel} unit={copy.sliderUnit} min={copy.slider.min} max={copy.slider.max} step={copy.slider.step} value={weight} onChange={setWeight} />
+          <WorkoutProgress testID={ids.progress} label={copy.progressLabel} value={copy.progress.value} max={copy.progress.max} valueText={copy.progressText} />
+          <SectionsAccordion testID={ids.accordion} sections={copy.accordionSections} panels={copy.accordionPanels} />
+          <WorkoutMenu testID={ids.menu} label={copy.menuOpen} items={copy.menuItems} onSelect={() => {}} />
+          <Segmented testID={ids.segmented} label={copy.segmentedLabel} options={copy.segmentedOptions} value={range} onChange={setRange} />
         </Section>
 
         <Section title="Native control (@expo/ui)">

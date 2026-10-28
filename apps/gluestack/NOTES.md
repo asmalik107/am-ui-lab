@@ -300,3 +300,23 @@ Rule followed: pass only the props the gluestack docs ask for, and add no roles,
 - Everything on device: the a11y tree, focus on modal open and close, announcements, Reduce Motion, text scaling, touch targets, and whether all three themes repaint gluestack components, the gorhom sheet, the header and the `@expo/ui` Host.
 - Whether `useResolveClassNames('accent-…')` returns colours for the `rgb(var(--x))` tokens at runtime. The export succeeded and the variables are in the bundle, but I haven't seen the result on screen.
 - Whether the twMerge global config fixes the `text-heading` vs `text-foreground` conflict at runtime. I checked it by reading the code, not by rendering.
+
+## iOS 27 setup (27 October 2026)
+
+The lab moved from the iPhone 17 Pro simulator on iOS 26.4 to the iPhone 17 simulator on iOS 27.0 (Xcode 27.1). Expo SDK 57 apps built with the iOS 27 SDK need the UIKit scene life cycle, which SDK 57 adds as an opt-in:
+
+1. `npx expo install expo-build-properties` (57.0.22).
+2. In `app.json` plugins: `["expo-build-properties", { "ios": { "enableSceneSupport": true } }]`. The option is documented in `node_modules/expo-build-properties/build/pluginConfig.d.ts` ("Adopt the UIKit scene lifecycle in an Expo SDK 57 iOS project, as required by the iOS 27 SDK"; needs expo 57.0.23 or newer; this app is on 57.0.31). Source: expo/expo PR #50205.
+3. `npx expo install --check`: clean.
+
+## Items 15–19 (added 27 October 2026)
+
+Added with `npx gluestack-ui@5.0.3 add slider progress accordion menu -y`. It copied `components/ui/{slider,progress,accordion,menu}` from the same repo commit as before (`b712c85`, the CLI's cache in `~/.gluestack/cache/gluestack-ui`). `package.json` didn't change. `npx tsc --noEmit` reports one new error inside the copied `components/ui/menu/index.tsx` (line 127, `opacity` in a transform config); `src/` stays clean.
+
+| # | Item | Component | Docs | Accessibility passed by hand |
+| --- | --- | --- | --- | --- |
+| 15 | Slider | `Slider`, `SliderTrack`, `SliderFilledTrack`, `SliderThumb` | https://gluestack.io/ui/docs/components/slider | none (the docs pass no label) |
+| 16 | Progress | `Progress`, `ProgressFilledTrack` (core sets `role="progressbar"` and `aria-valuetext` as a percentage, `@gluestack-ui/core/lib/esm/progress/creator/Progress.jsx`) | https://gluestack.io/ui/docs/components/progress | none |
+| 17 | Accordion | `Accordion type="multiple" isCollapsible`, `AccordionItem`, `AccordionHeader`, `AccordionTrigger`, `AccordionTitleText`, `AccordionIcon`, `AccordionContent` | https://gluestack.io/ui/docs/components/accordion | none |
+| 18 | Menu | `Menu` with a `trigger` render prop on a `Button`, `MenuItem`, `MenuItemLabel` | https://gluestack.io/ui/docs/components/menu | none |
+| 19 | Segmented control | **Hand-built**: gluestack-ui ships no segmented control. Row of `Pressable` with `role="button"` + `aria-selected`, styled with the app's Uniwind classes | – | all of it |

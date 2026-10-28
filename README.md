@@ -10,7 +10,7 @@ Every number below was measured. Where something couldn't be measured, this page
 
 - **Stack:** Expo SDK 57, React Native 0.86.3, React 19.2.3, New Architecture, Reanimated 4.5.1, expo-router.
 - **Test device:** iPhone 17 simulator, iOS 27.0 (Xcode 27.1). All results are from Release builds, except the re-render counts (Debug, see below).
-- **Dates:** first built 22–23 October 2026 on the iPhone 17 Pro simulator with iOS 26.4. Re-run on iOS 27.0 with items 15–19, the dark and brand audits and the new metrics on 27–28 October. Git history keeps the 26.4 results; what changed is listed under [iOS 27 against iOS 26.4](#ios-27-against-ios-264).
+- **Dates:** first built 22–23 October 2026 on the iPhone 17 Pro simulator with iOS 26.4. Re-run on iOS 27.0 with the slider, progress bar, accordion, menu and segmented control added, the dark and brand audits and the new metrics on 27–28 October. Git history keeps the 26.4 results; what changed is listed under [iOS 27 against iOS 26.4](#ios-27-against-ios-264).
 - **iOS 27 setup step:** Expo SDK 57 apps built with Xcode 27 need the UIKit scene life cycle. Every app adds `expo-build-properties` with `ios.enableSceneSupport: true` (see each app's `NOTES.md`).
 
 ## The apps
@@ -33,7 +33,7 @@ Each app's `NOTES.md` records:
 - the doc link for each API used
 - which items use library components and which are hand-built
 
-The spec for the test screen is in [docs/method.md](docs/method.md). Items 1–14 are the original set. Items 15–19 (slider, progress, accordion, menu, segmented control) were added on 27 October.
+The spec for the test screen is in [docs/method.md](docs/method.md): 19 items, from buttons and form controls to overlays, a 200-row list, a theme switcher, a slider, progress bar, accordion, menu and segmented control. The last five were added on 27 October.
 
 **Every check, side by side:** [docs/checks.html](docs/checks.html) has every check for all eight apps, with the measured detail for each cell, plus charts of the scores and metrics. It's generated from `results/` by `scripts/report-html.mjs`.
 
@@ -46,20 +46,20 @@ The spec for the test screen is in [docs/method.md](docs/method.md). Items 1–1
 - that a text-field error is reachable from the field
 - that the screen behind a dialog, bottom sheet, select or menu is hidden from VoiceOver
 - that toasts reach the accessibility tree
-- for items 15–19: the slider's adjustable trait and value, and that dragging changes the value; progress name and value; the accordion's expanded state; menu items as buttons; the segmented control's selected state
+- the slider's adjustable trait and value, and that dragging changes it; the progress bar's name and value; the accordion's expanded state; menu items as buttons; the segmented control's selected state
 
-Every check runs three times: in the light, dark and brand themes. **No check gave a different result in dark or brand than in light, in any app.**
+Every check runs three times, in the light, dark and brand themes, because a theme could change which elements exist or how they're labelled. **No check gave a different result in dark or brand than in light, in any app**, so the scores below hold for all three.
 
-| App | Items 1–14 (39 checks) | Extra sheets | Items 15–19 | All checks, each theme |
-| --- | --- | --- | --- | --- |
-| baseline | 35 / 39 | 5 / 5 (@expo/ui) | 18 / 18 | 58 / 62 |
-| unistyles | 35 / 39 | 5 / 5 (@expo/ui) | 18 / 18 | 58 / 62 |
-| uniwind | 35 / 39 | 5 / 5 (@expo/ui) | 18 / 18 | 58 / 62 |
-| nativewind (v5 RC, with the line-height workaround) | 35 / 39 | 5 / 5 (@expo/ui) | 18 / 18 | 58 / 62 |
-| heroui | 22 / 39 | 8 / 10 (raw @gorhom, @expo/ui) | 14 / 18 | 44 / 67 |
-| reusables | 18 / 39 | 5 / 5 (@expo/ui) | 14 / 18 | 37 / 62 |
-| tamagui | 19 / 31, 8 checks unable to run | 9 / 10 (Tamagui Sheet, @expo/ui) | 8 / 16, accordion checks unable to run | 36 / 57 |
-| gluestack | 19 / 39 | 6 / 9 (@expo/ui, gluestack BottomSheet: 4 of its 5 checks could run) | 10 / 18 | 35 / 66 |
+| App | Test screen (57 checks) | Extra sheets | All checks |
+| --- | --- | --- | --- |
+| baseline | 53 / 57 | 5 / 5 (@expo/ui) | 58 / 62 |
+| unistyles | 53 / 57 | 5 / 5 (@expo/ui) | 58 / 62 |
+| uniwind | 53 / 57 | 5 / 5 (@expo/ui) | 58 / 62 |
+| nativewind (v5 RC, with the line-height workaround) | 53 / 57 | 5 / 5 (@expo/ui) | 58 / 62 |
+| heroui | 36 / 57 | 8 / 10 (raw @gorhom, @expo/ui) | 44 / 67 |
+| reusables | 32 / 57 | 5 / 5 (@expo/ui) | 37 / 62 |
+| gluestack | 29 / 57 | 6 / 9 (@expo/ui, gluestack BottomSheet: 4 of its 5 checks could run) | 35 / 66 |
+| tamagui | 27 / 47, with 10 checks unable to run (see below) | 9 / 10 (Tamagui Sheet, @expo/ui) | 36 / 57 |
 
 Full tables are in `results/<app>/ios-a11y.md` (light), `ios-a11y-dark.md` and `ios-a11y-brand.md`. The raw trees are in the matching `.json` files, and `a11y-dark.png` and `a11y-brand.png` show the theme was applied.
 
@@ -89,15 +89,15 @@ The three styling engines (Unistyles, Uniwind, NativeWind) carry the baseline's 
 
 Each app colours the sheet through its own theming (`withUnistyles`, `useCSSVariable`, NativeWind `styled()`, Tamagui `useTheme`, `useResolveClassNames`, HeroUI `useThemeColor`; see each app's `NOTES.md`). In every app the sheet was opened in the dark theme on the simulator and showed the theme's surface and text colours. Inside the HeroUI app it is the only sheet whose title and body VoiceOver can read.
 
-**Items 15–19.** Each app uses its library's own component where the library ships one. Otherwise the component is hand-built on React Native primitives with the library's styling and the baseline's hand-written accessibility.
+**Slider, progress bar, accordion, menu and segmented control.** Each app uses its library's own component where the library ships one. Otherwise the component is hand-built on React Native primitives with the library's styling and the baseline's hand-written accessibility.
 
-| Item | baseline + 3 engines | Tamagui | gluestack | HeroUI | Reusables |
+| Component | baseline + 3 engines | Tamagui | gluestack | HeroUI | Reusables |
 | --- | --- | --- | --- | --- | --- |
-| 15 Slider | hand-built, 3 / 3 | own, 1 / 3 | own, 0 / 3 | own, 1 / 3 | hand-built, 3 / 3 |
-| 16 Progress | hand-built, 1 / 1 | own, 1 / 1 | own, 0 / 1 | hand-built, 1 / 1 | own, 0 / 1 |
-| 17 Accordion | hand-built, 4 / 4 | own, 0 / 2 (no header element, so the rest couldn't run) | own, 3 / 4 | own, 4 / 4 | own, 4 / 4 |
-| 18 Menu | hand-built, 6 / 6 | own (native iOS menu), 5 / 6 | own, 3 / 6 | own, 4 / 6 | own, 4 / 6 |
-| 19 Segmented control | hand-built, 4 / 4 | own (ToggleGroup), 1 / 4 | hand-built, 4 / 4 | hand-built, 4 / 4 | own (ToggleGroup), 3 / 4 |
+| Slider | hand-built, 3 / 3 | own, 1 / 3 | own, 0 / 3 | own, 1 / 3 | hand-built, 3 / 3 |
+| Progress | hand-built, 1 / 1 | own, 1 / 1 | own, 0 / 1 | hand-built, 1 / 1 | own, 0 / 1 |
+| Accordion | hand-built, 4 / 4 | own, 0 / 2 (no header element, so the rest couldn't run) | own, 3 / 4 | own, 4 / 4 | own, 4 / 4 |
+| Menu | hand-built, 6 / 6 | own (native iOS menu), 5 / 6 | own, 3 / 6 | own, 4 / 6 | own, 4 / 6 |
+| Segmented control | hand-built, 4 / 4 | own (ToggleGroup), 1 / 4 | hand-built, 4 / 4 | hand-built, 4 / 4 | own (ToggleGroup), 3 / 4 |
 
 What failed, each checked by hand on the simulator:
 - **`role="slider"` gives no iOS trait.** Tamagui's and HeroUI's slider thumbs use it, so VoiceOver isn't told it's adjustable.
@@ -125,7 +125,7 @@ What failed, each checked by hand on the simulator:
   - Tamagui's options expose no role and no selected state.
   - Reusables' are read as "radio button, checked/unchecked", which passes, but they are 40 pt tall.
 
-**Failures specific to a library (items 1–14), unchanged on iOS 27:**
+**Other failures specific to a library, unchanged on iOS 27:**
 
 - **nativewind (5.0.0-rc.0)**
   - Tailwind v4 type tokens with px line-heights (`--text-body--line-height: 22px`) rendered each line at font size × value: 16 × 22 = 352 pt. Every text element matched size × line-height exactly. The page was 18 screens tall and the tests couldn't reach most controls. The as-found results are kept in `results/nativewind-px-line-height/`.
@@ -163,18 +163,18 @@ What failed, each checked by hand on the simulator:
 
 `scripts/textsize-test.mjs` compares control heights at the default size against the largest accessibility size. Screenshots are saved in `results/<app>/textsize-*.png`.
 
-| App | Items 1–14 that grew | Items 15–19 that grew | Clipping seen in screenshots |
-| --- | --- | --- | --- |
-| baseline | 13 / 13 | 3 / 4 | none |
-| unistyles | 13 / 13 | 3 / 4 | none (radio circles also scale, via `rt.fontScale`) |
-| uniwind | 13 / 13 | 3 / 4 | none |
-| nativewind (workaround) | 13 / 13 | 3 / 4 | none |
-| tamagui | 9 / 11 | 0 / 2 | none |
-| gluestack | 12 / 13 | 3 / 3 | none |
-| heroui | 9 / 13 | 2 / 3 | button labels partly cut off |
-| reusables | 1 / 13 | 1 / 4 | **button labels cut off completely** (fixed-height buttons) |
+| App | Controls that grew | Clipping seen in screenshots |
+| --- | --- | --- |
+| baseline | 16 / 17 | none |
+| unistyles | 16 / 17 | none (radio circles also scale, via `rt.fontScale`) |
+| uniwind | 16 / 17 | none |
+| nativewind (workaround) | 16 / 17 | none |
+| tamagui | 9 / 13 | none |
+| gluestack | 15 / 16 | none |
+| heroui | 11 / 16 | button labels partly cut off |
+| reusables | 2 / 17 | **button labels cut off completely** (fixed-height buttons) |
 
-The `@expo/ui` Switch is pushed past the screen edge in every app. The hand-built slider's track stays 44 pt at AX5 (its label above it grows), which is why it counts as not grown. "Items 15–19" counts the slider, the first accordion header, the menu trigger and the first segmented option, where the app exposes them.
+The `@expo/ui` Switch is pushed past the screen edge in every app. The hand-built slider's track stays 44 pt at AX5 (its label above it grows), which is why it counts as not grown. The denominator is the controls the app exposes: Tamagui's accordion header and menu trigger, and gluestack's and HeroUI's slider, aren't measurable elements.
 
 ### Reduce Motion
 
@@ -208,7 +208,7 @@ Every animated overlay respected Reduce Motion when it was on at launch. One fra
 | heroui | 48.7 ms (light→dark ~65, dark→brand ~49, brand→light ~32) | 82.7 ms (82–99) | 5.24 MB |
 | reusables | 32.4 ms (7 runs) | 83.2 ms (82–100) | 6.83 MB |
 
-Bundle sizes are the Hermes bytecode from `npx expo export --platform ios` (`scripts/bundle-size.mjs`), measured on 27 October with items 1–19. Items 15–19 added 15 KB to the baseline and 650 KB to gluestack (5.01 → 5.66 MB). Reusables bundles every lucide icon (1,917 of them) although it uses 4.
+Bundle sizes are the Hermes bytecode from `npx expo export --platform ios` (`scripts/bundle-size.mjs`), measured on 27 October with all 19 items. The five components added on 27 October added 15 KB to the baseline and 650 KB to gluestack (5.01 → 5.66 MB). Reusables bundles every lucide icon (1,917 of them) although it uses 4.
 
 A theme-switch run is only counted when the readout changes. Two runs in a row that both took exactly 99.0 ms (Tamagui) or 32.4 ms (Reusables) can't be told apart from no update, so those runs have fewer than 10.
 
@@ -260,7 +260,7 @@ A theme-switch run is only counted when the readout changes. Two runs in a row t
 
 Every check was re-run on iOS 27.0, and each change was checked by hand.
 
-- **Accessibility:** all 39 checks for items 1–14 and every sheet check give the same pass or fail in all eight apps. One detail changed: iOS 27 autocorrected the typed "not-an-email" to "notability" (the field doesn't turn autocorrect off). The error check still passes.
+- **Accessibility:** the 39 checks that existed on iOS 26.4 (the test screen before the five newer components) and every sheet check give the same pass or fail in all eight apps. One detail changed: iOS 27 autocorrected the typed "not-an-email" to "notability" (the field doesn't turn autocorrect off). The error check still passes.
 - **Largest text size:** the same counts and the same controls pushed off screen in every app.
 - **Reduce Motion:** within a frame or two of 26.4. HeroUI's bottom sheet with Reduce Motion on went from 33 to 100 ms (still three frames, against 533 ms with it off).
 - **Theme switch:**
@@ -273,7 +273,7 @@ Every check was re-run on iOS 27.0, and each change was checked by hand.
 
 - Simulators expose the accessibility tree. They don't let you hear VoiceOver, check swipe order as spoken, or test Switch Control. Those need a device.
 - The slider check drags the thumb. VoiceOver's own swipe up (the increment action) can't be performed on the simulator without VoiceOver running.
-- Some kit elements are in the system accessibility tree but not in argent's view-hierarchy walk: Tamagui's Progress and its native menu button. For items 15–19 the audit reads those from the system tree. It gives role, label, value and size, but not the selected state, and sizes only to about ±0.4 pt. Those cells say "(system tree)".
+- Some kit elements are in the system accessibility tree but not in argent's view-hierarchy walk: Tamagui's Progress and its native menu button. For the slider, progress bar, accordion, menu and segmented control, the audit reads those from the system tree. It gives role, label, value and size, but not the selected state, and sizes only to about ±0.4 pt. Those cells say "(system tree)".
 - Frame hitches and first paint aren't measured (see above).
 - Android and TalkBack have not been tested yet.
 - The timing clock runs in JS. Libraries that apply styles natively (Unistyles, Tamagui's native runtime) may do work it doesn't see.

@@ -169,20 +169,27 @@ const otherRows = [
 // --- Charts: inline SVG drawn from the results, no library. Each chart is a
 // figure with a visible caption; the numbers are also in a table that screen
 // readers get instead of the drawing (the SVG is aria-hidden).
-const newItems = ['Slider', 'Progress', 'Accordion', 'Menu', 'Segmented control'];
-// Groups as in the README: items 1–14 include the shared sheet slot; the
-// extra sheets are the named variants, e.g. "Bottom sheet (@expo/ui)".
-const part = (f) => (f.component.startsWith('Bottom sheet (') ? 'sheets' : newItems.includes(f.component) ? 'new' : 'core');
+// Groups as in the README: the test screen is all 19 items, including the
+// shared sheet slot; the extra sheets are the named variants, e.g.
+// "Bottom sheet (@expo/ui)".
+const part = (f) => (f.component.startsWith('Bottom sheet (') ? 'sheets' : 'screen');
 const tally = (findings, which) => {
   const fs = (findings ?? []).filter((f) => !which || part(f) === which);
   return fs.length ? { pass: fs.filter((f) => f.pass).length, total: fs.length } : null;
 };
+// The dark and brand audits are only shown separately if some check in some
+// app gave a different result from light; otherwise one score covers all three.
+const themesDiffer = themeDiffs.length > 0;
+const themeNote = themesDiffer ? 'light theme' : 'the same in the light, dark and brand themes';
 const scoreParts = [
-  ['Original test screen (items 1–14)', 'Buttons, text field, switch, checkbox, radio group, select, dialog, bottom sheet, tabs, toast and the @expo/ui switch: 39 checks, light theme.', (a) => tally(data[a].a11y?.findings, 'core')],
-  ['Extra bottom sheets', 'The @expo/ui sheet in every app, plus Tamagui’s and gluestack’s own sheets, and a raw @gorhom sheet in the HeroUI app (whose own sheet is in the original screen): 5 checks per sheet.', (a) => tally(data[a].a11y?.findings, 'sheets')],
-  ['Newer components (items 15–19)', 'Slider, progress bar, accordion, menu and segmented control, added 27 Oct: 18 checks.', (a) => tally(data[a].a11y?.findings, 'new')],
-  ['Everything, dark theme', 'All the checks above, re-run with the app switched to its dark theme.', (a) => tally(data[a].dark?.findings)],
-  ['Everything, brand theme', 'All the checks above, re-run with the app switched to its brand theme.', (a) => tally(data[a].brand?.findings)],
+  ['Test screen', `All 19 items of the test screen, from buttons, form controls, dialog, sheet, tabs and toast to the slider, progress bar, accordion, menu and segmented control. 57 checks (fewer for Tamagui, where some couldn’t run). Results are ${themeNote}.`, (a) => tally(data[a].a11y?.findings, 'screen')],
+  ['Extra bottom sheets', 'The @expo/ui sheet in every app, plus Tamagui’s and gluestack’s own sheets, and a raw @gorhom sheet in the HeroUI app (whose own sheet is on the test screen): 5 checks per sheet.', (a) => tally(data[a].a11y?.findings, 'sheets')],
+  ...(themesDiffer
+    ? [
+        ['Everything, dark theme', 'All the checks above, re-run with the app switched to its dark theme.', (a) => tally(data[a].dark?.findings)],
+        ['Everything, brand theme', 'All the checks above, re-run with the app switched to its brand theme.', (a) => tally(data[a].brand?.findings)],
+      ]
+    : []),
 ];
 const W = 400;
 const LABEL = 118;
@@ -331,9 +338,9 @@ ${scoreCharts}
 <div class="wrap"><table>
 <thead><tr><th>#</th><th scope="col" class="check">Check</th>${apps.map(([, name, kind]) => `<th scope="col">${esc(name)}<small>${esc(kind)}</small></th>`).join('')}</tr></thead>
 <tbody>
-<tr class="score"><td></td><th scope="row">Checks passed, light theme</th>${apps.map(([a]) => `<td>${score(a)}</td>`).join('')}</tr>
-<tr class="score"><td></td><th scope="row">Checks passed, dark theme</th>${apps.map(([a]) => `<td>${score(a, 'dark')}</td>`).join('')}</tr>
-<tr class="score"><td></td><th scope="row">Checks passed, brand theme</th>${apps.map(([a]) => `<td>${score(a, 'brand')}</td>`).join('')}</tr>
+${themesDiffer
+  ? ['light', 'dark', 'brand'].map((t) => `<tr class="score"><td></td><th scope="row">Checks passed, ${t} theme</th>${apps.map(([a]) => `<td>${score(a, t === 'light' ? 'a11y' : t)}</td>`).join('')}</tr>`).join('\n')
+  : `<tr class="score"><td></td><th scope="row">Checks passed<span class="what">Same in the light, dark and brand themes.</span></th>${apps.map(([a]) => `<td>${score(a)}</td>`).join('')}</tr>`}
 ${checkRows}
 </tbody>
 </table></div>

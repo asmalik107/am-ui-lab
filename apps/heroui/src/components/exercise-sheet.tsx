@@ -17,7 +17,7 @@ const StyledBottomSheetView = withUniwind(BottomSheetView);
 
 type Props = { sheetRef: RefObject<BottomSheetModal<unknown> | null>; title: string; body: string; close: string; testID: string };
 
-export function GorhomSheet({ sheetRef, title, body, close, testID }: Props) {
+export function ExerciseSheet({ sheetRef, title, body, close, testID }: Props) {
   return (
     <StyledBottomSheetModal
       ref={sheetRef}

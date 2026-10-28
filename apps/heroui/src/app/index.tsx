@@ -26,10 +26,14 @@ import { ScrollView, Text, View } from 'react-native';
 import { copy, ids } from '@shared/content';
 import type { ThemeName } from '@shared/tokens';
 
-import { ExpoSheet } from '../components/expo-sheet';
-import { GorhomSheet } from '../components/gorhom-sheet';
-import { SectionsAccordion, Segmented, WeightSlider, WorkoutMenu, WorkoutProgress } from '../components/more';
+import { Accordion } from '../components/accordion';
+import { ExerciseSheet } from '../components/exercise-sheet';
+import { ExpoExerciseSheet } from '../components/expo-exercise-sheet';
+import { Menu } from '../components/menu';
+import { Progress } from '../components/progress';
 import { Section } from '../components/section';
+import { Segmented } from '../components/segmented';
+import { Slider } from '../components/slider';
 import { setTheme, space, themeNames, type, useThemeName } from '../theme';
 import { mark, measure } from '../perf';
 import { View as PerfTouch } from 'react-native';
@@ -276,10 +280,10 @@ export default function TestScreen() {
 
       {/* 15–19. Slider, Accordion and Menu from HeroUI; Progress and segmented hand-built. */}
       <Section title={copy.moreTitle}>
-        <WeightSlider testID={ids.slider} label={copy.sliderLabel} unit={copy.sliderUnit} min={copy.slider.min} max={copy.slider.max} step={copy.slider.step} value={weight} onChange={setWeight} />
-        <WorkoutProgress testID={ids.progress} label={copy.progressLabel} value={copy.progress.value} max={copy.progress.max} valueText={copy.progressText} />
-        <SectionsAccordion testID={ids.accordion} sections={copy.accordionSections} panels={copy.accordionPanels} />
-        <WorkoutMenu testID={ids.menu} label={copy.menuOpen} items={copy.menuItems} onSelect={() => {}} />
+        <Slider testID={ids.slider} label={copy.sliderLabel} unit={copy.sliderUnit} min={copy.slider.min} max={copy.slider.max} step={copy.slider.step} value={weight} onChange={setWeight} />
+        <Progress testID={ids.progress} label={copy.progressLabel} value={copy.progress.value} max={copy.progress.max} valueText={copy.progressText} />
+        <Accordion testID={ids.accordion} sections={copy.accordionSections} panels={copy.accordionPanels} />
+        <Menu testID={ids.menu} label={copy.menuOpen} items={copy.menuItems} onSelect={() => {}} />
         <Segmented testID={ids.segmented} label={copy.segmentedLabel} options={copy.segmentedOptions} value={range} onChange={setRange} />
       </Section>
 
@@ -299,14 +303,14 @@ export default function TestScreen() {
         </PerfTouch>
       </Section>
 
-      <GorhomSheet
+      <ExerciseSheet
         sheetRef={gorhomSheet}
         testID={`${ids.sheet}-gorhom`}
         title={copy.sheetTitle}
         body={copy.sheetBody}
         close={copy.sheetClose}
       />
-      <ExpoSheet open={expoSheet} onClose={() => setExpoSheet(false)} testID={ids.expoSheet} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
+      <ExpoExerciseSheet open={expoSheet} onClose={() => setExpoSheet(false)} testID={ids.expoSheet} title={copy.sheetTitle} body={copy.sheetBody} close={copy.sheetClose} />
     </ScrollView>
   );
 }

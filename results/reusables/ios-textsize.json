@@ -1,8 +1,12 @@
 {
   "app": "reusables",
   "bundleId": "dev.asimmalik.uilab.reusables",
-  "udid": "9B4311A6-178B-4879-9923-B2468FDE9675",
-  "date": "2026-10-22T19:56:04.113Z",
+  "udid": "11A84A8F-FDB1-4921-8105-D7B17EC3CBC1",
+  "device": {
+    "name": "iPhone 17",
+    "runtime": "iOS 27.0"
+  },
+  "date": "2026-10-28T09:40:08.172Z",
   "growth": [
     {
       "id": "test-button",
@@ -73,11 +77,35 @@
     {
       "id": "test-native-switch",
       "normal": 28,
-      "large": 63.333251953125,
-      "ratio": 2.26190185546875
+      "large": 63.33349609375,
+      "ratio": 2.2619105747767856
     },
     {
       "id": "test-list-link",
+      "normal": 40,
+      "large": 40,
+      "ratio": 1
+    },
+    {
+      "id": "test-slider",
+      "normal": 44,
+      "large": 44,
+      "ratio": 1
+    },
+    {
+      "id": "test-accordion-0",
+      "normal": 52,
+      "large": 103.666748046875,
+      "ratio": 1.99359130859375
+    },
+    {
+      "id": "test-menu-open",
+      "normal": 40,
+      "large": 40,
+      "ratio": 1
+    },
+    {
+      "id": "test-segmented-0",
       "normal": 40,
       "large": 40,
       "ratio": 1

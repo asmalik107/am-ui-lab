@@ -395,7 +395,8 @@ try {
   const opts = [];
   for (const i of [0, 1, 2]) opts.push(await element(`test-segmented-${i}`));
   const role = (e) => e.traits.includes('button') || /radio|tab|segment/i.test(`${e.value} ${e.traits}`);
-  const sel = (e) => !!e && (e.traits.includes('selected') || /selected|checked/i.test(e.value ?? ''));
+  // "unchecked" must not count as checked.
+  const sel = (e) => !!e && (e.traits.includes('selected') || /\bselected\b|(^|[^n])checked/i.test(e.value ?? ''));
   add('Segmented control', 'options have name and role', opts.every((e, i) => e && e.label?.includes(segOptions[i]) && role(e)), opts.map(desc2).join(' | '));
   add('Segmented control', 'selected option marked', sel(opts[0]) && !sel(opts[1]), opts.map(desc2).join(' | '));
   target('Segmented control', opts[0]);

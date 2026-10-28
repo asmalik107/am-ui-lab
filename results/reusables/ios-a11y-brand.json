@@ -1,0 +1,3798 @@
+{
+  "app": "reusables",
+  "bundleId": "dev.asimmalik.uilab.reusables",
+  "udid": "11A84A8F-FDB1-4921-8105-D7B17EC3CBC1",
+  "device": {
+    "name": "iPhone 17",
+    "runtime": "iOS 27.0"
+  },
+  "theme": "brand",
+  "date": "2026-10-28T09:56:31.129Z",
+  "findings": [
+    {
+      "component": "Button",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Save workout\" value=\"\" traits=[button] 370×40pt"
+    },
+    {
+      "component": "Button",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "370×40pt"
+    },
+    {
+      "component": "Button (disabled)",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Unavailable\" value=\"\" traits=[button, notEnabled] 370×40pt"
+    },
+    {
+      "component": "Button (disabled)",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "370×40pt"
+    },
+    {
+      "component": "Button (loading)",
+      "check": "name, role, state",
+      "pass": false,
+      "detail": "label=\"Saving\" value=\"\" traits=[button, notEnabled] 370×40pt"
+    },
+    {
+      "component": "Button (loading)",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "370×40pt"
+    },
+    {
+      "component": "Text field",
+      "check": "name, role, state",
+      "pass": false,
+      "detail": "label=\"\" value=\"\" traits=[] 368×38pt"
+    },
+    {
+      "component": "Switch",
+      "check": "name, role, state",
+      "pass": false,
+      "detail": "label=\"\" value=\"1\" traits=[button, toggleButton] 32×19pt"
+    },
+    {
+      "component": "Switch",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "32×19pt"
+    },
+    {
+      "component": "Checkbox",
+      "check": "name, role, state",
+      "pass": false,
+      "detail": "label=\"\" value=\"checkbox, unchecked\" traits=[] 16×16pt"
+    },
+    {
+      "component": "Checkbox",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "16×16pt"
+    },
+    {
+      "component": "Radio option",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"\" value=\"radio button, checked\" traits=[] 16×16pt"
+    },
+    {
+      "component": "Radio option",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "16×16pt"
+    },
+    {
+      "component": "Select trigger",
+      "check": "name, role, state",
+      "pass": false,
+      "detail": "label=\"60 seconds\" value=\"\" traits=[] 200×40pt"
+    },
+    {
+      "component": "Select trigger",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "200×40pt"
+    },
+    {
+      "component": "Tab (selected)",
+      "check": "name, role, state",
+      "pass": false,
+      "detail": "label=\"Today\" value=\"\" traits=[selected] 58×30pt"
+    },
+    {
+      "component": "Tab (selected)",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "58×30pt"
+    },
+    {
+      "component": "Native switch (@expo/ui)",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Sync with Health (native control)\" value=\"0\" traits=[button, toggleButton] 317×28pt"
+    },
+    {
+      "component": "Native switch (@expo/ui)",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "317×28pt"
+    },
+    {
+      "component": "Radio group",
+      "check": "all options exposed",
+      "pass": true,
+      "detail": "3 options found"
+    },
+    {
+      "component": "Radio group",
+      "check": "group label read",
+      "pass": true,
+      "detail": "label text \"Experience level\" in tree"
+    },
+    {
+      "component": "Text field",
+      "check": "error shown",
+      "pass": true,
+      "detail": "error text in tree"
+    },
+    {
+      "component": "Text field",
+      "check": "error reachable from field",
+      "pass": false,
+      "detail": "label=\"\" value=\"not-an-email\" traits=[] 366×36pt hint=\"\""
+    },
+    {
+      "component": "Dialog",
+      "check": "opens",
+      "pass": true,
+      "detail": "title in tree"
+    },
+    {
+      "component": "Dialog",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": false,
+      "detail": "still exposed: test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2"
+    },
+    {
+      "component": "Dialog",
+      "check": "title is a heading",
+      "pass": false,
+      "detail": "AXGroup label=\"Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Cancel, Delete\""
+    },
+    {
+      "component": "Dialog",
+      "check": "actions are buttons",
+      "pass": true,
+      "detail": "AXButton label=\"Cancel\""
+    },
+    {
+      "component": "Dialog",
+      "check": "closes",
+      "pass": true,
+      "detail": "title gone"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "opens",
+      "pass": true,
+      "detail": "sheet content in tree"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "title and body readable",
+      "pass": true,
+      "detail": "title in tree"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": false,
+      "detail": "still exposed: test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "closes",
+      "pass": true,
+      "detail": "sheet gone"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "screen reachable again after close",
+      "pass": true,
+      "detail": "screen controls back in system tree"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "opens",
+      "pass": true,
+      "detail": "sheet content in tree"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "title and body readable",
+      "pass": true,
+      "detail": "title in tree"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": true,
+      "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "closes",
+      "pass": true,
+      "detail": "sheet gone"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "screen reachable again after close",
+      "pass": true,
+      "detail": "screen controls back in system tree"
+    },
+    {
+      "component": "Select",
+      "check": "opens",
+      "pass": true,
+      "detail": "options in tree"
+    },
+    {
+      "component": "Select",
+      "check": "current option marked",
+      "pass": false,
+      "detail": "AXGroup label=\"60 seconds\""
+    },
+    {
+      "component": "Select",
+      "check": "options are actionable",
+      "pass": false,
+      "detail": "AXGroup label=\"30 seconds\" | AXGroup label=\"45 seconds\" | AXGroup label=\"60 seconds\" | AXGroup label=\"90 seconds\" | AXGroup label=\"2 minutes\""
+    },
+    {
+      "component": "Select",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": true,
+      "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Select",
+      "check": "new value read on trigger",
+      "pass": true,
+      "detail": "label=\"90 seconds\" value=\"\" traits=[] 200×40pt"
+    },
+    {
+      "component": "Toast",
+      "check": "in accessibility tree",
+      "pass": true,
+      "detail": "AXStaticText label=\"Set logged\""
+    },
+    {
+      "component": "Slider",
+      "check": "name, role, value",
+      "pass": true,
+      "detail": "label=\"Weight\" value=\"60 kg\" traits=[adjustable] 370×44pt"
+    },
+    {
+      "component": "Slider",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×44pt"
+    },
+    {
+      "component": "Slider",
+      "check": "dragging changes the value",
+      "pass": true,
+      "detail": "value \"60 kg\" → \"180 kg\""
+    },
+    {
+      "component": "Progress",
+      "check": "name and value",
+      "pass": false,
+      "detail": "label=\"\" value=\"0%\" traits=[updatesFrequently] 370×8pt"
+    },
+    {
+      "component": "Accordion",
+      "check": "header is a button",
+      "pass": true,
+      "detail": "label=\"Warm-up\" value=\"\" traits=[button] 370×52pt"
+    },
+    {
+      "component": "Accordion",
+      "check": "target ≥ 44pt",
+      "pass": true,
+      "detail": "370×52pt"
+    },
+    {
+      "component": "Accordion",
+      "check": "expanded state exposed",
+      "pass": true,
+      "detail": "closed: label=\"Warm-up\" value=\"\" traits=[button] 370×52pt; open: label=\"Warm-up\" value=\"expanded\" traits=[button] 370×52pt"
+    },
+    {
+      "component": "Accordion",
+      "check": "content shows and hides",
+      "pass": true,
+      "detail": "panel text appeared; gone after second tap"
+    },
+    {
+      "component": "Menu",
+      "check": "trigger name and role",
+      "pass": true,
+      "detail": "label=\"Workout options\" value=\"\" traits=[button] 370×40pt"
+    },
+    {
+      "component": "Menu",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "370×40pt"
+    },
+    {
+      "component": "Menu",
+      "check": "opens",
+      "pass": true,
+      "detail": "all three actions in tree"
+    },
+    {
+      "component": "Menu",
+      "check": "items are buttons",
+      "pass": false,
+      "detail": "AXGroup label=\"Duplicate\" | AXGroup label=\"Share\" | AXGroup label=\"Archive\""
+    },
+    {
+      "component": "Menu",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": true,
+      "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Menu",
+      "check": "closes after an action",
+      "pass": true,
+      "detail": "actions gone"
+    },
+    {
+      "component": "Segmented control",
+      "check": "options have name and role",
+      "pass": true,
+      "detail": "label=\"Week\" value=\"radio button, checked\" traits=[] 124×40pt | label=\"Month\" value=\"radio button, unchecked\" traits=[] 123×40pt | label=\"Year\" value=\"radio button, unchecked\" traits=[] 123×40pt"
+    },
+    {
+      "component": "Segmented control",
+      "check": "selected option marked",
+      "pass": true,
+      "detail": "label=\"Week\" value=\"radio button, checked\" traits=[] 124×40pt | label=\"Month\" value=\"radio button, unchecked\" traits=[] 123×40pt | label=\"Year\" value=\"radio button, unchecked\" traits=[] 123×40pt"
+    },
+    {
+      "component": "Segmented control",
+      "check": "target ≥ 44pt",
+      "pass": false,
+      "detail": "124×40pt"
+    },
+    {
+      "component": "Segmented control",
+      "check": "selection moves on tap",
+      "pass": true,
+      "detail": "label=\"Week\" value=\"radio button, unchecked\" traits=[] 124×40pt | label=\"Month\" value=\"radio button, checked\" traits=[] 123×40pt"
+    }
+  ],
+  "states": {
+    "main": [
+      {
+        "frame": {
+          "x": 16,
+          "y": 132,
+          "width": 370,
+          "height": 34
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 149
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.15102974828375287,
+          "width": 0.9203980099502488,
+          "height": 0.038901601830663615
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.17048054919908467
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Component test screen"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 182,
+          "width": 370,
+          "height": 26
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 195
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.20823798627002288,
+          "width": 0.9203980099502488,
+          "height": 0.029748283752860413
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.2231121281464531
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Theme"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 220,
+          "width": 370,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 230
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.2517162471395881,
+          "width": 0.9203980099502488,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.2631578947368421
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Theme"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 250,
+          "width": 16,
+          "height": 16
+        },
+        "tapPoint": {
+          "x": 24,
+          "y": 258
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.28604118993135014,
+          "width": 0.03980099502487562,
+          "height": 0.018306636155606407
+        },
+        "normalizedTapPoint": {
+          "x": 0.05970149253731343,
+          "y": 0.2951945080091533
+        },
+        "traits": [],
+        "value": "radio button, unchecked",
+        "identifier": "test-theme-0",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 44,
+          "y": 248,
+          "width": 33.666664123535156,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 60.83333206176758,
+          "y": 258
+        },
+        "normalizedFrame": {
+          "x": 0.10945273631840796,
+          "y": 0.2837528604118993,
+          "width": 0.08374792070531134,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.15132669667106363,
+          "y": 0.2951945080091533
+        },
+        "traits": [],
+        "label": "Light",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 282,
+          "width": 16,
+          "height": 16
+        },
+        "tapPoint": {
+          "x": 24,
+          "y": 290
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.32265446224256294,
+          "width": 0.03980099502487562,
+          "height": 0.018306636155606407
+        },
+        "normalizedTapPoint": {
+          "x": 0.05970149253731343,
+          "y": 0.3318077803203661
+        },
+        "traits": [],
+        "value": "radio button, unchecked",
+        "identifier": "test-theme-1",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 44,
+          "y": 280,
+          "width": 31.333335876464844,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 59.66666793823242,
+          "y": 290
+        },
+        "normalizedFrame": {
+          "x": 0.10945273631840796,
+          "y": 0.32036613272311215,
+          "width": 0.07794362158324589,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.1484245471100309,
+          "y": 0.3318077803203661
+        },
+        "traits": [],
+        "label": "Dark",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 314,
+          "width": 16,
+          "height": 16
+        },
+        "tapPoint": {
+          "x": 24,
+          "y": 322
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.35926773455377575,
+          "width": 0.03980099502487562,
+          "height": 0.018306636155606407
+        },
+        "normalizedTapPoint": {
+          "x": 0.05970149253731343,
+          "y": 0.3684210526315789
+        },
+        "traits": [],
+        "value": "radio button, checked",
+        "identifier": "test-theme-2",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 44,
+          "y": 312,
+          "width": 39.333335876464844,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 63.66666793823242,
+          "y": 322
+        },
+        "normalizedFrame": {
+          "x": 0.10945273631840796,
+          "y": 0.35697940503432496,
+          "width": 0.09784411909568369,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.1583747958662498,
+          "y": 0.3684210526315789
+        },
+        "traits": [],
+        "label": "Brand",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 364,
+          "width": 370,
+          "height": 26
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 377
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.41647597254004576,
+          "width": 0.9203980099502488,
+          "height": 0.029748283752860413
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.43135011441647597
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Buttons"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 402,
+          "width": 370,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 422
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.459954233409611,
+          "width": 0.9203980099502488,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.482837528604119
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Save workout",
+        "identifier": "test-button",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 454,
+          "width": 370,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 474
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.5194508009153318,
+          "width": 0.9203980099502488,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.5423340961098398
+        },
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "label": "Unavailable",
+        "identifier": "test-button-disabled",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 506,
+          "width": 370,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 526
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.5789473684210527,
+          "width": 0.9203980099502488,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.6018306636155606
+        },
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "label": "Saving",
+        "identifier": "test-button-loading",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 578,
+          "width": 370,
+          "height": 26
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 591
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.6613272311212814,
+          "width": 0.9203980099502488,
+          "height": 0.029748283752860413
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.6762013729977117
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Form"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 616,
+          "width": 370,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 626
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.7048054919908466,
+          "width": 0.9203980099502488,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.7162471395881007
+        },
+        "traits": [],
+        "label": "Email",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 17,
+          "y": 641,
+          "width": 368,
+          "height": 38
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 660
+        },
+        "normalizedFrame": {
+          "x": 0.04228855721393035,
+          "y": 0.7334096109839817,
+          "width": 0.9154228855721394,
+          "height": 0.043478260869565216
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.7551487414187643
+        },
+        "traits": [],
+        "identifier": "test-textfield",
+        "viewClassName": "RCTUITextField"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 684,
+          "width": 370,
+          "height": 18
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 693
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.782608695652174,
+          "width": 0.9203980099502488,
+          "height": 0.020594965675057208
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.7929061784897025
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "We'll send your plan here."
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 714.6666666865349,
+          "width": 32,
+          "height": 18.6666259765625
+        },
+        "tapPoint": {
+          "x": 32,
+          "y": 723.9999796748161
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.817696414973152,
+          "width": 0.07960199004975124,
+          "height": 0.02135769562535755
+        },
+        "normalizedTapPoint": {
+          "x": 0.07960199004975124,
+          "y": 0.8283752627858308
+        },
+        "traits": [
+          "button",
+          "toggleButton"
+        ],
+        "value": "1",
+        "identifier": "test-switch",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 56,
+          "y": 714,
+          "width": 126.33332824707031,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 119.16666412353516,
+          "y": 724
+        },
+        "normalizedFrame": {
+          "x": 0.13930348258706468,
+          "y": 0.816933638443936,
+          "width": 0.31426201056485153,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.29643448786949045,
+          "y": 0.8283752860411899
+        },
+        "traits": [],
+        "label": "Workout reminders",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 748,
+          "width": 16,
+          "height": 16
+        },
+        "tapPoint": {
+          "x": 24,
+          "y": 756
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.8558352402745996,
+          "width": 0.03980099502487562,
+          "height": 0.018306636155606407
+        },
+        "normalizedTapPoint": {
+          "x": 0.05970149253731343,
+          "y": 0.8649885583524027
+        },
+        "traits": [],
+        "value": "checkbox, unchecked",
+        "identifier": "test-checkbox",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 44,
+          "y": 746,
+          "width": 129.6666717529297,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 108.83333587646484,
+          "y": 756
+        },
+        "normalizedFrame": {
+          "x": 0.10945273631840796,
+          "y": 0.8535469107551488,
+          "width": 0.3225539098331584,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.2707296912349872,
+          "y": 0.8649885583524027
+        },
+        "traits": [],
+        "label": "I agree to the terms",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 778,
+          "width": 370,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 788
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.8901601830663616,
+          "width": 0.9203980099502488,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 0.9016018306636155
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Experience level"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 808,
+          "width": 16,
+          "height": 16
+        },
+        "tapPoint": {
+          "x": 24,
+          "y": 816
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.9244851258581236,
+          "width": 0.03980099502487562,
+          "height": 0.018306636155606407
+        },
+        "normalizedTapPoint": {
+          "x": 0.05970149253731343,
+          "y": 0.9336384439359268
+        },
+        "traits": [],
+        "value": "radio button, checked",
+        "identifier": "test-radiogroup-0",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 44,
+          "y": 806,
+          "width": 59.333335876464844,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 73.66666793823242,
+          "y": 816
+        },
+        "normalizedFrame": {
+          "x": 0.10945273631840796,
+          "y": 0.9221967963386728,
+          "width": 0.1475953628767782,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.18325041775679707,
+          "y": 0.9336384439359268
+        },
+        "traits": [],
+        "label": "Beginner",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 840,
+          "width": 16,
+          "height": 16
+        },
+        "tapPoint": {
+          "x": 24,
+          "y": 848
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.9610983981693364,
+          "width": 0.03980099502487562,
+          "height": 0.018306636155606407
+        },
+        "normalizedTapPoint": {
+          "x": 0.05970149253731343,
+          "y": 0.9702517162471396
+        },
+        "traits": [],
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-1",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 44,
+          "y": 838,
+          "width": 84.33332824707031,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 86.16666412353516,
+          "y": 848
+        },
+        "normalizedFrame": {
+          "x": 0.10945273631840796,
+          "y": 0.9588100686498856,
+          "width": 0.209784398624553,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.21434493563068446,
+          "y": 0.9702517162471396
+        },
+        "traits": [],
+        "label": "Intermediate",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 872,
+          "width": 16,
+          "height": 16
+        },
+        "tapPoint": {
+          "x": 24,
+          "y": 880
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 0.9977116704805492,
+          "width": 0.03980099502487562,
+          "height": 0.018306636155606407
+        },
+        "normalizedTapPoint": {
+          "x": 0.05970149253731343,
+          "y": 1.0068649885583525
+        },
+        "traits": [],
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-2",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 44,
+          "y": 870,
+          "width": 66,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 77,
+          "y": 880
+        },
+        "normalizedFrame": {
+          "x": 0.10945273631840796,
+          "y": 0.9954233409610984,
+          "width": 0.16417910447761194,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.19154228855721392,
+          "y": 1.0068649885583525
+        },
+        "traits": [],
+        "label": "Advanced",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 902,
+          "width": 370,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 912
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.032036613272311,
+          "width": 0.9203980099502488,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.0434782608695652
+        },
+        "traits": [],
+        "label": "Rest time",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 926,
+          "width": 200,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 116,
+          "y": 946
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.0594965675057209,
+          "width": 0.4975124378109453,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.2885572139303483,
+          "y": 1.0823798627002288
+        },
+        "traits": [],
+        "label": "60 seconds",
+        "identifier": "test-select",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 998,
+          "width": 370,
+          "height": 26
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1011
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.1418764302059496,
+          "width": 0.9203980099502488,
+          "height": 0.029748283752860413
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.1567505720823799
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Overlays"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1036,
+          "width": 370,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1056
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.1853546910755148,
+          "width": 0.9203980099502488,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.208237986270023
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Delete workout",
+        "identifier": "test-dialog-open",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1088,
+          "width": 370,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1108
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.2448512585812357,
+          "width": 0.9203980099502488,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.2677345537757436
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Show exercise details",
+        "identifier": "test-sheet-open",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1140,
+          "width": 370,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1160
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.3043478260869565,
+          "width": 0.9203980099502488,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.3272311212814645
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Show exercise details (@expo/ui)",
+        "identifier": "test-sheet-open-expoui",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1192,
+          "width": 370,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1212
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.3638443935926774,
+          "width": 0.9203980099502488,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.3867276887871853
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Log set",
+        "identifier": "test-toast-show",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1264,
+          "width": 370,
+          "height": 26
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1277
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.4462242562929062,
+          "width": 0.9203980099502488,
+          "height": 0.029748283752860413
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.4610983981693364
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Tabs"
+      },
+      {
+        "frame": {
+          "x": 19,
+          "y": 1305,
+          "width": 58,
+          "height": 30
+        },
+        "tapPoint": {
+          "x": 48,
+          "y": 1320
+        },
+        "normalizedFrame": {
+          "x": 0.0472636815920398,
+          "y": 1.4931350114416475,
+          "width": 0.14427860696517414,
+          "height": 0.034324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.11940298507462686,
+          "y": 1.5102974828375286
+        },
+        "traits": [
+          "selected"
+        ],
+        "label": "Today",
+        "identifier": "test-tabs-0",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 77,
+          "y": 1305,
+          "width": 46.666664123535156,
+          "height": 30
+        },
+        "tapPoint": {
+          "x": 100.33333206176758,
+          "y": 1320
+        },
+        "normalizedFrame": {
+          "x": 0.19154228855721392,
+          "y": 1.4931350114416475,
+          "width": 0.11608622916302277,
+          "height": 0.034324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.24958540313872532,
+          "y": 1.5102974828375286
+        },
+        "traits": [],
+        "label": "Plan",
+        "identifier": "test-tabs-1",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 123.66666412353516,
+          "y": 1305,
+          "width": 77.00000762939453,
+          "height": 30
+        },
+        "tapPoint": {
+          "x": 162.16666793823242,
+          "y": 1320
+        },
+        "normalizedFrame": {
+          "x": 0.3076285177202367,
+          "y": 1.4931350114416475,
+          "width": 0.19154230753580728,
+          "height": 0.034324942791762014
+        },
+        "normalizedTapPoint": {
+          "x": 0.4033996714881404,
+          "y": 1.5102974828375286
+        },
+        "traits": [],
+        "label": "Progress",
+        "identifier": "test-tabs-2",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1346,
+          "width": 370,
+          "height": 22
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1357
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.540045766590389,
+          "width": 0.9203980099502488,
+          "height": 0.02517162471395881
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.5526315789473684
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "3 exercises left today."
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1400,
+          "width": 370,
+          "height": 26
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1413
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.6018306636155606,
+          "width": 0.9203980099502488,
+          "height": 0.029748283752860413
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.6167048054919908
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "More components"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1438,
+          "width": 370,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1448
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.6453089244851258,
+          "width": 0.9203980099502488,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.6567505720823799
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Weight: 60 kg"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1462,
+          "width": 370,
+          "height": 44
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1484
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.6727688787185355,
+          "width": 0.9203980099502488,
+          "height": 0.05034324942791762
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.6979405034324944
+        },
+        "traits": [
+          "adjustable"
+        ],
+        "label": "Weight",
+        "value": "60 kg",
+        "identifier": "test-slider",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1518,
+          "width": 370,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1528
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.736842105263158,
+          "width": 0.9203980099502488,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.7482837528604118
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Workout progress"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1542,
+          "width": 370,
+          "height": 8
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1546
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.7643020594965675,
+          "width": 0.9203980099502488,
+          "height": 0.009153318077803204
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.768878718535469
+        },
+        "traits": [
+          "updatesFrequently"
+        ],
+        "value": "0%",
+        "identifier": "test-progress",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1554,
+          "width": 370,
+          "height": 18
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1563
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.7780320366132722,
+          "width": 0.9203980099502488,
+          "height": 0.020594965675057208
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.7883295194508009
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "3 of 8 exercises"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1584,
+          "width": 370,
+          "height": 52
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1610
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.8123569794050343,
+          "width": 0.9203980099502488,
+          "height": 0.059496567505720827
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.8421052631578947
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Warm-up",
+        "identifier": "test-accordion-0",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1637,
+          "width": 370,
+          "height": 52
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1663
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.8729977116704806,
+          "width": 0.9203980099502488,
+          "height": 0.059496567505720827
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.902745995423341
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Main set",
+        "identifier": "test-accordion-1",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1690,
+          "width": 370,
+          "height": 52
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1716
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 1.9336384439359269,
+          "width": 0.9203980099502488,
+          "height": 0.059496567505720827
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 1.963386727688787
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Cool-down",
+        "identifier": "test-accordion-2",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1755,
+          "width": 370,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1775
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.0080091533180777,
+          "width": 0.9203980099502488,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.030892448512586
+        },
+        "traits": [
+          "button"
+        ],
+        "label": "Workout options",
+        "identifier": "test-menu-open",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1807,
+          "width": 370,
+          "height": 20
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1817
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.0675057208237986,
+          "width": 0.9203980099502488,
+          "height": 0.02288329519450801
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.0789473684210527
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Chart range"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1831,
+          "width": 124,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 78,
+          "y": 1851
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.094965675057208,
+          "width": 0.30845771144278605,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.19402985074626866,
+          "y": 2.1178489702517163
+        },
+        "traits": [],
+        "label": "Week",
+        "value": "radio button, checked",
+        "identifier": "test-segmented-0",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 140,
+          "y": 1831,
+          "width": 123,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 201.5,
+          "y": 1851
+        },
+        "normalizedFrame": {
+          "x": 0.3482587064676617,
+          "y": 2.094965675057208,
+          "width": 0.30597014925373134,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.5012437810945274,
+          "y": 2.1178489702517163
+        },
+        "traits": [],
+        "label": "Month",
+        "value": "radio button, unchecked",
+        "identifier": "test-segmented-1",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 263,
+          "y": 1831,
+          "width": 123,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 324.5,
+          "y": 1851
+        },
+        "normalizedFrame": {
+          "x": 0.654228855721393,
+          "y": 2.094965675057208,
+          "width": 0.30597014925373134,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.8072139303482587,
+          "y": 2.1178489702517163
+        },
+        "traits": [],
+        "label": "Year",
+        "value": "radio button, unchecked",
+        "identifier": "test-segmented-2",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 1903,
+          "width": 370,
+          "height": 26
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 1916
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.177345537757437,
+          "width": 0.9203980099502488,
+          "height": 0.029748283752860413
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.192219679633867
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "Native control (@expo/ui)"
+      },
+      {
+        "frame": {
+          "x": 15.999995231628418,
+          "y": 1927,
+          "width": 316.6666564941406,
+          "height": 28
+        },
+        "tapPoint": {
+          "x": 174.33332347869873,
+          "y": 1941
+        },
+        "normalizedFrame": {
+          "x": 0.03980098316325477,
+          "y": 2.2048054919908466,
+          "width": 0.7877280012292055,
+          "height": 0.032036613272311214
+        },
+        "normalizedTapPoint": {
+          "x": 0.43366498377785756,
+          "y": 2.220823798627002
+        },
+        "traits": [
+          "button",
+          "toggleButton"
+        ],
+        "label": "Sync with Health (native control)",
+        "value": "0",
+        "identifier": "test-native-switch"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 2001,
+          "width": 370,
+          "height": 26
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 2014
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.289473684210526,
+          "width": 0.9203980099502488,
+          "height": 0.029748283752860413
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.3043478260869565
+        },
+        "traits": [
+          "header",
+          "staticText"
+        ],
+        "label": "List"
+      },
+      {
+        "frame": {
+          "x": 16,
+          "y": 2039,
+          "width": 370,
+          "height": 40
+        },
+        "tapPoint": {
+          "x": 201,
+          "y": 2059
+        },
+        "normalizedFrame": {
+          "x": 0.03980099502487562,
+          "y": 2.3329519450800915,
+          "width": 0.9203980099502488,
+          "height": 0.04576659038901602
+        },
+        "normalizedTapPoint": {
+          "x": 0.5,
+          "y": 2.3558352402745997
+        },
+        "traits": [
+          "link"
+        ],
+        "label": "Open 200-row list",
+        "identifier": "test-list-link",
+        "viewClassName": "RCTViewComponentView"
+      },
+      {
+        "frame": {
+          "x": 0,
+          "y": 116,
+          "width": 0,
+          "height": 0
+        },
+        "tapPoint": {
+          "x": 0,
+          "y": 116
+        },
+        "normalizedFrame": {
+          "x": 0,
+          "y": 0.13272311212814644,
+          "width": 0,
+          "height": 0
+        },
+        "normalizedTapPoint": {
+          "x": 0,
+          "y": 0.13272311212814644
+        },
+        "traits": [],
+        "identifier": "test-sheet-expoui"
+      },
+      {
+        "frame": {
+          "x": 107.66666666666669,
+          "y": 73.66666666666666,
+          "width": 186.66666666666669,
+          "height": 20.66666666666667
+        },
+        "tapPoint": {
+          "x": 201.00000000000003,
+          "y": 84
+        },
+        "normalizedFrame": {
+          "x": 0.26782752902155893,
+          "y": 0.08428680396643783,
+          "width": 0.4643449419568823,
+          "height": 0.023646071700991617
+        },
+        "normalizedTapPoint": {
+          "x": 0.5000000000000001,
+          "y": 0.09610983981693363
+        },
+        "traits": [
+          "header"
+        ],
+        "label": "React Native Reusables",
+        "viewClassName": "UILabel"
+      },
+      {
+        "frame": {
+          "x": 4,
+          "y": 54,
+          "width": 112.33333587646484,
+          "height": 11
+        },
+        "tapPoint": {
+          "x": 60.16666793823242,
+          "y": 59.5
+        },
+        "normalizedFrame": {
+          "x": 0.009950248756218905,
+          "y": 0.06178489702517163,
+          "width": 0.2794361588966787,
+          "height": 0.012585812356979404
+        },
+        "normalizedTapPoint": {
+          "x": 0.14966832820455828,
+          "y": 0.06807780320366133
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "Theme switch: 32.5 ms"
+      },
+      {
+        "frame": {
+          "x": 4,
+          "y": 65,
+          "width": 112.33333587646484,
+          "height": 11
+        },
+        "tapPoint": {
+          "x": 60.16666793823242,
+          "y": 70.5
+        },
+        "normalizedFrame": {
+          "x": 0.009950248756218905,
+          "y": 0.07437070938215103,
+          "width": 0.2794361588966787,
+          "height": 0.012585812356979404
+        },
+        "normalizedTapPoint": {
+          "x": 0.14966832820455828,
+          "y": 0.08066361556064074
+        },
+        "traits": [
+          "staticText"
+        ],
+        "label": "List mount: not measured"
+      }
+    ],
+    "textFieldError": [
+      {
+        "role": "AXGroup",
+        "label": "Toolbar",
+        "identifier": "Toolbar",
+        "nx": 0.5,
+        "ny": 0.5,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Theme switch: 32.5 ms",
+        "nx": 0.14950000000000002,
+        "ny": 0.0685,
+        "x": 0.01,
+        "y": 0.062,
+        "w": 0.279,
+        "h": 0.013
+      },
+      {
+        "role": "AXStaticText",
+        "label": "List mount: not measured",
+        "nx": 0.14950000000000002,
+        "ny": 0.0805,
+        "x": 0.01,
+        "y": 0.074,
+        "w": 0.279,
+        "h": 0.013
+      },
+      {
+        "role": "AXHeading",
+        "label": "React Native Reusables",
+        "nx": 0.5,
+        "ny": 0.096,
+        "x": 0.268,
+        "y": 0.084,
+        "w": 0.464,
+        "h": 0.024
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Vertical scroll bar, 3 pages",
+        "value": "0%",
+        "nx": 0.9555,
+        "ny": 0.531,
+        "x": 0.918,
+        "y": 0.133,
+        "w": 0.075,
+        "h": 0.796
+      },
+      {
+        "role": "AXHeading",
+        "label": "Component test screen",
+        "nx": 0.5,
+        "ny": 0.17049999999999998,
+        "x": 0.04,
+        "y": 0.151,
+        "w": 0.92,
+        "h": 0.039
+      },
+      {
+        "role": "AXHeading",
+        "label": "Theme",
+        "nx": 0.5,
+        "ny": 0.22299999999999998,
+        "x": 0.04,
+        "y": 0.208,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Theme",
+        "nx": 0.5,
+        "ny": 0.2635,
+        "x": 0.04,
+        "y": 0.252,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "Light",
+        "nx": 0.151,
+        "ny": 0.2955,
+        "x": 0.109,
+        "y": 0.284,
+        "w": 0.084,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, unchecked",
+        "identifier": "test-theme-0",
+        "nx": 0.06,
+        "ny": 0.295,
+        "x": 0.04,
+        "y": 0.286,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Dark",
+        "nx": 0.148,
+        "ny": 0.3315,
+        "x": 0.109,
+        "y": 0.32,
+        "w": 0.078,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, unchecked",
+        "identifier": "test-theme-1",
+        "nx": 0.06,
+        "ny": 0.332,
+        "x": 0.04,
+        "y": 0.323,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Brand",
+        "nx": 0.158,
+        "ny": 0.3685,
+        "x": 0.109,
+        "y": 0.357,
+        "w": 0.098,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, checked",
+        "identifier": "test-theme-2",
+        "nx": 0.06,
+        "ny": 0.368,
+        "x": 0.04,
+        "y": 0.359,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXHeading",
+        "label": "Buttons",
+        "nx": 0.5,
+        "ny": 0.431,
+        "x": 0.04,
+        "y": 0.416,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXButton",
+        "label": "Save workout",
+        "identifier": "test-button",
+        "nx": 0.5,
+        "ny": 0.48300000000000004,
+        "x": 0.04,
+        "y": 0.46,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Unavailable",
+        "identifier": "test-button-disabled",
+        "nx": 0.5,
+        "ny": 0.542,
+        "x": 0.04,
+        "y": 0.519,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Saving",
+        "identifier": "test-button-loading",
+        "nx": 0.5,
+        "ny": 0.602,
+        "x": 0.04,
+        "y": 0.579,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXHeading",
+        "label": "Form",
+        "nx": 0.5,
+        "ny": 0.676,
+        "x": 0.04,
+        "y": 0.661,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXGroup",
+        "label": "Email",
+        "nx": 0.5,
+        "ny": 0.7164999999999999,
+        "x": 0.04,
+        "y": 0.705,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXTextField",
+        "label": "",
+        "value": "not-an-email",
+        "identifier": "test-textfield",
+        "nx": 0.5,
+        "ny": 0.7555,
+        "x": 0.045,
+        "y": 0.735,
+        "w": 0.91,
+        "h": 0.041
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Enter a valid email address.",
+        "nx": 0.5,
+        "ny": 0.7935,
+        "x": 0.04,
+        "y": 0.783,
+        "w": 0.92,
+        "h": 0.021
+      },
+      {
+        "role": "AXGroup",
+        "label": "Workout reminders",
+        "nx": 0.29600000000000004,
+        "ny": 0.8284999999999999,
+        "x": 0.139,
+        "y": 0.817,
+        "w": 0.314,
+        "h": 0.023
+      },
+      {
+        "role": "AXButton",
+        "label": "",
+        "value": "1",
+        "identifier": "test-switch",
+        "nx": 0.08,
+        "ny": 0.8284999999999999,
+        "x": 0.04,
+        "y": 0.818,
+        "w": 0.08,
+        "h": 0.021
+      },
+      {
+        "role": "AXGroup",
+        "label": "I agree to the terms",
+        "nx": 0.2705,
+        "ny": 0.8654999999999999,
+        "x": 0.109,
+        "y": 0.854,
+        "w": 0.323,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "checkbox, unchecked",
+        "identifier": "test-checkbox",
+        "nx": 0.06,
+        "ny": 0.865,
+        "x": 0.04,
+        "y": 0.856,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Experience level",
+        "nx": 0.5,
+        "ny": 0.9015,
+        "x": 0.04,
+        "y": 0.89,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "Beginner",
+        "nx": 0.183,
+        "ny": 0.9335,
+        "x": 0.109,
+        "y": 0.922,
+        "w": 0.148,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, checked",
+        "identifier": "test-radiogroup-0",
+        "nx": 0.06,
+        "ny": 0.933,
+        "x": 0.04,
+        "y": 0.924,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Intermediate",
+        "nx": 0.214,
+        "ny": 0.9704999999999999,
+        "x": 0.109,
+        "y": 0.959,
+        "w": 0.21,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-1",
+        "nx": 0.06,
+        "ny": 0.97,
+        "x": 0.04,
+        "y": 0.961,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Horizontal scroll bar, 1 page",
+        "value": "0%",
+        "nx": 0.5,
+        "ny": 0.979,
+        "x": 0.154,
+        "y": 0.962,
+        "w": 0.692,
+        "h": 0.034
+      },
+      {
+        "role": "AXGroup",
+        "label": "Advanced",
+        "nx": 0.191,
+        "ny": 0.9974999999999999,
+        "x": 0.109,
+        "y": 0.995,
+        "w": 0.164,
+        "h": 0.005
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-2",
+        "nx": 0.06,
+        "ny": 0.999,
+        "x": 0.04,
+        "y": 0.998,
+        "w": 0.04,
+        "h": 0.002
+      }
+    ],
+    "dialog": [
+      {
+        "role": "AXGroup",
+        "label": "Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Cancel, Delete",
+        "nx": 0.5,
+        "ny": 0.5,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "role": "AXGroup",
+        "label": "Toolbar",
+        "identifier": "Toolbar",
+        "nx": 0.5,
+        "ny": 0.5,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "role": "AXButton",
+        "label": "Saving",
+        "identifier": "test-button-loading",
+        "nx": 0.5,
+        "ny": 0.015,
+        "x": 0.04,
+        "y": 0,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Theme switch: 31.9 ms",
+        "identifier": "perf-theme",
+        "nx": 0.14950000000000002,
+        "ny": 0.0685,
+        "x": 0.01,
+        "y": 0.062,
+        "w": 0.279,
+        "h": 0.013
+      },
+      {
+        "role": "AXHeading",
+        "label": "Form",
+        "nx": 0.5,
+        "ny": 0.081,
+        "x": 0.04,
+        "y": 0.066,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXStaticText",
+        "label": "List mount: not measured",
+        "identifier": "perf-list",
+        "nx": 0.14950000000000002,
+        "ny": 0.0805,
+        "x": 0.01,
+        "y": 0.074,
+        "w": 0.279,
+        "h": 0.013
+      },
+      {
+        "role": "AXHeading",
+        "label": "React Native Reusables",
+        "nx": 0.5,
+        "ny": 0.096,
+        "x": 0.268,
+        "y": 0.084,
+        "w": 0.464,
+        "h": 0.024
+      },
+      {
+        "role": "AXGroup",
+        "label": "Email",
+        "nx": 0.5,
+        "ny": 0.1215,
+        "x": 0.04,
+        "y": 0.11,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Vertical scroll bar, 3 pages",
+        "value": "39%",
+        "nx": 0.9555,
+        "ny": 0.531,
+        "x": 0.918,
+        "y": 0.133,
+        "w": 0.075,
+        "h": 0.796
+      },
+      {
+        "role": "AXTextField",
+        "label": "",
+        "identifier": "test-textfield",
+        "nx": 0.4995,
+        "ny": 0.1595,
+        "x": 0.042,
+        "y": 0.138,
+        "w": 0.915,
+        "h": 0.043
+      },
+      {
+        "role": "AXStaticText",
+        "label": "We'll send your plan here.",
+        "nx": 0.5,
+        "ny": 0.1985,
+        "x": 0.04,
+        "y": 0.188,
+        "w": 0.92,
+        "h": 0.021
+      },
+      {
+        "role": "AXGroup",
+        "label": "Workout reminders",
+        "nx": 0.29600000000000004,
+        "ny": 0.2335,
+        "x": 0.139,
+        "y": 0.222,
+        "w": 0.314,
+        "h": 0.023
+      },
+      {
+        "role": "AXButton",
+        "label": "",
+        "value": "1",
+        "identifier": "test-switch",
+        "nx": 0.08,
+        "ny": 0.2335,
+        "x": 0.04,
+        "y": 0.223,
+        "w": 0.08,
+        "h": 0.021
+      },
+      {
+        "role": "AXGroup",
+        "label": "I agree to the terms",
+        "nx": 0.2705,
+        "ny": 0.2705,
+        "x": 0.109,
+        "y": 0.259,
+        "w": 0.323,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "checkbox, unchecked",
+        "identifier": "test-checkbox",
+        "nx": 0.06,
+        "ny": 0.27,
+        "x": 0.04,
+        "y": 0.261,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Experience level",
+        "nx": 0.5,
+        "ny": 0.3065,
+        "x": 0.04,
+        "y": 0.295,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "Beginner",
+        "nx": 0.183,
+        "ny": 0.3385,
+        "x": 0.109,
+        "y": 0.327,
+        "w": 0.148,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, checked",
+        "identifier": "test-radiogroup-0",
+        "nx": 0.06,
+        "ny": 0.339,
+        "x": 0.04,
+        "y": 0.33,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Intermediate",
+        "nx": 0.214,
+        "ny": 0.3755,
+        "x": 0.109,
+        "y": 0.364,
+        "w": 0.21,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-1",
+        "nx": 0.06,
+        "ny": 0.375,
+        "x": 0.04,
+        "y": 0.366,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXHeading",
+        "label": "Delete this workout?",
+        "nx": 0.5,
+        "ny": 0.41300000000000003,
+        "x": 0.082,
+        "y": 0.397,
+        "w": 0.836,
+        "h": 0.032
+      },
+      {
+        "role": "AXGroup",
+        "label": "Advanced",
+        "nx": 0.191,
+        "ny": 0.41150000000000003,
+        "x": 0.109,
+        "y": 0.4,
+        "w": 0.164,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-2",
+        "nx": 0.06,
+        "ny": 0.41200000000000003,
+        "x": 0.04,
+        "y": 0.403,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Rest time",
+        "nx": 0.5,
+        "ny": 0.4485,
+        "x": 0.04,
+        "y": 0.437,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXStaticText",
+        "label": "This removes the workout and its logged sets. You cannot undo this.",
+        "nx": 0.5,
+        "ny": 0.461,
+        "x": 0.082,
+        "y": 0.438,
+        "w": 0.836,
+        "h": 0.046
+      },
+      {
+        "role": "AXGroup",
+        "label": "60 seconds",
+        "identifier": "test-select",
+        "nx": 0.289,
+        "ny": 0.48800000000000004,
+        "x": 0.04,
+        "y": 0.465,
+        "w": 0.498,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Delete",
+        "identifier": "test-dialog-confirm",
+        "nx": 0.5,
+        "ny": 0.525,
+        "x": 0.082,
+        "y": 0.502,
+        "w": 0.836,
+        "h": 0.046
+      },
+      {
+        "role": "AXHeading",
+        "label": "Overlays",
+        "nx": 0.5,
+        "ny": 0.562,
+        "x": 0.04,
+        "y": 0.547,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXButton",
+        "label": "Cancel",
+        "identifier": "test-dialog-cancel",
+        "nx": 0.5,
+        "ny": 0.5800000000000001,
+        "x": 0.082,
+        "y": 0.557,
+        "w": 0.836,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Delete workout",
+        "value": "expanded",
+        "identifier": "test-dialog-open",
+        "nx": 0.5,
+        "ny": 0.613,
+        "x": 0.04,
+        "y": 0.59,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details",
+        "identifier": "test-sheet-open",
+        "nx": 0.5,
+        "ny": 0.673,
+        "x": 0.04,
+        "y": 0.65,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details (@expo/ui)",
+        "identifier": "test-sheet-open-expoui",
+        "nx": 0.5,
+        "ny": 0.732,
+        "x": 0.04,
+        "y": 0.709,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Log set",
+        "identifier": "test-toast-show",
+        "nx": 0.5,
+        "ny": 0.792,
+        "x": 0.04,
+        "y": 0.769,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXHeading",
+        "label": "Tabs",
+        "nx": 0.5,
+        "ny": 0.866,
+        "x": 0.04,
+        "y": 0.851,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXGroup",
+        "label": "Today",
+        "identifier": "test-tabs-0",
+        "nx": 0.119,
+        "ny": 0.915,
+        "x": 0.047,
+        "y": 0.898,
+        "w": 0.144,
+        "h": 0.034
+      },
+      {
+        "role": "AXGroup",
+        "label": "Plan",
+        "identifier": "test-tabs-1",
+        "nx": 0.25,
+        "ny": 0.915,
+        "x": 0.192,
+        "y": 0.898,
+        "w": 0.116,
+        "h": 0.034
+      },
+      {
+        "role": "AXGroup",
+        "label": "Progress",
+        "identifier": "test-tabs-2",
+        "nx": 0.404,
+        "ny": 0.915,
+        "x": 0.308,
+        "y": 0.898,
+        "w": 0.192,
+        "h": 0.034
+      },
+      {
+        "role": "AXStaticText",
+        "label": "3 exercises left today.",
+        "nx": 0.5,
+        "ny": 0.9574999999999999,
+        "x": 0.04,
+        "y": 0.945,
+        "w": 0.92,
+        "h": 0.025
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Horizontal scroll bar, 1 page",
+        "value": "0%",
+        "nx": 0.5,
+        "ny": 0.979,
+        "x": 0.154,
+        "y": 0.962,
+        "w": 0.692,
+        "h": 0.034
+      }
+    ],
+    "sheet:test-sheet-open": [
+      {
+        "role": "AXButton",
+        "label": "Bottom sheet backdrop",
+        "nx": 0.5,
+        "ny": 0.5,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "role": "AXGroup",
+        "label": "Toolbar",
+        "identifier": "Toolbar",
+        "nx": 0.5,
+        "ny": 0.5,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "role": "AXButton",
+        "label": "Saving",
+        "identifier": "test-button-loading",
+        "nx": 0.5,
+        "ny": 0.015,
+        "x": 0.04,
+        "y": 0,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Theme switch: 32.8 ms",
+        "identifier": "perf-theme",
+        "nx": 0.14950000000000002,
+        "ny": 0.0685,
+        "x": 0.01,
+        "y": 0.062,
+        "w": 0.279,
+        "h": 0.013
+      },
+      {
+        "role": "AXHeading",
+        "label": "Form",
+        "nx": 0.5,
+        "ny": 0.081,
+        "x": 0.04,
+        "y": 0.066,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXStaticText",
+        "label": "List mount: not measured",
+        "identifier": "perf-list",
+        "nx": 0.14950000000000002,
+        "ny": 0.0805,
+        "x": 0.01,
+        "y": 0.074,
+        "w": 0.279,
+        "h": 0.013
+      },
+      {
+        "role": "AXHeading",
+        "label": "React Native Reusables",
+        "nx": 0.5,
+        "ny": 0.096,
+        "x": 0.268,
+        "y": 0.084,
+        "w": 0.464,
+        "h": 0.024
+      },
+      {
+        "role": "AXGroup",
+        "label": "Email",
+        "nx": 0.5,
+        "ny": 0.1215,
+        "x": 0.04,
+        "y": 0.11,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Vertical scroll bar, 3 pages",
+        "value": "39%",
+        "nx": 0.9555,
+        "ny": 0.531,
+        "x": 0.918,
+        "y": 0.133,
+        "w": 0.075,
+        "h": 0.796
+      },
+      {
+        "role": "AXTextField",
+        "label": "",
+        "identifier": "test-textfield",
+        "nx": 0.4995,
+        "ny": 0.1595,
+        "x": 0.042,
+        "y": 0.138,
+        "w": 0.915,
+        "h": 0.043
+      },
+      {
+        "role": "AXStaticText",
+        "label": "We'll send your plan here.",
+        "nx": 0.5,
+        "ny": 0.1985,
+        "x": 0.04,
+        "y": 0.188,
+        "w": 0.92,
+        "h": 0.021
+      },
+      {
+        "role": "AXGroup",
+        "label": "Workout reminders",
+        "nx": 0.29600000000000004,
+        "ny": 0.2335,
+        "x": 0.139,
+        "y": 0.222,
+        "w": 0.314,
+        "h": 0.023
+      },
+      {
+        "role": "AXButton",
+        "label": "",
+        "value": "1",
+        "identifier": "test-switch",
+        "nx": 0.08,
+        "ny": 0.2335,
+        "x": 0.04,
+        "y": 0.223,
+        "w": 0.08,
+        "h": 0.021
+      },
+      {
+        "role": "AXGroup",
+        "label": "I agree to the terms",
+        "nx": 0.2705,
+        "ny": 0.2705,
+        "x": 0.109,
+        "y": 0.259,
+        "w": 0.323,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "checkbox, unchecked",
+        "identifier": "test-checkbox",
+        "nx": 0.06,
+        "ny": 0.27,
+        "x": 0.04,
+        "y": 0.261,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Experience level",
+        "nx": 0.5,
+        "ny": 0.3065,
+        "x": 0.04,
+        "y": 0.295,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "Beginner",
+        "nx": 0.183,
+        "ny": 0.3385,
+        "x": 0.109,
+        "y": 0.327,
+        "w": 0.148,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, checked",
+        "identifier": "test-radiogroup-0",
+        "nx": 0.06,
+        "ny": 0.339,
+        "x": 0.04,
+        "y": 0.33,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Intermediate",
+        "nx": 0.214,
+        "ny": 0.3755,
+        "x": 0.109,
+        "y": 0.364,
+        "w": 0.21,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-1",
+        "nx": 0.06,
+        "ny": 0.375,
+        "x": 0.04,
+        "y": 0.366,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Advanced",
+        "nx": 0.191,
+        "ny": 0.41150000000000003,
+        "x": 0.109,
+        "y": 0.4,
+        "w": 0.164,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-2",
+        "nx": 0.06,
+        "ny": 0.41200000000000003,
+        "x": 0.04,
+        "y": 0.403,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Rest time",
+        "nx": 0.5,
+        "ny": 0.4485,
+        "x": 0.04,
+        "y": 0.437,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "60 seconds",
+        "identifier": "test-select",
+        "nx": 0.289,
+        "ny": 0.48800000000000004,
+        "x": 0.04,
+        "y": 0.465,
+        "w": 0.498,
+        "h": 0.046
+      },
+      {
+        "role": "AXHeading",
+        "label": "Overlays",
+        "nx": 0.5,
+        "ny": 0.562,
+        "x": 0.04,
+        "y": 0.547,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXButton",
+        "label": "Delete workout",
+        "identifier": "test-dialog-open",
+        "nx": 0.5,
+        "ny": 0.613,
+        "x": 0.04,
+        "y": 0.59,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details",
+        "identifier": "test-sheet-open",
+        "nx": 0.5,
+        "ny": 0.673,
+        "x": 0.04,
+        "y": 0.65,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details (@expo/ui)",
+        "identifier": "test-sheet-open-expoui",
+        "nx": 0.5,
+        "ny": 0.732,
+        "x": 0.04,
+        "y": 0.709,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Bottom sheet handle",
+        "nx": 0.5,
+        "ny": 0.7685,
+        "x": 0,
+        "y": 0.755,
+        "w": 1,
+        "h": 0.027
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Bottom Sheet",
+        "nx": 0.5,
+        "ny": 0.8775,
+        "x": 0,
+        "y": 0.755,
+        "w": 1,
+        "h": 0.245
+      },
+      {
+        "role": "AXButton",
+        "label": "Log set",
+        "identifier": "test-toast-show",
+        "nx": 0.5,
+        "ny": 0.792,
+        "x": 0.04,
+        "y": 0.769,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Bottom Sheet",
+        "nx": 0.5,
+        "ny": 0.8915000000000001,
+        "x": 0,
+        "y": 0.783,
+        "w": 1,
+        "h": 0.217
+      },
+      {
+        "role": "AXHeading",
+        "label": "Goblet squat",
+        "nx": 0.5005,
+        "ny": 0.8250000000000001,
+        "x": 0.06,
+        "y": 0.81,
+        "w": 0.881,
+        "h": 0.03
+      },
+      {
+        "role": "AXHeading",
+        "label": "Tabs",
+        "nx": 0.5,
+        "ny": 0.866,
+        "x": 0.04,
+        "y": 0.851,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Hold the kettlebell at your chest, sit back and down, then drive up through your heels.",
+        "nx": 0.5005,
+        "ny": 0.879,
+        "x": 0.06,
+        "y": 0.854,
+        "w": 0.881,
+        "h": 0.05
+      },
+      {
+        "role": "AXGroup",
+        "label": "Today",
+        "identifier": "test-tabs-0",
+        "nx": 0.119,
+        "ny": 0.915,
+        "x": 0.047,
+        "y": 0.898,
+        "w": 0.144,
+        "h": 0.034
+      },
+      {
+        "role": "AXGroup",
+        "label": "Plan",
+        "identifier": "test-tabs-1",
+        "nx": 0.25,
+        "ny": 0.915,
+        "x": 0.192,
+        "y": 0.898,
+        "w": 0.116,
+        "h": 0.034
+      },
+      {
+        "role": "AXGroup",
+        "label": "Progress",
+        "identifier": "test-tabs-2",
+        "nx": 0.404,
+        "ny": 0.915,
+        "x": 0.308,
+        "y": 0.898,
+        "w": 0.192,
+        "h": 0.034
+      },
+      {
+        "role": "AXButton",
+        "label": "Close",
+        "identifier": "test-sheet-close",
+        "nx": 0.5005,
+        "ny": 0.9410000000000001,
+        "x": 0.06,
+        "y": 0.918,
+        "w": 0.881,
+        "h": 0.046
+      },
+      {
+        "role": "AXStaticText",
+        "label": "3 exercises left today.",
+        "nx": 0.5,
+        "ny": 0.9574999999999999,
+        "x": 0.04,
+        "y": 0.945,
+        "w": 0.92,
+        "h": 0.025
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Horizontal scroll bar, 1 page",
+        "value": "0%",
+        "nx": 0.5,
+        "ny": 0.979,
+        "x": 0.154,
+        "y": 0.962,
+        "w": 0.692,
+        "h": 0.034
+      }
+    ],
+    "sheet:test-sheet-open-expoui": [
+      {
+        "role": "AXGroup",
+        "label": "dismiss popup",
+        "identifier": "PopoverDismissRegion",
+        "nx": 0.5,
+        "ny": 0.5,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "role": "AXButton",
+        "label": "Sheet Grabber",
+        "value": "Collapsed",
+        "nx": 0.5005,
+        "ny": 0.812,
+        "x": 0.381,
+        "y": 0.799,
+        "w": 0.239,
+        "h": 0.026
+      },
+      {
+        "role": "AXHeading",
+        "label": "Goblet squat",
+        "nx": 0.20199999999999999,
+        "ny": 0.834,
+        "x": 0.058,
+        "y": 0.821,
+        "w": 0.288,
+        "h": 0.026
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Hold the kettlebell at your chest, sit back and down, then drive up through your heels.",
+        "nx": 0.4535,
+        "ny": 0.881,
+        "x": 0.058,
+        "y": 0.86,
+        "w": 0.791,
+        "h": 0.042
+      },
+      {
+        "role": "AXButton",
+        "label": "Close",
+        "identifier": "test-sheet-expoui-close",
+        "nx": 0.138,
+        "ny": 0.935,
+        "x": 0.058,
+        "y": 0.916,
+        "w": 0.16,
+        "h": 0.038
+      }
+    ],
+    "select": [
+      {
+        "role": "AXGroup",
+        "label": "30 seconds",
+        "identifier": "test-select-option-0",
+        "nx": 0.2885,
+        "ny": 0.7695,
+        "x": 0.052,
+        "y": 0.749,
+        "w": 0.473,
+        "h": 0.041
+      },
+      {
+        "role": "AXGroup",
+        "label": "45 seconds",
+        "identifier": "test-select-option-1",
+        "nx": 0.2885,
+        "ny": 0.8115,
+        "x": 0.052,
+        "y": 0.791,
+        "w": 0.473,
+        "h": 0.041
+      },
+      {
+        "role": "AXGroup",
+        "label": "60 seconds",
+        "identifier": "test-select-option-2",
+        "nx": 0.2885,
+        "ny": 0.8524999999999999,
+        "x": 0.052,
+        "y": 0.832,
+        "w": 0.473,
+        "h": 0.041
+      },
+      {
+        "role": "AXGroup",
+        "label": "90 seconds",
+        "identifier": "test-select-option-3",
+        "nx": 0.2885,
+        "ny": 0.8935,
+        "x": 0.052,
+        "y": 0.873,
+        "w": 0.473,
+        "h": 0.041
+      },
+      {
+        "role": "AXGroup",
+        "label": "2 minutes",
+        "identifier": "test-select-option-4",
+        "nx": 0.2885,
+        "ny": 0.9345,
+        "x": 0.052,
+        "y": 0.914,
+        "w": 0.473,
+        "h": 0.041
+      }
+    ],
+    "toast": [
+      {
+        "role": "AXGroup",
+        "label": "Toolbar",
+        "identifier": "Toolbar",
+        "nx": 0.5,
+        "ny": 0.5,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1
+      },
+      {
+        "role": "AXButton",
+        "label": "Save workout",
+        "identifier": "test-button",
+        "nx": 0.5,
+        "ny": 0.0025,
+        "x": 0.04,
+        "y": 0,
+        "w": 0.92,
+        "h": 0.005
+      },
+      {
+        "role": "AXButton",
+        "label": "Unavailable",
+        "identifier": "test-button-disabled",
+        "nx": 0.5,
+        "ny": 0.040999999999999995,
+        "x": 0.04,
+        "y": 0.018,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Theme switch: 30.3 ms",
+        "nx": 0.14950000000000002,
+        "ny": 0.0685,
+        "x": 0.01,
+        "y": 0.062,
+        "w": 0.279,
+        "h": 0.013
+      },
+      {
+        "role": "AXStaticText",
+        "label": "List mount: not measured",
+        "nx": 0.14950000000000002,
+        "ny": 0.0805,
+        "x": 0.01,
+        "y": 0.074,
+        "w": 0.279,
+        "h": 0.013
+      },
+      {
+        "role": "AXButton",
+        "label": "Saving",
+        "identifier": "test-button-loading",
+        "nx": 0.5,
+        "ny": 0.101,
+        "x": 0.04,
+        "y": 0.078,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXHeading",
+        "label": "React Native Reusables",
+        "nx": 0.5,
+        "ny": 0.096,
+        "x": 0.268,
+        "y": 0.084,
+        "w": 0.464,
+        "h": 0.024
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Vertical scroll bar, 3 pages",
+        "value": "33%",
+        "nx": 0.9555,
+        "ny": 0.531,
+        "x": 0.918,
+        "y": 0.133,
+        "w": 0.075,
+        "h": 0.796
+      },
+      {
+        "role": "AXHeading",
+        "label": "Form",
+        "nx": 0.5,
+        "ny": 0.175,
+        "x": 0.04,
+        "y": 0.16,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXGroup",
+        "label": "Email",
+        "nx": 0.5,
+        "ny": 0.2155,
+        "x": 0.04,
+        "y": 0.204,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXTextField",
+        "label": "",
+        "identifier": "test-textfield",
+        "nx": 0.4995,
+        "ny": 0.2535,
+        "x": 0.042,
+        "y": 0.232,
+        "w": 0.915,
+        "h": 0.043
+      },
+      {
+        "role": "AXStaticText",
+        "label": "We'll send your plan here.",
+        "nx": 0.5,
+        "ny": 0.29150000000000004,
+        "x": 0.04,
+        "y": 0.281,
+        "w": 0.92,
+        "h": 0.021
+      },
+      {
+        "role": "AXGroup",
+        "label": "Workout reminders",
+        "nx": 0.29600000000000004,
+        "ny": 0.3275,
+        "x": 0.139,
+        "y": 0.316,
+        "w": 0.314,
+        "h": 0.023
+      },
+      {
+        "role": "AXButton",
+        "label": "",
+        "value": "1",
+        "identifier": "test-switch",
+        "nx": 0.08,
+        "ny": 0.3275,
+        "x": 0.04,
+        "y": 0.317,
+        "w": 0.08,
+        "h": 0.021
+      },
+      {
+        "role": "AXGroup",
+        "label": "I agree to the terms",
+        "nx": 0.2705,
+        "ny": 0.3635,
+        "x": 0.109,
+        "y": 0.352,
+        "w": 0.323,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "checkbox, unchecked",
+        "identifier": "test-checkbox",
+        "nx": 0.06,
+        "ny": 0.364,
+        "x": 0.04,
+        "y": 0.355,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Experience level",
+        "nx": 0.5,
+        "ny": 0.4005,
+        "x": 0.04,
+        "y": 0.389,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "Beginner",
+        "nx": 0.183,
+        "ny": 0.4325,
+        "x": 0.109,
+        "y": 0.421,
+        "w": 0.148,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, checked",
+        "identifier": "test-radiogroup-0",
+        "nx": 0.06,
+        "ny": 0.432,
+        "x": 0.04,
+        "y": 0.423,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Intermediate",
+        "nx": 0.214,
+        "ny": 0.46950000000000003,
+        "x": 0.109,
+        "y": 0.458,
+        "w": 0.21,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-1",
+        "nx": 0.06,
+        "ny": 0.46900000000000003,
+        "x": 0.04,
+        "y": 0.46,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Advanced",
+        "nx": 0.191,
+        "ny": 0.5055,
+        "x": 0.109,
+        "y": 0.494,
+        "w": 0.164,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "",
+        "value": "radio button, unchecked",
+        "identifier": "test-radiogroup-2",
+        "nx": 0.06,
+        "ny": 0.506,
+        "x": 0.04,
+        "y": 0.497,
+        "w": 0.04,
+        "h": 0.018
+      },
+      {
+        "role": "AXGroup",
+        "label": "Rest time",
+        "nx": 0.5,
+        "ny": 0.5425,
+        "x": 0.04,
+        "y": 0.531,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
+        "role": "AXGroup",
+        "label": "60 seconds",
+        "identifier": "test-select",
+        "nx": 0.289,
+        "ny": 0.5810000000000001,
+        "x": 0.04,
+        "y": 0.558,
+        "w": 0.498,
+        "h": 0.046
+      },
+      {
+        "role": "AXHeading",
+        "label": "Overlays",
+        "nx": 0.5,
+        "ny": 0.656,
+        "x": 0.04,
+        "y": 0.641,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXButton",
+        "label": "Delete workout",
+        "identifier": "test-dialog-open",
+        "nx": 0.5,
+        "ny": 0.7070000000000001,
+        "x": 0.04,
+        "y": 0.684,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details",
+        "identifier": "test-sheet-open",
+        "nx": 0.5,
+        "ny": 0.767,
+        "x": 0.04,
+        "y": 0.744,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Show exercise details (@expo/ui)",
+        "identifier": "test-sheet-open-expoui",
+        "nx": 0.5,
+        "ny": 0.8260000000000001,
+        "x": 0.04,
+        "y": 0.803,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXButton",
+        "label": "Log set",
+        "identifier": "test-toast-show",
+        "nx": 0.5,
+        "ny": 0.886,
+        "x": 0.04,
+        "y": 0.863,
+        "w": 0.92,
+        "h": 0.046
+      },
+      {
+        "role": "AXStaticText",
+        "label": "Set logged",
+        "nx": 0.5005,
+        "ny": 0.9325,
+        "x": 0.08,
+        "y": 0.92,
+        "w": 0.841,
+        "h": 0.025
+      },
+      {
+        "role": "AXHeading",
+        "label": "Tabs",
+        "nx": 0.5,
+        "ny": 0.96,
+        "x": 0.04,
+        "y": 0.945,
+        "w": 0.92,
+        "h": 0.03
+      },
+      {
+        "role": "AXAdjustable",
+        "label": "Horizontal scroll bar, 1 page",
+        "value": "0%",
+        "nx": 0.5,
+        "ny": 0.979,
+        "x": 0.154,
+        "y": 0.962,
+        "w": 0.692,
+        "h": 0.034
+      },
+      {
+        "role": "AXGroup",
+        "label": "Today",
+        "identifier": "test-tabs-0",
+        "nx": 0.119,
+        "ny": 0.996,
+        "x": 0.047,
+        "y": 0.992,
+        "w": 0.144,
+        "h": 0.008
+      },
+      {
+        "role": "AXGroup",
+        "label": "Plan",
+        "identifier": "test-tabs-1",
+        "nx": 0.25,
+        "ny": 0.996,
+        "x": 0.192,
+        "y": 0.992,
+        "w": 0.116,
+        "h": 0.008
+      },
+      {
+        "role": "AXGroup",
+        "label": "Progress",
+        "identifier": "test-tabs-2",
+        "nx": 0.404,
+        "ny": 0.996,
+        "x": 0.308,
+        "y": 0.992,
+        "w": 0.192,
+        "h": 0.008
+      }
+    ],
+    "menu": [
+      {
+        "role": "AXGroup",
+        "label": "Duplicate",
+        "identifier": "test-menu-item-0",
+        "nx": 0.318,
+        "ny": 0.6865,
+        "x": 0.052,
+        "y": 0.666,
+        "w": 0.532,
+        "h": 0.041
+      },
+      {
+        "role": "AXGroup",
+        "label": "Share",
+        "identifier": "test-menu-item-1",
+        "nx": 0.318,
+        "ny": 0.7274999999999999,
+        "x": 0.052,
+        "y": 0.707,
+        "w": 0.532,
+        "h": 0.041
+      },
+      {
+        "role": "AXGroup",
+        "label": "Archive",
+        "identifier": "test-menu-item-2",
+        "nx": 0.318,
+        "ny": 0.7685,
+        "x": 0.052,
+        "y": 0.748,
+        "w": 0.532,
+        "h": 0.041
+      }
+    ]
+  }
+}

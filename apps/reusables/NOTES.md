@@ -195,3 +195,23 @@ src/app/index.tsx 281, src/app/list.tsx 31, src/app/_layout.tsx 48, src/componen
 - https://docs.uniwind.dev/class-names (group-*, placeholder:* unsupported in Free)
 - https://docs.uniwind.dev/pro/reanimated-animations (animate-* is Pro)
 - https://rnprimitives.com/portal (linked from RNR's install docs. Primitive behaviour was confirmed from `node_modules/@rn-primitives/*/dist/*.mjs`, not from the site.)
+
+## iOS 27 setup (27 October 2026)
+
+The lab moved from the iPhone 17 Pro simulator on iOS 26.4 to the iPhone 17 simulator on iOS 27.0 (Xcode 27.1). Expo SDK 57 apps built with the iOS 27 SDK need the UIKit scene life cycle, which SDK 57 adds as an opt-in:
+
+1. `npx expo install expo-build-properties` (57.0.22).
+2. In `app.json` plugins: `["expo-build-properties", { "ios": { "enableSceneSupport": true } }]`. The option is documented in `node_modules/expo-build-properties/build/pluginConfig.d.ts` ("Adopt the UIKit scene lifecycle in an Expo SDK 57 iOS project, as required by the iOS 27 SDK"; needs expo 57.0.23 or newer; this app is on 57.0.31). Source: expo/expo PR #50205.
+3. `npx expo install --check`: clean.
+
+## Items 15–19 (added 27 October 2026)
+
+Added with `npx @react-native-reusables/cli@0.7.1 add progress accordion dropdown-menu toggle-group --styling-library uniwind -y`. It created `progress.tsx`, `accordion.tsx`, `dropdown-menu.tsx`, `toggle.tsx` and `toggle-group.tsx` in `src/components/ui`, and added `@rn-primitives/{accordion,dropdown-menu,progress,toggle,toggle-group}` ^1.5.2 to `package.json`. `npx tsc --noEmit` stays clean. The components are used in `src/components/more.tsx`.
+
+| # | Item | Component | Accessibility passed by hand |
+| --- | --- | --- | --- |
+| 15 | Slider | **Hand-built**: Reusables has no slider. The baseline's `View` slider (`accessible`, `accessibilityRole="adjustable"`, `aria-value*`, increment/decrement) with Uniwind classes | all of it |
+| 16 | Progress | `Progress` (`@rn-primitives/progress`), value as a percentage | none |
+| 17 | Accordion | `Accordion type="multiple"`, `AccordionItem`, `AccordionTrigger`, `AccordionContent` | none |
+| 18 | Menu | `DropdownMenu`, `DropdownMenuTrigger asChild` on an outline `Button`, `DropdownMenuContent`, `DropdownMenuItem` | none |
+| 19 | Segmented control | `ToggleGroup type="single" variant="outline"`, `ToggleGroupItem` | `aria-label` on each item |

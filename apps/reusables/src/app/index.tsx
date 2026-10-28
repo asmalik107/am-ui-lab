@@ -34,6 +34,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Text } from '@/components/ui/text';
+import { SectionsAccordion, Segmented, WeightSlider, WorkoutMenu, WorkoutProgress } from '@/components/more';
 import { type } from '@/lib/type';
 import { cn } from '@/lib/utils';
 import { mark, measure } from '../perf';
@@ -92,6 +93,8 @@ export default function TestScreen() {
   const [saving, setSaving] = useState(false);
   const [sync, setSync] = useState(false);
   const [expoSheet, setExpoSheet] = useState(false);
+  const [weight, setWeight] = useState<number>(copy.slider.initial);
+  const [range, setRange] = useState<string>(copy.segmentedOptions[0]);
   const sheet = useRef<BottomSheetModal<unknown>>(null);
   const hideToast = useCallback(() => setToast(false), []);
 
@@ -266,6 +269,14 @@ export default function TestScreen() {
               </TabsContent>
             ))}
           </Tabs>
+        </Section>
+
+        <Section title={copy.moreTitle}>
+          <WeightSlider testID={ids.slider} label={copy.sliderLabel} unit={copy.sliderUnit} min={copy.slider.min} max={copy.slider.max} step={copy.slider.step} value={weight} onChange={setWeight} />
+          <WorkoutProgress testID={ids.progress} label={copy.progressLabel} value={copy.progress.value} max={copy.progress.max} valueText={copy.progressText} />
+          <SectionsAccordion testID={ids.accordion} sections={copy.accordionSections} panels={copy.accordionPanels} />
+          <WorkoutMenu testID={ids.menu} label={copy.menuOpen} items={copy.menuItems} onSelect={() => {}} />
+          <Segmented testID={ids.segmented} label={copy.segmentedLabel} options={copy.segmentedOptions} value={range} onChange={setRange} />
         </Section>
 
         <Section title="Native control (@expo/ui)">

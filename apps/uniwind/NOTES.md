@@ -26,7 +26,7 @@ Not installed: `tailwind-variants` / `tailwind-merge`. The Uniwind docs suggest 
 6. **`src/css.d.ts` (new):** `declare module '*.css';`, the same fix the heroui app needed for TypeScript 6's side-effect-import check.
 7. **`src/app/_layout.tsx`:** imports `../global.css` (in a component file, not the entry, as the quickstart says). Calls `Uniwind.setTheme('light')` at module load: Uniwind defaults to adaptive themes that follow the device, and the baseline starts on light.
 8. Deleted `src/theme.tsx`, the baseline's React-context provider. There is no provider.
-9. Rewrote the styling in `src/app/_layout.tsx`, `src/app/index.tsx`, `src/app/list.tsx`, `src/components/controls.tsx` and `src/components/overlays.tsx`. Every `style` / `StyleSheet` / inline style became a `className`, except `GestureHandlerRootView style={{ flex: 1 }}` (not an RN component Uniwind patches). `src/a11y.ts` and `src/perf.tsx` are byte-identical to the baseline's.
+9. Rewrote the styling in `src/app/_layout.tsx`, `src/app/index.tsx`, `src/app/list.tsx` and the components in `src/components/` (one file per component). Every `style` / `StyleSheet` / inline style became a `className`, except `GestureHandlerRootView style={{ flex: 1 }}` (not an RN component Uniwind patches). `src/a11y.ts` and `src/perf.tsx` are byte-identical to the baseline's.
 10. Perf wiring copied from `apps/unistyles`: `<PerfReadout />` in the layout, `mark()` / `Uniwind.setTheme()` / `measure('theme')` in the theme switcher, `<PerfTouch onTouchStart={mark}>` (a `View`) around `<Link href="/list" asChild><Button …/></Link>`, and `onLayout={useListMeasure()}` on the FlatList.
 11. `tsconfig.json`: unchanged (still has `@shared/*`). No Babel config: Uniwind doesn't need one.
 
@@ -34,7 +34,7 @@ Not installed: `tailwind-variants` / `tailwind-merge`. The Uniwind docs suggest 
 
 None at build time. Two things carried over from the heroui app's notes and applied up front:
 - `src/css.d.ts` for `TS2882` on `import '../global.css'`.
-- The gorhom ref is typed `BottomSheetModal<unknown>` (in `index.tsx` and `forwardRef` in `overlays.tsx`), because `withUniwind`'s prop types resolve gorhom's generic to `unknown`.
+- The gorhom ref is typed `BottomSheetModal<unknown>` (in `index.tsx` and `forwardRef` in `exercise-sheet.tsx`), because `withUniwind`'s prop types resolve gorhom's generic to `unknown`.
 
 Order matters: `npx tsc --noEmit` should run after one Metro run (`expo export` or `expo start`), which generates `src/uniwind-types.d.ts`. Before that, `Uniwind.setTheme` accepts any string.
 
@@ -100,7 +100,7 @@ Navigation (`Stack` `screenOptions`) reads `useCSSVariable(['--color-surface', '
 **@gorhom/bottom-sheet (item 13).** gorhom isn't one of the RN components Uniwind patches, and `backgroundStyle` / `handleIndicatorStyle` aren't `style`. `withUniwind` with no mapping gives every `*Style` prop a `*ClassName` twin, resolved against the active theme. This is the same approach as the heroui app.
 
 ```tsx
-// src/components/overlays.tsx
+// src/components/exercise-sheet.tsx
 const ThemedBottomSheetModal = withUniwind(BottomSheetModal);
 const ThemedBottomSheetView = withUniwind(BottomSheetView);
 
@@ -116,7 +116,7 @@ const ThemedBottomSheetView = withUniwind(BottomSheetView);
 **@expo/ui (item 14).** `Host` takes `colorScheme` and `seedColor` as props. The name comes from `useUniwind()`, and the colour from `useCSSVariable('--color-primary')`. That variable resolves because `bg-primary` / `text-primary` are used in classNames, which the docs require. The hook returns `string | number | undefined`, so the value is narrowed to a string.
 
 ```tsx
-// src/app/index.tsx
+// src/components/themed-host.tsx
 function ThemedHost({ children }: { children: ReactNode }) {
   const { theme } = useUniwind();
   const primary = useCSSVariable('--color-primary');

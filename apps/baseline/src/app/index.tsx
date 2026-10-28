@@ -7,8 +7,24 @@ import { ScrollView, Text, View } from 'react-native';
 import { copy, ids } from '@shared/content';
 import type { ThemeName } from '@shared/tokens';
 
-import { Accordion, Button, Checkbox, Progress, RadioGroup, Section, Segmented, Slider, SwitchRow, Tabs, TextField, announce } from '../components/controls';
-import { Dialog, ExerciseSheet, ExpoExerciseSheet, Menu, Select, Toast } from '../components/overlays';
+import { announce } from '../a11y';
+import { Accordion } from '../components/accordion';
+import { Button } from '../components/button';
+import { Checkbox } from '../components/checkbox';
+import { Dialog } from '../components/dialog';
+import { ExerciseSheet } from '../components/exercise-sheet';
+import { ExpoExerciseSheet } from '../components/expo-exercise-sheet';
+import { Menu } from '../components/menu';
+import { Progress } from '../components/progress';
+import { RadioGroup } from '../components/radio-group';
+import { Section } from '../components/section';
+import { Segmented } from '../components/segmented';
+import { Select } from '../components/select';
+import { Slider } from '../components/slider';
+import { SwitchRow } from '../components/switch-row';
+import { Tabs } from '../components/tabs';
+import { TextField } from '../components/text-field';
+import { Toast } from '../components/toast';
 import { mark, measure } from '../perf';
 import { useTheme } from '../theme';
 

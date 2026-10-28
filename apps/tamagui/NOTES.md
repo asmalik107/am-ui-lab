@@ -91,7 +91,7 @@ Hand-built (not Tamagui components): the theme-name context, the `EmailInput` Fi
 ### Third-party sheet and @expo/ui (code)
 
 ```tsx
-// src/components/overlays.tsx
+// src/components/exercise-sheet.tsx
 const SheetView = styled(BottomSheetView, { p: 'xl', pb: 'xxl', gap: 'md' }) // tokens via styled()
 
 export const ExerciseSheet = forwardRef<BottomSheetModal, SheetContentProps>(function ExerciseSheet(props, ref) {

@@ -28,6 +28,7 @@ import type { ThemeName } from '@shared/tokens';
 
 import { ExpoSheet } from '../components/expo-sheet';
 import { GorhomSheet } from '../components/gorhom-sheet';
+import { SectionsAccordion, Segmented, WeightSlider, WorkoutMenu, WorkoutProgress } from '../components/more';
 import { Section } from '../components/section';
 import { setTheme, space, themeNames, type, useThemeName } from '../theme';
 import { mark, measure } from '../perf';
@@ -54,6 +55,8 @@ export default function TestScreen() {
   const [saving, setSaving] = useState(false);
   const [sync, setSync] = useState(false);
   const [expoSheet, setExpoSheet] = useState(false);
+  const [weight, setWeight] = useState<number>(copy.slider.initial);
+  const [range, setRange] = useState<string>(copy.segmentedOptions[0]);
   const gorhomSheet = useRef<BottomSheetModal<unknown>>(null);
 
   // No announcement call here: HeroUI's FieldError has no live region, and the
@@ -269,6 +272,15 @@ export default function TestScreen() {
             </Tabs.Content>
           ))}
         </Tabs>
+      </Section>
+
+      {/* 15–19. Slider, Accordion and Menu from HeroUI; Progress and segmented hand-built. */}
+      <Section title={copy.moreTitle}>
+        <WeightSlider testID={ids.slider} label={copy.sliderLabel} unit={copy.sliderUnit} min={copy.slider.min} max={copy.slider.max} step={copy.slider.step} value={weight} onChange={setWeight} />
+        <WorkoutProgress testID={ids.progress} label={copy.progressLabel} value={copy.progress.value} max={copy.progress.max} valueText={copy.progressText} />
+        <SectionsAccordion testID={ids.accordion} sections={copy.accordionSections} panels={copy.accordionPanels} />
+        <WorkoutMenu testID={ids.menu} label={copy.menuOpen} items={copy.menuItems} onSelect={() => {}} />
+        <Segmented testID={ids.segmented} label={copy.segmentedLabel} options={copy.segmentedOptions} value={range} onChange={setRange} />
       </Section>
 
       {/* 14. @expo/ui native control, seeded from the active HeroUI accent token. */}

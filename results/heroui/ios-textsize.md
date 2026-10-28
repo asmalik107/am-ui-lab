@@ -1,8 +1,8 @@
 # heroui: largest text size (AX5)
 
-Run 2026-10-22 with `scripts/textsize-test.mjs`. Control heights at the default size (large) against the largest accessibility size (accessibility-extra-extra-extra-large).
+Run 2026-10-28 on the iPhone 17 simulator (iOS 27.0) with `scripts/textsize-test.mjs`. Control heights at the default size (large) against the largest accessibility size (accessibility-extra-extra-extra-large).
 
-- Controls that grew by more than 20%: 9 of 13
+- Controls that grew by more than 20%: 11 of 16
 - Controls pushed past the screen edge: test-tabs-2, test-native-switch
 - Overlapping controls: none
 - Screenshots: textsize-1.png, textsize-2.png, textsize-3.png, textsize-4.png
@@ -22,3 +22,7 @@ Run 2026-10-22 with `scripts/textsize-test.mjs`. Control heights at the default 
 | test-tabs-2 | 36 | 98 | 2.72 |
 | test-native-switch | 28 | 63 | 2.26 |
 | test-list-link | 48 | 48 | 1.00 |
+| test-slider | missing | missing | – |
+| test-accordion-0 | 52 | 104 | 1.99 |
+| test-menu-open | 48 | 48 | 1.00 |
+| test-segmented-0 | 44 | 143 | 3.25 |

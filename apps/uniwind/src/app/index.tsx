@@ -1,53 +1,33 @@
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { Host, Switch as NativeSwitch } from '@expo/ui';
+import { Switch as NativeSwitch } from '@expo/ui';
 import { Link } from 'expo-router';
-import { useCallback, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import { Uniwind, useCSSVariable, useUniwind } from 'uniwind';
 
 import { copy, ids } from '@shared/content';
-import type { ThemeName } from '@shared/tokens';
 
-import { Accordion, Button, Checkbox, Progress, RadioGroup, Section, Segmented, Slider, SwitchRow, Tabs, TextField, announce } from '../components/controls';
-import { Dialog, ExerciseSheet, ExpoExerciseSheet, Menu, Select, Toast } from '../components/overlays';
-import { mark, measure } from '../perf';
+import { announce } from '../a11y';
+import { Accordion } from '../components/accordion';
+import { Button } from '../components/button';
+import { Checkbox } from '../components/checkbox';
+import { Dialog } from '../components/dialog';
+import { ExerciseSheet } from '../components/exercise-sheet';
+import { ExpoExerciseSheet } from '../components/expo-exercise-sheet';
+import { Menu } from '../components/menu';
+import { Progress } from '../components/progress';
+import { RadioGroup } from '../components/radio-group';
+import { Section } from '../components/section';
+import { Segmented } from '../components/segmented';
+import { Select } from '../components/select';
+import { Slider } from '../components/slider';
+import { SwitchRow } from '../components/switch-row';
+import { Tabs } from '../components/tabs';
+import { TextField } from '../components/text-field';
+import { ThemeSwitcher } from '../components/theme-switcher';
+import { ThemedHost } from '../components/themed-host';
+import { Toast } from '../components/toast';
+import { mark } from '../perf';
 import { View as PerfTouch } from 'react-native';
-
-const themeNames: ThemeName[] = ['light', 'dark', 'brand'];
-
-// The switcher needs the current theme name as a value (for aria-checked),
-// not as a style, so it reads it with useUniwind. Kept in its own small
-// component so only the switcher re-renders. https://docs.uniwind.dev/api/use-uniwind
-function ThemeSwitcher() {
-  const { theme } = useUniwind();
-  return (
-    <RadioGroup
-      testID={ids.themeSwitcher}
-      label={copy.themeLabel}
-      options={copy.themes}
-      value={copy.themes[Math.max(0, themeNames.indexOf(theme as ThemeName))]}
-      onChange={(v) => {
-        mark();
-        Uniwind.setTheme(themeNames[copy.themes.indexOf(v as (typeof copy.themes)[number])]);
-        measure('theme');
-      }}
-    />
-  );
-}
-
-// @expo/ui Host takes colorScheme / seedColor as props, so they come from the
-// active Uniwind theme: the name from useUniwind, the colour from
-// useCSSVariable (--color-primary is used in classNames, so it resolves).
-// https://docs.uniwind.dev/api/use-css-variable
-function ThemedHost({ children }: { children: ReactNode }) {
-  const { theme } = useUniwind();
-  const primary = useCSSVariable('--color-primary');
-  return (
-    <Host matchContents colorScheme={theme === 'dark' ? 'dark' : 'light'} seedColor={typeof primary === 'string' ? primary : undefined}>
-      {children}
-    </Host>
-  );
-}
 
 export default function TestScreen() {
   const [email, setEmail] = useState('');

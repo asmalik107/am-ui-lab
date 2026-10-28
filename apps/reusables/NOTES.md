@@ -106,7 +106,7 @@ Copied components are unmodified except for the `input.tsx` fix in error 1. RNR'
 All of these are for things RNR doesn't ship. Each copies the baseline's approach.
 
 1. Text field error: `aria-live="polite"` on the helper/error `Text`, plus `announce()` (iOS `AccessibilityInfo.announceForAccessibility`) in `validate()`. Helper and error text are **not** programmatically tied to the input (no `accessibilityHint`, no `aria-invalid`), because RNR's Input documents none.
-2. Toast: `role="alert"`, `aria-live="polite"`, and `announce()` on show (src/components/overlays.tsx).
+2. Toast: `role="alert"`, `aria-live="polite"`, and `announce()` on show (src/components/toast.tsx).
 3. Bottom sheet: `aria-modal` on `BottomSheetView` and `accessible={false}` on the modal, as in the baseline. gorhom sets neither.
 4. List rows: `accessible` plus a combined `accessibilityLabel`, as in the baseline. RNR has no list component.
 5. `aria-labelledby` / `nativeID` linking on form controls. This is RNR's documented pattern, not an extra role or state, but it's listed here because it's wiring the app author does by hand.
@@ -206,7 +206,7 @@ The lab moved from the iPhone 17 Pro simulator on iOS 26.4 to the iPhone 17 simu
 
 ## Items 15–19 (added 27 October 2026)
 
-Added with `npx @react-native-reusables/cli@0.7.1 add progress accordion dropdown-menu toggle-group --styling-library uniwind -y`. It created `progress.tsx`, `accordion.tsx`, `dropdown-menu.tsx`, `toggle.tsx` and `toggle-group.tsx` in `src/components/ui`, and added `@rn-primitives/{accordion,dropdown-menu,progress,toggle,toggle-group}` ^1.5.2 to `package.json`. `npx tsc --noEmit` stays clean. The components are used in `src/components/more.tsx`.
+Added with `npx @react-native-reusables/cli@0.7.1 add progress accordion dropdown-menu toggle-group --styling-library uniwind -y`. It created `progress.tsx`, `accordion.tsx`, `dropdown-menu.tsx`, `toggle.tsx` and `toggle-group.tsx` in `src/components/ui`, and added `@rn-primitives/{accordion,dropdown-menu,progress,toggle,toggle-group}` ^1.5.2 to `package.json`. `npx tsc --noEmit` stays clean. The components are used in `src/components/progress.tsx`, `accordion.tsx`, `menu.tsx` and `segmented.tsx`.
 
 | # | Item | Component | Accessibility passed by hand |
 | --- | --- | --- | --- |

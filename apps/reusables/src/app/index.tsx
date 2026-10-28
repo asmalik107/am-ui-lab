@@ -3,7 +3,7 @@ import { Host, Switch as NativeSwitch } from '@expo/ui';
 import type { Option } from '@rn-primitives/select';
 import { Link } from 'expo-router';
 import { Loader2 } from 'lucide-react-native';
-import { useCallback, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Platform, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Uniwind, useCSSVariable, useUniwind } from 'uniwind';
@@ -12,7 +12,16 @@ import { copy, ids } from '@shared/content';
 import type { ThemeName } from '@shared/tokens';
 
 import { announce } from '@/a11y';
-import { ExerciseSheet, ExpoExerciseSheet, Toast } from '@/components/overlays';
+import { Accordion } from '@/components/accordion';
+import { ExerciseSheet } from '@/components/exercise-sheet';
+import { ExpoExerciseSheet } from '@/components/expo-exercise-sheet';
+import { Menu } from '@/components/menu';
+import { Progress } from '@/components/progress';
+import { RadioGroup } from '@/components/radio-group';
+import { Section } from '@/components/section';
+import { Segmented } from '@/components/segmented';
+import { Slider } from '@/components/slider';
+import { Toast } from '@/components/toast';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,53 +38,16 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Text } from '@/components/ui/text';
-import { SectionsAccordion, Segmented, WeightSlider, WorkoutMenu, WorkoutProgress } from '@/components/more';
 import { type } from '@/lib/type';
 import { cn } from '@/lib/utils';
 import { mark, measure } from '../perf';
 import { View as PerfTouch } from 'react-native';
 
 const themeNames: ThemeName[] = ['light', 'dark', 'brand'];
-
-function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <View className="gap-3 py-4">
-      {/* RNR Text variant="h4" sets role="heading" itself. */}
-      <Text variant="h4" className={type.title}>
-        {title}
-      </Text>
-      {children}
-    </View>
-  );
-}
-
-// Labelled radio group, composed the way RNR's docs show it: RadioGroupItem +
-// Label per option, Label onPress selecting on native. The group and item
-// labels are linked with aria-labelledby/nativeID (RNR's Label example).
-function LabelledRadioGroup({ testID, label, options, value, onChange }: { testID: string; label: string; options: readonly string[]; value: string; onChange: (v: string) => void }) {
-  return (
-    <View className="gap-2">
-      <Text nativeID={`${testID}-label`} className={type.label}>
-        {label}
-      </Text>
-      <RadioGroup testID={testID} aria-labelledby={`${testID}-label`} value={value} onValueChange={onChange}>
-        {options.map((opt, i) => (
-          <View key={opt} className="flex-row items-center gap-3">
-            <RadioGroupItem testID={`${testID}-${i}`} value={opt} aria-labelledby={`${testID}-${i}-label`} />
-            <Label nativeID={`${testID}-${i}-label`} onPress={Platform.select({ native: () => onChange(opt) })}>
-              {opt}
-            </Label>
-          </View>
-        ))}
-      </RadioGroup>
-    </View>
-  );
-}
 
 export default function TestScreen() {
   const { theme } = useUniwind();
@@ -125,7 +97,7 @@ export default function TestScreen() {
         <Section title={copy.themeLabel}>
           {/* Uniwind.setTheme is the documented runtime switch; brand is
               registered through extraThemes in metro.config.js. */}
-          <LabelledRadioGroup
+          <RadioGroup
             testID={ids.themeSwitcher}
             label={copy.themeLabel}
             options={copy.themes}
@@ -201,7 +173,7 @@ export default function TestScreen() {
             </Label>
           </View>
 
-          <LabelledRadioGroup testID={ids.radioGroup} label={copy.radioGroupLabel} options={copy.radioOptions} value={level} onChange={setLevel} />
+          <RadioGroup testID={ids.radioGroup} label={copy.radioGroupLabel} options={copy.radioOptions} value={level} onChange={setLevel} />
 
           <View className="gap-1">
             <Label nativeID={`${ids.select}-label`}>{copy.selectLabel}</Label>
@@ -272,10 +244,10 @@ export default function TestScreen() {
         </Section>
 
         <Section title={copy.moreTitle}>
-          <WeightSlider testID={ids.slider} label={copy.sliderLabel} unit={copy.sliderUnit} min={copy.slider.min} max={copy.slider.max} step={copy.slider.step} value={weight} onChange={setWeight} />
-          <WorkoutProgress testID={ids.progress} label={copy.progressLabel} value={copy.progress.value} max={copy.progress.max} valueText={copy.progressText} />
-          <SectionsAccordion testID={ids.accordion} sections={copy.accordionSections} panels={copy.accordionPanels} />
-          <WorkoutMenu testID={ids.menu} label={copy.menuOpen} items={copy.menuItems} onSelect={() => {}} />
+          <Slider testID={ids.slider} label={copy.sliderLabel} unit={copy.sliderUnit} min={copy.slider.min} max={copy.slider.max} step={copy.slider.step} value={weight} onChange={setWeight} />
+          <Progress testID={ids.progress} label={copy.progressLabel} value={copy.progress.value} max={copy.progress.max} valueText={copy.progressText} />
+          <Accordion testID={ids.accordion} sections={copy.accordionSections} panels={copy.accordionPanels} />
+          <Menu testID={ids.menu} label={copy.menuOpen} items={copy.menuItems} onSelect={() => {}} />
           <Segmented testID={ids.segmented} label={copy.segmentedLabel} options={copy.segmentedOptions} value={range} onChange={setRange} />
         </Section>
 

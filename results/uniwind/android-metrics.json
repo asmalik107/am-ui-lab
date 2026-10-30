@@ -1,0 +1,137 @@
+{
+  "app": "uniwind",
+  "bundleId": "dev.asimmalik.uilab.uniwind",
+  "udid": "emulator-5554",
+  "platform": "android",
+  "device": {
+    "name": "Pixel 9 Pro 2 emulator",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-28T20:27:17.168Z",
+  "poll": {
+    "n": 5,
+    "median": 173.3254579999999,
+    "min": 171.75358400000005,
+    "max": 199.39662499999997,
+    "samples": [
+      199.39662499999997,
+      175.76441699999998,
+      172.51520900000003,
+      173.3254579999999,
+      171.75358400000005
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 1846.4807910000018,
+    "min": 1776.2291669999995,
+    "max": 1889.7670829999988,
+    "samples": [
+      1805.9428750000002,
+      1823.6622910000006,
+      1846.7664159999986,
+      1776.2291669999995,
+      1873.1534170000014,
+      1869.1150419999976,
+      1827.805375,
+      1877.015416000002,
+      1846.195166000005,
+      1889.7670829999988
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 578.1659170000012,
+    "min": 529.771084,
+    "max": 606.5764170000039,
+    "samples": [
+      529.771084,
+      575.3936659999999,
+      559.2327909999985,
+      575.7810840000002,
+      594.119458000001,
+      585.4892919999984,
+      560.0921670000025,
+      582.3654999999999,
+      580.5507500000022,
+      606.5764170000039
+    ]
+  },
+  "firstFrame": {
+    "n": 10,
+    "median": 530.5,
+    "min": 491,
+    "max": 539,
+    "samples": [
+      491,
+      538,
+      513,
+      532,
+      531,
+      538,
+      510,
+      528,
+      530,
+      539
+    ]
+  },
+  "memory": {
+    "idle": {
+      "pss": 140542976,
+      "rss": 274460672
+    },
+    "used": {
+      "pss": 182523904,
+      "rss": 321130496
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 7430,
+    "cpuMs": {
+      "main": 680,
+      "js": 780,
+      "other": 2480,
+      "total": 3940
+    },
+    "frames": {
+      "total": 433,
+      "janky": 5,
+      "p50": 17,
+      "p90": 18,
+      "p99": 19
+    }
+  }
+}

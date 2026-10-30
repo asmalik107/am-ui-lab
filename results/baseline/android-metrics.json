@@ -1,0 +1,137 @@
+{
+  "app": "baseline",
+  "bundleId": "dev.asimmalik.uilab.baseline",
+  "udid": "emulator-5554",
+  "platform": "android",
+  "device": {
+    "name": "Pixel 9 Pro 2 emulator",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-28T20:15:55.208Z",
+  "poll": {
+    "n": 5,
+    "median": 175.944166,
+    "min": 170.14412500000003,
+    "max": 913.756916,
+    "samples": [
+      913.756916,
+      170.14412500000003,
+      171.88916700000004,
+      176.23620899999992,
+      175.944166
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 1806.5997289999987,
+    "min": 1770.9887919999965,
+    "max": 1841.9459169999973,
+    "samples": [
+      1829.123,
+      1821.0889579999994,
+      1810.726584,
+      1803.1046669999978,
+      1784.231291,
+      1799.2503749999996,
+      1810.0947909999995,
+      1770.9887919999965,
+      1841.9459169999973,
+      1780.081041999998
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 565.2258124999998,
+    "min": 527.8897910000014,
+    "max": 603.4940829999978,
+    "samples": [
+      576.3143329999998,
+      550.9947920000004,
+      573.7574999999997,
+      565.1647919999978,
+      527.8897910000014,
+      578.0570000000007,
+      565.2868330000019,
+      549.1823339999974,
+      603.4940829999978,
+      563.8977500000037
+    ]
+  },
+  "firstFrame": {
+    "n": 10,
+    "median": 515.5,
+    "min": 489,
+    "max": 554,
+    "samples": [
+      533,
+      508,
+      523,
+      519,
+      489,
+      535,
+      508,
+      511,
+      554,
+      512
+    ]
+  },
+  "memory": {
+    "idle": {
+      "pss": 139817984,
+      "rss": 272367616
+    },
+    "used": {
+      "pss": 187966464,
+      "rss": 324952064
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 7431,
+    "cpuMs": {
+      "main": 690,
+      "js": 740,
+      "other": 2490,
+      "total": 3920
+    },
+    "frames": {
+      "total": 429,
+      "janky": 8,
+      "p50": 17,
+      "p90": 17,
+      "p99": 19
+    }
+  }
+}

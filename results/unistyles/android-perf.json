@@ -1,0 +1,47 @@
+{
+  "app": "unistyles",
+  "bundleId": "dev.asimmalik.uilab.unistyles",
+  "udid": "emulator-5554",
+  "platform": "android",
+  "device": {
+    "name": "Pixel 9 Pro 2 emulator",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-28T20:16:59.146Z",
+  "theme": {
+    "n": 10,
+    "median": 34.4,
+    "min": 26.6,
+    "max": 49.8,
+    "samples": [
+      34.4,
+      36.8,
+      34.9,
+      36,
+      49.8,
+      32.6,
+      33.5,
+      26.6,
+      34.4,
+      33.7
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 101.94999999999999,
+    "min": 99.3,
+    "max": 117.5,
+    "samples": [
+      100.5,
+      102.6,
+      101.6,
+      99.3,
+      104.9,
+      103.8,
+      102.3,
+      101.4,
+      100.2,
+      117.5
+    ]
+  }
+}

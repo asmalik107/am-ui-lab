@@ -1,0 +1,47 @@
+{
+  "app": "uniwind",
+  "bundleId": "dev.asimmalik.uilab.uniwind",
+  "udid": "emulator-5554",
+  "platform": "android",
+  "device": {
+    "name": "Pixel 9 Pro 2 emulator",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-28T20:20:11.321Z",
+  "theme": {
+    "n": 10,
+    "median": 35.900000000000006,
+    "min": 31.8,
+    "max": 40,
+    "samples": [
+      39.2,
+      33.7,
+      40,
+      35.2,
+      38.8,
+      34.9,
+      37,
+      36.6,
+      33.3,
+      31.8
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 100.80000000000001,
+    "min": 99.8,
+    "max": 102.8,
+    "samples": [
+      100.5,
+      100.7,
+      100.4,
+      100.6,
+      101,
+      102.8,
+      101.8,
+      100.9,
+      99.8,
+      102.7
+    ]
+  }
+}

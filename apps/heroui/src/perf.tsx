@@ -3,7 +3,7 @@
 // builds, where React's Profiler callbacks don't run. <PerfReadout /> shows the
 // results as text so scripts/perf-run.mjs can read them from the accessibility tree.
 import { useRef, useSyncExternalStore } from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 
 let start = 0;
 const results: Record<string, number> = {};
@@ -53,7 +53,9 @@ export function PerfReadout() {
   const theme = usePerf('theme');
   const list = usePerf('list');
   return (
-    <View pointerEvents="none" style={{ position: 'absolute', top: 54, left: 4, opacity: 0.6 }}>
+    <View
+      pointerEvents="none"
+      style={{ position: 'absolute', left: 4, opacity: 0.6, ...(Platform.OS === 'android' ? { bottom: 24 } : { top: 54 }) }}>
       <Text testID="perf-theme" style={{ fontSize: 9, color: '#888' }}>{fmt('Theme switch', theme)}</Text>
       <Text testID="perf-list" style={{ fontSize: 9, color: '#888' }}>{fmt('List mount', list)}</Text>
     </View>

@@ -17,7 +17,7 @@ import { mkdirSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { deviceInfo } from './device.mjs';
+import { deviceInfo, platformOf } from './device.mjs';
 import { readMetrics, writeMetrics } from './metrics-md.mjs';
 
 const [app, bundleId, udid, runsArg] = process.argv.slice(2);
@@ -26,6 +26,8 @@ if (!app || !bundleId || !udid) {
   console.error('Usage: node scripts/metrics-run.mjs <app> <bundleId> <udid> [runs]');
   process.exit(1);
 }
+const platform = platformOf(udid);
+const android = platform === 'android';
 const device = deviceInfo(udid);
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
@@ -34,13 +36,20 @@ mkdirSync(work, { recursive: true });
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const step = (msg) => console.error(`[metrics ${new Date().toISOString().slice(11, 19)}] ${msg}`);
-const argent = (tool, args) =>
-  JSON.parse(execFileSync('argent', ['run', tool, '--json', '--args', JSON.stringify({ udid, ...args })], { encoding: 'utf8', maxBuffer: 64 << 20 }));
+function argent(tool, args, tries = 3) {
+  for (let i = 1; ; i++) {
+    try {
+      return JSON.parse(execFileSync('argent', ['run', tool, '--json', '--args', JSON.stringify({ udid, ...args })], { encoding: 'utf8', maxBuffer: 64 << 20 }));
+    } catch (err) {
+      if (i >= tries || !['describe', 'list-devices'].includes(tool)) throw err;
+    }
+  }
+}
 
 function axTree() {
   const els = [];
   for (const line of argent('describe', {}).description.split('\n')) {
-    const m = line.match(/^\s+(AX\w+)(?: "((?:[^"\\]|\\.)*)")?(?: value="((?:[^"\\]|\\.)*)")?(?: id="([^"]*)")?\s+\(([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\)/);
+    const m = line.match(/^\s+(\w+)(?: "((?:[^"\\]|\\.)*)")?(?: value="((?:[^"\\]|\\.)*)")?(?: id="([^"]*)")?(?: \[[^\]]*\])?\s+\(([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\)/);
     if (!m) continue;
     const [x, y, w, h] = m.slice(5, 9).map(Number);
     els.push({ role: m[1], label: m[2] ?? '', identifier: m[4], nx: x + w / 2, ny: y + h / 2, y, h });
@@ -60,14 +69,18 @@ async function waitFor(pred, ms = 8000) {
   }
   return null;
 }
+function aboveOnIos(id) {
+  const d = argent('native-describe-screen', { bundleId });
+  const n = d.elements.find((x) => x.identifier === id);
+  if (!n) throw new Error(`${id} not in view hierarchy`);
+  return n.frame.y / d.screenFrame.height < 0.12;
+}
+const adb = (...args) => execFileSync('adb', ['-s', udid, ...args], { encoding: 'utf8', maxBuffer: 64 << 20 });
 async function scrollTo(id) {
   for (let i = 0; i < 14; i++) {
     const e = byId(axTree(), id);
     if (e && e.y > 0.12 && e.y + e.h < 0.92) return e;
-    const d = argent('native-describe-screen', { bundleId });
-    const n = d.elements.find((x) => x.identifier === id);
-    if (!n) throw new Error(`${id} not in view hierarchy`);
-    const up = n.frame.y / d.screenFrame.height < 0.12;
+    const up = android ? (e ? e.y < 0.12 : i >= 7) : aboveOnIos(id);
     argent('gesture-swipe', { fromX: 0.5, fromY: up ? 0.35 : 0.65, toX: 0.5, toY: up ? 0.65 : 0.35, momentum: false, durationMs: 300 });
     await sleep(400);
   }
@@ -79,6 +92,7 @@ const stats = (xs) => {
   return { n: s.length, median: s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2, min: s[0], max: s[s.length - 1], samples: xs };
 };
 const terminate = () => {
+  if (android) return void adb('shell', 'am', 'force-stop', bundleId);
   try {
     execFileSync('xcrun', ['simctl', 'terminate', udid, bundleId], { stdio: 'ignore' });
   } catch {
@@ -87,6 +101,11 @@ const terminate = () => {
 };
 // The app's process id on the Mac, from the simulator's launchd.
 function pid() {
+  if (android) {
+    const p = Number(adb('shell', 'pidof', bundleId).trim().split(/\s+/)[0]);
+    if (!p) throw new Error(`no running process for ${bundleId}`);
+    return p;
+  }
   const out = execFileSync('xcrun', ['simctl', 'spawn', udid, 'launchctl', 'list'], { encoding: 'utf8' });
   const line = out.split('\n').find((l) => l.includes(`UIKitApplication:${bundleId}[`));
   const p = Number(line?.split('\t')[0]);
@@ -96,6 +115,11 @@ function pid() {
 // footprint's JSON reports the process's physical footprint, the number
 // Xcode's memory gauge and jetsam use.
 function footprint() {
+  if (android) {
+    const out = adb('shell', 'dumpsys', 'meminfo', bundleId);
+    const kb = (re) => Number(out.match(re)?.[1] ?? NaN) * 1024;
+    return { pss: kb(/TOTAL PSS:\s+(\d+)/), rss: kb(/TOTAL RSS:\s+(\d+)/) };
+  }
   const file = join(work, 'footprint.json');
   execFileSync('footprint', ['--pid', String(pid()), '-j', file, '--noCategories'], { stdio: 'ignore' });
   return JSON.parse(readFileSync(file, 'utf8'));
@@ -119,6 +143,43 @@ function cpuByThread(file, p) {
   }
   return { cpuMs: { main: ms.main ?? 0, js: ms.js ?? 0, other: ms.other ?? 0, total: (ms.main ?? 0) + (ms.js ?? 0) + (ms.other ?? 0) } };
 }
+function threadMs(p) {
+  const ms = { main: 0, js: 0, other: 0 };
+  for (const line of adb('shell', `cat /proc/${p}/task/*/stat`).split('\n')) {
+    const m = line.match(/^(\d+) \((.*)\) (.*)$/);
+    if (!m) continue;
+    const f = m[3].split(' ');
+    const t = (Number(f[11]) + Number(f[12])) * 10;
+    const name = Number(m[1]) === p ? 'main' : /^mqt_(v_)?js/.test(m[2]) ? 'js' : 'other';
+    ms[name] += t;
+  }
+  return ms;
+}
+function gfxinfo() {
+  const out = adb('shell', 'dumpsys', 'gfxinfo', bundleId);
+  const n = (re) => Number(out.match(re)?.[1] ?? NaN);
+  return { total: n(/Total frames rendered: (\d+)/), janky: n(/Janky frames: (\d+)/), p50: n(/50th percentile: (\d+)ms/), p90: n(/90th percentile: (\d+)ms/), p99: n(/99th percentile: (\d+)ms/) };
+}
+async function androidScroll(p) {
+  adb('shell', 'dumpsys', 'gfxinfo', bundleId, 'reset');
+  const before = threadMs(p);
+  const t0 = performance.now();
+  for (let i = 0; i < 5; i++) {
+    argent('gesture-swipe', { fromX: 0.5, fromY: i % 2 ? 0.25 : 0.8, toX: 0.5, toY: i % 2 ? 0.8 : 0.25, durationMs: 150 });
+    await sleep(1200);
+  }
+  const windowMs = Math.round(performance.now() - t0);
+  const after = threadMs(p);
+  const cpuMs = { main: after.main - before.main, js: after.js - before.js, other: after.other - before.other };
+  cpuMs.total = cpuMs.main + cpuMs.js + cpuMs.other;
+  return { flings: 5, windowMs, cpuMs, frames: gfxinfo() };
+}
+const goBack = () => (android ? argent('button', { button: 'back' }) : argent('gesture-swipe', { fromX: 0.0, fromY: 0.5, toX: 0.7, toY: 0.5, durationMs: 300 }));
+function launch() {
+  if (!android) return { call: argent('launch-app', { bundleId }) };
+  const out = adb('shell', 'am', 'start', '-W', '-n', `${bundleId}/.MainActivity`);
+  return { totalTime: Number(out.match(/TotalTime: (\d+)/)?.[1] ?? NaN) };
+}
 // Rows of the potential-hangs table that belong to the app's process.
 function hangs(file, p) {
   const rows = readFileSync(file, 'utf8').split('<row>').slice(1);
@@ -140,16 +201,18 @@ for (let i = 0; i < 5; i++) {
 }
 const startup = [];
 const launchCall = [];
+const firstFrame = [];
 for (let i = 0; i < runs; i++) {
   step(`startup run ${i + 1}`);
   terminate();
   await sleep(1500);
   const t0 = performance.now();
-  argent('launch-app', { bundleId });
+  const { totalTime } = launch();
   const t1 = performance.now();
   if (await waitFor((els) => hasLabel(els, 'Component test screen'), 60000)) {
     startup.push(performance.now() - t0);
     launchCall.push(t1 - t0);
+    if (Number.isFinite(totalTime)) firstFrame.push(totalTime);
   }
   await sleep(1000);
 }
@@ -158,7 +221,7 @@ step('memory at idle');
 // --- Memory at idle: 5 s after a fresh launch.
 terminate();
 await sleep(1500);
-argent('launch-app', { bundleId });
+launch();
 await waitFor((els) => hasLabel(els, 'Component test screen'), 60000);
 await sleep(5000);
 const idle = footprint();
@@ -178,7 +241,8 @@ const appPid = pid();
 // recording is retried once; the attempts are kept in the results.
 let scroll;
 const attempts = [];
-for (let attempt = 0; attempt < 2 && !scroll?.cpuMs; attempt++) {
+if (android) scroll = await androidScroll(appPid);
+for (let attempt = 0; !android && attempt < 2 && !scroll?.cpuMs; attempt++) {
   try {
     const exe = execFileSync('ps', ['-p', String(appPid), '-o', 'comm='], { encoding: 'utf8' }).trim().split('/').pop();
     argent('native-profiler-start', { device_id: udid, app_process: exe, udid: undefined });
@@ -204,9 +268,9 @@ for (let i = 0; i < 4; i++) argent('gesture-swipe', { fromX: 0.5, fromY: 0.8, to
 await sleep(2000); // let the last fling settle, or the back gesture is taken as a scroll
 // Back through the header's back button (expo-router gives it id BackButton).
 for (let i = 0; i < 3 && !byId(axTree(), 'test-list-link') && !hasLabel(axTree(), 'Native control'); i++) {
-  const back = byId(axTree(), 'BackButton');
+  const back = !android && byId(axTree(), 'BackButton');
   if (back) tap(back);
-  else argent('gesture-swipe', { fromX: 0.0, fromY: 0.5, toX: 0.7, toY: 0.5, durationMs: 300 });
+  else goBack();
   await waitFor((els) => byId(els, 'test-list-link') || hasLabel(els, 'Native control'), 4000);
 }
 await sleep(800);
@@ -242,8 +306,8 @@ for (const [open, sign, closeId, closeLabel] of overlays) {
 await sleep(2000);
 const used = footprint();
 
-const mem = (f) => ({ physFootprint: f.processes[0].auxiliary.phys_footprint, footprint: f.processes[0].footprint });
+const mem = (f) => (android ? f : { physFootprint: f.processes[0].auxiliary.phys_footprint, footprint: f.processes[0].footprint });
 // Re-render counts come from a separate Debug run, so they are kept.
-const { rerenders } = readMetrics(app);
-writeMetrics(app, { app, bundleId, udid, device, date: new Date().toISOString(), poll: stats(polls), startup: stats(startup), launchCall: stats(launchCall), memory: { idle: mem(idle), used: mem(used), overlays: opened }, scroll, rerenders });
-console.log(readFileSync(new URL('ios-metrics.md', outDir), 'utf8'));
+const { rerenders } = readMetrics(app, platform);
+writeMetrics(app, { app, bundleId, udid, platform, device, date: new Date().toISOString(), poll: stats(polls), startup: stats(startup), launchCall: stats(launchCall), firstFrame: firstFrame.length ? stats(firstFrame) : undefined, memory: { idle: mem(idle), used: mem(used), overlays: opened }, scroll, rerenders });
+console.log(readFileSync(new URL(`${platform}-metrics.md`, outDir), 'utf8'));

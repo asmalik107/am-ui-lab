@@ -6,7 +6,7 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
-import { deviceInfo } from './device.mjs';
+import { deviceInfo, platformOf } from './device.mjs';
 
 const [app, bundleId, udid, runsArg] = process.argv.slice(2);
 const runs = Number(runsArg ?? 10);
@@ -14,18 +14,26 @@ if (!app || !bundleId || !udid) {
   console.error('Usage: node scripts/perf-run.mjs <app> <bundleId> <udid> [runs]');
   process.exit(1);
 }
+const platform = platformOf(udid);
 const device = deviceInfo(udid);
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const argent = (tool, args) =>
-  JSON.parse(execFileSync('argent', ['run', tool, '--json', '--args', JSON.stringify({ udid, ...args })], { encoding: 'utf8', maxBuffer: 64 << 20 }));
+function argent(tool, args, tries = 3) {
+  for (let i = 1; ; i++) {
+    try {
+      return JSON.parse(execFileSync('argent', ['run', tool, '--json', '--args', JSON.stringify({ udid, ...args })], { encoding: 'utf8', maxBuffer: 64 << 20 }));
+    } catch (err) {
+      if (i >= tries || !['describe', 'list-devices'].includes(tool)) throw err;
+    }
+  }
+}
 
 function axTree() {
   const els = [];
   for (const line of argent('describe', {}).description.split('\n')) {
-    const m = line.match(/^\s+(AX\w+)(?: "((?:[^"\\]|\\.)*)")?(?: value="((?:[^"\\]|\\.)*)")?(?: id="([^"]*)")?\s+\(([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\)/);
+    const m = line.match(/^\s+(\w+)(?: "((?:[^"\\]|\\.)*)")?(?: value="((?:[^"\\]|\\.)*)")?(?: id="([^"]*)")?(?: \[[^\]]*\])?\s+\(([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\)/);
     if (!m) continue;
     const [x, y, w, h] = m.slice(5, 9).map(Number);
     els.push({ role: m[1], label: m[2] ?? '', identifier: m[4], nx: x + w / 2, ny: y + h / 2, y, h });
@@ -50,15 +58,22 @@ async function scrollTo(id) {
   for (let i = 0; i < 14; i++) {
     const e = byId(axTree(), id);
     if (e && e.y > 0.12 && e.y + e.h < 0.92) return e;
-    const d = argent('native-describe-screen', { bundleId });
-    const n = d.elements.find((x) => x.identifier === id);
-    if (!n) throw new Error(`${id} not in view hierarchy`);
-    const up = n.frame.y / d.screenFrame.height < 0.12; // target is above: drag content down
+    const up = platform === 'android' ? (e ? e.y < 0.12 : i >= 7) : aboveOnIos(id);
     argent('gesture-swipe', { fromX: 0.5, fromY: up ? 0.35 : 0.65, toX: 0.5, toY: up ? 0.65 : 0.35, momentum: false, durationMs: 300 });
     await sleep(400);
   }
   throw new Error(`could not reach ${id}`);
 }
+function aboveOnIos(id) {
+  const d = argent('native-describe-screen', { bundleId });
+  const n = d.elements.find((x) => x.identifier === id);
+  if (!n) throw new Error(`${id} not in view hierarchy`);
+  return n.frame.y / d.screenFrame.height < 0.12;
+}
+const goBack = () =>
+  platform === 'android'
+    ? argent('button', { button: 'back' })
+    : argent('gesture-swipe', { fromX: 0.0, fromY: 0.5, toX: 0.7, toY: 0.5, durationMs: 300 });
 // The readout's testIDs are not exposed on text in the system tree, so the
 // value is found by its label prefix.
 const prefix = { 'perf-theme': 'Theme switch:', 'perf-list': 'List mount:' };
@@ -101,18 +116,18 @@ for (let i = 0; i < runs; i++) {
   tap(await scrollTo('test-list-link'));
   const ms = await waitFor((els) => readMs(els, 'perf-list'));
   if (ms != null) list.push(ms);
-  argent('gesture-swipe', { fromX: 0.0, fromY: 0.5, toX: 0.7, toY: 0.5, durationMs: 300 }); // edge swipe back
+  goBack();
   await waitFor((els) => byId(els, 'test-list-link') || els.some((e) => e.label.includes('Native control')));
   await sleep(700);
 }
 
-const result = { app, bundleId, udid, device, date: new Date().toISOString(), theme: stats(theme), list: stats(list) };
-writeFileSync(new URL('ios-perf.json', outDir), JSON.stringify(result, null, 2));
+const result = { app, bundleId, udid, platform, device, date: new Date().toISOString(), theme: stats(theme), list: stats(list) };
+writeFileSync(new URL(`${platform}-perf.json`, outDir), JSON.stringify(result, null, 2));
 const row = (name, s) => `| ${name} | ${s.n} | ${s.median.toFixed(1)} | ${s.min.toFixed(1)}–${s.max.toFixed(1)} |`;
 const md = [
-  `# ${app}: iOS timings`,
+  `# ${app}: ${platform === 'ios' ? 'iOS' : 'Android'} timings`,
   '',
-  `Run ${result.date.slice(0, 10)} on the ${device.name} simulator (${device.runtime}, ${udid}) with \`scripts/perf-run.mjs\`, Release build. Times are from the tap to the second frame after the update (\`src/perf.ts\`).`,
+  `Run ${result.date.slice(0, 10)} on the ${platform === 'ios' ? `${device.name} simulator` : device.name} (${device.runtime}, ${udid}) with \`scripts/perf-run.mjs\`, Release build. Times are from the tap to the second frame after the update (\`src/perf.ts\`).`,
   '',
   '| Measure | Runs | Median (ms) | Range (ms) |',
   '| --- | --- | --- | --- |',
@@ -120,5 +135,5 @@ const md = [
   row('200-row list mount', result.list),
   '',
 ].join('\n');
-writeFileSync(new URL('ios-perf.md', outDir), md);
+writeFileSync(new URL(`${platform}-perf.md`, outDir), md);
 console.log(md);

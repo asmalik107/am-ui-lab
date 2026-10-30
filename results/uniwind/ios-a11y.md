@@ -1,6 +1,6 @@
 # uniwind: iOS accessibility audit, light theme
 
-Run 2026-10-27 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, light theme, with `scripts/a11y-audit.mjs`. 58/62 checks passed.
+Run 2026-10-30 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, light theme, with `scripts/a11y-audit.mjs`. 58/62 checks passed.
 
 Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.
 
@@ -36,7 +36,7 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Dialog | closes | pass | title gone |
 | Bottom sheet | opens | pass | sheet content in tree |
 | Bottom sheet | title and body readable | pass | title in tree |
-| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2 |
+| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show |
 | Bottom sheet | closes | pass | sheet gone |
 | Bottom sheet | screen reachable again after close | pass | screen controls back in system tree |
 | Bottom sheet (@expo/ui) | opens | pass | sheet content in tree |

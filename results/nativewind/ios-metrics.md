@@ -1,15 +1,15 @@
 # nativewind: startup, memory, scrolling and re-renders
 
-Run 2026-10-27 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, with `scripts/metrics-run.mjs`.
+Run 2026-10-30 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, with `scripts/metrics-run.mjs`.
 
 | Measure | Result |
 | --- | --- |
-| Startup until readable: launch-app call to the title in the accessibility tree, median of 10 | 9381 ms (8447–10059) |
-| of which the launch-app call itself, median | 364 ms |
-| Clock resolution (one describe poll, median) | 281 ms |
+| Startup until readable: launch-app call to the title in the accessibility tree, median of 10 | 8041 ms (7880–8438) |
+| of which the launch-app call itself, median | 372 ms |
+| Clock resolution (one describe poll, median) | 177 ms |
 | Memory at idle, 5 s after launch (phys_footprint) | 66.9 MiB |
-| Memory after the list and every overlay (phys_footprint) | 135.2 MiB |
-| App CPU time during 5 list flings (7.5 s) | 1983 ms (main thread 809, JS thread 1115) |
+| Memory after the list and every overlay (phys_footprint) | 132.5 MiB |
+| App CPU time during 5 list flings (7.6 s) | 2081 ms (main thread 788, JS thread 1231) |
 | Main-thread hangs during the flings | 0 |
 
 Overlays opened for the memory figure: test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-select, test-menu-open, test-toast-show.

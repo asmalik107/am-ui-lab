@@ -7,7 +7,7 @@
     "runtime": "iOS 27.0"
   },
   "theme": "light",
-  "date": "2026-10-28T09:49:53.680Z",
+  "date": "2026-10-30T14:51:29.449Z",
   "findings": [
     {
       "component": "Button",
@@ -145,7 +145,7 @@
       "component": "Text field",
       "check": "error reachable from field",
       "pass": false,
-      "detail": "label=\"\" value=\"no-an-emailt\" traits=[] 366×36pt hint=\"\""
+      "detail": "label=\"\" value=\"not-an-email\" traits=[] 366×36pt hint=\"\""
     },
     {
       "component": "Dialog",
@@ -193,7 +193,7 @@
       "component": "Bottom sheet",
       "check": "screen behind is hidden from VoiceOver",
       "pass": false,
-      "detail": "still exposed: test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2"
+      "detail": "still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2"
     },
     {
       "component": "Bottom sheet",
@@ -2251,7 +2251,7 @@
       {
         "role": "AXTextField",
         "label": "",
-        "value": "no-an-emailt",
+        "value": "not-an-email",
         "identifier": "test-textfield",
         "nx": 0.5,
         "ny": 0.7555,
@@ -2857,14 +2857,25 @@
       },
       {
         "role": "AXButton",
-        "label": "Saving",
-        "identifier": "test-button-loading",
+        "label": "Unavailable",
+        "identifier": "test-button-disabled",
         "nx": 0.5,
-        "ny": 0.015,
+        "ny": 0.0085,
         "x": 0.04,
         "y": 0,
         "w": 0.92,
-        "h": 0.03
+        "h": 0.017
+      },
+      {
+        "role": "AXButton",
+        "label": "Saving",
+        "identifier": "test-button-loading",
+        "nx": 0.5,
+        "ny": 0.054,
+        "x": 0.04,
+        "y": 0.031,
+        "w": 0.92,
+        "h": 0.046
       },
       {
         "role": "AXStaticText",
@@ -2876,16 +2887,6 @@
         "y": 0.062,
         "w": 0.316,
         "h": 0.013
-      },
-      {
-        "role": "AXHeading",
-        "label": "Form",
-        "nx": 0.5,
-        "ny": 0.081,
-        "x": 0.04,
-        "y": 0.066,
-        "w": 0.92,
-        "h": 0.03
       },
       {
         "role": "AXStaticText",
@@ -2909,19 +2910,19 @@
         "h": 0.024
       },
       {
-        "role": "AXGroup",
-        "label": "Email",
+        "role": "AXHeading",
+        "label": "Form",
         "nx": 0.5,
-        "ny": 0.1215,
+        "ny": 0.128,
         "x": 0.04,
-        "y": 0.11,
+        "y": 0.113,
         "w": 0.92,
-        "h": 0.023
+        "h": 0.03
       },
       {
         "role": "AXAdjustable",
         "label": "Vertical scroll bar, 3 pages",
-        "value": "39%",
+        "value": "36%",
         "nx": 0.9555,
         "ny": 0.531,
         "x": 0.918,
@@ -2930,13 +2931,23 @@
         "h": 0.796
       },
       {
+        "role": "AXGroup",
+        "label": "Email",
+        "nx": 0.5,
+        "ny": 0.1685,
+        "x": 0.04,
+        "y": 0.157,
+        "w": 0.92,
+        "h": 0.023
+      },
+      {
         "role": "AXTextField",
         "label": "",
         "identifier": "test-textfield",
         "nx": 0.4995,
-        "ny": 0.1595,
+        "ny": 0.2065,
         "x": 0.042,
-        "y": 0.138,
+        "y": 0.185,
         "w": 0.915,
         "h": 0.043
       },
@@ -2944,9 +2955,9 @@
         "role": "AXStaticText",
         "label": "We'll send your plan here.",
         "nx": 0.5,
-        "ny": 0.1985,
+        "ny": 0.2455,
         "x": 0.04,
-        "y": 0.188,
+        "y": 0.235,
         "w": 0.92,
         "h": 0.021
       },
@@ -2954,9 +2965,9 @@
         "role": "AXGroup",
         "label": "Workout reminders",
         "nx": 0.29600000000000004,
-        "ny": 0.2335,
+        "ny": 0.2805,
         "x": 0.139,
-        "y": 0.222,
+        "y": 0.269,
         "w": 0.314,
         "h": 0.023
       },
@@ -2966,9 +2977,9 @@
         "value": "1",
         "identifier": "test-switch",
         "nx": 0.08,
-        "ny": 0.2335,
+        "ny": 0.2805,
         "x": 0.04,
-        "y": 0.223,
+        "y": 0.27,
         "w": 0.08,
         "h": 0.021
       },
@@ -2976,9 +2987,9 @@
         "role": "AXGroup",
         "label": "I agree to the terms",
         "nx": 0.2705,
-        "ny": 0.2705,
+        "ny": 0.3165,
         "x": 0.109,
-        "y": 0.259,
+        "y": 0.305,
         "w": 0.323,
         "h": 0.023
       },
@@ -2988,9 +2999,9 @@
         "value": "checkbox, unchecked",
         "identifier": "test-checkbox",
         "nx": 0.06,
-        "ny": 0.27,
+        "ny": 0.317,
         "x": 0.04,
-        "y": 0.261,
+        "y": 0.308,
         "w": 0.04,
         "h": 0.018
       },
@@ -2998,9 +3009,9 @@
         "role": "AXStaticText",
         "label": "Experience level",
         "nx": 0.5,
-        "ny": 0.3065,
+        "ny": 0.35350000000000004,
         "x": 0.04,
-        "y": 0.295,
+        "y": 0.342,
         "w": 0.92,
         "h": 0.023
       },
@@ -3008,9 +3019,9 @@
         "role": "AXGroup",
         "label": "Beginner",
         "nx": 0.183,
-        "ny": 0.3385,
+        "ny": 0.3855,
         "x": 0.109,
-        "y": 0.327,
+        "y": 0.374,
         "w": 0.148,
         "h": 0.023
       },
@@ -3020,9 +3031,9 @@
         "value": "radio button, checked",
         "identifier": "test-radiogroup-0",
         "nx": 0.06,
-        "ny": 0.339,
+        "ny": 0.385,
         "x": 0.04,
-        "y": 0.33,
+        "y": 0.376,
         "w": 0.04,
         "h": 0.018
       },
@@ -3030,9 +3041,9 @@
         "role": "AXGroup",
         "label": "Intermediate",
         "nx": 0.214,
-        "ny": 0.3755,
+        "ny": 0.4225,
         "x": 0.109,
-        "y": 0.364,
+        "y": 0.411,
         "w": 0.21,
         "h": 0.023
       },
@@ -3042,9 +3053,9 @@
         "value": "radio button, unchecked",
         "identifier": "test-radiogroup-1",
         "nx": 0.06,
-        "ny": 0.375,
+        "ny": 0.422,
         "x": 0.04,
-        "y": 0.366,
+        "y": 0.413,
         "w": 0.04,
         "h": 0.018
       },
@@ -3052,9 +3063,9 @@
         "role": "AXGroup",
         "label": "Advanced",
         "nx": 0.191,
-        "ny": 0.41150000000000003,
+        "ny": 0.4585,
         "x": 0.109,
-        "y": 0.4,
+        "y": 0.447,
         "w": 0.164,
         "h": 0.023
       },
@@ -3064,9 +3075,9 @@
         "value": "radio button, unchecked",
         "identifier": "test-radiogroup-2",
         "nx": 0.06,
-        "ny": 0.41200000000000003,
+        "ny": 0.459,
         "x": 0.04,
-        "y": 0.403,
+        "y": 0.45,
         "w": 0.04,
         "h": 0.018
       },
@@ -3074,9 +3085,9 @@
         "role": "AXGroup",
         "label": "Rest time",
         "nx": 0.5,
-        "ny": 0.4485,
+        "ny": 0.4955,
         "x": 0.04,
-        "y": 0.437,
+        "y": 0.484,
         "w": 0.92,
         "h": 0.023
       },
@@ -3085,9 +3096,9 @@
         "label": "60 seconds",
         "identifier": "test-select",
         "nx": 0.289,
-        "ny": 0.48800000000000004,
+        "ny": 0.534,
         "x": 0.04,
-        "y": 0.465,
+        "y": 0.511,
         "w": 0.498,
         "h": 0.046
       },
@@ -3095,9 +3106,9 @@
         "role": "AXHeading",
         "label": "Overlays",
         "nx": 0.5,
-        "ny": 0.562,
+        "ny": 0.609,
         "x": 0.04,
-        "y": 0.547,
+        "y": 0.594,
         "w": 0.92,
         "h": 0.03
       },
@@ -3106,9 +3117,9 @@
         "label": "Delete workout",
         "identifier": "test-dialog-open",
         "nx": 0.5,
-        "ny": 0.613,
+        "ny": 0.66,
         "x": 0.04,
-        "y": 0.59,
+        "y": 0.637,
         "w": 0.92,
         "h": 0.046
       },
@@ -3117,20 +3128,9 @@
         "label": "Show exercise details",
         "identifier": "test-sheet-open",
         "nx": 0.5,
-        "ny": 0.673,
+        "ny": 0.72,
         "x": 0.04,
-        "y": 0.65,
-        "w": 0.92,
-        "h": 0.046
-      },
-      {
-        "role": "AXButton",
-        "label": "Show exercise details (@expo/ui)",
-        "identifier": "test-sheet-open-expoui",
-        "nx": 0.5,
-        "ny": 0.732,
-        "x": 0.04,
-        "y": 0.709,
+        "y": 0.697,
         "w": 0.92,
         "h": 0.046
       },
@@ -3156,12 +3156,12 @@
       },
       {
         "role": "AXButton",
-        "label": "Log set",
-        "identifier": "test-toast-show",
+        "label": "Show exercise details (@expo/ui)",
+        "identifier": "test-sheet-open-expoui",
         "nx": 0.5,
-        "ny": 0.792,
+        "ny": 0.779,
         "x": 0.04,
-        "y": 0.769,
+        "y": 0.756,
         "w": 0.92,
         "h": 0.046
       },
@@ -3186,14 +3186,15 @@
         "h": 0.03
       },
       {
-        "role": "AXHeading",
-        "label": "Tabs",
+        "role": "AXButton",
+        "label": "Log set",
+        "identifier": "test-toast-show",
         "nx": 0.5,
-        "ny": 0.866,
+        "ny": 0.839,
         "x": 0.04,
-        "y": 0.851,
+        "y": 0.816,
         "w": 0.92,
-        "h": 0.03
+        "h": 0.046
       },
       {
         "role": "AXStaticText",
@@ -3206,37 +3207,14 @@
         "h": 0.05
       },
       {
-        "role": "AXGroup",
-        "label": "Today",
-        "identifier": "test-tabs-0",
-        "nx": 0.119,
-        "ny": 0.915,
-        "x": 0.047,
+        "role": "AXHeading",
+        "label": "Tabs",
+        "nx": 0.5,
+        "ny": 0.913,
+        "x": 0.04,
         "y": 0.898,
-        "w": 0.144,
-        "h": 0.034
-      },
-      {
-        "role": "AXGroup",
-        "label": "Plan",
-        "identifier": "test-tabs-1",
-        "nx": 0.25,
-        "ny": 0.915,
-        "x": 0.192,
-        "y": 0.898,
-        "w": 0.116,
-        "h": 0.034
-      },
-      {
-        "role": "AXGroup",
-        "label": "Progress",
-        "identifier": "test-tabs-2",
-        "nx": 0.404,
-        "ny": 0.915,
-        "x": 0.308,
-        "y": 0.898,
-        "w": 0.192,
-        "h": 0.034
+        "w": 0.92,
+        "h": 0.03
       },
       {
         "role": "AXButton",
@@ -3250,14 +3228,37 @@
         "h": 0.046
       },
       {
-        "role": "AXStaticText",
-        "label": "3 exercises left today.",
-        "nx": 0.5,
-        "ny": 0.9574999999999999,
-        "x": 0.04,
+        "role": "AXGroup",
+        "label": "Today",
+        "identifier": "test-tabs-0",
+        "nx": 0.119,
+        "ny": 0.962,
+        "x": 0.047,
         "y": 0.945,
-        "w": 0.92,
-        "h": 0.025
+        "w": 0.144,
+        "h": 0.034
+      },
+      {
+        "role": "AXGroup",
+        "label": "Plan",
+        "identifier": "test-tabs-1",
+        "nx": 0.25,
+        "ny": 0.962,
+        "x": 0.192,
+        "y": 0.945,
+        "w": 0.116,
+        "h": 0.034
+      },
+      {
+        "role": "AXGroup",
+        "label": "Progress",
+        "identifier": "test-tabs-2",
+        "nx": 0.404,
+        "ny": 0.962,
+        "x": 0.308,
+        "y": 0.945,
+        "w": 0.192,
+        "h": 0.034
       },
       {
         "role": "AXAdjustable",
@@ -3269,6 +3270,16 @@
         "y": 0.962,
         "w": 0.692,
         "h": 0.034
+      },
+      {
+        "role": "AXStaticText",
+        "label": "3 exercises left today.",
+        "nx": 0.5,
+        "ny": 0.996,
+        "x": 0.04,
+        "y": 0.992,
+        "w": 0.92,
+        "h": 0.008
       }
     ],
     "sheet:test-sheet-open-expoui": [
@@ -3775,9 +3786,9 @@
         "label": "Duplicate",
         "identifier": "test-menu-item-0",
         "nx": 0.318,
-        "ny": 0.6865,
+        "ny": 0.7334999999999999,
         "x": 0.052,
-        "y": 0.666,
+        "y": 0.713,
         "w": 0.532,
         "h": 0.041
       },
@@ -3786,9 +3797,9 @@
         "label": "Share",
         "identifier": "test-menu-item-1",
         "nx": 0.318,
-        "ny": 0.7274999999999999,
+        "ny": 0.7745,
         "x": 0.052,
-        "y": 0.707,
+        "y": 0.754,
         "w": 0.532,
         "h": 0.041
       },
@@ -3797,9 +3808,9 @@
         "label": "Archive",
         "identifier": "test-menu-item-2",
         "nx": 0.318,
-        "ny": 0.7685,
+        "ny": 0.8155,
         "x": 0.052,
-        "y": 0.748,
+        "y": 0.795,
         "w": 0.532,
         "h": 0.041
       }

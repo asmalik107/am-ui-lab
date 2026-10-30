@@ -6,74 +6,78 @@
     "name": "iPhone 17",
     "runtime": "iOS 27.0"
   },
-  "date": "2026-10-27T21:03:52.266Z",
+  "date": "2026-10-30T13:47:22.177Z",
   "runs": [
     {
       "reduceMotion": false,
       "component": "Dialog",
       "label": "Dialog",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793134961685.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793367980221.mp4",
       "fps": 30,
-      "peak": 22.9,
-      "ms": 300,
+      "peak": 20.6,
+      "ms": 433,
       "frames": [
-        12.2,
-        22.9,
-        19.2,
-        15.7,
-        10.8,
-        7.8,
-        4.6,
-        3.2,
-        2.3
+        9.8,
+        1.6,
+        4,
+        19.4,
+        20.6,
+        18.1,
+        13.9,
+        9.3,
+        5.5,
+        4.5,
+        2.5,
+        0.9,
+        1.4
       ]
     },
     {
       "reduceMotion": false,
       "component": "Bottom sheet",
       "label": "Bottom sheet",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793134983554.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793367999116.mp4",
       "fps": 30,
-      "peak": 24.6,
-      "ms": 433,
+      "peak": 23.9,
+      "ms": 400,
       "frames": [
-        24.6,
-        14.9,
-        24,
+        22.1,
+        17.5,
+        23.9,
         20.5,
         16,
         11.7,
         9.2,
         6.7,
-        4.5,
-        3.2,
-        2.7,
-        2,
-        1
+        5.6,
+        1.7,
+        2.8,
+        2.5
       ]
     },
     {
       "reduceMotion": true,
       "component": "Dialog",
       "label": "Dialog",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793135006391.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793368018497.mp4",
       "fps": 30,
-      "peak": 100,
-      "ms": 33,
+      "peak": 99.6,
+      "ms": 67,
       "frames": [
-        100
+        1.6,
+        99.6
       ]
     },
     {
       "reduceMotion": true,
       "component": "Bottom sheet",
       "label": "Bottom sheet",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793135026837.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793368037377.mp4",
       "fps": 30,
-      "peak": 91,
+      "peak": 90.9,
       "ms": 33,
       "frames": [
-        91
+        90.9
       ]
     }
   ]

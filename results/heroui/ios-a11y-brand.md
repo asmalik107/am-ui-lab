@@ -1,6 +1,6 @@
 # heroui: iOS accessibility audit, brand theme
 
-Run 2026-10-28 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, brand theme, with `scripts/a11y-audit.mjs`. 44/67 checks passed.
+Run 2026-10-30 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, brand theme, with `scripts/a11y-audit.mjs`. 44/67 checks passed.
 
 Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.
 
@@ -36,7 +36,7 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Dialog | closes | pass | title gone |
 | Bottom sheet | opens | pass | sheet content in tree |
 | Bottom sheet | title and body readable | **fail** | title and body text not in the system tree |
-| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-gorhom, test-sheet-open-expoui |
+| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-gorhom |
 | Bottom sheet | closes | pass | sheet gone |
 | Bottom sheet | screen reachable again after close | pass | screen controls back in system tree |
 | Bottom sheet (@expo/ui) | opens | pass | sheet content in tree |
@@ -46,7 +46,7 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Bottom sheet (@expo/ui) | screen reachable again after close | pass | screen controls back in system tree |
 | Bottom sheet (@gorhom, raw) | opens | pass | sheet content in tree |
 | Bottom sheet (@gorhom, raw) | title and body readable | **fail** | title and body text not in the system tree |
-| Bottom sheet (@gorhom, raw) | screen behind is hidden from VoiceOver | **fail** | still exposed: test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-gorhom, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2 |
+| Bottom sheet (@gorhom, raw) | screen behind is hidden from VoiceOver | **fail** | still exposed: test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-gorhom, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components |
 | Bottom sheet (@gorhom, raw) | closes | pass | sheet gone |
 | Bottom sheet (@gorhom, raw) | screen reachable again after close | pass | screen controls back in system tree |
 | Select | opens | pass | options in tree |
@@ -67,7 +67,7 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Menu | target ≥ 44pt | pass | 370×48pt |
 | Menu | opens | pass | all three actions in tree |
 | Menu | items are buttons | **fail** | AXGroup label="Duplicate" \| AXGroup label="Share" \| AXGroup label="Archive" |
-| Menu | screen behind is hidden from VoiceOver | **fail** | still exposed: test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link |
+| Menu | screen behind is hidden from VoiceOver | **fail** | still exposed: test-sheet-open-gorhom, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui) |
 | Menu | closes after an action | pass | actions gone |
 | Segmented control | options have name and role | pass | label="Week" value="" traits=[button, selected] 121×44pt \| label="Month" value="" traits=[button] 121×44pt \| label="Year" value="" traits=[button] 121×44pt |
 | Segmented control | selected option marked | pass | label="Week" value="" traits=[button, selected] 121×44pt \| label="Month" value="" traits=[button] 121×44pt \| label="Year" value="" traits=[button] 121×44pt |

@@ -1,15 +1,15 @@
 # baseline: startup, memory, scrolling and re-renders
 
-Run 2026-10-28 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, with `scripts/metrics-run.mjs`.
+Run 2026-10-30 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, with `scripts/metrics-run.mjs`.
 
 | Measure | Result |
 | --- | --- |
-| Startup until readable: launch-app call to the title in the accessibility tree, median of 10 | 8065 ms (1938–8417) |
-| of which the launch-app call itself, median | 340 ms |
-| Clock resolution (one describe poll, median) | 319 ms |
-| Memory at idle, 5 s after launch (phys_footprint) | 62.9 MiB |
-| Memory after the list and every overlay (phys_footprint) | 124.4 MiB |
-| App CPU time during 5 list flings (7.5 s) | 2160 ms (main thread 1123, JS thread 995) |
+| Startup until readable: launch-app call to the title in the accessibility tree, median of 10 | 4624 ms (4500–5232) |
+| of which the launch-app call itself, median | 339 ms |
+| Clock resolution (one describe poll, median) | 194 ms |
+| Memory at idle, 5 s after launch (phys_footprint) | 62.6 MiB |
+| Memory after the list and every overlay (phys_footprint) | 123.3 MiB |
+| App CPU time during 5 list flings (7.5 s) | 963 ms (main thread 466, JS thread 477) |
 | Main-thread hangs during the flings | 0 |
 
 Overlays opened for the memory figure: test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-select, test-menu-open, test-toast-show.

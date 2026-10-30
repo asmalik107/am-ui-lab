@@ -1,6 +1,6 @@
 # baseline: iOS accessibility audit, brand theme
 
-Run 2026-10-27 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, brand theme, with `scripts/a11y-audit.mjs`. 58/62 checks passed.
+Run 2026-10-30 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, brand theme, with `scripts/a11y-audit.mjs`. 58/62 checks passed.
 
 Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.
 

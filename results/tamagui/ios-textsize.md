@@ -1,6 +1,6 @@
 # tamagui: largest text size (AX5)
 
-Run 2026-10-28 on the iPhone 17 simulator (iOS 27.0) with `scripts/textsize-test.mjs`. Control heights at the default size (large) against the largest accessibility size (accessibility-extra-extra-extra-large).
+Run 2026-10-30 on the iPhone 17 simulator (iOS 27.0) with `scripts/textsize-test.mjs`. Control heights at the default size (large) against the largest accessibility size (accessibility-extra-extra-extra-large).
 
 - Controls that grew by more than 20%: 9 of 13
 - Controls pushed past the screen edge: test-native-switch

@@ -1,6 +1,6 @@
 # gluestack: iOS accessibility audit, light theme
 
-Run 2026-10-28 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, light theme, with `scripts/a11y-audit.mjs`. 35/66 checks passed.
+Run 2026-10-30 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, light theme, with `scripts/a11y-audit.mjs`. 35/66 checks passed.
 
 Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.
 
@@ -51,7 +51,7 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Select | opens | pass | options in tree |
 | Select | current option marked | **fail** | AXGroup label="60 seconds" |
 | Select | options are actionable | **fail** | AXGroup label="30 seconds" \| AXGroup label="45 seconds" \| AXGroup label="60 seconds" \| AXGroup label="90 seconds" \| AXGroup label="2 minutes" |
-| Select | screen behind is hidden from VoiceOver | **fail** | still exposed: test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui |
+| Select | screen behind is hidden from VoiceOver | **fail** | still exposed: test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, Overlays, test-dialog-open, test-sheet-open |
 | Select | new value read on trigger | **fail** | label="" value="" traits=[button] 370×40pt |
 | Toast | in accessibility tree | pass | AXStaticText label="Set logged" |
 | Slider | name, role, value | **fail** | label="Slider" value="" traits=[] 370×6pt (system tree) |
@@ -66,7 +66,7 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Menu | target ≥ 44pt | **fail** | 370×38pt |
 | Menu | opens | pass | all three actions in tree |
 | Menu | items are buttons | **fail** | AXGroup label="Duplicate" \| AXGroup label="Share" \| AXGroup label="Archive" |
-| Menu | screen behind is hidden from VoiceOver | **fail** | still exposed: test-sheet-open-gluestack, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List |
+| Menu | screen behind is hidden from VoiceOver | **fail** | still exposed: test-sheet-open-gluestack, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link |
 | Menu | closes after an action | pass | actions gone |
 | Segmented control | options have name and role | pass | label="Week" value="" traits=[button, selected] 121×44pt \| label="Month" value="" traits=[button] 121×44pt \| label="Year" value="" traits=[button] 121×44pt |
 | Segmented control | selected option marked | pass | label="Week" value="" traits=[button, selected] 121×44pt \| label="Month" value="" traits=[button] 121×44pt \| label="Year" value="" traits=[button] 121×44pt |

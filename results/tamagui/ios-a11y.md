@@ -1,6 +1,6 @@
 # tamagui: iOS accessibility audit, light theme
 
-Run 2026-10-29 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, light theme, with `scripts/a11y-audit.mjs`. 36/57 checks passed.
+Run 2026-10-30 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B17EC3CBC1), Release build, light theme, with `scripts/a11y-audit.mjs`. 36/57 checks passed.
 
 Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.
 
@@ -26,13 +26,13 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Text field | error shown | pass | error text in tree |
 | Text field | error reachable from field | pass | label="Email" value="not-an-email" traits=[] 368×42pt hint="We'll send your plan here. Enter a valid email address." |
 | Dialog | opens | pass | title in tree |
-| Dialog | screen behind is hidden from VoiceOver | **fail** | still exposed: test-button, Form, test-textfield, test-switch, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-tamagui |
+| Dialog | screen behind is hidden from VoiceOver | **fail** | still exposed: Form, test-textfield, test-switch, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-tamagui, test-sheet-open-expoui, test-toast-show, Tabs |
 | Dialog | title is a heading | pass | AXHeading label="Delete this workout?" |
 | Dialog | actions are buttons | pass | AXButton label="Dialog Close" |
 | Dialog | closes | pass | title gone |
 | Bottom sheet | opens | pass | sheet content in tree |
 | Bottom sheet | title and body readable | pass | title in tree |
-| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: test-textfield, test-switch, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-tamagui, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2 |
+| Bottom sheet | screen behind is hidden from VoiceOver | **fail** | still exposed: Form, test-textfield, test-switch, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-tamagui, test-sheet-open-expoui, test-toast-show, Tabs |
 | Bottom sheet | closes | pass | sheet gone |
 | Bottom sheet | screen reachable again after close | pass | screen controls back in system tree |
 | Bottom sheet (@expo/ui) | opens | pass | sheet content in tree |
@@ -57,7 +57,7 @@ Traits and sizes come from the view hierarchy (argent `native-describe-screen`).
 | Menu | target ≥ 44pt | pass | 152×44pt (system tree, ±0.4 pt) |
 | Menu | opens | pass | all three actions in tree |
 | Menu | items are buttons | pass | AXButton label="Duplicate" \| AXButton label="Share" \| AXButton label="Archive" |
-| Menu | screen behind is hidden from VoiceOver | **fail** | still exposed: test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch |
+| Menu | screen behind is hidden from VoiceOver | **fail** | still exposed: test-sheet-open-tamagui, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch |
 | Menu | closes after an action | pass | actions gone |
 | Segmented control | options have name and role | **fail** | label="Week" value="" traits=[] 123×44pt \| label="Month" value="" traits=[] 123×44pt \| label="Year" value="" traits=[] 123×44pt |
 | Segmented control | selected option marked | **fail** | label="Week" value="" traits=[] 123×44pt \| label="Month" value="" traits=[] 123×44pt \| label="Year" value="" traits=[] 123×44pt |

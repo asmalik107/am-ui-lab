@@ -6,46 +6,42 @@
     "name": "iPhone 17",
     "runtime": "iOS 27.0"
   },
-  "date": "2026-10-28T09:41:20.987Z",
+  "date": "2026-10-30T14:59:21.517Z",
   "runs": [
     {
       "reduceMotion": false,
       "component": "Dialog",
       "label": "Dialog",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793180422327.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793372303526.mp4",
       "fps": 30,
-      "peak": 26.3,
-      "ms": 200,
+      "peak": 26.6,
+      "ms": 133,
       "frames": [
-        5.8,
-        16.4,
-        26.2,
-        26.3,
-        16.4,
-        5.2
+        26.5,
+        26.6,
+        16.5,
+        5.3
       ]
     },
     {
       "reduceMotion": false,
       "component": "Bottom sheet",
       "label": "Bottom sheet",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793180439773.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793372321203.mp4",
       "fps": 30,
       "peak": 34.2,
-      "ms": 433,
+      "ms": 367,
       "frames": [
-        26.2,
         34.2,
         20.6,
-        0,
         15.8,
-        7.9,
-        12.7,
+        11.8,
+        9.2,
         6.7,
         4.5,
         3.5,
         2.9,
-        2,
+        2.1,
         1
       ]
     },
@@ -53,7 +49,7 @@
       "reduceMotion": true,
       "component": "Dialog",
       "label": "Dialog",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793180457601.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793372339125.mp4",
       "fps": 30,
       "peak": 96.6,
       "ms": 33,
@@ -65,12 +61,12 @@
       "reduceMotion": true,
       "component": "Bottom sheet",
       "label": "Bottom sheet",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793180476374.mp4",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-11A84A8F-FDB1-4921-8105-D7B17EC3CBC1-1793372356851.mp4",
       "fps": 30,
-      "peak": 91.1,
+      "peak": 92.5,
       "ms": 33,
       "frames": [
-        91.1
+        92.5
       ]
     }
   ]

@@ -1,6 +1,6 @@
 {
   "app": "tamagui",
-  "iosHbcBytes": 5426638,
-  "date": "2026-10-22",
-  "how": "npx expo export --platform ios, main Hermes bytecode file"
+  "iosHbcBytes": 5444885,
+  "date": "2026-10-30",
+  "how": "npx expo export --platform ios, main Hermes bytecode file (index-*.hbc), test screen with items 1–19"
 }

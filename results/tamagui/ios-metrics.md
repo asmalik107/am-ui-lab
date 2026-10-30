@@ -4,12 +4,12 @@ Run 2026-10-30 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B
 
 | Measure | Result |
 | --- | --- |
-| Startup until readable: launch-app call to the title in the accessibility tree, median of 10 | 7886 ms (7803–8312) |
-| of which the launch-app call itself, median | 316 ms |
-| Clock resolution (one describe poll, median) | 198 ms |
-| Memory at idle, 5 s after launch (phys_footprint) | 81.8 MiB |
-| Memory after the list and every overlay (phys_footprint) | 187.8 MiB |
-| App CPU time during 5 list flings (7.6 s) | 2116 ms (main thread 827, JS thread 1230) |
+| Startup until readable: launch-app call to the title in the accessibility tree, median of 10 | 8405 ms (8166–9741) |
+| of which the launch-app call itself, median | 417 ms |
+| Clock resolution (one describe poll, median) | 210 ms |
+| Memory at idle, 5 s after launch (phys_footprint) | 82.2 MiB |
+| Memory after the list and every overlay (phys_footprint) | 160.8 MiB |
+| App CPU time during 5 list flings (7.6 s) | 1984 ms (main thread 807, JS thread 1104) |
 | Main-thread hangs during the flings | 0 |
 
 Overlays opened for the memory figure: test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-select (error: test-select not in view hierarchy), test-menu-open (error: test-menu-open not in view hierarchy), test-toast-show.
@@ -18,6 +18,6 @@ Frame hitches were not measured: xctrace's Animation Hitches template fails on t
 
 ## Re-renders on theme switch
 
-Run 2026-10-28, Debug build with Metro, argent React profiler (`scripts/rerender-run.mjs`). Counts only: Debug timings aren't representative.
+Run 2026-10-30, Debug build with Metro, argent React profiler (`scripts/rerender-run.mjs`). Counts only: Debug timings aren't representative.
 
-Not measured: the Debug build aborts on a React Native Yoga layout assertion (__assert_rtn in YogaLayoutableShadowNode::layout, crash report UILabTamagui-2026-10-28-105109.ips), as it did on iOS 26.4; Release builds are unaffected
+Not measured: the Debug build aborts on a React Native Yoga layout assertion (__assert_rtn in YogaLayoutableShadowNode::layout, crash report UILabTamagui-2026-10-30-171250.ips), as it did on 28 October; Release builds are unaffected

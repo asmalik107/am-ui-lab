@@ -18,7 +18,7 @@ Frame hitches were not measured: xctrace's Animation Hitches template fails on t
 
 ## Re-renders on theme switch
 
-Run 2026-10-28, Debug build with Metro, argent React profiler (`scripts/rerender-run.mjs`). Counts only: Debug timings aren't representative.
+Run 2026-10-30, Debug build with Metro, argent React profiler (`scripts/rerender-run.mjs`). Counts only: Debug timings aren't representative.
 
 | Switch | React commits | Component renders |
 | --- | --- | --- |

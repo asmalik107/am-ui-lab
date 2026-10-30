@@ -4,12 +4,12 @@ Run 2026-10-30 on the iPhone 17 simulator (iOS 27.0, 11A84A8F-FDB1-4921-8105-D7B
 
 | Measure | Result |
 | --- | --- |
-| Startup until readable: launch-app call to the title in the accessibility tree, median of 10 | 4624 ms (4500–5232) |
-| of which the launch-app call itself, median | 339 ms |
-| Clock resolution (one describe poll, median) | 194 ms |
-| Memory at idle, 5 s after launch (phys_footprint) | 62.6 MiB |
-| Memory after the list and every overlay (phys_footprint) | 123.3 MiB |
-| App CPU time during 5 list flings (7.5 s) | 963 ms (main thread 466, JS thread 477) |
+| Startup until readable: launch-app call to the title in the accessibility tree, median of 10 | 8030 ms (7740–9662) |
+| of which the launch-app call itself, median | 350 ms |
+| Clock resolution (one describe poll, median) | 201 ms |
+| Memory at idle, 5 s after launch (phys_footprint) | 62.9 MiB |
+| Memory after the list and every overlay (phys_footprint) | 124.5 MiB |
+| App CPU time during 5 list flings (7.6 s) | 1995 ms (main thread 971, JS thread 977) |
 | Main-thread hangs during the flings | 0 |
 
 Overlays opened for the memory figure: test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-select, test-menu-open, test-toast-show.
@@ -18,10 +18,10 @@ Frame hitches were not measured: xctrace's Animation Hitches template fails on t
 
 ## Re-renders on theme switch
 
-Run 2026-10-28, Debug build with Metro, argent React profiler (`scripts/rerender-run.mjs`). Counts only: Debug timings aren't representative.
+Run 2026-10-30, Debug build with Metro, argent React profiler (`scripts/rerender-run.mjs`). Counts only: Debug timings aren't representative.
 
 | Switch | React commits | Component renders |
 | --- | --- | --- |
 | light → dark | 3 | 298 |
 | dark → brand | 2 | 298 |
-| brand → light | 2 | 288 |
+| brand → light | 2 | 290 |

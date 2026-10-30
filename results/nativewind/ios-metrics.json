@@ -110,7 +110,7 @@
     "hangs": 0
   },
   "rerenders": {
-    "date": "2026-10-28T10:44:08.851Z",
+    "date": "2026-10-30T17:02:15.674Z",
     "build": "Debug",
     "switches": [
       {
@@ -119,8 +119,8 @@
         "commits": 3,
         "renders": 460,
         "raw": {
-          "duration_ms": 2856.275,
-          "sample_count": 217,
+          "duration_ms": 2829.919,
+          "sample_count": 223,
           "fiber_renders_captured": 460,
           "total_react_commits": 3,
           "hot_commit_indices": [
@@ -137,8 +137,8 @@
         "commits": 3,
         "renders": 460,
         "raw": {
-          "duration_ms": 2837.993,
-          "sample_count": 226,
+          "duration_ms": 2805.193,
+          "sample_count": 209,
           "fiber_renders_captured": 460,
           "total_react_commits": 3,
           "hot_commit_indices": [
@@ -155,8 +155,8 @@
         "commits": 3,
         "renders": 456,
         "raw": {
-          "duration_ms": 2797.104,
-          "sample_count": 228,
+          "duration_ms": 2808.776,
+          "sample_count": 211,
           "fiber_renders_captured": 456,
           "total_react_commits": 3,
           "hot_commit_indices": [

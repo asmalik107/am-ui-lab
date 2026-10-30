@@ -1,6 +1,6 @@
 {
   "app": "reusables",
-  "iosHbcBytes": 6831782,
-  "date": "2026-10-27",
+  "iosHbcBytes": 6834302,
+  "date": "2026-10-30",
   "how": "npx expo export --platform ios, main Hermes bytecode file (entry-*.hbc), test screen with items 1–19"
 }

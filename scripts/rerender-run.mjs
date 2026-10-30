@@ -45,7 +45,17 @@ try {
   argent('restart-app', { bundleId });
   if (!(await waitFor((els) => els.some((e) => e.label.includes('Component test screen'))))) throw new Error('app did not show the test screen');
   await sleep(3000);
-  run('debugger-connect', { device_id: udid });
+  // The app can show the screen before it has re-attached to Metro after the
+  // restart (seen on Uniwind and NativeWind, 30 Oct), so retry for 30 s.
+  for (let i = 0; ; i++) {
+    try {
+      run('debugger-connect', { device_id: udid });
+      break;
+    } catch (err) {
+      if (i >= 14) throw err;
+      await sleep(2000);
+    }
+  }
   // The theme radios sit near the top of the screen, visible at launch.
   rerenders.switches = [];
   for (const to of [1, 2, 0]) {

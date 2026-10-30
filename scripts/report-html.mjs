@@ -38,6 +38,10 @@ for (const [a] of apps) for (const f of data[a].a11y?.findings ?? []) {
   const key = `${f.component} | ${f.check}`;
   if (!seen.has(key)) { seen.add(key); rows.push({ key, component: f.component, check: f.check }); }
 }
+// Keep each component's rows together: a check only one app produced (e.g. a
+// later app's "test could run") would otherwise open a second group at the end.
+const order = [...new Set(rows.map((r) => r.component))];
+rows.sort((x, y) => order.indexOf(x.component) - order.indexOf(y.component));
 const result = (a, key) => data[a].a11y?.findings.find((f) => `${f.component} | ${f.check}` === key);
 
 const what = {
@@ -74,8 +78,17 @@ const what = {
 };
 
 const cell = (f) => {
+  if (f?.notRun) return '<td class="na" title="Not run: the test could not start on this app"><span aria-hidden="true">n/r</span><span class="sr">not run</span></td>';
   if (!f) return '<td class="na" title="Not applicable: this app has no such element"><span aria-hidden="true">–</span><span class="sr">not applicable</span></td>';
   return `<td class="${f.pass ? 'pass' : 'fail'}" title="${esc(f.detail)}"><span aria-hidden="true">${f.pass ? '✓' : '✗'}</span><span class="sr">${f.pass ? 'pass' : 'fail'}</span></td>`;
+};
+// The audit only writes "test could run" when the test failed to start, so an
+// app with other results for that component did run it, and an app where it
+// failed to start has no result for that component's other checks.
+const ran = (a, r) => {
+  const own = data[a].a11y?.findings.filter((f) => f.component === r.component) ?? [];
+  if (r.check === 'test could run') return own.length ? { pass: true, detail: 'test ran' } : null;
+  return own.some((f) => f.check === 'test could run' && !f.pass) ? { notRun: true } : null;
 };
 const score = (a, key = 'a11y') => {
   const f = data[a][key]?.findings;
@@ -144,7 +157,7 @@ const checkRows = rows.map((r) => {
     return sheetSection();
   }
   const head = r.component !== group ? (group = r.component, `<tr class="group"><th colspan="${apps.length + 2}" scope="colgroup"><span>${esc(r.component)}</span></th></tr>`) : '';
-  return `${head}<tr><td class="num">${++n}</td><th scope="row">${esc(r.check)}<span class="what">${esc(what[r.check] ?? '')}</span></th>${apps.map(([a]) => cell(result(a, r.key))).join('')}</tr>`;
+  return `${head}<tr><td class="num">${++n}</td><th scope="row">${esc(r.check)}<span class="what">${esc(what[r.check] ?? '')}</span></th>${apps.map(([a]) => cell(result(a, r.key) ?? ran(a, r))).join('')}</tr>`;
 }).filter(Boolean).join('\n');
 
 const motion = (a, comp, rm) => data[a].motion?.runs.find((r) => r.component === comp && r.reduceMotion === rm)?.ms;
@@ -327,7 +340,7 @@ tr.score th[scope="row"] { background: var(--bg); }
 <main>
 <h1>UI library checks</h1>
 <p>Every check run on every app, generated from <code>results/</code> by <code>scripts/report-html.mjs</code>. All apps build the same test screen; results are from Release builds on ${esc(deviceText)}. The accessibility checks read the iOS accessibility tree, which is what VoiceOver is given. They don't hear what it says. Hover a cell for the measured detail.</p>
-<div class="legend"><span>✓ pass</span><span>✗ fail</span><span>– not applicable (the app has no such element)</span><span>* NativeWind results use a line-height workaround; see apps/nativewind/NOTES.md</span></div>
+<div class="legend"><span>✓ pass</span><span>✗ fail</span><span>– not applicable (the app has no such element)</span><span>n/r not run (the test could not start)</span><span>* NativeWind results use a line-height workaround; see apps/nativewind/NOTES.md</span></div>
 
 <h2>Scores at a glance</h2>
 <p>Each chart is one group of accessibility checks; a bar is the share of that group's checks the app passed, with the count at its end. Green means it passed every check in the group. The full spec is in <code>docs/method.md</code>, and every check is listed in the table below.</p>

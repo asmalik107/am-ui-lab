@@ -206,3 +206,11 @@ Also fixed: the ToggleGroup stacked its items vertically until `flexDirection="r
 - Accordion: `Accordion.Header` is an `H1` around the trigger (`@tamagui/accordion/src/Accordion.tsx` line 462). VoiceOver gets a heading read as "￼" and no button or expanded state.
 - Menu: with the documented `setup-expo-ui-menu` import it opens iOS's own context menu. Items are buttons; the screen behind stays in the system tree beside a "Dismiss context menu" button (needs a device check, as it's iOS's own menu).
 - Segmented control (ToggleGroup): options expose a name but no role and no selected state.
+
+### Select and Accordion triggers (re-checked 29 October 2026)
+
+Re-run after the component refactor (fresh Release build, iOS 27, light theme). Both still can't be tested, and the cause is Tamagui, not the test IDs:
+- Select: `Select.Trigger` gets `testID` (the view has identifier `test-select` and nativeID `test-select-control`) and passes `accessibilityRole="button"` and `accessibilityState` (`@tamagui/select/src/SelectTrigger.tsx`), but the view is not an accessibility element on iOS. VoiceOver only reaches its "60 seconds" text, with no button, name or expanded state, so it can't open the Select. The audit records "test could run: fail" and the other Select checks as not run.
+- Accordion: unchanged from above. The trigger has identifier `test-accordion-0` but sits inside the `H1` header, which VoiceOver reads as one heading "￼". No button reaches the system tree.
+
+Not patched by hand (e.g. `accessible` on the triggers), so Tamagui is measured as shipped. Dark and brand were not re-run; the old runs show the same failure.

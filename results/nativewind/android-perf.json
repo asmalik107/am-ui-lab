@@ -1,0 +1,47 @@
+{
+  "app": "nativewind",
+  "bundleId": "dev.asimmalik.uilab.nativewind",
+  "udid": "R5CXA2TFTKP",
+  "platform": "android",
+  "device": {
+    "name": "SM-A156E",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-30T19:23:11.885Z",
+  "theme": {
+    "n": 10,
+    "median": 182.3,
+    "min": 150.3,
+    "max": 232.4,
+    "samples": [
+      232.4,
+      188.9,
+      186.7,
+      185.4,
+      179.2,
+      172.4,
+      194.4,
+      166,
+      150.3,
+      153
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 181.5,
+    "min": 158.8,
+    "max": 276.9,
+    "samples": [
+      217.4,
+      170.7,
+      187.2,
+      164.7,
+      158.8,
+      210.9,
+      174.6,
+      276.9,
+      260.9,
+      175.8
+    ]
+  }
+}

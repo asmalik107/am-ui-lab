@@ -1,0 +1,47 @@
+{
+  "app": "gluestack",
+  "bundleId": "dev.asimmalik.uilab.gluestack",
+  "udid": "R5CXA2TFTKP",
+  "platform": "android",
+  "device": {
+    "name": "SM-A156E",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-30T19:07:37.919Z",
+  "theme": {
+    "n": 10,
+    "median": 158.05,
+    "min": 137.4,
+    "max": 237.7,
+    "samples": [
+      237.7,
+      161.5,
+      197.1,
+      222.2,
+      137.4,
+      138.8,
+      216.9,
+      151.1,
+      148.3,
+      154.6
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 153.6,
+    "min": 123.7,
+    "max": 199.6,
+    "samples": [
+      199.6,
+      158.2,
+      160.5,
+      151.5,
+      140.2,
+      143.1,
+      123.7,
+      175.1,
+      155.7,
+      127.7
+    ]
+  }
+}

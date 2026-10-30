@@ -1,0 +1,137 @@
+{
+  "app": "tamagui",
+  "bundleId": "dev.asimmalik.uilab.tamagui",
+  "udid": "R5CXA2TFTKP",
+  "platform": "android",
+  "device": {
+    "name": "SM-A156E",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-30T19:05:17.040Z",
+  "poll": {
+    "n": 5,
+    "median": 203.34504200000003,
+    "min": 189.58241599999997,
+    "max": 219.94933399999996,
+    "samples": [
+      219.94933399999996,
+      218.67341699999997,
+      203.34504200000003,
+      201.21237500000007,
+      189.58241599999997
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 3382.826562,
+    "min": 2899.060458,
+    "max": 3507.8762089999946,
+    "samples": [
+      3394.6989579999995,
+      3315.5668339999993,
+      3322.6890410000015,
+      3375.7075829999994,
+      3418.462499999998,
+      3507.8762089999946,
+      3366.9030000000057,
+      3395.5607079999972,
+      2899.060458,
+      3389.945541000001
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 1647.1342290000011,
+    "min": 1613.9824169999993,
+    "max": 1747.4589999999953,
+    "samples": [
+      1701.389458,
+      1613.9824169999993,
+      1614.7084160000013,
+      1650.2381249999999,
+      1635.2218749999993,
+      1747.4589999999953,
+      1620.794667000002,
+      1675.1561250000013,
+      1644.0303330000024,
+      1655.1559579999957
+    ]
+  },
+  "firstFrame": {
+    "n": 10,
+    "median": 1526.5,
+    "min": 1506,
+    "max": 1653,
+    "samples": [
+      1589,
+      1506,
+      1513,
+      1544,
+      1520,
+      1653,
+      1508,
+      1589,
+      1532,
+      1521
+    ]
+  },
+  "memory": {
+    "idle": {
+      "pss": 188939264,
+      "rss": 261180416
+    },
+    "used": {
+      "pss": 237370368,
+      "rss": 317252608
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": false,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 7592,
+    "cpuMs": {
+      "main": 2240,
+      "js": 2940,
+      "other": 3780,
+      "total": 8960
+    },
+    "frames": {
+      "total": 1224,
+      "janky": 1,
+      "p50": 13,
+      "p90": 19,
+      "p99": 31
+    }
+  }
+}

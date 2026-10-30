@@ -1,0 +1,137 @@
+{
+  "app": "reusables",
+  "bundleId": "dev.asimmalik.uilab.reusables",
+  "udid": "R5CXA2TFTKP",
+  "platform": "android",
+  "device": {
+    "name": "SM-A156E",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-30T19:20:54.024Z",
+  "poll": {
+    "n": 5,
+    "median": 198.189125,
+    "min": 185.23920900000002,
+    "max": 201.16991699999994,
+    "samples": [
+      200.517458,
+      185.23920900000002,
+      198.189125,
+      201.16991699999994,
+      192.860541
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 3142.4672290000026,
+    "min": 3057.2521669999987,
+    "max": 3235.6237500000007,
+    "samples": [
+      3148.0890830000003,
+      3235.6237500000007,
+      3081.8026250000003,
+      3179.688666000002,
+      3111.8536669999994,
+      3151.339250000001,
+      3204.9627089999994,
+      3057.2521669999987,
+      3136.8453750000044,
+      3081.0891249999986
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 1621.2875834999995,
+    "min": 1597.3212500000009,
+    "max": 1714.0350420000032,
+    "samples": [
+      1603.5459580000002,
+      1713.9760420000002,
+      1618.760209,
+      1624.1597910000019,
+      1597.3212500000009,
+      1623.814957999999,
+      1714.0350420000032,
+      1606.3249589999978,
+      1628.8420410000035,
+      1609.465458999999
+    ]
+  },
+  "firstFrame": {
+    "n": 10,
+    "median": 1517,
+    "min": 1494,
+    "max": 1602,
+    "samples": [
+      1503,
+      1602,
+      1517,
+      1517,
+      1494,
+      1532,
+      1601,
+      1505,
+      1530,
+      1509
+    ]
+  },
+  "memory": {
+    "idle": {
+      "pss": 181211136,
+      "rss": 252679168
+    },
+    "used": {
+      "pss": 231823360,
+      "rss": 312574976
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 7563,
+    "cpuMs": {
+      "main": 2200,
+      "js": 2470,
+      "other": 3570,
+      "total": 8240
+    },
+    "frames": {
+      "total": 1248,
+      "janky": 1,
+      "p50": 11,
+      "p90": 16,
+      "p99": 21
+    }
+  }
+}

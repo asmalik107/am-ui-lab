@@ -1,0 +1,47 @@
+{
+  "app": "heroui",
+  "bundleId": "dev.asimmalik.uilab.heroui",
+  "udid": "R5CXA2TFTKP",
+  "platform": "android",
+  "device": {
+    "name": "SM-A156E",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-30T19:13:06.919Z",
+  "theme": {
+    "n": 10,
+    "median": 245.55,
+    "min": 209.7,
+    "max": 324.5,
+    "samples": [
+      324.5,
+      223.4,
+      222.7,
+      324.5,
+      221.6,
+      229.3,
+      261.8,
+      209.7,
+      266,
+      266.7
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 202,
+    "min": 180.4,
+    "max": 265,
+    "samples": [
+      265,
+      226.4,
+      211.8,
+      194.3,
+      190.6,
+      209.7,
+      183.7,
+      180.4,
+      224,
+      186.5
+    ]
+  }
+}

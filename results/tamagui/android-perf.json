@@ -1,0 +1,47 @@
+{
+  "app": "tamagui",
+  "bundleId": "dev.asimmalik.uilab.tamagui",
+  "udid": "R5CXA2TFTKP",
+  "platform": "android",
+  "device": {
+    "name": "SM-A156E",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-30T19:02:21.869Z",
+  "theme": {
+    "n": 10,
+    "median": 631.45,
+    "min": 614.6,
+    "max": 640.6,
+    "samples": [
+      640.6,
+      638.1,
+      629,
+      622.3,
+      634.1,
+      627.4,
+      623,
+      633.9,
+      614.6,
+      639.7
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 374,
+    "min": 331.7,
+    "max": 423.4,
+    "samples": [
+      405,
+      374,
+      374,
+      368.5,
+      423.4,
+      331.7,
+      370.9,
+      404.1,
+      418.9,
+      368.1
+    ]
+  }
+}

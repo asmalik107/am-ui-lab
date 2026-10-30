@@ -1,0 +1,137 @@
+{
+  "app": "gluestack",
+  "bundleId": "dev.asimmalik.uilab.gluestack",
+  "udid": "R5CXA2TFTKP",
+  "platform": "android",
+  "device": {
+    "name": "SM-A156E",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-30T19:10:04.451Z",
+  "poll": {
+    "n": 5,
+    "median": 196.82,
+    "min": 193.0224169999999,
+    "max": 216.28041599999995,
+    "samples": [
+      193.100792,
+      196.82,
+      216.28041599999995,
+      203.00699999999995,
+      193.0224169999999
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 3229.1585625000007,
+    "min": 3159.1462500000016,
+    "max": 3305.313000000002,
+    "samples": [
+      3274.163541,
+      3284.127166,
+      3182.343791000001,
+      3159.1462500000016,
+      3174.123374999999,
+      3221.1652920000015,
+      3227.9055829999998,
+      3277.4692080000023,
+      3305.313000000002,
+      3230.4115420000016
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 1564.6618959999996,
+    "min": 1534.5725410000014,
+    "max": 1645.658125,
+    "samples": [
+      1559.0677500000002,
+      1645.658125,
+      1538.7723330000008,
+      1534.5725410000014,
+      1567.8895830000001,
+      1601.4061249999977,
+      1544.3468749999956,
+      1599.1938330000048,
+      1561.434208999999,
+      1581.1135839999988
+    ]
+  },
+  "firstFrame": {
+    "n": 10,
+    "median": 1457,
+    "min": 1428,
+    "max": 1541,
+    "samples": [
+      1460,
+      1541,
+      1428,
+      1438,
+      1454,
+      1497,
+      1435,
+      1502,
+      1468,
+      1448
+    ]
+  },
+  "memory": {
+    "idle": {
+      "pss": 188291072,
+      "rss": 260334592
+    },
+    "used": {
+      "pss": 306635776,
+      "rss": 387507200
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 7486,
+    "cpuMs": {
+      "main": 2370,
+      "js": 2820,
+      "other": 3950,
+      "total": 9140
+    },
+    "frames": {
+      "total": 1280,
+      "janky": 0,
+      "p50": 11,
+      "p90": 18,
+      "p99": 22
+    }
+  }
+}

@@ -9,7 +9,7 @@ A side-by-side comparison of React Native UI libraries. Every library builds the
 Every number below was measured. Where something couldn't be measured, this page says so.
 
 - **Stack:** Expo SDK 57, React Native 0.86.3, React 19.2.3, New Architecture, Reanimated 4.5.1, expo-router.
-- **Test device:** iPhone 17 simulator, iOS 27.0 (Xcode 27.1). All results are from Release builds, except the re-render counts (Debug, see below).
+- **Test device:** iPhone 17 simulator, iOS 27.0 (Xcode 27.1). All results are from Release builds, except the re-render counts (Debug, see below). The timings and metrics were also run on Android, on a Galaxy A15 5G; see [Android](#android-galaxy-a15-5g).
 - **Dates:** first built 22–23 October 2026 on the iPhone 17 Pro simulator with iOS 26.4. Re-run on iOS 27.0 with the slider, progress bar, accordion, menu and segmented control added, the dark and brand audits and the new metrics on 27–28 October. Git history keeps the 26.4 results; what changed is listed under [iOS 27 against iOS 26.4](#ios-27-against-ios-264).
 - **iOS 27 setup step:** Expo SDK 57 apps built with Xcode 27 need the UIKit scene life cycle. Every app adds `expo-build-properties` with `ios.enableSceneSupport: true` (see each app's `NOTES.md`).
 
@@ -272,13 +272,48 @@ Every check was re-run on iOS 27.0, and each change was checked by hand.
   - The others are unchanged at about 32 ms.
 - **List mount:** medians sit on frame multiples (about 82, 98 and 115 ms). Baseline, Uniwind and Reusables moved down a frame (to about 82 ms) and NativeWind up a frame (to 114.7 ms). The ranges overlap.
 
+### Android (Galaxy A15 5G)
+
+The timings and metrics were re-run on a physical Android phone: a Samsung Galaxy A15 5G (SM-A156E), Android 16, on 30 October. It's a budget phone, so it shows what each library costs on slow hardware. Release builds, 10 runs each, with the same `scripts/perf-run.mjs` and `scripts/metrics-run.mjs` given the phone's adb serial. The accessibility, text-size and Reduce Motion checks haven't been run on Android.
+
+| App | Theme switch, median (range) | 200-row list mount, median (range) | Startup until readable | Memory at idle → after use (PSS) | App CPU during 5 list flings | Janky frames |
+| --- | --- | --- | --- | --- | --- | --- |
+| baseline | 92.7 ms (76–124) | 155.7 ms (135–190) | 2.88 s | 163.1 → 213.4 MiB | 8.53 s | 0 of 1,224 |
+| unistyles | 83.2 ms (61–118) | 149.4 ms (133–182) | 2.98 s | 163.7 → 220.3 MiB | 9.12 s | 0 of 1,290 |
+| uniwind | 126.0 ms (97–181) | 169.6 ms (146–201) | 2.92 s | 160.6 → 217.2 MiB | 9.08 s | 0 of 1,286 |
+| nativewind | 182.3 ms (150–232) | 181.5 ms (159–277) | 2.94 s | 161.0 → 208.5 MiB | 9.34 s | 0 of 1,250 |
+| tamagui | 631.5 ms (615–641) | 374.0 ms (332–423) | 3.38 s | 180.2 → 226.4 MiB | 8.96 s | 1 of 1,224 |
+| gluestack | 158.1 ms (137–238) | 153.6 ms (124–200) | 3.23 s | 179.6 → 292.4 MiB | 9.14 s | 0 of 1,280 |
+| heroui | 245.6 ms (210–325) | 202.0 ms (180–265) | 3.35 s | 197.8 → 416.3 MiB | 10.31 s | 0 of 1,260 |
+| reusables | 100.7 ms (68–107) | 157.4 ms (145–200) | 3.14 s | 172.8 → 221.1 MiB | 8.24 s | 1 of 1,248 |
+
+What the phone shows that the simulator didn't:
+
+- **Tamagui** takes 632 ms to switch theme, about 7 times the baseline, and 374 ms to mount the list, 2.4 times the baseline. On the simulator it was also the slowest theme switch (99 ms), but the gap was much smaller.
+- **HeroUI's** memory roughly doubles after the list and overlays (198 → 416 MiB). The other apps grow by about 50 MiB, except gluestack (112 MiB). Its theme switch is the second slowest, at 246 ms.
+- **The styling engines** stay near the baseline. Unistyles and Reusables are within noise of it. Uniwind and NativeWind are slower to switch theme (126 and 182 ms), but their ranges overlap the baseline's.
+- **Scrolling** is smooth in every app: at most 1 janky frame in about 1,250.
+
+How to read these numbers:
+
+- **Device and conditions:** the phone was on charge with power saving off and no thermal throttling. It warmed from 32.5 °C to 34.8 °C over the run. The apps ran in the order baseline, unistyles, uniwind, tamagui, gluestack, heroui, reusables, nativewind, with a minute's pause between them, so the baseline ran on the coolest phone.
+- **Startup until readable:** from the launch command until "Component test screen" is in the accessibility tree, which is when TalkBack could first read it. As on iOS, the apps sit close together (2.88–3.38 s), so read them as a group. Android's own first-frame time (`am start -W` TotalTime) is in each app's `results/<app>/android-metrics.md`. Here that first frame is the splash screen.
+- **Memory:** total PSS from `dumpsys meminfo`. That isn't the same measure as iOS's `phys_footprint`, so compare apps within one platform only.
+- **CPU:** user plus system time of the app's threads, read from `/proc` before and after the flings, in 10 ms ticks.
+- **Janky frames:** from `dumpsys gfxinfo`, which the iOS simulator has no equivalent for.
+- **Idle CPU:** in a one-off check, with the app sitting on the test screen for 10 s, most apps used about 5.8 s of CPU. That is mostly the always-spinning "Saving" indicator. HeroUI used 9.1 s and Reusables 1.1 s.
+
+Two fixes came out of the Android run. The timing readout sat on the header title on Android, so it moved to the bottom-left there; it stays at the top on iOS. Gluestack's header was always white: `useTokenColor` built class names at runtime, so Tailwind never generated `accent-surface`, `accent-background` or `accent-card`.
+
+An Android emulator was tried first. Emulator 37.1 and 37.2 crashed repeatedly in their gRPC server, and a fresh virtual device later slowed until every command timed out, so no emulator numbers are reported.
+
 ## Limits
 
 - Simulators expose the accessibility tree. They don't let you hear VoiceOver, check swipe order as spoken, or test Switch Control. Those need a device.
 - The slider check drags the thumb. VoiceOver's own swipe up (the increment action) can't be performed on the simulator without VoiceOver running.
 - Some kit elements are in the system accessibility tree but not in argent's view-hierarchy walk: Tamagui's Progress and its native menu button. For the slider, progress bar, accordion, menu and segmented control, the audit reads those from the system tree. It gives role, label, value and size, but not the selected state, and sizes only to about ±0.4 pt. Those cells say "(system tree)".
 - Frame hitches and first paint aren't measured (see above).
-- Android and TalkBack have not been tested yet.
+- On Android only the timings and metrics have been run, on one budget phone. The accessibility audit, text size, Reduce Motion and TalkBack haven't been tested there.
 - The timing clock runs in JS. Libraries that apply styles natively (Unistyles, Tamagui's native runtime) may do work it doesn't see.
 - The Tamagui **Debug** build aborted on a React Native Yoga layout assertion on iOS 26.4 when the `@expo/ui` Host sat below the form sections. Release builds are unaffected; see the re-render table for iOS 27.
 - Tamagui's RadioGroup doesn't draw its selected dot in this build, although the tree reports it as checked. This may come from the lab's theme setup (the `brand` theme renamed to `labBrand`) rather than from Tamagui.
@@ -298,6 +333,24 @@ For the re-render counts, build Debug, start Metro and install with `scripts/aud
 
 ```bash
 node scripts/rerender-run.mjs <app> dev.asimmalik.uilab.<app> <simulator-udid>
+```
+
+On Android, build and install each app, then pass the device's adb serial instead of a simulator UDID. Results go to `results/<app>/android-*`:
+
+```bash
+scripts/build-android.sh <app> Release
+```
+
+```bash
+adb -s <serial> install -r -g apps/<app>/android/app/build/outputs/apk/release/app-release.apk
+```
+
+```bash
+node scripts/perf-run.mjs <app> dev.asimmalik.uilab.<app> <serial>
+```
+
+```bash
+node scripts/metrics-run.mjs <app> dev.asimmalik.uilab.<app> <serial>
 ```
 
 These need [argent](https://github.com/software-mansion/argent) for simulator control, plus ffmpeg. `scripts/contrast.mjs` checks the shared tokens against WCAG contrast; `scripts/devcost.mjs` and `scripts/bundle-size.mjs` produce the cost table and bundle sizes.

@@ -31,7 +31,15 @@ export function useThemeName() {
 // options, the @expo/ui Host, RN Switch trackColor). Uniwind's documented route
 // is useResolveClassNames; `accent-*` utilities resolve to style.accentColor.
 // https://docs.uniwind.dev/api/use-resolve-class-names
-export function useTokenColor(token: string): string | undefined {
-  const style = useResolveClassNames(`accent-${token}`) as { accentColor?: string };
+const accentClass = {
+  surface: 'accent-surface',
+  foreground: 'accent-foreground',
+  background: 'accent-background',
+  primary: 'accent-primary',
+  card: 'accent-card',
+} as const;
+
+export function useTokenColor(token: keyof typeof accentClass): string | undefined {
+  const style = useResolveClassNames(accentClass[token]) as { accentColor?: string };
   return style.accentColor;
 }

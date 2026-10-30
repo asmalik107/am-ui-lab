@@ -55,10 +55,16 @@ async function waitFor(pred, ms = 8000) {
 // Scrolls until the element is on screen. The system tree only lists what is
 // visible, so the view hierarchy (which lists everything) gives the direction.
 async function scrollTo(id) {
-  for (let i = 0; i < 14; i++) {
-    const e = byId(axTree(), id);
+  let down = true;
+  let last = '';
+  for (let i = 0; i < 40; i++) {
+    const els = axTree();
+    const e = byId(els, id);
     if (e && e.y > 0.12 && e.y + e.h < 0.92) return e;
-    const up = platform === 'android' ? (e ? e.y < 0.12 : i >= 7) : aboveOnIos(id);
+    const seen = els.map((x) => x.label).join('|');
+    if (!e && seen === last) down = !down;
+    last = seen;
+    const up = platform === 'android' ? (e ? e.y < 0.12 : !down) : aboveOnIos(id);
     argent('gesture-swipe', { fromX: 0.5, fromY: up ? 0.35 : 0.65, toX: 0.5, toY: up ? 0.65 : 0.35, momentum: false, durationMs: 300 });
     await sleep(400);
   }

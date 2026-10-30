@@ -29,6 +29,8 @@ const data = Object.fromEntries(apps.map(([a]) => [a, {
   motion: load(a, 'ios-motion.json'),
   perf: load(a, 'ios-perf.json'),
   bundle: load(a, 'bundle.json'),
+  androidPerf: load(a, 'android-perf.json'),
+  androidMetrics: load(a, 'android-metrics.json'),
 }]));
 
 // Rows in first-seen order across apps, so extra checks (sheet variants) slot in.
@@ -243,11 +245,11 @@ const num = (a, f) => {
 // when measured twice (the baseline on 27 and 28 Oct), so a reader can tell a
 // real gap from noise.
 const metricCharts = [
-  ['Startup until readable by VoiceOver, median of 10', 'From the launch-app call until the screen title is in the accessibility tree. Not first paint.', 'Not meaningful between apps: every app is 7.8–9.4 s, and the baseline measured 4.8 s one day and 8.1 s the next.', (d) => d.metrics.startup.median, (v) => `${v.toFixed(0)} ms`],
+  ['Startup until readable by VoiceOver, median of 10', 'From the launch-app call until the screen title is in the accessibility tree. Not first paint.', 'Not meaningful between apps: every app is 7.9–8.4 s, and the same build has measured 4.8 s one day and 8.1 s the next.', (d) => d.metrics.startup.median, (v) => `${v.toFixed(0)} ms`],
   ['Memory at idle', 'phys_footprint 5 s after launch. Lower is better.', 'The baseline measured twice differed by 0.3 MiB, so the kits’ 12–28 MiB more than the baseline’s 63 MiB is real.', (d) => d.metrics.memory.idle.physFootprint / 1048576, (v) => `${v.toFixed(1)} MiB`],
-  ['Memory after use', 'After scrolling the 200-row list and opening every overlay once. Lower is better.', 'The baseline measured twice differed by 2.4 MiB; Tamagui (162 MiB) stands out; the rest are within about 20 MiB of the baseline’s 122–124.', (d) => d.metrics.memory.used.physFootprint / 1048576, (v) => `${v.toFixed(1)} MiB`],
+  ['Memory after use', 'After scrolling the 200-row list and opening every overlay once. Lower is better.', 'The baseline measured twice differed by 2.4 MiB; Tamagui (161 MiB) stands out; the rest are within about 20 MiB of the baseline’s 124.', (d) => d.metrics.memory.used.physFootprint / 1048576, (v) => `${v.toFixed(1)} MiB`],
   ['App CPU time during 5 list flings', 'CPU used by all of the app’s threads over 7.5 s of flinging. Lower is better.', 'The baseline measured twice differed by 0.2 s (1.95 and 2.16 s), so only HeroUI (2.5 s) stands apart. No app had a main-thread hang.', (d) => d.metrics.scroll.cpuMs.total, (v) => `${v.toFixed(0)} ms`],
-  ['Theme switch, median', 'From the tap to the second frame after the update.', 'One frame is 16.7 ms, so about 32 ms means it finished within a frame. Only Tamagui (6 frames) and HeroUI (depends on direction, 32–65 ms) take longer.', (d) => d.perf.theme.median, (v) => `${v.toFixed(1)} ms`],
+  ['Theme switch, median', 'From the tap to the second frame after the update.', 'One frame is 16.7 ms, so about 32 ms means it finished within a frame. Only Tamagui (6 frames) takes longer.', (d) => d.perf.theme.median, (v) => `${v.toFixed(1)} ms`],
   ['200-row list mount, median', 'From the tap to the second frame after the list’s first layout.', 'Results land on frame steps (about 82, 98 and 115 ms) and each app’s 10 runs span two to four of them, so a one-step difference is noise.', (d) => d.perf.list.median, (v) => `${v.toFixed(1)} ms`],
   ['iOS JS bundle', 'Hermes bytecode from expo export, with all 19 items.', 'Exact, with no run-to-run noise. The baseline is plain React Native, so the gap to it is what the library adds.', (d) => d.bundle.iosHbcBytes / 1e6, (v) => `${v.toFixed(2)} MB`],
   ['Components re-rendered on one theme switch', 'Light → dark, counted by argent’s React profiler on a Debug build. Fewer means less work for React.', 'Counts repeat closely for light → dark and dark → brand in every app, but brand → light can be lower (Uniwind 302 against 507). Tamagui isn’t measured: its Debug build aborts.', (d) => d.metrics.rerenders.switches[0].renders, (v) => `${v}`],
@@ -259,6 +261,41 @@ const metricCharts = [
   const max = Math.max(...rows.map((r) => r.value ?? 0)) || 1;
   return figure(`metric-${i}`, title, note, rows, max, title, read);
 }).join('\n');
+
+const androidCharts = [
+  ['Theme switch, median', 'From the tap to the second frame after the update. Lower is better.', 'Each app’s 10 runs spread over 30–110 ms, so only gaps bigger than that are real: Tamagui (632 ms) and HeroUI (246 ms).', (d) => d.androidPerf.theme.median, (v) => `${v.toFixed(1)} ms`],
+  ['200-row list mount, median', 'From the tap to the second frame after the list’s first layout. Lower is better.', 'Most apps sit at 150–180 ms with overlapping ranges. Tamagui (374 ms) stands out.', (d) => d.androidPerf.list.median, (v) => `${v.toFixed(1)} ms`],
+  ['Startup until readable by TalkBack, median of 10', 'From the launch command until the screen title is in the accessibility tree. Not first paint.', 'Every app is 2.9–3.4 s, so read it as a group, not a ranking.', (d) => d.androidMetrics.startup.median, (v) => `${v.toFixed(0)} ms`],
+  ['Memory at idle', 'Total PSS from dumpsys meminfo, 5 s after launch. Lower is better. Not comparable with iOS phys_footprint.', 'The kits use 10–35 MiB more than the baseline’s 163 MiB.', (d) => d.androidMetrics.memory.idle.pss / 1048576, (v) => `${v.toFixed(1)} MiB`],
+  ['Memory after use', 'After scrolling the list and opening every overlay once. Lower is better.', 'Most apps grow by about 50 MiB. HeroUI (416 MiB) and gluestack (292 MiB) grow far more.', (d) => d.androidMetrics.memory.used.pss / 1048576, (v) => `${v.toFixed(1)} MiB`],
+  ['App CPU time during 5 list flings', 'User plus system time of the app’s threads over 7.5 s of flinging, from /proc. Lower is better.', 'Most apps use 8.2–9.3 s. HeroUI (10.3 s) uses the most.', (d) => d.androidMetrics.scroll.cpuMs.total, (v) => `${v.toFixed(0)} ms`],
+  ['Janky frames during the flings', 'Frames dumpsys gfxinfo marks as janky, out of about 1,250. Lower is better.', 'At most 1 janky frame in any app, so scrolling is smooth everywhere.', (d) => d.androidMetrics.scroll.frames.janky, (v) => `${v}`],
+].map(([title, note, read, get, fmt], i) => {
+  const rows = apps.map(([a, name]) => {
+    const v = num(a, get);
+    return { label: name, value: v, text: v == null ? 'not measured' : fmt(v) };
+  });
+  const max = Math.max(...rows.map((r) => r.value ?? 0)) || 1;
+  return figure(`android-${i}`, title, note, rows, max, title, read);
+}).join('\n');
+const androidMs = (v) => (v == null ? '–' : `${v.toFixed(1)} ms`);
+const androidMiB = (v) => (v == null ? '–' : `${(v / 1048576).toFixed(1)} MiB`);
+const androidRows = [
+  ['Theme switch, median (range)', (d) => `${androidMs(d.androidPerf.theme.median)} (${d.androidPerf.theme.min.toFixed(0)}–${d.androidPerf.theme.max.toFixed(0)})`],
+  ['200-row list mount, median (range)', (d) => `${androidMs(d.androidPerf.list.median)} (${d.androidPerf.list.min.toFixed(0)}–${d.androidPerf.list.max.toFixed(0)})`],
+  ['Startup until readable, median', (d) => `${(d.androidMetrics.startup.median / 1000).toFixed(2)} s`],
+  ['First frame (am start -W TotalTime), median', (d) => `${d.androidMetrics.firstFrame.median.toFixed(0)} ms`],
+  ['Memory at idle (PSS)', (d) => androidMiB(d.androidMetrics.memory.idle.pss)],
+  ['Memory after use (PSS)', (d) => androidMiB(d.androidMetrics.memory.used.pss)],
+  ['App CPU during 5 list flings', (d) => `${(d.androidMetrics.scroll.cpuMs.total / 1000).toFixed(2)} s`],
+  ['Janky frames during the flings', (d) => `${d.androidMetrics.scroll.frames.janky} of ${d.androidMetrics.scroll.frames.total}`],
+  ['Frame time, 50th / 90th / 99th percentile', (d) => `${d.androidMetrics.scroll.frames.p50} / ${d.androidMetrics.scroll.frames.p90} / ${d.androidMetrics.scroll.frames.p99} ms`],
+].map(([label, fn]) => `<tr><th scope="row">${label}</th>${apps.map(([a]) => `<td>${esc(num(a, fn) ?? '–')}</td>`).join('')}</tr>`).join('\n');
+const androidDevice = apps.map(([a]) => data[a].androidMetrics?.device).find(Boolean);
+const phoneNames = { 'SM-A156E': 'Samsung Galaxy A15 5G' };
+const androidDeviceText = androidDevice
+  ? `the ${phoneNames[androidDevice.name] ? `${phoneNames[androidDevice.name]} (${androidDevice.name})` : androidDevice.name} running ${androidDevice.runtime}`
+  : 'an Android device';
 
 // Developer cost, from results/devcost.json (scripts/devcost.mjs).
 const devcostFile = new URL('results/devcost.json', root);
@@ -339,16 +376,16 @@ tr.score th[scope="row"] { background: var(--bg); }
 <body>
 <main>
 <h1>UI library checks</h1>
-<p>Every check run on every app, generated from <code>results/</code> by <code>scripts/report-html.mjs</code>. All apps build the same test screen; results are from Release builds on ${esc(deviceText)}. The accessibility checks read the iOS accessibility tree, which is what VoiceOver is given. They don't hear what it says. Hover a cell for the measured detail.</p>
+<p>Every check run on every app, generated from <code>results/</code> by <code>scripts/report-html.mjs</code>. All apps build the same test screen. iOS results are from Release builds on ${esc(deviceText)}; Android results are from Release builds on ${esc(androidDeviceText)}. The accessibility checks read the iOS accessibility tree, which is what VoiceOver is given. They don't hear what it says. Hover a cell for the measured detail.</p>
 <div class="legend"><span>✓ pass</span><span>✗ fail</span><span>– not applicable (the app has no such element)</span><span>n/r not run (the test could not start)</span><span>* NativeWind results use a line-height workaround; see apps/nativewind/NOTES.md</span></div>
 
-<h2>Scores at a glance</h2>
+<h2>iOS: accessibility scores at a glance</h2>
 <p>Each chart is one group of accessibility checks; a bar is the share of that group's checks the app passed, with the count at its end. Green means it passed every check in the group. The full spec is in <code>docs/method.md</code>, and every check is listed in the table below.</p>
 <div class="charts">
 ${scoreCharts}
 </div>
 
-<h2>Accessibility checks (iOS)</h2>
+<h2>iOS: accessibility checks</h2>
 <div class="wrap"><table>
 <thead><tr><th>#</th><th scope="col" class="check">Check</th>${apps.map(([, name, kind]) => `<th scope="col">${esc(name)}<small>${esc(kind)}</small></th>`).join('')}</tr></thead>
 <tbody>
@@ -359,17 +396,17 @@ ${checkRows}
 </tbody>
 </table></div>
 
-<h2>Dark and brand themes</h2>
+<h2>iOS: dark and brand themes</h2>
 <p>Every check also ran with the app switched to its dark and brand themes. The grid above shows light; this lists every check whose result changed.</p>
 ${themeDiffHtml}
 
-<h2>Startup, memory, scrolling, timings and size</h2>
+<h2>iOS: startup, memory, scrolling, timings and size</h2>
 <p>Bars compare the eight apps on one measure; shorter is better on every chart here. Under each chart, “How to read it” says how much the same app moved when measured twice, so you can tell a real gap from noise. Frame hitches couldn’t be measured on the simulator (xctrace: “Hitches is not supported on this platform”), so scrolling is shown as the app’s CPU time while flinging the list.</p>
 <div class="charts">
 ${metricCharts}
 </div>
 
-<h2>Text size, motion, timings and size</h2>
+<h2>iOS: text size, motion, timings and size</h2>
 <p>Transition times come from a real-time screen recording; an instant change is one frame (33 ms). Timings are medians of 10 runs, accurate to one frame (16.7 ms).</p>
 <div class="wrap"><table>
 <thead><tr><th scope="col" class="check">Measure</th>${apps.map(([, name]) => `<th scope="col">${esc(name)}</th>`).join('')}</tr></thead>
@@ -377,7 +414,19 @@ ${metricCharts}
 ${otherRows}
 </tbody>
 </table></div>
-<h2>Developer cost</h2>
+<h2>Android: timings, startup, memory and scrolling</h2>
+<p>The same timing and metrics scripts, run on ${esc(androidDeviceText)}, a physical budget phone. Release builds, 10 runs each. Accessibility, text size and Reduce Motion haven’t been checked on Android yet. Memory is total PSS from dumpsys meminfo, so compare apps within Android, not with iOS.</p>
+<div class="charts">
+${androidCharts}
+</div>
+<div class="wrap"><table>
+<thead><tr><th scope="col" class="check">Measure</th>${apps.map(([, name]) => `<th scope="col">${esc(name)}</th>`).join('')}</tr></thead>
+<tbody>
+${androidRows}
+</tbody>
+</table></div>
+
+<h2>Developer cost (both platforms)</h2>
 <p>Counted with <code>scripts/devcost.mjs</code>${devcost ? ` on ${esc(devcost.date)}` : ''}. What it would cost a developer to build the same screen with each library. Each row says what it counts and how.</p>
 <div class="wrap"><table>
 <thead><tr><th scope="col" class="check">Count</th>${apps.map(([, name]) => `<th scope="col">${esc(name)}</th>`).join('')}</tr></thead>

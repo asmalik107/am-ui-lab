@@ -12,7 +12,8 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
-import { deviceInfo } from './device.mjs';
+import { androidA11y } from './android-a11y.mjs';
+import { deviceInfo, platformOf } from './device.mjs';
 
 const [app, bundleId, udid] = process.argv.slice(2);
 if (!app || !bundleId || !udid) {
@@ -20,16 +21,30 @@ if (!app || !bundleId || !udid) {
   process.exit(1);
 }
 const device = deviceInfo(udid);
+const android = platformOf(udid) === 'android';
+const platform = android ? 'android' : 'ios';
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const argent = (tool, args) =>
   JSON.parse(execFileSync('argent', ['run', tool, '--json', '--args', JSON.stringify({ udid, ...args })], { encoding: 'utf8', maxBuffer: 64 << 20 }));
-const setReduceMotion = (on) =>
-  execFileSync('xcrun', ['simctl', 'spawn', udid, 'defaults', 'write', 'com.apple.Accessibility', 'ReduceMotionEnabled', '-bool', on ? 'true' : 'false']);
+const swipe = (dy) => argent('gesture-swipe', { fromX: 0.5, fromY: 0.5 + dy / 2, toX: 0.5, toY: 0.5 - dy / 2, momentum: false, durationMs: 300 });
+const droid = android && androidA11y({ udid, bundleId, swipe, sleep });
+const scales = ['animator_duration_scale', 'transition_animation_scale', 'window_animation_scale'];
+const restoreScales = [];
+const setReduceMotion = (on) => {
+  if (!android) return execFileSync('xcrun', ['simctl', 'spawn', udid, 'defaults', 'write', 'com.apple.Accessibility', 'ReduceMotionEnabled', '-bool', on ? 'true' : 'false']);
+  for (const key of scales) {
+    const restore = droid.setting('global', key, on ? 0 : 1);
+    if (restoreScales.length < scales.length) restoreScales.push(restore);
+  }
+};
+const restoreMotion = () => (android ? restoreScales.forEach((r) => r()) : setReduceMotion(false));
+if (android) process.on('exit', restoreMotion);
 
 function axTree() {
+  if (android) return droid.focusable();
   const els = [];
   for (const line of argent('describe', {}).description.split('\n')) {
     const m = line.match(/^\s+(AX\w+)(?: "((?:[^"\\]|\\.)*)")?(?: value="((?:[^"\\]|\\.)*)")?(?: id="([^"]*)")?\s+\(([\d.]+), ([\d.]+), ([\d.]+), ([\d.]+)\)/);
@@ -40,6 +55,7 @@ function axTree() {
   return els;
 }
 async function scrollTo(id) {
+  if (android) return droid.reach(id);
   for (let i = 0; i < 14; i++) {
     const e = axTree().find((x) => x.identifier === id);
     if (e && e.y > 0.12 && e.y + e.h < 0.85) return e;
@@ -61,9 +77,9 @@ async function scrollTo(id) {
 // An instant change is one frame (33 ms at 30 fps).
 const THRESHOLD = 1.0;
 function transitionMs(file) {
-  const out = execFileSync('ffmpeg', ['-v', 'error', '-i', file, '-vf', 'tblend=all_mode=difference,signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=-', '-f', 'null', '-'], { encoding: 'utf8', maxBuffer: 64 << 20 });
+  const out = execFileSync('ffmpeg', ['-v', 'error', '-i', file, '-vf', `${android ? 'fps=30,' : ''}tblend=all_mode=difference,signalstats,metadata=print:key=lavfi.signalstats.YAVG:file=-`, '-f', 'null', '-'], { encoding: 'utf8', maxBuffer: 64 << 20 });
   const diffs = [...out.matchAll(/YAVG=([\d.]+)/g)].map((m) => Number(m[1]));
-  const fps = Number(execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=r_frame_rate', '-of', 'csv=p=0', file], { encoding: 'utf8' }).trim().split('/').reduce((n, d) => n / d));
+  const fps = android ? 30 : Number(execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=r_frame_rate', '-of', 'csv=p=0', file], { encoding: 'utf8' }).trim().split('/').reduce((n, d) => n / d));
   const skip = Math.round(fps * 0.3); // recorder start-up
   let peak = skip;
   for (let i = skip; i < diffs.length; i++) if (diffs[i] > diffs[peak]) peak = i;
@@ -103,14 +119,16 @@ try {
     }
   }
 } finally {
-  setReduceMotion(false); // never leave the simulator with Reduce Motion on
+  restoreMotion();
 }
 
-writeFileSync(new URL('ios-motion.json', outDir), JSON.stringify({ app, bundleId, udid, device, date: new Date().toISOString(), runs }, null, 2));
+writeFileSync(new URL(`${platform}-motion.json`, outDir), JSON.stringify({ app, bundleId, udid, platform, device, date: new Date().toISOString(), runs }, null, 2));
 const md = [
-  `# ${app}: Reduce Motion`,
+  `# ${app}: ${android ? 'Remove animations' : 'Reduce Motion'}`,
   '',
-  `Run ${new Date().toISOString().slice(0, 10)} on the ${device.name} simulator (${device.runtime}) with \`scripts/motion-test.mjs\`. Transition duration of the open, from a real-time 30 fps screen recording: the run of visibly changing frames (mean luma difference above 1.0) around the largest change, which is the overlay appearing. An instant change is one frame (33 ms); an animation lasts as long as it runs. Reduce Motion was set before launch; switching it while the app runs was not tested.`,
+  android
+    ? `Run ${new Date().toISOString().slice(0, 10)} on the ${device.name} (${device.runtime}) with \`scripts/motion-test.mjs\`. Android's Remove animations sets the animator, transition and window animation scales to 0, which is what React Native's isReduceMotionEnabled and Reanimated read. The phone's variable-rate recording is resampled to 30 fps, so one frame is 33 ms as on iOS. Set before launch.`
+    : `Run ${new Date().toISOString().slice(0, 10)} on the ${device.name} simulator (${device.runtime}) with \`scripts/motion-test.mjs\`. Transition duration of the open, from a real-time 30 fps screen recording: the run of visibly changing frames (mean luma difference above 1.0) around the largest change, which is the overlay appearing. An instant change is one frame (33 ms); an animation lasts as long as it runs. Reduce Motion was set before launch; switching it while the app runs was not tested.`,
   '',
   '| Component | Reduce Motion off | Reduce Motion on |',
   '| --- | --- | --- |',
@@ -121,5 +139,5 @@ const md = [
   }),
   '',
 ].join('\n');
-writeFileSync(new URL('ios-motion.md', outDir), md);
+writeFileSync(new URL(`${platform}-motion.md`, outDir), md);
 console.log(md);

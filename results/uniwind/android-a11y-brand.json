@@ -1,0 +1,6448 @@
+{
+  "app": "uniwind",
+  "bundleId": "dev.asimmalik.uilab.uniwind",
+  "udid": "R5CXA2TFTKP",
+  "platform": "android",
+  "device": {
+    "name": "SM-A156E",
+    "runtime": "Android 16 (API 36)"
+  },
+  "theme": "brand",
+  "date": "2026-10-31T21:59:51.614Z",
+  "findings": [
+    {
+      "component": "Button",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Save workout\" value=\"\" traits=[button] 352×48dp"
+    },
+    {
+      "component": "Button",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "352×48dp"
+    },
+    {
+      "component": "Button (disabled)",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Unavailable\" value=\"\" traits=[button, notEnabled] 352×48dp"
+    },
+    {
+      "component": "Button (disabled)",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "352×48dp"
+    },
+    {
+      "component": "Button (loading)",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"busy\" value=\"\" traits=[button, notEnabled] 352×48dp"
+    },
+    {
+      "component": "Button (loading)",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "352×48dp"
+    },
+    {
+      "component": "Text field",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Email\" value=\"\" traits=[] 352×48dp"
+    },
+    {
+      "component": "Switch",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Workout reminders\" value=\"checked\" traits=[toggleButton] 352×48dp"
+    },
+    {
+      "component": "Switch",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "352×48dp"
+    },
+    {
+      "component": "Checkbox",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"I agree to the terms\" value=\"unchecked\" traits=[checkbox] 352×48dp"
+    },
+    {
+      "component": "Checkbox",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "352×48dp"
+    },
+    {
+      "component": "Radio option",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Beginner\" value=\"checked\" traits=[radio] 352×48dp"
+    },
+    {
+      "component": "Radio option",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "352×48dp"
+    },
+    {
+      "component": "Select trigger",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Rest time, 60 seconds\" value=\"collapsed\" traits=[combobox] role=\"Combo box\" 352×48dp"
+    },
+    {
+      "component": "Select trigger",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "352×48dp"
+    },
+    {
+      "component": "Tab (selected)",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"Today\" value=\"selected\" traits=[selected, tab] role=\"Tab\" 117×48dp"
+    },
+    {
+      "component": "Tab (selected)",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "117×48dp"
+    },
+    {
+      "component": "Native switch (@expo/ui)",
+      "check": "name, role, state",
+      "pass": true,
+      "detail": "label=\"\" value=\"Off, unchecked\" traits=[] 52×48dp"
+    },
+    {
+      "component": "Native switch (@expo/ui)",
+      "check": "target ≥ 48dp",
+      "pass": false,
+      "detail": "52×47.6dp"
+    },
+    {
+      "component": "Radio group",
+      "check": "all options exposed",
+      "pass": true,
+      "detail": "3 options found"
+    },
+    {
+      "component": "Radio group",
+      "check": "group label read",
+      "pass": true,
+      "detail": "label text \"Experience level\" in tree"
+    },
+    {
+      "component": "Text field",
+      "check": "error shown",
+      "pass": true,
+      "detail": "error text in tree"
+    },
+    {
+      "component": "Text field",
+      "check": "error reachable from field",
+      "pass": true,
+      "detail": "label=\"Email\" value=\"not-an-email\" traits=[] 352×48dp hint=\"Enter a valid email address.\""
+    },
+    {
+      "component": "Dialog",
+      "check": "opens",
+      "pass": true,
+      "detail": "title in tree"
+    },
+    {
+      "component": "Dialog",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": true,
+      "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Dialog",
+      "check": "title is a heading",
+      "pass": true,
+      "detail": "AXHeading label=\"Delete this workout?\""
+    },
+    {
+      "component": "Dialog",
+      "check": "actions are buttons",
+      "pass": true,
+      "detail": "AXButton label=\"Cancel\""
+    },
+    {
+      "component": "Dialog",
+      "check": "closes",
+      "pass": true,
+      "detail": "title gone"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "opens",
+      "pass": true,
+      "detail": "sheet content in tree"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "title and body readable",
+      "pass": true,
+      "detail": "title in tree"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": false,
+      "detail": "still exposed: Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-menu-open, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "closes",
+      "pass": true,
+      "detail": "sheet gone"
+    },
+    {
+      "component": "Bottom sheet",
+      "check": "screen reachable again after close",
+      "pass": true,
+      "detail": "screen controls back in system tree"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "opens",
+      "pass": true,
+      "detail": "sheet content in tree"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "title and body readable",
+      "pass": true,
+      "detail": "title in tree"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": true,
+      "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "closes",
+      "pass": true,
+      "detail": "sheet gone"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "screen reachable again after close",
+      "pass": true,
+      "detail": "screen controls back in system tree"
+    },
+    {
+      "component": "Select",
+      "check": "opens",
+      "pass": true,
+      "detail": "options in tree"
+    },
+    {
+      "component": "Select",
+      "check": "current option marked",
+      "pass": true,
+      "detail": "AXRadioButton label=\"60 seconds\" value=\"checked\""
+    },
+    {
+      "component": "Select",
+      "check": "options are actionable",
+      "pass": true,
+      "detail": "AXRadioButton label=\"30 seconds\" value=\"unchecked\" | AXRadioButton label=\"45 seconds\" value=\"unchecked\" | AXRadioButton label=\"60 seconds\" value=\"checked\" | AXRadioButton label=\"90 seconds\" value=\"unchecked\" | AXRadioButton label=\"2 minutes\" value=\"unchecked\""
+    },
+    {
+      "component": "Select",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": true,
+      "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Select",
+      "check": "new value read on trigger",
+      "pass": true,
+      "detail": "label=\"Rest time, 90 seconds\" value=\"collapsed\" traits=[combobox] role=\"Combo box\" 352×48dp"
+    },
+    {
+      "component": "Toast",
+      "check": "in accessibility tree",
+      "pass": true,
+      "detail": "AXTextView label=\"Set logged\""
+    },
+    {
+      "component": "Slider",
+      "check": "name, role, value",
+      "pass": true,
+      "detail": "label=\"Weight, 60 kg\" value=\"60\" traits=[adjustable] 352×48dp"
+    },
+    {
+      "component": "Slider",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "352×48dp"
+    },
+    {
+      "component": "Slider",
+      "check": "dragging changes the value",
+      "pass": true,
+      "detail": "value \"60\" → \"180\""
+    },
+    {
+      "component": "Progress",
+      "check": "name and value",
+      "pass": true,
+      "detail": "label=\"Workout progress, 3 of 8 exercises\" value=\"3\" traits=[] role=\"Progress bar\" 352×8dp"
+    },
+    {
+      "component": "Accordion",
+      "check": "header is a button",
+      "pass": true,
+      "detail": "label=\"Warm-up\" value=\"collapsed\" traits=[button] 350×48dp"
+    },
+    {
+      "component": "Accordion",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "350×48dp"
+    },
+    {
+      "component": "Accordion",
+      "check": "expanded state exposed",
+      "pass": true,
+      "detail": "closed: label=\"Warm-up\" value=\"collapsed\" traits=[button] 350×48dp; open: label=\"Warm-up\" value=\"expanded\" traits=[button] 350×48dp"
+    },
+    {
+      "component": "Accordion",
+      "check": "content shows and hides",
+      "pass": true,
+      "detail": "panel text appeared; gone after second tap"
+    },
+    {
+      "component": "Menu",
+      "check": "trigger name and role",
+      "pass": true,
+      "detail": "label=\"Workout options\" value=\"\" traits=[button] 352×48dp"
+    },
+    {
+      "component": "Menu",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "352×48dp"
+    },
+    {
+      "component": "Menu",
+      "check": "opens",
+      "pass": true,
+      "detail": "all three actions in tree"
+    },
+    {
+      "component": "Menu",
+      "check": "items are buttons",
+      "pass": true,
+      "detail": "AXButton label=\"Duplicate\" | AXButton label=\"Share\" | AXButton label=\"Archive\""
+    },
+    {
+      "component": "Menu",
+      "check": "screen behind is hidden from VoiceOver",
+      "pass": true,
+      "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Menu",
+      "check": "closes after an action",
+      "pass": true,
+      "detail": "actions gone"
+    },
+    {
+      "component": "Segmented control",
+      "check": "options have name and role",
+      "pass": true,
+      "detail": "label=\"Week\" value=\"selected\" traits=[button, selected] 116×48dp | label=\"Month\" value=\"\" traits=[button] 115×48dp | label=\"Year\" value=\"\" traits=[button] 116×48dp"
+    },
+    {
+      "component": "Segmented control",
+      "check": "selected option marked",
+      "pass": true,
+      "detail": "label=\"Week\" value=\"selected\" traits=[button, selected] 116×48dp | label=\"Month\" value=\"\" traits=[button] 115×48dp | label=\"Year\" value=\"\" traits=[button] 116×48dp"
+    },
+    {
+      "component": "Segmented control",
+      "check": "target ≥ 48dp",
+      "pass": true,
+      "detail": "116×48dp"
+    },
+    {
+      "component": "Segmented control",
+      "check": "selection moves on tap",
+      "pass": true,
+      "detail": "label=\"Week\" value=\"\" traits=[button] 116×48dp | label=\"Month\" value=\"selected\" traits=[button, selected] 115×48dp"
+    }
+  ],
+  "states": {
+    "main": [
+      {
+        "label": "",
+        "traits": [
+          "toggleButton"
+        ],
+        "role": "AXView",
+        "roleDescription": "Switch",
+        "frame": {
+          "x": 223.64443969726562,
+          "y": 537.95556640625,
+          "width": 51.911109924316406,
+          "height": 32
+        },
+        "visible": true,
+        "x": 0.5824073950449625,
+        "y": 0.6465812096228967,
+        "w": 0.13518518209457397,
+        "h": 0.038461538461538464,
+        "nx": 0.6499999860922495,
+        "ny": 0.6658119788536659,
+        "focusable": false
+      },
+      {
+        "label": "Uniwind",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 43.022220611572266,
+          "width": 71.46666717529297,
+          "height": 27.0222225189209
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.05170939977352436,
+        "w": 0.18611111243565878,
+        "h": 0.03247863283524147,
+        "nx": 0.13472222288449606,
+        "ny": 0.06794871619114509,
+        "focusable": true
+      },
+      {
+        "label": "Component test screen",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 100.62222290039062,
+          "width": 352,
+          "height": 34.13333511352539
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.12094017175527719,
+        "w": 0.9166666666666666,
+        "h": 0.04102564316529494,
+        "nx": 0.5,
+        "ny": 0.14145299333792466,
+        "focusable": true
+      },
+      {
+        "label": "Theme",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 189.15554809570312,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.22735041838425857,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.23952990541091332,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme",
+        "label": "Theme",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Radio group",
+        "frame": {
+          "x": 16,
+          "y": 189.15554809570312,
+          "width": 352,
+          "height": 176.35556030273438
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.22735041838425857,
+        "w": 0.9166666666666666,
+        "h": 0.21196581767155573,
+        "nx": 0.5,
+        "ny": 0.33333332722003645,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme-0",
+        "label": "Light",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 213.3333282470703,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.2564102502969595,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.2852564041431134,
+        "focusable": true
+      },
+      {
+        "label": "Light",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 49.77777862548828,
+          "y": 226.13333129882812,
+          "width": 35.55555725097656,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.12962963183720908,
+        "y": 0.27179486934955305,
+        "w": 0.09259259700775146,
+        "h": 0.026495727208944466,
+        "nx": 0.1759259303410848,
+        "ny": 0.28504273295402527,
+        "focusable": false
+      },
+      {
+        "identifier": "test-theme-1",
+        "label": "Dark",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 265.6000061035156,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3192307765667255,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.34807693041287935,
+        "focusable": true
+      },
+      {
+        "label": "Dark",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 49.77777862548828,
+          "y": 278.3999938964844,
+          "width": 32.71111297607422,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.12962963183720908,
+        "y": 0.33461537727942836,
+        "w": 0.08518519004185994,
+        "h": 0.026495727208944466,
+        "nx": 0.17222222685813904,
+        "ny": 0.3478632408839006,
+        "focusable": false
+      },
+      {
+        "identifier": "test-theme-2",
+        "label": "Brand",
+        "value": "checked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 317.5111083984375,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3816239283635066,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.41047008220966047,
+        "focusable": true
+      },
+      {
+        "label": "Brand",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 49.77777862548828,
+          "y": 330.31109619140625,
+          "width": 41.599998474121094,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.12962963183720908,
+        "y": 0.3970085290762094,
+        "w": 0.10833332935969035,
+        "h": 0.026495727208944466,
+        "nx": 0.18379629651705426,
+        "ny": 0.41025639268068165,
+        "focusable": false
+      },
+      {
+        "label": "Buttons",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 397.5111083984375,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.47777777451735276,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.4935897405330951,
+        "focusable": true
+      },
+      {
+        "identifier": "test-button",
+        "label": "Save workout",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": 0.7111111283302307
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": 0.0008547008753969119,
+        "nx": 0.5,
+        "ny": 0.10213675296220642,
+        "focusable": true
+      },
+      {
+        "label": "Save workout",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 145.42222595214844,
+          "y": 449.77777099609375,
+          "width": 93.15555572509766,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.3787037134170532,
+        "y": 0.5405982824472281,
+        "w": 0.2425925930341085,
+        "h": 0.024358974053309515,
+        "nx": 0.5000000099341074,
+        "ny": 0.5527777694738828,
+        "focusable": false
+      },
+      {
+        "identifier": "test-button-disabled",
+        "label": "Unavailable",
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 97.42222595214844,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.11709402157710148,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.14594017542325532,
+        "focusable": true
+      },
+      {
+        "label": "Unavailable",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 152.1777801513672,
+          "y": 111.28888702392578,
+          "width": 79.64444732666016,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.39629630247751874,
+        "y": 0.13376068151914156,
+        "w": 0.2074074149131775,
+        "h": 0.024358974053309515,
+        "nx": 0.5000000099341075,
+        "ny": 0.1459401685457963,
+        "focusable": false
+      },
+      {
+        "identifier": "test-button-loading",
+        "label": "busy",
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 157.15554809570312,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.1888888799227201,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.21773503376887396,
+        "focusable": true
+      },
+      {
+        "label": "Saving",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 182.39999389648438,
+          "y": 171.022216796875,
+          "width": 46.57777786254883,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.47499998410542804,
+        "y": 0.20555554903470552,
+        "w": 0.12129629651705424,
+        "h": 0.024358974053309515,
+        "nx": 0.5356481323639551,
+        "ny": 0.21773503606136027,
+        "focusable": false
+      },
+      {
+        "label": "Form",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 237.15554809570312,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.2850427260765663,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.30085469209230864,
+        "focusable": true
+      },
+      {
+        "label": "Email",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 275.5555419921875,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.33119656489445615,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.3433760519211109,
+        "focusable": true
+      },
+      {
+        "identifier": "test-textfield",
+        "label": "Email",
+        "value": "",
+        "hint": "We'll send your plan here.",
+        "traits": [],
+        "role": "AXEditText",
+        "frame": {
+          "x": 16,
+          "y": 299.73333740234375,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.36025641514704776,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.3891025689932016,
+        "focusable": true
+      },
+      {
+        "label": "We'll send your plan here.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 351.6444396972656,
+          "width": 352,
+          "height": 18.133333206176758
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.4226495669438289,
+        "w": 0.9166666666666666,
+        "h": 0.021794871642039373,
+        "nx": 0.5,
+        "ny": 0.4335470027648486,
+        "focusable": true
+      },
+      {
+        "identifier": "test-switch",
+        "label": "Workout reminders",
+        "value": "checked",
+        "traits": [
+          "toggleButton"
+        ],
+        "role": "AXSwitch",
+        "frame": {
+          "x": 16,
+          "y": 381.8666687011719,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.45897436141967773,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.4878205152658316,
+        "focusable": true
+      },
+      {
+        "label": "Workout reminders",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 394.6666564941406,
+          "width": 305.0666809082031,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.47435896213238055,
+        "w": 0.7944444815317789,
+        "h": 0.026495727208944466,
+        "nx": 0.43888890743255615,
+        "ny": 0.48760682573685277,
+        "focusable": false
+      },
+      {
+        "identifier": "test-checkbox",
+        "label": "I agree to the terms",
+        "value": "unchecked",
+        "traits": [
+          "checkbox"
+        ],
+        "role": "AXCheckBox",
+        "frame": {
+          "x": 16,
+          "y": 441.95556640625,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.5311965942382812,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.5600427480844351,
+        "focusable": true
+      },
+      {
+        "label": "I agree to the terms",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 51.911109924316406,
+          "y": 454.75555419921875,
+          "width": 316.0888977050781,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.13518518209457397,
+        "y": 0.5465811949509841,
+        "w": 0.8231481711069742,
+        "h": 0.026495727208944466,
+        "nx": 0.546759267648061,
+        "ny": 0.5598290585554564,
+        "focusable": false
+      },
+      {
+        "identifier": "test-radiogroup",
+        "label": "Experience level",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Radio group",
+        "frame": {
+          "x": 16,
+          "y": 86.75555419921875,
+          "width": 352,
+          "height": 176.35556030273438
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.10427350264329177,
+        "w": 0.9166666666666666,
+        "h": 0.21196581767155573,
+        "nx": 0.5,
+        "ny": 0.21025641147906965,
+        "focusable": true
+      },
+      {
+        "label": "Experience level",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 86.75555419921875,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.10427350264329177,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.11645298966994652,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup-0",
+        "label": "Beginner",
+        "value": "checked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 110.93333435058594,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.13333333455599272,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.16217948840214658,
+        "focusable": true
+      },
+      {
+        "label": "Beginner",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 49.77777862548828,
+          "y": 123.73332977294922,
+          "width": 62.93333435058594,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.12962963183720908,
+        "y": 0.1487179444386409,
+        "w": 0.16388889153798422,
+        "h": 0.026495727208944466,
+        "nx": 0.21157407760620117,
+        "ny": 0.1619658080431131,
+        "focusable": false
+      },
+      {
+        "identifier": "test-radiogroup-1",
+        "label": "Intermediate",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 163.1999969482422,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.196153842485868,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.22499999633202186,
+        "focusable": true
+      },
+      {
+        "label": "Intermediate",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 49.77777862548828,
+          "y": 176,
+          "width": 89.95555877685547,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.12962963183720908,
+        "y": 0.21153846153846154,
+        "w": 0.23425926764806113,
+        "h": 0.026495727208944466,
+        "nx": 0.24675926566123962,
+        "ny": 0.22478632514293376,
+        "focusable": false
+      },
+      {
+        "identifier": "test-radiogroup-2",
+        "label": "Advanced",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 215.11111450195312,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.2585470126225398,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.2873931664686937,
+        "focusable": true
+      },
+      {
+        "label": "Advanced",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 49.77777862548828,
+          "y": 227.91111755371094,
+          "width": 70.4000015258789,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.12962963183720908,
+        "y": 0.27393163167513335,
+        "w": 0.18333333730697632,
+        "h": 0.026495727208944466,
+        "nx": 0.22129630049069723,
+        "ny": 0.28717949527960557,
+        "focusable": false
+      },
+      {
+        "label": "Rest time",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 274.8444519042969,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.33034188930804914,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.3425213763347039,
+        "focusable": true
+      },
+      {
+        "identifier": "test-select",
+        "label": "Rest time, 60 seconds",
+        "value": "collapsed",
+        "traits": [
+          "combobox"
+        ],
+        "role": "AXView",
+        "roleDescription": "Combo box",
+        "frame": {
+          "x": 16,
+          "y": 299.022216796875,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3594017028808594,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.38824785672701323,
+        "focusable": true
+      },
+      {
+        "label": "60 seconds",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 28.799999237060547,
+          "y": 311.8222351074219,
+          "width": 82.13333129882812,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.07499999801317851,
+        "y": 0.3747863402733436,
+        "w": 0.21388888359069824,
+        "h": 0.026495727208944466,
+        "nx": 0.18194443980852765,
+        "ny": 0.38803420387781584,
+        "focusable": false
+      },
+      {
+        "label": "Overlays",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 379.022216796875,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.4555555490347055,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.4713675150504479,
+        "focusable": true
+      },
+      {
+        "identifier": "test-dialog-open",
+        "label": "Delete workout",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 417.4222106933594,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.5017093878525954,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.5305555416987493,
+        "focusable": true
+      },
+      {
+        "label": "Delete workout",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 140.08888244628906,
+          "y": 431.28887939453125,
+          "width": 103.46666717529297,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.3648147980372111,
+        "y": 0.5183760569645808,
+        "w": 0.2694444457689921,
+        "h": 0.024358974053309515,
+        "nx": 0.49953702092170715,
+        "ny": 0.5305555439912355,
+        "focusable": false
+      },
+      {
+        "identifier": "test-sheet-open",
+        "label": "Show exercise details",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": 31.64444351196289
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": 0.03803418691341694,
+        "nx": 0.5,
+        "ny": 0.12072649598121643,
+        "focusable": true
+      },
+      {
+        "label": "Show exercise details",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 117.33333587646484,
+          "y": 84.62222290039062,
+          "width": 148.977783203125,
+          "height": 17.77777862548828
+        },
+        "visible": true,
+        "x": 0.3055555621782939,
+        "y": 0.10170940252450797,
+        "w": 0.3879629770914714,
+        "h": 0.021367522386404183,
+        "nx": 0.49953705072402954,
+        "ny": 0.11239316371771006,
+        "focusable": false
+      },
+      {
+        "identifier": "test-sheet-open-expoui",
+        "label": "Show exercise details (@expo/ui)",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 128,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.15384615384615385,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.1826923076923077,
+        "focusable": true
+      },
+      {
+        "label": "Show exercise details (@expo/ui)",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 77.5111083984375,
+          "y": 141.86666870117188,
+          "width": 228.62222290039062,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.20185184478759766,
+        "y": 0.17051282295813927,
+        "w": 0.595370372136434,
+        "h": 0.024358974053309515,
+        "nx": 0.49953703085581463,
+        "ny": 0.18269230998479402,
+        "focusable": false
+      },
+      {
+        "identifier": "test-toast-show",
+        "label": "Log set",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 188.08888244628906,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.22606836832486665,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.2549145221710205,
+        "focusable": true
+      },
+      {
+        "label": "Log set",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 166.39999389648438,
+          "y": 201.95555114746094,
+          "width": 50.844444274902344,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.4333333174387614,
+        "y": 0.2427350374368521,
+        "w": 0.1324074069658915,
+        "h": 0.024358974053309515,
+        "nx": 0.49953702092170715,
+        "ny": 0.2549145244635069,
+        "focusable": false
+      },
+      {
+        "label": "Tabs",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 268.0888977050781,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3222222328186035,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.3380341988343459,
+        "focusable": true
+      },
+      {
+        "identifier": "test-tabs",
+        "label": "",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Tab list",
+        "frame": {
+          "x": 16,
+          "y": 306.4888916015625,
+          "width": 352,
+          "height": 49.06666564941406
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3683760716364934,
+        "w": 0.9166666666666666,
+        "h": 0.058974357751699596,
+        "nx": 0.5,
+        "ny": 0.39786325051234317,
+        "focusable": false
+      },
+      {
+        "identifier": "test-tabs-0",
+        "label": "Today",
+        "value": "selected",
+        "hint": "Tab 1 of 3",
+        "traits": [
+          "selected",
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 16,
+          "y": 306.4888916015625,
+          "width": 117.33333587646484,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3683760716364934,
+        "w": 0.3055555621782939,
+        "h": 0.057692307692307696,
+        "nx": 0.1944444477558136,
+        "ny": 0.39722222548264724,
+        "focusable": true
+      },
+      {
+        "label": "Today",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 54.0444450378418,
+          "y": 318.5777893066406,
+          "width": 41.24444580078125,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.14074074228604636,
+        "y": 0.3829059967627892,
+        "w": 0.1074074109395345,
+        "h": 0.024358974053309515,
+        "nx": 0.1944444477558136,
+        "ny": 0.39508548378944397,
+        "focusable": false
+      },
+      {
+        "identifier": "test-tabs-1",
+        "label": "Plan",
+        "hint": "Tab 2 of 3",
+        "traits": [
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 133.3333282470703,
+          "y": 306.4888916015625,
+          "width": 117.33333587646484,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.3472222089767456,
+        "y": 0.3683760716364934,
+        "w": 0.3055555621782939,
+        "h": 0.057692307692307696,
+        "nx": 0.4999999900658926,
+        "ny": 0.39722222548264724,
+        "focusable": true
+      },
+      {
+        "label": "Plan",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 176.7111053466797,
+          "y": 318.5777893066406,
+          "width": 30.577777862548828,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.460185170173645,
+        "y": 0.3829059967627892,
+        "w": 0.07962962985038757,
+        "h": 0.024358974053309515,
+        "nx": 0.4999999850988388,
+        "ny": 0.39508548378944397,
+        "focusable": false
+      },
+      {
+        "identifier": "test-tabs-2",
+        "label": "Progress",
+        "hint": "Tab 3 of 3",
+        "traits": [
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 250.6666717529297,
+          "y": 306.4888916015625,
+          "width": 117.33333587646484,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.6527777910232544,
+        "y": 0.3683760716364934,
+        "w": 0.3055555621782939,
+        "h": 0.057692307692307696,
+        "nx": 0.8055555721124014,
+        "ny": 0.39722222548264724,
+        "focusable": true
+      },
+      {
+        "label": "Progress",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 278.3999938964844,
+          "y": 318.5777893066406,
+          "width": 61.86666488647461,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.7249999841054281,
+        "y": 0.3829059967627892,
+        "w": 0.1611111064751943,
+        "h": 0.024358974053309515,
+        "nx": 0.8055555373430252,
+        "ny": 0.39508548378944397,
+        "focusable": false
+      },
+      {
+        "label": "3 exercises left today.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 367.28887939453125,
+          "width": 352,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.4414529800415039,
+        "w": 0.9166666666666666,
+        "h": 0.026495727208944466,
+        "nx": 0.5,
+        "ny": 0.4547008436459761,
+        "focusable": true
+      },
+      {
+        "label": "More components",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 421.3333435058594,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.5064102686368502,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.5222222346525927,
+        "focusable": true
+      },
+      {
+        "label": "Weight: 60 kg",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": 11.377778053283691
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": 0.01367521400635059,
+        "nx": 0.5,
+        "ny": 0.10854700952768326,
+        "focusable": true
+      },
+      {
+        "identifier": "test-slider",
+        "label": "Weight, 60 kg",
+        "value": "60",
+        "traits": [
+          "adjustable"
+        ],
+        "role": "AXSeekBar",
+        "frame": {
+          "x": 16,
+          "y": 99.9111099243164,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.12008546865903415,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.148931622505188,
+        "focusable": true
+      },
+      {
+        "label": "Workout progress",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 94.57777404785156,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.11367520919212928,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.12585469621878403,
+        "focusable": true
+      },
+      {
+        "identifier": "test-progress",
+        "label": "Workout progress, 3 of 8 exercises",
+        "value": "3",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Progress bar",
+        "frame": {
+          "x": 16,
+          "y": 118.75555419921875,
+          "width": 352,
+          "height": 8.177778244018555
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.14273504110483023,
+        "w": 0.9166666666666666,
+        "h": 0.009829060389445378,
+        "nx": 0.5,
+        "ny": 0.14764957129955292,
+        "focusable": true
+      },
+      {
+        "label": "3 of 8 exercises",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 130.84445190429688,
+          "width": 352,
+          "height": 18.133333206176758
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.15726496623112604,
+        "w": 0.9166666666666666,
+        "h": 0.021794871642039373,
+        "nx": 0.5,
+        "ny": 0.16816240205214572,
+        "focusable": true
+      },
+      {
+        "identifier": "test-accordion-0",
+        "label": "Warm-up",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 162.13333129882812,
+          "width": 349.8666687011719,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.044444446762402855,
+        "y": 0.19487179242647612,
+        "w": 0.9111111164093018,
+        "h": 0.057692307692307696,
+        "nx": 0.5000000049670538,
+        "ny": 0.22371794627262998,
+        "focusable": true
+      },
+      {
+        "label": "Warm-up",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 28.799999237060547,
+          "y": 176,
+          "width": 62.93333435058594,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.07499999801317851,
+        "y": 0.21153846153846154,
+        "w": 0.16388889153798422,
+        "h": 0.024358974053309515,
+        "nx": 0.15694444378217062,
+        "ny": 0.2237179485651163,
+        "focusable": false
+      },
+      {
+        "identifier": "test-accordion-1",
+        "label": "Main set",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 211.1999969482422,
+          "width": 349.8666687011719,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.044444446762402855,
+        "y": 0.2538461501781757,
+        "w": 0.9111111164093018,
+        "h": 0.057692307692307696,
+        "nx": 0.5000000049670538,
+        "ny": 0.28269230402432954,
+        "focusable": true
+      },
+      {
+        "label": "Main set",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 28.799999237060547,
+          "y": 225.06666564941406,
+          "width": 59.377777099609375,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.07499999801317851,
+        "y": 0.27051281929016113,
+        "w": 0.15462962786356607,
+        "h": 0.024358974053309515,
+        "nx": 0.15231481194496155,
+        "ny": 0.2826923063168159,
+        "focusable": false
+      },
+      {
+        "identifier": "test-accordion-2",
+        "label": "Cool-down",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 260.26666259765625,
+          "width": 349.8666687011719,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.044444446762402855,
+        "y": 0.3128205079298753,
+        "w": 0.9111111164093018,
+        "h": 0.057692307692307696,
+        "nx": 0.5000000049670538,
+        "ny": 0.34166666177602917,
+        "focusable": true
+      },
+      {
+        "label": "Cool-down",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 28.799999237060547,
+          "y": 274.1333312988281,
+          "width": 74.31111145019531,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.07499999801317851,
+        "y": 0.3294871770418607,
+        "w": 0.1935185194015503,
+        "h": 0.024358974053309515,
+        "nx": 0.17175925771395367,
+        "ny": 0.3416666640685155,
+        "focusable": false
+      },
+      {
+        "identifier": "test-menu-open",
+        "label": "Workout options",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 321.0666809082031,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3858974530146672,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.41474360686082107,
+        "focusable": true
+      },
+      {
+        "label": "Workout options",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 135.46665954589844,
+          "y": 334.9333190917969,
+          "width": 113.06666564941406,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.35277775923411053,
+        "y": 0.4025640854468712,
+        "w": 0.2944444417953491,
+        "h": 0.024358974053309515,
+        "nx": 0.4999999801317851,
+        "ny": 0.414743572473526,
+        "focusable": false
+      },
+      {
+        "label": "Chart range",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 380.79998779296875,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.45769229302039516,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.46987178004704994,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented",
+        "label": "Chart range",
+        "traits": [],
+        "role": "AXViewGroup",
+        "frame": {
+          "x": 16,
+          "y": 404.977783203125,
+          "width": 352,
+          "height": 54.0444450378418
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.48675214327298677,
+        "w": 0.9166666666666666,
+        "h": 0.06495726567048293,
+        "nx": 0.5,
+        "ny": 0.5192307761082282,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented-0",
+        "label": "Week",
+        "value": "selected",
+        "traits": [
+          "button",
+          "selected"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 18.844444274902344,
+          "y": 407.8222351074219,
+          "width": 115.55555725097656,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.04907407363255819,
+        "y": 0.490170955657959,
+        "w": 0.3009259303410848,
+        "h": 0.057692307692307696,
+        "nx": 0.19953703880310059,
+        "ny": 0.5190171095041128,
+        "focusable": true
+      },
+      {
+        "label": "Week",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 57.24444580078125,
+          "y": 421.68890380859375,
+          "width": 38.0444450378418,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.14907407760620117,
+        "y": 0.5068376247699444,
+        "w": 0.09907407561937968,
+        "h": 0.024358974053309515,
+        "nx": 0.19861111541589102,
+        "ny": 0.5190171117965992,
+        "focusable": false
+      },
+      {
+        "identifier": "test-segmented-1",
+        "label": "Month",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 134.39999389648438,
+          "y": 407.8222351074219,
+          "width": 115.19999694824219,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.34999998410542804,
+        "y": 0.490170955657959,
+        "w": 0.29999999205271405,
+        "h": 0.057692307692307696,
+        "nx": 0.49999998013178504,
+        "ny": 0.5190171095041128,
+        "focusable": true
+      },
+      {
+        "label": "Month",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 169.60000610351562,
+          "y": 421.68890380859375,
+          "width": 44.44444274902344,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.4416666825612386,
+        "y": 0.5068376247699444,
+        "w": 0.11574073632558186,
+        "h": 0.024358974053309515,
+        "nx": 0.49953705072402954,
+        "ny": 0.5190171117965992,
+        "focusable": false
+      },
+      {
+        "identifier": "test-segmented-2",
+        "label": "Year",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 249.60000610351562,
+          "y": 407.8222351074219,
+          "width": 115.55555725097656,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.6500000158945719,
+        "y": 0.490170955657959,
+        "w": 0.3009259303410848,
+        "h": 0.057692307692307696,
+        "nx": 0.8004629810651143,
+        "ny": 0.5190171095041128,
+        "focusable": true
+      },
+      {
+        "label": "Year",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 291.5555419921875,
+          "y": 421.68890380859375,
+          "width": 30.933332443237305,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.7592592239379883,
+        "y": 0.5068376247699444,
+        "w": 0.08055555323759715,
+        "h": 0.024358974053309515,
+        "nx": 0.7995370005567869,
+        "ny": 0.5190171117965992,
+        "focusable": false
+      },
+      {
+        "label": "Native control (@expo/ui)",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 491.3777770996094,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.5905982897831843,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.6064102557989267,
+        "focusable": true
+      },
+      {
+        "label": "Sync with Health (native control)",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 545.4222412109375,
+          "width": 199.46665954589844,
+          "height": 16.711111068725586
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.6555555783785306,
+        "w": 0.5194444259007772,
+        "h": 0.020085470034525946,
+        "nx": 0.3013888796170553,
+        "ny": 0.6655983133957936,
+        "focusable": true
+      },
+      {
+        "identifier": "test-native-switch",
+        "label": "",
+        "value": "Off, unchecked",
+        "traits": [],
+        "role": "AXView",
+        "frame": {
+          "x": 223.64443969726562,
+          "y": 530.1333618164062,
+          "width": 51.911109924316406,
+          "height": 47.64444351196289
+        },
+        "visible": true,
+        "x": 0.5824073950449625,
+        "y": 0.6371795214139498,
+        "w": 0.13518518209457397,
+        "h": 0.05726495614418617,
+        "nx": 0.6499999860922495,
+        "ny": 0.665811999486043,
+        "focusable": true
+      },
+      {
+        "label": "List",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 609.4222412109375,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.7324786553016076,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.74829062131735,
+        "focusable": true
+      },
+      {
+        "identifier": "test-list-link",
+        "label": "Open 200-row list",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 647.8222045898438,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.7786324574397161,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.80747861128587,
+        "focusable": true
+      },
+      {
+        "label": "Open 200-row list",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 131.1999969482422,
+          "y": 661.6889038085938,
+          "width": 121.5999984741211,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.3416666587193807,
+        "y": 0.7952991632314829,
+        "w": 0.3166666626930237,
+        "h": 0.024358974053309515,
+        "nx": 0.4999999900658925,
+        "ny": 0.8074786502581376,
+        "focusable": false
+      },
+      {
+        "identifier": "perf-theme",
+        "label": "Theme switch: 155.2 ms",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 3.9111111164093018,
+          "y": 782.5777587890625,
+          "width": 104.88888549804688,
+          "height": 12.800000190734863
+        },
+        "visible": true,
+        "x": 0.010185185198982557,
+        "y": 0.9405982677753155,
+        "w": 0.2731481393178304,
+        "h": 0.015384615613864018,
+        "nx": 0.14675925485789776,
+        "ny": 0.9482905755822475,
+        "focusable": true
+      },
+      {
+        "identifier": "perf-list",
+        "label": "List mount: not measured",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 3.9111111164093018,
+          "y": 795.3778076171875,
+          "width": 104.88888549804688,
+          "height": 12.800000190734863
+        },
+        "visible": false,
+        "x": 0.010185185198982557,
+        "y": 0.9559829418475811,
+        "w": 0.2731481393178304,
+        "h": 0.015384615613864018,
+        "nx": 0.14675925485789776,
+        "ny": 0.9636752496545131,
+        "focusable": true
+      }
+    ],
+    "textFieldError": [
+      {
+        "label": "Uniwind",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 43.022220611572266,
+          "width": 71.46666717529297,
+          "height": 27.0222225189209
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.05170939977352436,
+        "w": 0.18611111243565878,
+        "h": 0.03247863283524147,
+        "nx": 0.13472222288449606,
+        "ny": 0.06794871619114509,
+        "focusable": true
+      },
+      {
+        "label": "Component test screen",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 100.62222290039062,
+          "width": 352,
+          "height": 34.13333511352539
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.12094017175527719,
+        "w": 0.9166666666666666,
+        "h": 0.04102564316529494,
+        "nx": 0.5,
+        "ny": 0.14145299333792466,
+        "focusable": true
+      },
+      {
+        "label": "Theme",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 150.75555419921875,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.1811965795663687,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.19700854558211106,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme",
+        "label": "Theme",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Radio group",
+        "frame": {
+          "x": 16,
+          "y": 189.15554809570312,
+          "width": 352,
+          "height": 176.35556030273438
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.22735041838425857,
+        "w": 0.9166666666666666,
+        "h": 0.21196581767155573,
+        "nx": 0.5,
+        "ny": 0.33333332722003645,
+        "focusable": true
+      },
+      {
+        "label": "Theme",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 189.15554809570312,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.22735041838425857,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.23952990541091332,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme-0",
+        "label": "Light",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 213.3333282470703,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.2564102502969595,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.2852564041431134,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme-1",
+        "label": "Dark",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 265.6000061035156,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3192307765667255,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.34807693041287935,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme-2",
+        "label": "Brand",
+        "value": "checked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 317.5111083984375,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3816239283635066,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.41047008220966047,
+        "focusable": true
+      },
+      {
+        "label": "Buttons",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 397.5111083984375,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.47777777451735276,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.4935897405330951,
+        "focusable": true
+      },
+      {
+        "identifier": "test-button",
+        "label": "Save workout",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 435.9111022949219,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.5239316133352426,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.5527777671813965,
+        "focusable": true
+      },
+      {
+        "identifier": "test-button-disabled",
+        "label": "Unavailable",
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 496,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.5961538461538461,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.625,
+        "focusable": true
+      },
+      {
+        "identifier": "test-button-loading",
+        "label": "busy",
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 555.7333374023438,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.6679487228393555,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.6967948766855093,
+        "focusable": true
+      },
+      {
+        "label": "Form",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 635.7333374023438,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.7641025689932016,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.779914535008944,
+        "focusable": true
+      },
+      {
+        "label": "Email",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 674.1333618164062,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.8102564444908729,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.8224359315175276,
+        "focusable": true
+      },
+      {
+        "identifier": "test-textfield",
+        "label": "Email",
+        "value": "not-an-email",
+        "hint": "Enter a valid email address.",
+        "traits": [],
+        "role": "AXEditText",
+        "frame": {
+          "x": 16,
+          "y": 698.3110961914062,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.8393162213839017,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.8681623752300556,
+        "focusable": true
+      },
+      {
+        "label": "Enter a valid email address.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 750.2222290039062,
+          "width": 352,
+          "height": 18.133333206176758
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.9017094098604642,
+        "w": 0.9166666666666666,
+        "h": 0.021794871642039373,
+        "nx": 0.5,
+        "ny": 0.9126068456814839,
+        "focusable": true
+      },
+      {
+        "identifier": "test-switch",
+        "label": "Workout reminders",
+        "value": "checked",
+        "traits": [
+          "toggleButton"
+        ],
+        "role": "AXSwitch",
+        "frame": {
+          "x": 16,
+          "y": 780.4444580078125,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.9380342043363131,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.966880358182467,
+        "focusable": true
+      },
+      {
+        "identifier": "test-checkbox",
+        "label": "I agree to the terms",
+        "value": "unchecked",
+        "traits": [
+          "checkbox"
+        ],
+        "role": "AXCheckBox",
+        "frame": {
+          "x": 16,
+          "y": 840.5333251953125,
+          "width": 352,
+          "height": -8.533333778381348
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.0102564004751353,
+        "w": 0.9166666666666666,
+        "h": -0.010256410791323734,
+        "nx": 0.5,
+        "ny": 1.0051281950794735,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup",
+        "label": "Experience level",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Radio group",
+        "frame": {
+          "x": 16,
+          "y": 900.6221923828125,
+          "width": 352,
+          "height": -68.62222290039062
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.0824785966139574,
+        "w": 0.9166666666666666,
+        "h": -0.08247863329373874,
+        "nx": 0.5,
+        "ny": 1.041239279967088,
+        "focusable": true
+      },
+      {
+        "label": "Experience level",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 900.6221923828125,
+          "width": 352,
+          "height": -68.62222290039062
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.0824785966139574,
+        "w": 0.9166666666666666,
+        "h": -0.08247863329373874,
+        "nx": 0.5,
+        "ny": 1.041239279967088,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup-0",
+        "label": "Beginner",
+        "value": "checked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 924.7999877929688,
+          "width": 352,
+          "height": -92.80000305175781
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.111538446866549,
+        "w": 0.9166666666666666,
+        "h": -0.11153846520643967,
+        "nx": 0.5,
+        "ny": 1.0557692142633293,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup-1",
+        "label": "Intermediate",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 977.066650390625,
+          "width": 352,
+          "height": -145.06666564941406
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.1743589547964244,
+        "w": 0.9166666666666666,
+        "h": -0.174358973136315,
+        "nx": 0.5,
+        "ny": 1.087179468228267,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup-2",
+        "label": "Advanced",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 1028.977783203125,
+          "width": 352,
+          "height": -196.977783203125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.2367521432729869,
+        "w": 0.9166666666666666,
+        "h": -0.23675214327298677,
+        "nx": 0.5,
+        "ny": 1.1183760716364934,
+        "focusable": true
+      },
+      {
+        "label": "Rest time",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1088.7110595703125,
+          "width": 352,
+          "height": -256.71112060546875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.3085469465989332,
+        "w": 0.9166666666666666,
+        "h": -0.3085470199584961,
+        "nx": 0.5,
+        "ny": 1.1542734366196852,
+        "focusable": true
+      },
+      {
+        "identifier": "test-select",
+        "label": "Rest time, 60 seconds",
+        "value": "collapsed",
+        "traits": [
+          "combobox"
+        ],
+        "role": "AXView",
+        "roleDescription": "Combo box",
+        "frame": {
+          "x": 16,
+          "y": 1112.888916015625,
+          "width": 352,
+          "height": -280.8888854980469
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.3376068702110877,
+        "w": 0.9166666666666666,
+        "h": -0.3376068335313063,
+        "nx": 0.5,
+        "ny": 1.1688034534454346,
+        "focusable": true
+      },
+      {
+        "label": "Overlays",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 1192.888916015625,
+          "width": 352,
+          "height": -360.8888854980469
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.433760716364934,
+        "w": 0.9166666666666666,
+        "h": -0.4337606796851525,
+        "nx": 0.5,
+        "ny": 1.2168803765223577,
+        "focusable": true
+      },
+      {
+        "identifier": "test-dialog-open",
+        "label": "Delete workout",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 1231.2889404296875,
+          "width": 352,
+          "height": -399.28887939453125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.479914591862605,
+        "w": 0.9166666666666666,
+        "h": -0.47991451850304234,
+        "nx": 0.5,
+        "ny": 1.239957332611084,
+        "focusable": true
+      },
+      {
+        "identifier": "test-sheet-open",
+        "label": "Show exercise details",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 1291.3778076171875,
+          "width": 352,
+          "height": -459.3777770996094
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.5521367880014272,
+        "w": 0.9166666666666666,
+        "h": -0.5521367513216459,
+        "nx": 0.5,
+        "ny": 1.2760684123406043,
+        "focusable": true
+      },
+      {
+        "identifier": "test-sheet-open-expoui",
+        "label": "Show exercise details (@expo/ui)",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 1351.111083984375,
+          "width": 352,
+          "height": -519.111083984375
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.6239315913273737,
+        "w": 0.9166666666666666,
+        "h": -0.6239315913273737,
+        "nx": 0.5,
+        "ny": 1.3119657956636868,
+        "focusable": true
+      },
+      {
+        "identifier": "test-toast-show",
+        "label": "Log set",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 1411.199951171875,
+          "width": 352,
+          "height": -579.2000122070312
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.6961537874661958,
+        "w": 0.9166666666666666,
+        "h": -0.6961538608257587,
+        "nx": 0.5,
+        "ny": 1.3480768570533166,
+        "focusable": true
+      },
+      {
+        "label": "Tabs",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 1491.199951171875,
+          "width": 352,
+          "height": -659.2000122070312
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.792307633620042,
+        "w": 0.9166666666666666,
+        "h": -0.7923077069796048,
+        "nx": 0.5,
+        "ny": 1.3961537801302397,
+        "focusable": true
+      },
+      {
+        "identifier": "test-tabs-0",
+        "label": "Today",
+        "value": "selected",
+        "hint": "Tab 1 of 3",
+        "traits": [
+          "selected",
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 16,
+          "y": 1529.5999755859375,
+          "width": 117.33333587646484,
+          "height": -697.5999755859375
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.8384615091177134,
+        "w": 0.3055555621782939,
+        "h": -0.8384615091177133,
+        "nx": 0.1944444477558136,
+        "ny": 1.4192307545588567,
+        "focusable": true
+      },
+      {
+        "identifier": "test-tabs-1",
+        "label": "Plan",
+        "hint": "Tab 2 of 3",
+        "traits": [
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 133.3333282470703,
+          "y": 1529.5999755859375,
+          "width": 117.33333587646484,
+          "height": -697.5999755859375
+        },
+        "visible": false,
+        "x": 0.3472222089767456,
+        "y": 1.8384615091177134,
+        "w": 0.3055555621782939,
+        "h": -0.8384615091177133,
+        "nx": 0.4999999900658926,
+        "ny": 1.4192307545588567,
+        "focusable": true
+      },
+      {
+        "identifier": "test-tabs-2",
+        "label": "Progress",
+        "hint": "Tab 3 of 3",
+        "traits": [
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 250.6666717529297,
+          "y": 1529.5999755859375,
+          "width": 117.33333587646484,
+          "height": -697.5999755859375
+        },
+        "visible": false,
+        "x": 0.6527777910232544,
+        "y": 1.8384615091177134,
+        "w": 0.3055555621782939,
+        "h": -0.8384615091177133,
+        "nx": 0.8055555721124014,
+        "ny": 1.4192307545588567,
+        "focusable": true
+      },
+      {
+        "label": "3 exercises left today.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1590.4000244140625,
+          "width": 352,
+          "height": -758.4000244140625
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.9115384908822866,
+        "w": 0.9166666666666666,
+        "h": -0.9115384908822867,
+        "nx": 0.5,
+        "ny": 1.4557692454411433,
+        "focusable": true
+      },
+      {
+        "label": "More components",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 1644.4444580078125,
+          "width": 352,
+          "height": -812.4444580078125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.9764957427978516,
+        "w": 0.9166666666666666,
+        "h": -0.9764957427978516,
+        "nx": 0.5,
+        "ny": 1.4882478713989258,
+        "focusable": true
+      },
+      {
+        "label": "Weight: 100 kg",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1682.844482421875,
+          "width": 352,
+          "height": -850.8444213867188
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.0226496182955227,
+        "w": 0.9166666666666666,
+        "h": -1.02264954493596,
+        "nx": 0.5,
+        "ny": 1.5113248458275428,
+        "focusable": true
+      },
+      {
+        "identifier": "test-slider",
+        "label": "Weight, 100 kg",
+        "value": "100",
+        "traits": [
+          "adjustable"
+        ],
+        "role": "AXSeekBar",
+        "frame": {
+          "x": 16,
+          "y": 1707.022216796875,
+          "width": 352,
+          "height": -875.022216796875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.051709395188552,
+        "w": 0.9166666666666666,
+        "h": -1.0517093951885517,
+        "nx": 0.5,
+        "ny": 1.525854697594276,
+        "focusable": true
+      },
+      {
+        "label": "Workout progress",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1767.111083984375,
+          "width": 352,
+          "height": -935.111083984375
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.123931591327374,
+        "w": 0.9166666666666666,
+        "h": -1.1239315913273737,
+        "nx": 0.5,
+        "ny": 1.5619657956636872,
+        "focusable": true
+      },
+      {
+        "identifier": "test-progress",
+        "label": "Workout progress, 3 of 8 exercises",
+        "value": "3",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Progress bar",
+        "frame": {
+          "x": 16,
+          "y": 1791.2889404296875,
+          "width": 352,
+          "height": -959.2888793945312
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.1529915149395285,
+        "w": 0.9166666666666666,
+        "h": -1.1529914415799654,
+        "nx": 0.5,
+        "ny": 1.5764957941495457,
+        "focusable": true
+      },
+      {
+        "label": "3 of 8 exercises",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1803.3778076171875,
+          "width": 352,
+          "height": -971.3778076171875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.1675214033860426,
+        "w": 0.9166666666666666,
+        "h": -1.1675214033860426,
+        "nx": 0.5,
+        "ny": 1.5837607016930213,
+        "focusable": true
+      },
+      {
+        "identifier": "test-accordion-0",
+        "label": "Warm-up",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 1834.6666259765625,
+          "width": 349.8666687011719,
+          "height": -1002.6666870117188
+        },
+        "visible": false,
+        "x": 0.044444446762402855,
+        "y": 2.20512815622183,
+        "w": 0.9111111164093018,
+        "h": -1.2051282295813928,
+        "nx": 0.5000000049670538,
+        "ny": 1.6025640414311335,
+        "focusable": true
+      },
+      {
+        "identifier": "test-accordion-1",
+        "label": "Main set",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 1883.7332763671875,
+          "width": 349.8666687011719,
+          "height": -1051.7332763671875
+        },
+        "visible": false,
+        "x": 0.044444446762402855,
+        "y": 2.264102495633639,
+        "w": 0.9111111164093018,
+        "h": -1.2641024956336389,
+        "nx": 0.5000000049670538,
+        "ny": 1.6320512478168194,
+        "focusable": true
+      },
+      {
+        "identifier": "test-accordion-2",
+        "label": "Cool-down",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 1932.800048828125,
+          "width": 349.8666687011719,
+          "height": -1100.800048828125
+        },
+        "visible": false,
+        "x": 0.044444446762402855,
+        "y": 2.323076981764573,
+        "w": 0.9111111164093018,
+        "h": -1.3230769817645733,
+        "nx": 0.5000000049670538,
+        "ny": 1.6615384908822866,
+        "focusable": true
+      },
+      {
+        "identifier": "test-menu-open",
+        "label": "Workout options",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 1993.5999755859375,
+          "width": 352,
+          "height": -1161.5999755859375
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.396153816810021,
+        "w": 0.9166666666666666,
+        "h": -1.396153816810021,
+        "nx": 0.5,
+        "ny": 1.6980769084050105,
+        "focusable": true
+      },
+      {
+        "label": "Chart range",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 2053.333251953125,
+          "width": 352,
+          "height": -1221.3333740234375
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.4679486201359677,
+        "w": 0.9166666666666666,
+        "h": -1.4679487668550932,
+        "nx": 0.5,
+        "ny": 1.7339742367084212,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented",
+        "label": "Chart range",
+        "traits": [],
+        "role": "AXViewGroup",
+        "frame": {
+          "x": 16,
+          "y": 2077.51123046875,
+          "width": 352,
+          "height": -1245.5111083984375
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.4970086904672475,
+        "w": 0.9166666666666666,
+        "h": -1.497008543748122,
+        "nx": 0.5,
+        "ny": 1.7485044185931864,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented-0",
+        "label": "Week",
+        "value": "selected",
+        "traits": [
+          "button",
+          "selected"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 18.844444274902344,
+          "y": 2080.35546875,
+          "width": 115.55555725097656,
+          "height": -1248.3555908203125
+        },
+        "visible": false,
+        "x": 0.04907407363255819,
+        "y": 2.50042724609375,
+        "w": 0.3009259303410848,
+        "h": -1.5004273928128755,
+        "nx": 0.19953703880310059,
+        "ny": 1.7502135496873121,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented-1",
+        "label": "Month",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 134.39999389648438,
+          "y": 2080.35546875,
+          "width": 115.19999694824219,
+          "height": -1248.3555908203125
+        },
+        "visible": false,
+        "x": 0.34999998410542804,
+        "y": 2.50042724609375,
+        "w": 0.29999999205271405,
+        "h": -1.5004273928128755,
+        "nx": 0.49999998013178504,
+        "ny": 1.7502135496873121,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented-2",
+        "label": "Year",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 249.60000610351562,
+          "y": 2080.35546875,
+          "width": 115.55555725097656,
+          "height": -1248.3555908203125
+        },
+        "visible": false,
+        "x": 0.6500000158945719,
+        "y": 2.50042724609375,
+        "w": 0.3009259303410848,
+        "h": -1.5004273928128755,
+        "nx": 0.8004629810651143,
+        "ny": 1.7502135496873121,
+        "focusable": true
+      },
+      {
+        "label": "Native control (@expo/ui)",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 2163.9111328125,
+          "width": 352,
+          "height": -1331.9111328125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.600854726938101,
+        "w": 0.9166666666666666,
+        "h": -1.600854726938101,
+        "nx": 0.5,
+        "ny": 1.8004273634690504,
+        "focusable": true
+      },
+      {
+        "label": "Sync with Health (native control)",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 2217.95556640625,
+          "width": 199.46665954589844,
+          "height": 16.711111068725586
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.665811978853666,
+        "w": 0.5194444259007772,
+        "h": 0.020085470034525946,
+        "nx": 0.3013888796170553,
+        "ny": 2.6758547138709288,
+        "focusable": true
+      },
+      {
+        "identifier": "test-native-switch",
+        "label": "",
+        "value": "Off, unchecked",
+        "traits": [],
+        "role": "AXView",
+        "frame": {
+          "x": 223.64443969726562,
+          "y": 2202.666748046875,
+          "width": 51.911109924316406,
+          "height": 47.64444351196289
+        },
+        "visible": false,
+        "x": 0.5824073950449625,
+        "y": 2.6474359952486477,
+        "w": 0.13518518209457397,
+        "h": 0.05726495614418617,
+        "nx": 0.6499999860922495,
+        "ny": 2.6760684733207407,
+        "focusable": true
+      },
+      {
+        "label": "List",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 2281.95556640625,
+          "width": 352,
+          "height": -1449.95556640625
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.742735055776743,
+        "w": 0.9166666666666666,
+        "h": -1.7427350557767427,
+        "nx": 0.5,
+        "ny": 1.8713675278883715,
+        "focusable": true
+      },
+      {
+        "identifier": "test-list-link",
+        "label": "Open 200-row list",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 2320.35546875,
+          "width": 352,
+          "height": -1488.3555908203125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 2.7888887845552883,
+        "w": 0.9166666666666666,
+        "h": -1.788888931274414,
+        "nx": 0.5,
+        "ny": 1.8944443189180813,
+        "focusable": true
+      },
+      {
+        "identifier": "perf-theme",
+        "label": "Theme switch: 155.2 ms",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 3.9111111164093018,
+          "y": 782.5777587890625,
+          "width": 104.88888549804688,
+          "height": 12.800000190734863
+        },
+        "visible": true,
+        "x": 0.010185185198982557,
+        "y": 0.9405982677753155,
+        "w": 0.2731481393178304,
+        "h": 0.015384615613864018,
+        "nx": 0.14675925485789776,
+        "ny": 0.9482905755822475,
+        "focusable": true
+      },
+      {
+        "identifier": "perf-list",
+        "label": "List mount: not measured",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 3.9111111164093018,
+          "y": 795.3778076171875,
+          "width": 104.88888549804688,
+          "height": 12.800000190734863
+        },
+        "visible": false,
+        "x": 0.010185185198982557,
+        "y": 0.9559829418475811,
+        "w": 0.2731481393178304,
+        "h": 0.015384615613864018,
+        "nx": 0.14675925485789776,
+        "ny": 0.9636752496545131,
+        "focusable": true
+      }
+    ],
+    "dialog": [
+      {
+        "label": "Delete this workout?",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 48,
+          "y": 344.5333251953125,
+          "width": 288,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.125,
+        "y": 0.41410255432128906,
+        "w": 0.75,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.4299145203370314,
+        "focusable": true
+      },
+      {
+        "label": "This removes the workout and its logged sets. You cannot undo this.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 48,
+          "y": 382.9333190917969,
+          "width": 288,
+          "height": 44.088890075683594
+        },
+        "visible": true,
+        "x": 0.125,
+        "y": 0.46025639313917893,
+        "w": 0.75,
+        "h": 0.05299145441788893,
+        "nx": 0.5,
+        "ny": 0.4867521203481234,
+        "focusable": true
+      },
+      {
+        "identifier": "test-dialog-cancel",
+        "label": "Cancel",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 171.37777709960938,
+          "y": 439.1111145019531,
+          "width": 81.06666564941406,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.44629629453023273,
+        "y": 0.527777781853309,
+        "w": 0.21111110846201578,
+        "h": 0.057692307692307696,
+        "nx": 0.5518518487612406,
+        "ny": 0.5566239356994629,
+        "focusable": true
+      },
+      {
+        "identifier": "test-dialog-confirm",
+        "label": "Delete",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 260.26666259765625,
+          "y": 439.1111145019531,
+          "width": 76.0888900756836,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.6777777671813965,
+        "y": 0.527777781853309,
+        "w": 0.19814815123875937,
+        "h": 0.057692307692307696,
+        "nx": 0.7768518428007761,
+        "ny": 0.5566239356994629,
+        "focusable": true
+      }
+    ],
+    "sheet:test-sheet-open": [
+      {
+        "label": "Bottom sheet backdrop",
+        "hint": "Tap to close the bottom sheet",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 384,
+          "height": 832
+        },
+        "visible": true,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "nx": 0.5,
+        "ny": 0.5,
+        "focusable": true
+      },
+      {
+        "label": "Bottom Sheet",
+        "traits": [
+          "adjustable"
+        ],
+        "role": "AXSeekBar",
+        "frame": {
+          "x": 0,
+          "y": 609.4222412109375,
+          "width": 384,
+          "height": 222.57777404785156
+        },
+        "visible": true,
+        "x": 0,
+        "y": 0.7324786553016076,
+        "w": 1,
+        "h": 0.2675213630382831,
+        "nx": 0.5,
+        "ny": 0.8662393368207492,
+        "focusable": true
+      },
+      {
+        "label": "Bottom sheet handle",
+        "hint": "Drag up or down to extend or minimize the bottom sheet",
+        "traits": [
+          "adjustable"
+        ],
+        "role": "AXSeekBar",
+        "frame": {
+          "x": 0,
+          "y": 609.4222412109375,
+          "width": 384,
+          "height": 24.177778244018555
+        },
+        "visible": true,
+        "x": 0,
+        "y": 0.7324786553016076,
+        "w": 1,
+        "h": 0.029059829620214608,
+        "nx": 0.5,
+        "ny": 0.747008570111715,
+        "focusable": true
+      },
+      {
+        "label": "Bottom Sheet",
+        "traits": [
+          "adjustable"
+        ],
+        "role": "AXSeekBar",
+        "frame": {
+          "x": 0,
+          "y": 633.5999755859375,
+          "width": 384,
+          "height": 198.39999389648438
+        },
+        "visible": true,
+        "x": 0,
+        "y": 0.7615384321946365,
+        "w": 1,
+        "h": 0.2384615311255822,
+        "nx": 0.5,
+        "ny": 0.8807691977574276,
+        "focusable": true
+      },
+      {
+        "label": "Goblet squat",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 23.822221755981445,
+          "y": 657.4222412109375,
+          "width": 336,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.06203703582286835,
+        "y": 0.7901709629939153,
+        "w": 0.875,
+        "h": 0.03162393203148475,
+        "nx": 0.49953703582286835,
+        "ny": 0.8059829290096577,
+        "focusable": true
+      },
+      {
+        "label": "Hold the kettlebell at your chest, sit back and down, then drive up through your heels.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 23.822221755981445,
+          "y": 695.8222045898438,
+          "width": 336,
+          "height": 44.088890075683594
+        },
+        "visible": true,
+        "x": 0.06203703582286835,
+        "y": 0.8363247651320237,
+        "w": 0.875,
+        "h": 0.05299145441788893,
+        "nx": 0.49953703582286835,
+        "ny": 0.8628204923409681,
+        "focusable": true
+      },
+      {
+        "identifier": "test-sheet-close",
+        "label": "Close",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 752,
+          "width": 336,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.9038461538461539,
+        "w": 0.875,
+        "h": 0.057692307692307696,
+        "nx": 0.5004629641771317,
+        "ny": 0.9326923076923077,
+        "focusable": true
+      },
+      {
+        "label": "Uniwind",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 43.022220611572266,
+          "width": 71.46666717529297,
+          "height": 27.0222225189209
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.05170939977352436,
+        "w": 0.18611111243565878,
+        "h": 0.03247863283524147,
+        "nx": 0.13472222288449606,
+        "ny": 0.06794871619114509,
+        "focusable": true
+      },
+      {
+        "label": "Component test screen",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -670.2222290039062
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.8055555637066181,
+        "nx": 0.5,
+        "ny": -0.30106837932880104,
+        "focusable": true
+      },
+      {
+        "label": "Theme",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -627.9111328125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.7547008807842548,
+        "nx": 0.5,
+        "ny": -0.2756410378676194,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme",
+        "label": "Theme",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Radio group",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -439.4666748046875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.5282051379864032,
+        "nx": 0.5,
+        "ny": -0.16239316646869364,
+        "focusable": true
+      },
+      {
+        "label": "Theme",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -595.5555419921875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.7158119495098407,
+        "nx": 0.5,
+        "ny": -0.25619657223041237,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme-0",
+        "label": "Light",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -543.6444702148438
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.6534188343928411,
+        "nx": 0.5,
+        "ny": -0.22500001467191258,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme-1",
+        "label": "Dark",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -491.3777770996094
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.5905982897831843,
+        "nx": 0.5,
+        "ny": -0.19358974236708418,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme-2",
+        "label": "Brand",
+        "value": "checked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -439.4666748046875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.5282051379864032,
+        "nx": 0.5,
+        "ny": -0.16239316646869364,
+        "focusable": true
+      },
+      {
+        "label": "Buttons",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -381.1555480957031
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.45811964915348935,
+        "nx": 0.5,
+        "ny": -0.1273504220522367,
+        "focusable": true
+      },
+      {
+        "identifier": "test-button",
+        "label": "Save workout",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -321.0666809082031
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.3858974530146672,
+        "nx": 0.5,
+        "ny": -0.09123932398282564,
+        "focusable": true
+      },
+      {
+        "identifier": "test-button-disabled",
+        "label": "Unavailable",
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -260.977783203125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.3136752201960637,
+        "nx": 0.5,
+        "ny": -0.05512820757352388,
+        "focusable": true
+      },
+      {
+        "identifier": "test-button-loading",
+        "label": "busy",
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -201.24444580078125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.24188034351055437,
+        "nx": 0.5,
+        "ny": -0.019230769230769218,
+        "focusable": true
+      },
+      {
+        "label": "Form",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -142.93333435058594
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.17179487301753119,
+        "nx": 0.5,
+        "ny": 0.015811966015742376,
+        "focusable": true
+      },
+      {
+        "label": "Email",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -110.57777404785156
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.1329059784228985,
+        "nx": 0.5,
+        "ny": 0.03525641331305872,
+        "focusable": true
+      },
+      {
+        "identifier": "test-textfield",
+        "label": "Email",
+        "value": "",
+        "hint": "We'll send your plan here.",
+        "traits": [],
+        "role": "AXEditText",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -58.66666793823242
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.07051282204114474,
+        "nx": 0.5,
+        "ny": 0.0664529915039356,
+        "focusable": true
+      },
+      {
+        "label": "We'll send your plan here.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -36.622222900390625
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.044017094832200274,
+        "nx": 0.5,
+        "ny": 0.07970085510840783,
+        "focusable": true
+      },
+      {
+        "identifier": "test-switch",
+        "label": "Workout reminders",
+        "value": "checked",
+        "traits": [
+          "toggleButton"
+        ],
+        "role": "AXSwitch",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": 23.46666717529297
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": 0.028205128816457894,
+        "nx": 0.5,
+        "ny": 0.11581196693273692,
+        "focusable": true
+      },
+      {
+        "identifier": "test-checkbox",
+        "label": "I agree to the terms",
+        "value": "unchecked",
+        "traits": [
+          "checkbox"
+        ],
+        "role": "AXCheckBox",
+        "frame": {
+          "x": 16,
+          "y": 120.17778015136719,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.14444444729731634,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.1732906011434702,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup",
+        "label": "Experience level",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Radio group",
+        "frame": {
+          "x": 16,
+          "y": 180.26666259765625,
+          "width": 352,
+          "height": 176.35556030273438
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.21666666177602914,
+        "w": 0.9166666666666666,
+        "h": 0.21196581767155573,
+        "nx": 0.5,
+        "ny": 0.322649570611807,
+        "focusable": true
+      },
+      {
+        "label": "Experience level",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 180.26666259765625,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.21666666177602914,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.2288461488026839,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup-0",
+        "label": "Beginner",
+        "value": "checked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 204.44444274902344,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.2457264936887301,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.2745726475348839,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup-1",
+        "label": "Intermediate",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 256.71112060546875,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3085470199584961,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.33739317380464995,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup-2",
+        "label": "Advanced",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 308.6222229003906,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3709401717552772,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.39978632560143107,
+        "focusable": true
+      },
+      {
+        "label": "Rest time",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 368.3555603027344,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.4427350484407865,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.45491453546744126,
+        "focusable": true
+      },
+      {
+        "identifier": "test-select",
+        "label": "Rest time, 60 seconds",
+        "value": "collapsed",
+        "traits": [
+          "combobox"
+        ],
+        "role": "AXView",
+        "roleDescription": "Combo box",
+        "frame": {
+          "x": 16,
+          "y": 392.5333251953125,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.47179486201359677,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.5006410158597506,
+        "focusable": true
+      },
+      {
+        "label": "Overlays",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 472.5333251953125,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.5679487081674429,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.5837606741831853,
+        "focusable": true
+      },
+      {
+        "identifier": "test-dialog-open",
+        "label": "Delete workout",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 510.9333190917969,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.6141025469853327,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.6429487008314866,
+        "focusable": true
+      },
+      {
+        "identifier": "test-sheet-open",
+        "label": "Show exercise details",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 571.022216796875,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.6863247798039362,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.7151709336500901,
+        "focusable": true
+      },
+      {
+        "identifier": "test-sheet-open-expoui",
+        "label": "Show exercise details (@expo/ui)",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 630.7555541992188,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.7581196564894456,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.7869658103355994,
+        "focusable": true
+      },
+      {
+        "identifier": "test-toast-show",
+        "label": "Log set",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 690.8444213867188,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.8303418526282678,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.8591880064744216,
+        "focusable": true
+      },
+      {
+        "label": "Tabs",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 770.8444213867188,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.9264956987821139,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.9423076647978563,
+        "focusable": true
+      },
+      {
+        "identifier": "test-tabs-0",
+        "label": "Today",
+        "value": "selected",
+        "hint": "Tab 1 of 3",
+        "traits": [
+          "selected",
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 16,
+          "y": 809.2444458007812,
+          "width": 117.33333587646484,
+          "height": 22.755556106567383
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.9726495742797852,
+        "w": 0.3055555621782939,
+        "h": 0.02735042801270118,
+        "nx": 0.1944444477558136,
+        "ny": 0.9863247882861358,
+        "focusable": true
+      },
+      {
+        "identifier": "test-tabs-1",
+        "label": "Plan",
+        "hint": "Tab 2 of 3",
+        "traits": [
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 133.3333282470703,
+          "y": 809.2444458007812,
+          "width": 117.33333587646484,
+          "height": 22.755556106567383
+        },
+        "visible": false,
+        "x": 0.3472222089767456,
+        "y": 0.9726495742797852,
+        "w": 0.3055555621782939,
+        "h": 0.02735042801270118,
+        "nx": 0.4999999900658926,
+        "ny": 0.9863247882861358,
+        "focusable": true
+      },
+      {
+        "identifier": "test-tabs-2",
+        "label": "Progress",
+        "hint": "Tab 3 of 3",
+        "traits": [
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 250.6666717529297,
+          "y": 809.2444458007812,
+          "width": 117.33333587646484,
+          "height": 22.755556106567383
+        },
+        "visible": false,
+        "x": 0.6527777910232544,
+        "y": 0.9726495742797852,
+        "w": 0.3055555621782939,
+        "h": 0.02735042801270118,
+        "nx": 0.8055555721124014,
+        "ny": 0.9863247882861358,
+        "focusable": true
+      },
+      {
+        "label": "3 exercises left today.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 870.04443359375,
+          "width": 352,
+          "height": -38.0444450378418
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.0457264826847956,
+        "w": 0.9166666666666666,
+        "h": -0.0457264964397137,
+        "nx": 0.5,
+        "ny": 1.0228632344649389,
+        "focusable": true
+      },
+      {
+        "label": "More components",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 924.0888671875,
+          "width": 352,
+          "height": -92.0888900756836
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.1106837346003606,
+        "w": 0.9166666666666666,
+        "h": -0.11068376211019662,
+        "nx": 0.5,
+        "ny": 1.0553418535452623,
+        "focusable": true
+      },
+      {
+        "label": "Weight: 60 kg",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 962.4888916015625,
+          "width": 352,
+          "height": -130.4888916015625
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.1568376100980318,
+        "w": 0.9166666666666666,
+        "h": -0.15683761009803185,
+        "nx": 0.5,
+        "ny": 1.0784188050490158,
+        "focusable": true
+      },
+      {
+        "identifier": "test-slider",
+        "label": "Weight, 60 kg",
+        "value": "60",
+        "traits": [
+          "adjustable"
+        ],
+        "role": "AXSeekBar",
+        "frame": {
+          "x": 16,
+          "y": 986.6666870117188,
+          "width": 352,
+          "height": -154.6666717529297
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.1858974603506236,
+        "w": 0.9166666666666666,
+        "h": -0.1858974420107328,
+        "nx": 0.5,
+        "ny": 1.0929487393452573,
+        "focusable": true
+      },
+      {
+        "label": "Workout progress",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1046.755615234375,
+          "width": 352,
+          "height": -214.75555419921875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.2581197298490083,
+        "w": 0.9166666666666666,
+        "h": -0.2581196564894456,
+        "nx": 0.5,
+        "ny": 1.1290599016042855,
+        "focusable": true
+      },
+      {
+        "identifier": "test-progress",
+        "label": "Workout progress, 3 of 8 exercises",
+        "value": "3",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Progress bar",
+        "frame": {
+          "x": 16,
+          "y": 1070.933349609375,
+          "width": 352,
+          "height": -238.93333435058594
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.2871795067420373,
+        "w": 0.9166666666666666,
+        "h": -0.2871794884021466,
+        "nx": 0.5,
+        "ny": 1.1435897625409641,
+        "focusable": true
+      },
+      {
+        "label": "3 of 8 exercises",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1083.022216796875,
+          "width": 352,
+          "height": -251.022216796875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.3017093951885517,
+        "w": 0.9166666666666666,
+        "h": -0.30170939518855167,
+        "nx": 0.5,
+        "ny": 1.150854697594276,
+        "focusable": true
+      },
+      {
+        "identifier": "test-accordion-0",
+        "label": "Warm-up",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 1114.3111572265625,
+          "width": 349.8666687011719,
+          "height": -282.31109619140625
+        },
+        "visible": false,
+        "x": 0.044444446762402855,
+        "y": 1.3393162947434645,
+        "w": 0.9111111164093018,
+        "h": -0.3393162213839017,
+        "nx": 0.5000000049670538,
+        "ny": 1.1696581840515137,
+        "focusable": true
+      },
+      {
+        "identifier": "test-accordion-1",
+        "label": "Main set",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 1163.3778076171875,
+          "width": 349.8666687011719,
+          "height": -331.3777770996094
+        },
+        "visible": false,
+        "x": 0.044444446762402855,
+        "y": 1.3982906341552734,
+        "w": 0.9111111164093018,
+        "h": -0.39829059747549206,
+        "nx": 0.5000000049670538,
+        "ny": 1.1991453354175274,
+        "focusable": true
+      },
+      {
+        "identifier": "test-accordion-2",
+        "label": "Cool-down",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 1212.4444580078125,
+          "width": 349.8666687011719,
+          "height": -380.4444580078125
+        },
+        "visible": false,
+        "x": 0.044444446762402855,
+        "y": 1.4572649735670824,
+        "w": 0.9111111164093018,
+        "h": -0.45726497356708234,
+        "nx": 0.5000000049670538,
+        "ny": 1.2286324867835412,
+        "focusable": true
+      },
+      {
+        "identifier": "test-menu-open",
+        "label": "Workout options",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 1273.244384765625,
+          "width": 352,
+          "height": -441.24444580078125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.53034180861253,
+        "w": 0.9166666666666666,
+        "h": -0.5303418819720929,
+        "nx": 0.5,
+        "ny": 1.2651708676264835,
+        "focusable": true
+      },
+      {
+        "label": "Chart range",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1332.977783203125,
+          "width": 352,
+          "height": -500.977783203125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.602136758657602,
+        "w": 0.9166666666666666,
+        "h": -0.6021367586576022,
+        "nx": 0.5,
+        "ny": 1.301068379328801,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented",
+        "label": "Chart range",
+        "traits": [],
+        "role": "AXViewGroup",
+        "frame": {
+          "x": 16,
+          "y": 1357.155517578125,
+          "width": 352,
+          "height": -525.1555786132812
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.631196535550631,
+        "w": 0.9166666666666666,
+        "h": -0.6311966089101938,
+        "nx": 0.5,
+        "ny": 1.315598231095534,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented-0",
+        "label": "Week",
+        "value": "selected",
+        "traits": [
+          "button",
+          "selected"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 18.844444274902344,
+          "y": 1360,
+          "width": 115.55555725097656,
+          "height": -528
+        },
+        "visible": false,
+        "x": 0.04907407363255819,
+        "y": 1.6346153846153846,
+        "w": 0.3009259303410848,
+        "h": -0.6346153846153846,
+        "nx": 0.19953703880310059,
+        "ny": 1.3173076923076923,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented-1",
+        "label": "Month",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 134.39999389648438,
+          "y": 1360,
+          "width": 115.19999694824219,
+          "height": -528
+        },
+        "visible": false,
+        "x": 0.34999998410542804,
+        "y": 1.6346153846153846,
+        "w": 0.29999999205271405,
+        "h": -0.6346153846153846,
+        "nx": 0.49999998013178504,
+        "ny": 1.3173076923076923,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented-2",
+        "label": "Year",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 249.60000610351562,
+          "y": 1360,
+          "width": 115.55555725097656,
+          "height": -528
+        },
+        "visible": false,
+        "x": 0.6500000158945719,
+        "y": 1.6346153846153846,
+        "w": 0.3009259303410848,
+        "h": -0.6346153846153846,
+        "nx": 0.8004629810651143,
+        "ny": 1.3173076923076923,
+        "focusable": true
+      },
+      {
+        "label": "Native control (@expo/ui)",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 1443.5555419921875,
+          "width": 352,
+          "height": -611.5555419921875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.73504271874061,
+        "w": 0.9166666666666666,
+        "h": -0.73504271874061,
+        "nx": 0.5,
+        "ny": 1.3675213593703048,
+        "focusable": true
+      },
+      {
+        "label": "Sync with Health (native control)",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1497.5999755859375,
+          "width": 199.46665954589844,
+          "height": 16.711111068725586
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.799999970656175,
+        "w": 0.5194444259007772,
+        "h": 0.020085470034525946,
+        "nx": 0.3013888796170553,
+        "ny": 1.8100427056734378,
+        "focusable": true
+      },
+      {
+        "identifier": "test-native-switch",
+        "label": "",
+        "value": "Off, unchecked",
+        "traits": [],
+        "role": "AXView",
+        "frame": {
+          "x": 223.64443969726562,
+          "y": 1482.3111572265625,
+          "width": 51.911109924316406,
+          "height": 47.64444351196289
+        },
+        "visible": false,
+        "x": 0.5824073950449625,
+        "y": 1.7816239870511568,
+        "w": 0.13518518209457397,
+        "h": 0.05726495614418617,
+        "nx": 0.6499999860922495,
+        "ny": 1.8102564651232498,
+        "focusable": true
+      },
+      {
+        "label": "List",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 1561.5999755859375,
+          "width": 352,
+          "height": -729.5999755859375
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.8769230475792518,
+        "w": 0.9166666666666666,
+        "h": -0.8769230475792518,
+        "nx": 0.5,
+        "ny": 1.4384615237896259,
+        "focusable": true
+      },
+      {
+        "identifier": "test-list-link",
+        "label": "Open 200-row list",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 1600,
+          "width": 352,
+          "height": -768
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.9230769230769231,
+        "w": 0.9166666666666666,
+        "h": -0.9230769230769231,
+        "nx": 0.5,
+        "ny": 1.4615384615384617,
+        "focusable": true
+      },
+      {
+        "identifier": "perf-theme",
+        "label": "Theme switch: 155.7 ms",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 3.9111111164093018,
+          "y": 782.5777587890625,
+          "width": 104.88888549804688,
+          "height": 12.800000190734863
+        },
+        "visible": true,
+        "x": 0.010185185198982557,
+        "y": 0.9405982677753155,
+        "w": 0.2731481393178304,
+        "h": 0.015384615613864018,
+        "nx": 0.14675925485789776,
+        "ny": 0.9482905755822475,
+        "focusable": true
+      },
+      {
+        "identifier": "perf-list",
+        "label": "List mount: not measured",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 3.9111111164093018,
+          "y": 795.3778076171875,
+          "width": 104.88888549804688,
+          "height": 12.800000190734863
+        },
+        "visible": false,
+        "x": 0.010185185198982557,
+        "y": 0.9559829418475811,
+        "w": 0.2731481393178304,
+        "h": 0.015384615613864018,
+        "nx": 0.14675925485789776,
+        "ny": 0.9636752496545131,
+        "focusable": true
+      }
+    ],
+    "sheet:test-sheet-open-expoui": [
+      {
+        "label": "Close sheet",
+        "traits": [],
+        "role": "AXView",
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 384,
+          "height": 602.6666870117188
+        },
+        "visible": true,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 0.7243589988121619,
+        "nx": 0.5,
+        "ny": 0.36217949940608096,
+        "focusable": true
+      },
+      {
+        "label": "Drag handle",
+        "traits": [],
+        "role": "AXView",
+        "frame": {
+          "x": 168.1777801513672,
+          "y": 602.6666870117188,
+          "width": 48,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.43796296914418537,
+        "y": 0.7243589988121619,
+        "w": 0.125,
+        "h": 0.057692307692307696,
+        "nx": 0.5004629691441853,
+        "ny": 0.7532051526583158,
+        "focusable": true
+      },
+      {
+        "label": "Goblet squat",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 650.6666870117188,
+          "width": 114.13333129882812,
+          "height": 23.46666717529297
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.7820513065044696,
+        "w": 0.29722221692403156,
+        "h": 0.028205128816457894,
+        "nx": 0.19027777512868244,
+        "ny": 0.7961538709126986,
+        "focusable": true
+      },
+      {
+        "label": "Hold the kettlebell at your chest, sit back and down, then drive up through your heels.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 686.2222290039062,
+          "width": 352,
+          "height": 37.68888854980469
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.8247863329373873,
+        "w": 0.9166666666666666,
+        "h": 0.045299144891592175,
+        "nx": 0.5,
+        "ny": 0.8474359053831835,
+        "focusable": true
+      },
+      {
+        "label": "Close",
+        "traits": [],
+        "role": "AXView",
+        "frame": {
+          "x": 16,
+          "y": 736,
+          "width": 82.84444427490234,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.8846153846153846,
+        "w": 0.21574074029922485,
+        "h": 0.057692307692307696,
+        "nx": 0.14953703681627908,
+        "ny": 0.9134615384615384,
+        "focusable": true
+      }
+    ],
+    "select": [
+      {
+        "label": "",
+        "traits": [],
+        "role": "AXViewGroup",
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 384,
+          "height": 832
+        },
+        "visible": true,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "nx": 0.5,
+        "ny": 0.5,
+        "focusable": true
+      },
+      {
+        "label": "Rest time",
+        "traits": [],
+        "role": "AXAbsListView",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 288,
+          "width": 336,
+          "height": 256
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.34615384615384615,
+        "w": 0.875,
+        "h": 0.3076923076923077,
+        "nx": 0.5004629641771317,
+        "ny": 0.5,
+        "focusable": true
+      },
+      {
+        "identifier": "test-select-option-0",
+        "label": "30 seconds",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 296.1777648925781,
+          "width": 336,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.35598289049588716,
+        "w": 0.875,
+        "h": 0.057692307692307696,
+        "nx": 0.5004629641771317,
+        "ny": 0.384829044342041,
+        "focusable": true
+      },
+      {
+        "identifier": "test-select-option-1",
+        "label": "45 seconds",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 344.1777648925781,
+          "width": 336,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.41367519818819487,
+        "w": 0.875,
+        "h": 0.057692307692307696,
+        "nx": 0.5004629641771317,
+        "ny": 0.4425213520343487,
+        "focusable": true
+      },
+      {
+        "identifier": "test-select-option-2",
+        "label": "60 seconds",
+        "value": "checked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 392.1777648925781,
+          "width": 336,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.4713675058805026,
+        "w": 0.875,
+        "h": 0.057692307692307696,
+        "nx": 0.5004629641771317,
+        "ny": 0.5002136597266564,
+        "focusable": true
+      },
+      {
+        "identifier": "test-select-option-3",
+        "label": "90 seconds",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 440.1777648925781,
+          "width": 336,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.5290598135728103,
+        "w": 0.875,
+        "h": 0.057692307692307696,
+        "nx": 0.5004629641771317,
+        "ny": 0.5579059674189641,
+        "focusable": true
+      },
+      {
+        "identifier": "test-select-option-4",
+        "label": "2 minutes",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 488.1777648925781,
+          "width": 336,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.5867521212651179,
+        "w": 0.875,
+        "h": 0.057692307692307696,
+        "nx": 0.5004629641771317,
+        "ny": 0.6155982751112717,
+        "focusable": true
+      }
+    ],
+    "toast": [
+      {
+        "label": "Uniwind",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 43.022220611572266,
+          "width": 71.46666717529297,
+          "height": 27.0222225189209
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.05170939977352436,
+        "w": 0.18611111243565878,
+        "h": 0.03247863283524147,
+        "nx": 0.13472222288449606,
+        "ny": 0.06794871619114509,
+        "focusable": true
+      },
+      {
+        "label": "Component test screen",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -672
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.8076923076923077,
+        "nx": 0.5,
+        "ny": -0.30213675132164586,
+        "focusable": true
+      },
+      {
+        "label": "Theme",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -629.6889038085938
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.7568376247699444,
+        "nx": 0.5,
+        "ny": -0.2767094098604642,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme",
+        "label": "Theme",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Radio group",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -441.24444580078125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.5303418819720929,
+        "nx": 0.5,
+        "ny": -0.16346153846153846,
+        "focusable": true
+      },
+      {
+        "label": "Theme",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -597.3333129882812
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.7179486934955304,
+        "nx": 0.5,
+        "ny": -0.2572649442232572,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme-0",
+        "label": "Light",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -545.4222412109375
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.6555555783785306,
+        "nx": 0.5,
+        "ny": -0.22606838666475734,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme-1",
+        "label": "Dark",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -493.1555480957031
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.5927350337688739,
+        "nx": 0.5,
+        "ny": -0.194658114359929,
+        "focusable": true
+      },
+      {
+        "identifier": "test-theme-2",
+        "label": "Brand",
+        "value": "checked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -441.24444580078125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.5303418819720929,
+        "nx": 0.5,
+        "ny": -0.16346153846153846,
+        "focusable": true
+      },
+      {
+        "label": "Buttons",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -382.9333190917969
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.46025639313917893,
+        "nx": 0.5,
+        "ny": -0.1284187940450815,
+        "focusable": true
+      },
+      {
+        "identifier": "test-button",
+        "label": "Save workout",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -322.8444519042969
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.3880341970003568,
+        "nx": 0.5,
+        "ny": -0.09230769597567043,
+        "focusable": true
+      },
+      {
+        "identifier": "test-button-disabled",
+        "label": "Unavailable",
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -262.75555419921875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.3158119641817533,
+        "nx": 0.5,
+        "ny": -0.05619657956636867,
+        "focusable": true
+      },
+      {
+        "identifier": "test-button-loading",
+        "label": "busy",
+        "traits": [
+          "button",
+          "notEnabled"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -203.022216796875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.24401708749624398,
+        "nx": 0.5,
+        "ny": -0.020299141223614023,
+        "focusable": true
+      },
+      {
+        "label": "Form",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -144.7111053466797
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.17393161700322077,
+        "nx": 0.5,
+        "ny": 0.014743594022897585,
+        "focusable": true
+      },
+      {
+        "label": "Email",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -112.35555267333984
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.13504273157853347,
+        "nx": 0.5,
+        "ny": 0.034188036735241234,
+        "focusable": true
+      },
+      {
+        "identifier": "test-textfield",
+        "label": "Email",
+        "value": "",
+        "hint": "We'll send your plan here.",
+        "traits": [],
+        "role": "AXEditText",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -60.44444274902344
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.07264957061180702,
+        "nx": 0.5,
+        "ny": 0.06538461721860446,
+        "focusable": true
+      },
+      {
+        "label": "We'll send your plan here.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": -38.400001525878906
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": -0.04615384798783522,
+        "nx": 0.5,
+        "ny": 0.07863247853059036,
+        "focusable": true
+      },
+      {
+        "identifier": "test-switch",
+        "label": "Workout reminders",
+        "value": "checked",
+        "traits": [
+          "toggleButton"
+        ],
+        "role": "AXSwitch",
+        "frame": {
+          "x": 16,
+          "y": 84.62222290039062,
+          "width": 352,
+          "height": 21.688888549804688
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.10170940252450797,
+        "w": 0.9166666666666666,
+        "h": 0.026068375660822943,
+        "nx": 0.5,
+        "ny": 0.11474359035491943,
+        "focusable": true
+      },
+      {
+        "identifier": "test-checkbox",
+        "label": "I agree to the terms",
+        "value": "unchecked",
+        "traits": [
+          "checkbox"
+        ],
+        "role": "AXCheckBox",
+        "frame": {
+          "x": 16,
+          "y": 118.4000015258789,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.14230769414168137,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.17115384798783523,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup",
+        "label": "Experience level",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Radio group",
+        "frame": {
+          "x": 16,
+          "y": 178.4888916015625,
+          "width": 352,
+          "height": 176.35556030273438
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.21452991779033953,
+        "w": 0.9166666666666666,
+        "h": 0.21196581767155573,
+        "nx": 0.5,
+        "ny": 0.3205128266261174,
+        "focusable": true
+      },
+      {
+        "label": "Experience level",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 178.4888916015625,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.21452991779033953,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.22670940481699428,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup-0",
+        "label": "Beginner",
+        "value": "checked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 202.6666717529297,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.24358974970304048,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.27243590354919434,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup-1",
+        "label": "Intermediate",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 254.93333435058594,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3064102576329158,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.33525641147906965,
+        "focusable": true
+      },
+      {
+        "identifier": "test-radiogroup-2",
+        "label": "Advanced",
+        "value": "unchecked",
+        "traits": [
+          "radio"
+        ],
+        "role": "AXRadioButton",
+        "frame": {
+          "x": 16,
+          "y": 306.8444519042969,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.3688034277695876,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.39764958161574143,
+        "focusable": true
+      },
+      {
+        "label": "Rest time",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 366.5777893066406,
+          "width": 352,
+          "height": 20.266666412353516
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.4405983044550969,
+        "w": 0.9166666666666666,
+        "h": 0.024358974053309515,
+        "nx": 0.5,
+        "ny": 0.4527777914817517,
+        "focusable": true
+      },
+      {
+        "identifier": "test-select",
+        "label": "Rest time, 60 seconds",
+        "value": "collapsed",
+        "traits": [
+          "combobox"
+        ],
+        "role": "AXView",
+        "roleDescription": "Combo box",
+        "frame": {
+          "x": 16,
+          "y": 390.75555419921875,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.46965811802790713,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.498504271874061,
+        "focusable": true
+      },
+      {
+        "label": "Overlays",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 470.75555419921875,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.5658119641817533,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.5816239301974957,
+        "focusable": true
+      },
+      {
+        "identifier": "test-dialog-open",
+        "label": "Delete workout",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 509.1555480957031,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.6119658029996432,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.6408119568457971,
+        "focusable": true
+      },
+      {
+        "identifier": "test-sheet-open",
+        "label": "Show exercise details",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 569.2444458007812,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.6841880358182467,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.7130341896644006,
+        "focusable": true
+      },
+      {
+        "identifier": "test-sheet-open-expoui",
+        "label": "Show exercise details (@expo/ui)",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 628.977783203125,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.755982912503756,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.7848290663499099,
+        "focusable": true
+      },
+      {
+        "identifier": "test-toast-show",
+        "label": "Log set",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 689.066650390625,
+          "width": 352,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.8282051086425781,
+        "w": 0.9166666666666666,
+        "h": 0.057692307692307696,
+        "nx": 0.5,
+        "ny": 0.857051262488732,
+        "focusable": true
+      },
+      {
+        "label": "Tabs",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 769.066650390625,
+          "width": 352,
+          "height": 26.311111450195312
+        },
+        "visible": true,
+        "x": 0.041666666666666664,
+        "y": 0.9243589547964243,
+        "w": 0.9166666666666666,
+        "h": 0.03162393203148475,
+        "nx": 0.5,
+        "ny": 0.9401709208121667,
+        "focusable": true
+      },
+      {
+        "identifier": "test-tabs-0",
+        "label": "Today",
+        "value": "selected",
+        "hint": "Tab 1 of 3",
+        "traits": [
+          "selected",
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 16,
+          "y": 807.4666748046875,
+          "width": 117.33333587646484,
+          "height": 24.53333282470703
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 0.9705128302940955,
+        "w": 0.3055555621782939,
+        "h": 0.029487178875849798,
+        "nx": 0.1944444477558136,
+        "ny": 0.9852564197320204,
+        "focusable": true
+      },
+      {
+        "identifier": "test-tabs-1",
+        "label": "Plan",
+        "hint": "Tab 2 of 3",
+        "traits": [
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 133.3333282470703,
+          "y": 807.4666748046875,
+          "width": 117.33333587646484,
+          "height": 24.53333282470703
+        },
+        "visible": false,
+        "x": 0.3472222089767456,
+        "y": 0.9705128302940955,
+        "w": 0.3055555621782939,
+        "h": 0.029487178875849798,
+        "nx": 0.4999999900658926,
+        "ny": 0.9852564197320204,
+        "focusable": true
+      },
+      {
+        "identifier": "test-tabs-2",
+        "label": "Progress",
+        "hint": "Tab 3 of 3",
+        "traits": [
+          "tab"
+        ],
+        "role": "AXView",
+        "roleDescription": "Tab",
+        "frame": {
+          "x": 250.6666717529297,
+          "y": 807.4666748046875,
+          "width": 117.33333587646484,
+          "height": 24.53333282470703
+        },
+        "visible": false,
+        "x": 0.6527777910232544,
+        "y": 0.9705128302940955,
+        "w": 0.3055555621782939,
+        "h": 0.029487178875849798,
+        "nx": 0.8055555721124014,
+        "ny": 0.9852564197320204,
+        "focusable": true
+      },
+      {
+        "label": "3 exercises left today.",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 868.2666625976562,
+          "width": 352,
+          "height": -36.266666412353516
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.043589738699106,
+        "w": 0.9166666666666666,
+        "h": -0.04358974328407875,
+        "nx": 0.5,
+        "ny": 1.0217948670570667,
+        "focusable": true
+      },
+      {
+        "label": "More components",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 922.3110961914062,
+          "width": 352,
+          "height": -90.31111145019531
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.108546990614671,
+        "w": 0.9166666666666666,
+        "h": -0.10854700895456168,
+        "nx": 0.5,
+        "ny": 1.0542734861373901,
+        "focusable": true
+      },
+      {
+        "label": "Weight: 60 kg",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 960.7111206054688,
+          "width": 352,
+          "height": -128.7111053466797
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.1547008661123424,
+        "w": 0.9166666666666666,
+        "h": -0.15470084777245155,
+        "nx": 0.5,
+        "ny": 1.0773504422261166,
+        "focusable": true
+      },
+      {
+        "identifier": "test-slider",
+        "label": "Weight, 60 kg",
+        "value": "60",
+        "traits": [
+          "adjustable"
+        ],
+        "role": "AXSeekBar",
+        "frame": {
+          "x": 16,
+          "y": 984.888916015625,
+          "width": 352,
+          "height": -152.88888549804688
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.183760716364934,
+        "w": 0.9166666666666666,
+        "h": -0.1837606796851525,
+        "nx": 0.5,
+        "ny": 1.0918803765223577,
+        "focusable": true
+      },
+      {
+        "label": "Workout progress",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1044.977783203125,
+          "width": 352,
+          "height": -212.977783203125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.255982912503756,
+        "w": 0.9166666666666666,
+        "h": -0.255982912503756,
+        "nx": 0.5,
+        "ny": 1.127991456251878,
+        "focusable": true
+      },
+      {
+        "identifier": "test-progress",
+        "label": "Workout progress, 3 of 8 exercises",
+        "value": "3",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Progress bar",
+        "frame": {
+          "x": 16,
+          "y": 1069.155517578125,
+          "width": 352,
+          "height": -237.15554809570312
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.2850426893967848,
+        "w": 0.9166666666666666,
+        "h": -0.2850427260765663,
+        "nx": 0.5,
+        "ny": 1.1425213263585017,
+        "focusable": true
+      },
+      {
+        "label": "3 of 8 exercises",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1081.244384765625,
+          "width": 352,
+          "height": -249.24444580078125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.2995725778432994,
+        "w": 0.9166666666666666,
+        "h": -0.2995726512028621,
+        "nx": 0.5,
+        "ny": 1.1497862522418683,
+        "focusable": true
+      },
+      {
+        "identifier": "test-accordion-0",
+        "label": "Warm-up",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 1112.5333251953125,
+          "width": 349.8666687011719,
+          "height": -280.5333251953125
+        },
+        "visible": false,
+        "x": 0.044444446762402855,
+        "y": 1.3371794773982122,
+        "w": 0.9111111164093018,
+        "h": -0.33717947739821214,
+        "nx": 0.5000000049670538,
+        "ny": 1.1685897386991062,
+        "focusable": true
+      },
+      {
+        "identifier": "test-accordion-1",
+        "label": "Main set",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 1161.5999755859375,
+          "width": 349.8666687011719,
+          "height": -329.6000061035156
+        },
+        "visible": false,
+        "x": 0.044444446762402855,
+        "y": 1.396153816810021,
+        "w": 0.9111111164093018,
+        "h": -0.3961538534898024,
+        "nx": 0.5000000049670538,
+        "ny": 1.1980768900651197,
+        "focusable": true
+      },
+      {
+        "identifier": "test-accordion-2",
+        "label": "Cool-down",
+        "value": "collapsed",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 17.066667556762695,
+          "y": 1210.6666259765625,
+          "width": 349.8666687011719,
+          "height": -378.6666564941406
+        },
+        "visible": false,
+        "x": 0.044444446762402855,
+        "y": 1.45512815622183,
+        "w": 0.9111111164093018,
+        "h": -0.45512819290161133,
+        "nx": 0.5000000049670538,
+        "ny": 1.2275640597710242,
+        "focusable": true
+      },
+      {
+        "identifier": "test-menu-open",
+        "label": "Workout options",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 1271.4666748046875,
+          "width": 352,
+          "height": -439.4666748046875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.5282051379864032,
+        "w": 0.9166666666666666,
+        "h": -0.5282051379864032,
+        "nx": 0.5,
+        "ny": 1.2641025689932017,
+        "focusable": true
+      },
+      {
+        "label": "Chart range",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1331.199951171875,
+          "width": 352,
+          "height": -499.20001220703125
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.5999999413123498,
+        "w": 0.9166666666666666,
+        "h": -0.6000000146719126,
+        "nx": 0.5,
+        "ny": 1.2999999339763935,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented",
+        "label": "Chart range",
+        "traits": [],
+        "role": "AXViewGroup",
+        "frame": {
+          "x": 16,
+          "y": 1355.3778076171875,
+          "width": 352,
+          "height": -523.3778076171875
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.6290598649245043,
+        "w": 0.9166666666666666,
+        "h": -0.6290598649245042,
+        "nx": 0.5,
+        "ny": 1.3145299324622521,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented-0",
+        "label": "Week",
+        "value": "selected",
+        "traits": [
+          "button",
+          "selected"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 18.844444274902344,
+          "y": 1358.22216796875,
+          "width": 115.55555725097656,
+          "height": -526.2222290039062
+        },
+        "visible": false,
+        "x": 0.04907407363255819,
+        "y": 1.6324785672701323,
+        "w": 0.3009259303410848,
+        "h": -0.632478640629695,
+        "nx": 0.19953703880310059,
+        "ny": 1.3162392469552848,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented-1",
+        "label": "Month",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 134.39999389648438,
+          "y": 1358.22216796875,
+          "width": 115.19999694824219,
+          "height": -526.2222290039062
+        },
+        "visible": false,
+        "x": 0.34999998410542804,
+        "y": 1.6324785672701323,
+        "w": 0.29999999205271405,
+        "h": -0.632478640629695,
+        "nx": 0.49999998013178504,
+        "ny": 1.3162392469552848,
+        "focusable": true
+      },
+      {
+        "identifier": "test-segmented-2",
+        "label": "Year",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 249.60000610351562,
+          "y": 1358.22216796875,
+          "width": 115.55555725097656,
+          "height": -526.2222290039062
+        },
+        "visible": false,
+        "x": 0.6500000158945719,
+        "y": 1.6324785672701323,
+        "w": 0.3009259303410848,
+        "h": -0.632478640629695,
+        "nx": 0.8004629810651143,
+        "ny": 1.3162392469552848,
+        "focusable": true
+      },
+      {
+        "label": "Native control (@expo/ui)",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 1441.77783203125,
+          "width": 352,
+          "height": -609.7777709960938
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.7329060481144831,
+        "w": 0.9166666666666666,
+        "h": -0.7329059747549204,
+        "nx": 0.5,
+        "ny": 1.3664530607370229,
+        "focusable": true
+      },
+      {
+        "label": "Sync with Health (native control)",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 16,
+          "y": 1495.822265625,
+          "width": 199.46665954589844,
+          "height": 16.711111068725586
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.7978633000300481,
+        "w": 0.5194444259007772,
+        "h": 0.020085470034525946,
+        "nx": 0.3013888796170553,
+        "ny": 1.807906035047311,
+        "focusable": true
+      },
+      {
+        "identifier": "test-native-switch",
+        "label": "",
+        "value": "Off, unchecked",
+        "traits": [],
+        "role": "AXView",
+        "frame": {
+          "x": 223.64443969726562,
+          "y": 1480.5333251953125,
+          "width": 51.911109924316406,
+          "height": 47.64444351196289
+        },
+        "visible": false,
+        "x": 0.5824073950449625,
+        "y": 1.7794871697059045,
+        "w": 0.13518518209457397,
+        "h": 0.05726495614418617,
+        "nx": 0.6499999860922495,
+        "ny": 1.8081196477779975,
+        "focusable": true
+      },
+      {
+        "label": "List",
+        "traits": [
+          "header"
+        ],
+        "role": "AXHeading",
+        "frame": {
+          "x": 16,
+          "y": 1559.822265625,
+          "width": 352,
+          "height": -727.8222045898438
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.874786376953125,
+        "w": 0.9166666666666666,
+        "h": -0.8747863035935622,
+        "nx": 0.5,
+        "ny": 1.437393225156344,
+        "focusable": true
+      },
+      {
+        "identifier": "test-list-link",
+        "label": "Open 200-row list",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 16,
+          "y": 1598.22216796875,
+          "width": 352,
+          "height": -766.2222290039062
+        },
+        "visible": false,
+        "x": 0.041666666666666664,
+        "y": 1.9209401057316706,
+        "w": 0.9166666666666666,
+        "h": -0.9209401790912335,
+        "nx": 0.5,
+        "ny": 1.4604700161860538,
+        "focusable": true
+      },
+      {
+        "label": "Set logged",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 32,
+          "y": 761.95556640625,
+          "width": 320,
+          "height": 22.044445037841797
+        },
+        "visible": true,
+        "x": 0.08333333333333333,
+        "y": 0.9158119788536658,
+        "w": 0.8333333333333334,
+        "h": 0.026495727208944466,
+        "nx": 0.5,
+        "ny": 0.9290598424581381,
+        "focusable": true
+      },
+      {
+        "identifier": "perf-theme",
+        "label": "Theme switch: 154.2 ms",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 3.9111111164093018,
+          "y": 782.5777587890625,
+          "width": 104.88888549804688,
+          "height": 12.800000190734863
+        },
+        "visible": true,
+        "x": 0.010185185198982557,
+        "y": 0.9405982677753155,
+        "w": 0.2731481393178304,
+        "h": 0.015384615613864018,
+        "nx": 0.14675925485789776,
+        "ny": 0.9482905755822475,
+        "focusable": true
+      },
+      {
+        "identifier": "perf-list",
+        "label": "List mount: not measured",
+        "traits": [],
+        "role": "AXTextView",
+        "frame": {
+          "x": 3.9111111164093018,
+          "y": 795.3778076171875,
+          "width": 104.88888549804688,
+          "height": 12.800000190734863
+        },
+        "visible": false,
+        "x": 0.010185185198982557,
+        "y": 0.9559829418475811,
+        "w": 0.2731481393178304,
+        "h": 0.015384615613864018,
+        "nx": 0.14675925485789776,
+        "ny": 0.9636752496545131,
+        "focusable": true
+      }
+    ],
+    "menu": [
+      {
+        "label": "",
+        "traits": [],
+        "role": "AXViewGroup",
+        "frame": {
+          "x": 0,
+          "y": 0,
+          "width": 384,
+          "height": 832
+        },
+        "visible": true,
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "nx": 0.5,
+        "ny": 0.5,
+        "focusable": true
+      },
+      {
+        "identifier": "test-menu",
+        "label": "Workout options",
+        "traits": [],
+        "role": "AXView",
+        "roleDescription": "Menu",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 336,
+          "width": 336,
+          "height": 160
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.40384615384615385,
+        "w": 0.875,
+        "h": 0.19230769230769232,
+        "nx": 0.5004629641771317,
+        "ny": 0.5,
+        "focusable": true
+      },
+      {
+        "identifier": "test-menu-item-0",
+        "label": "Duplicate",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 344.1777648925781,
+          "width": 336,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.41367519818819487,
+        "w": 0.875,
+        "h": 0.057692307692307696,
+        "nx": 0.5004629641771317,
+        "ny": 0.4425213520343487,
+        "focusable": true
+      },
+      {
+        "identifier": "test-menu-item-1",
+        "label": "Share",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 392.1777648925781,
+          "width": 336,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.4713675058805026,
+        "w": 0.875,
+        "h": 0.057692307692307696,
+        "nx": 0.5004629641771317,
+        "ny": 0.5002136597266564,
+        "focusable": true
+      },
+      {
+        "identifier": "test-menu-item-2",
+        "label": "Archive",
+        "traits": [
+          "button"
+        ],
+        "role": "AXButton",
+        "frame": {
+          "x": 24.177778244018555,
+          "y": 440.1777648925781,
+          "width": 336,
+          "height": 48
+        },
+        "visible": true,
+        "x": 0.06296296417713165,
+        "y": 0.5290598135728103,
+        "w": 0.875,
+        "h": 0.057692307692307696,
+        "nx": 0.5004629641771317,
+        "ny": 0.5579059674189641,
+        "focusable": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "app": "gluestack",
+  "bundleId": "dev.asimmalik.uilab.gluestack",
+  "udid": "R5CXA2TFTKP",
+  "platform": "android",
+  "device": {
+    "name": "SM-A156E",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-31T20:40:15.329Z",
+  "growth": [
+    {
+      "id": "test-button",
+      "normal": 36.266666412353516,
+      "large": 50.13333511352539,
+      "ratio": 1.382352999956138
+    },
+    {
+      "id": "test-textfield",
+      "normal": 34.13333511352539,
+      "large": 45.86666488647461,
+      "ratio": 1.3437498777639185
+    },
+    {
+      "id": "test-switch",
+      "normal": 27.0222225189209,
+      "large": 34.844444274902344,
+      "ratio": 1.2894736637781865
+    },
+    {
+      "id": "test-checkbox",
+      "normal": 22.044445037841797,
+      "large": 35.20000076293945,
+      "ratio": 1.5967741851752062
+    },
+    {
+      "id": "test-radiogroup-0",
+      "normal": 22.044445037841797,
+      "large": 35.20000076293945,
+      "ratio": 1.5967741851752062
+    },
+    {
+      "id": "test-select",
+      "normal": 39.82222366333008,
+      "large": 39.82222366333008,
+      "ratio": 1
+    },
+    {
+      "id": "test-dialog-open",
+      "normal": 36.266666412353516,
+      "large": 50.13333511352539,
+      "ratio": 1.382352999956138
+    },
+    {
+      "id": "test-sheet-open",
+      "normal": 38.0444450378418,
+      "large": 51.911109924316406,
+      "ratio": 1.3644859288309188
+    },
+    {
+      "id": "test-tabs-0",
+      "normal": 31.288888931274414,
+      "large": 47.64444351196289,
+      "ratio": 1.5227272408621864
+    },
+    {
+      "id": "test-tabs-1",
+      "normal": 31.288888931274414,
+      "large": 47.64444351196289,
+      "ratio": 1.5227272408621864
+    },
+    {
+      "id": "test-tabs-2",
+      "normal": 31.288888931274414,
+      "large": 47.64444351196289,
+      "ratio": 1.5227272408621864
+    },
+    {
+      "id": "test-native-switch",
+      "normal": 47.64444351196289,
+      "large": null,
+      "ratio": null
+    },
+    {
+      "id": "test-list-link",
+      "normal": 38.0444450378418,
+      "large": 52.266666412353516,
+      "ratio": 1.3738317475879922
+    },
+    {
+      "id": "test-slider",
+      "normal": 6.044444561004639,
+      "large": 6.044444561004639,
+      "ratio": 1
+    },
+    {
+      "id": "test-accordion-0",
+      "normal": 20.266666412353516,
+      "large": 34.13333511352539,
+      "ratio": 1.6842106352882715
+    },
+    {
+      "id": "test-menu-open",
+      "normal": 38.0444450378418,
+      "large": 51.911109924316406,
+      "ratio": 1.3644859288309188
+    },
+    {
+      "id": "test-segmented-0",
+      "normal": 44.088890075683594,
+      "large": 44.088890075683594,
+      "ratio": 1
+    }
+  ],
+  "offscreen": [
+    "test-native-switch"
+  ],
+  "overlaps": [],
+  "shots": [
+    "android-textsize-1.png",
+    "android-textsize-2.png",
+    "android-textsize-3.png",
+    "android-textsize-4.png"
+  ]
+}

@@ -9,7 +9,8 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-import { deviceInfo } from './device.mjs';
+import { androidA11y } from './android-a11y.mjs';
+import { deviceInfo, platformOf } from './device.mjs';
 
 const argv = process.argv.slice(2);
 const ti = argv.indexOf('--theme');
@@ -22,13 +23,17 @@ if (!app || !bundleId || !udid || !themes.includes(themeName)) {
 }
 const suffix = themeName === 'light' ? '' : `-${themeName}`;
 const device = deviceInfo(udid);
+const android = platformOf(udid) === 'android';
+const platform = android ? 'android' : 'ios';
 
 const copyOptions = ['30 seconds', '45 seconds', '60 seconds', '90 seconds', '2 minutes'];
 // Items 15–19, as in shared/content.ts.
 const copyPanel = 'Five minutes of easy cycling';
 const menuItems = ['Duplicate', 'Share', 'Archive'];
 const segOptions = ['Week', 'Month', 'Year'];
-const MIN_TARGET = 44; // Apple HIG default control size, in points
+const MIN_TARGET = android ? 48 : 44;
+const dim = (v) => (v < MIN_TARGET && Math.round(v) >= MIN_TARGET ? v.toFixed(1) : Math.round(v));
+const unit = android ? 'dp' : 'pt';
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
 
@@ -42,7 +47,16 @@ const argent = (tool, args) =>
 // which is what VoiceOver gets: it is used for everything about reachability
 // (what is exposed while an overlay is open) and for tap coordinates.
 let screen;
+const droid = android && androidA11y({ udid, bundleId, swipe: (dy) => swipe(dy), sleep: (ms) => sleep(ms) });
+const androidTree = () => {
+  const els = droid.tree();
+  screen = droid.screen;
+  return els;
+};
+const reachAndroid = (id) => droid.reach(id);
+const everything = () => droid.everything();
 function tree() {
+  if (android) return androidTree();
   // The inspector can return no elements while the app is still launching.
   for (let i = 0; i < 20; i++) {
     let d;
@@ -60,6 +74,7 @@ function tree() {
   throw new Error('native-describe-screen returned no elements');
 }
 function axTree() {
+  if (android) return androidTree().filter((e) => e.focusable);
   const text = argent('describe', {}).description;
   const els = [];
   for (const line of text.split('\n')) {
@@ -76,6 +91,7 @@ const swipe = (dy) => argent('gesture-swipe', { fromX: 0.5, fromY: 0.5 + dy / 2,
 
 // Scrolls until the element is comfortably on screen in the system tree.
 async function reach(id) {
+  if (android) return reachAndroid(id);
   for (let i = 0; i < 14; i++) {
     const e = byId(axTree(), id);
     if (e && e.y > 0.12 && e.y + e.h < 0.92) return e;
@@ -95,20 +111,27 @@ const tapId = async (id) => tap(await reach(id));
 async function waitFor(pred, ms = 4000) {
   const end = Date.now() + ms;
   while (Date.now() < end) {
-    const els = axTree();
+    let els = [];
+    try {
+      els = axTree();
+    } catch (err) {
+      if (!android) throw err;
+    }
     if (pred(els)) return els;
     await sleep(250);
   }
   return null;
 }
 const hasLabel = (els, text) => els.some((e) => (e.label ?? '').includes(text));
+const shown = (els) => (android ? els.filter((e) => e.visible || (e.w > 0 && e.h > 0 && e.y < 1 && e.y + e.h > 0)) : els);
+const hasShown = (els, text) => hasLabel(shown(els), text);
 
 const states = {};
 const findings = [];
 const add = (component, check, pass, detail) => findings.push({ component, check, pass, detail });
 
 // Name, role and value of an element, read back the way the report prints it.
-const desc = (e) => (e ? `label="${e.label ?? ''}" value="${e.value ?? ''}" traits=[${e.traits.join(', ')}] ${Math.round(e.frame.width)}×${Math.round(e.frame.height)}pt` : 'missing');
+const desc = (e) => (e ? `label="${e.label ?? ''}" value="${e.value ?? ''}" traits=[${e.traits.join(', ')}]${e.roleDescription ? ` role="${e.roleDescription}"` : ''} ${Math.round(e.frame.width)}×${Math.round(e.frame.height)}${unit}` : 'missing');
 
 // Each overlay test starts from a fresh launch, so an overlay that fails to
 // close can't affect the next test. A restart resets the app to the light
@@ -125,7 +148,7 @@ async function fresh() {
   await sleep(600);
   // One screenshot per run shows the theme really was applied.
   if (!shot) {
-    shot = `a11y-${themeName}.png`;
+    shot = `${android ? 'android-' : ''}a11y-${themeName}.png`;
     execFileSync('argent', ['run', 'screenshot', '--udid', udid, '--scale', '0.5', '--out', fileURLToPath(new URL(shot, outDir))]);
   }
 }
@@ -133,7 +156,7 @@ let shot;
 await fresh();
 
 // 1. Main screen: name, role, state and target size of every control.
-const main = tree();
+const main = android ? await everything() : tree();
 states.main = main;
 const expect = [
   ['Button', 'test-button', (e) => e.traits.includes('button')],
@@ -144,17 +167,18 @@ const expect = [
   ['Checkbox', 'test-checkbox', (e) => /checkbox/i.test(`${e.value} ${e.traits}`) && /(un)?checked|not checked|0|1/i.test(e.value ?? '') && /agree/i.test(e.label ?? '')],
   ['Radio option', 'test-radiogroup-0', (e) => /radio/i.test(`${e.value} ${e.traits}`) && /checked|selected|1/i.test(`${e.value} ${e.traits}`)],
   ['Select trigger', 'test-select', (e) => /Rest time/.test(`${e.label} ${e.value}`) && /60 seconds/.test(`${e.label} ${e.value}`) && (e.traits.includes('button') || /pop up|combo|menu|collapsed/i.test(`${e.value} ${e.traits}`))],
-  ['Tab (selected)', 'test-tabs-0', (e) => e.traits.includes('selected') && (e.traits.includes('button') || /tab/i.test(`${e.value} ${e.label}`))],
+  ['Tab (selected)', 'test-tabs-0', (e) => e.traits.includes('selected') && (e.traits.includes('button') || e.traits.includes('tab') || /tab/i.test(`${e.value} ${e.label}`))],
   ['Native switch (@expo/ui)', 'test-native-switch', (e) => e.traits.includes('toggleButton') || e.value != null],
 ];
 for (const [name, id, rule] of expect) {
-  const e = byId(main, id);
+  const e = android ? (byId(main, id) ? await reach(id).catch(() => byId(main, id)) : null) : byId(main, id);
   add(name, 'name, role, state', !!e && rule(e), desc(e));
   if (e && !name.startsWith('Text')) {
     const small = Math.min(e.frame.width, e.frame.height) < MIN_TARGET;
-    add(name, `target ≥ ${MIN_TARGET}pt`, !small, `${Math.round(e.frame.width)}×${Math.round(e.frame.height)}pt`);
+    add(name, `target ≥ ${MIN_TARGET}${unit}`, !small, `${dim(e.frame.width)}×${dim(e.frame.height)}${unit}`);
   }
 }
+if (android) await droid.toTop();
 const radios = main.filter((e) => /^test-radiogroup-\d$/.test(e.identifier ?? ''));
 add('Radio group', 'all options exposed', radios.length === 3, `${radios.length} options found`);
 add('Radio group', 'group label read', hasLabel(main, 'Experience level'), 'label text "Experience level" in tree');
@@ -187,19 +211,19 @@ try {
 try {
   await fresh();
   await tapId('test-dialog-open');
-  let dlg = await waitFor((els) => hasLabel(els, 'Delete this workout?'));
+  let dlg = await waitFor((els) => hasShown(els, 'Delete this workout?'));
   if (dlg) { await sleep(1000); dlg = axTree(); } // judge the settled state, not the open animation
   states.dialog = dlg ?? axTree();
   add('Dialog', 'opens', !!dlg, dlg ? 'title in tree' : 'title not found');
   if (dlg) {
     const l = leaks(dlg, ['test-dialog', 'test-dialog-confirm', 'test-dialog-cancel']);
     add('Dialog', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
-    const title = dlg.find((e) => e.label.includes('Delete this workout?'));
+    const title = shown(dlg).find((e) => e.label.includes('Delete this workout?'));
     add('Dialog', 'title is a heading', title?.role === 'AXHeading', axDesc(title));
-    const cancel = dlg.find((e) => e.identifier === 'test-dialog-cancel' || e.label === 'Cancel');
+    const cancel = shown(dlg).find((e) => e.identifier === 'test-dialog-cancel' || e.label === 'Cancel');
     add('Dialog', 'actions are buttons', cancel?.role === 'AXButton', axDesc(cancel));
     if (cancel) tap(cancel);
-    const closed = await waitFor((els) => !hasLabel(els, 'Delete this workout?'));
+    const closed = await waitFor((els) => !hasShown(els, 'Delete this workout?'));
     add('Dialog', 'closes', !!closed, closed ? 'title gone' : 'still open');
   }
 } catch (err) {
@@ -224,16 +248,16 @@ for (const v of sheetVariants) {
   try {
     await fresh();
     await tapId(v.open);
-    const isSheet = (els) => hasLabel(els, 'Goblet squat') || els.some((e) => e.identifier === v.close);
+    const isSheet = (els) => hasShown(els, 'Goblet squat') || shown(els).some((e) => e.identifier === v.close);
     let sh = await waitFor(isSheet);
     if (sh) { await sleep(1000); sh = axTree(); }
     states[`sheet:${v.open}`] = sh ?? axTree();
     add(v.name, 'opens', !!sh, sh ? 'sheet content in tree' : 'neither title nor Close button found');
     if (sh) {
-      add(v.name, 'title and body readable', hasLabel(sh, 'Goblet squat') && hasLabel(sh, 'kettlebell'), hasLabel(sh, 'Goblet squat') ? 'title in tree' : 'title and body text not in the system tree');
+      add(v.name, 'title and body readable', hasShown(sh, 'Goblet squat') && hasShown(sh, 'kettlebell'), hasShown(sh, 'Goblet squat') ? 'title in tree' : 'title and body text not in the system tree');
       const l = leaks(sh, [v.open.replace('-open', ''), v.close]);
       add(v.name, 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
-      const close = sh.find((e) => e.identifier === v.close) ?? sh.find((e) => e.label === 'Close');
+      const close = shown(sh).find((e) => e.identifier === v.close) ?? shown(sh).find((e) => e.label === 'Close');
       if (close) tap(close);
       const gone = await waitFor((els) => !isSheet(els));
       add(v.name, 'closes', !!gone, gone ? 'sheet gone' : 'still open');
@@ -253,12 +277,14 @@ for (const v of sheetVariants) {
 try {
   await fresh();
   await tapId('test-select');
-  let sel = await waitFor((els) => hasLabel(els, '90 seconds'));
+  let sel = await waitFor((els) => hasShown(els, '90 seconds'));
   if (sel) { await sleep(1000); sel = axTree(); }
   states.select = sel ?? axTree();
   add('Select', 'opens', !!sel, sel ? 'options in tree' : 'options not found');
   if (sel) {
-    const opts = sel.filter((e) => e.identifier !== 'test-select' && copyOptions.some((o) => e.label.includes(o)));
+    const trig = sel.find((e) => e.identifier === 'test-select')?.frame;
+    const inTrigger = (f) => !!trig && f.x >= trig.x - 1 && f.y >= trig.y - 1 && f.x + f.width <= trig.x + trig.width + 1 && f.y + f.height <= trig.y + trig.height + 1;
+    const opts = shown(sel).filter((e) => e.identifier !== 'test-select' && !inTrigger(e.frame) && copyOptions.some((o) => e.label.includes(o)));
     const current = opts.find((e) => e.label.includes('60 seconds'));
     add('Select', 'current option marked', !!current && /selected|checked/i.test(`${current.value} ${current.role}`), axDesc(current));
     add('Select', 'options are actionable', opts.length >= 5 && opts.every((e) => e.role === 'AXButton' || /radio|menu|option/i.test(`${e.value} ${e.role}`)), opts.map(axDesc).join(' | '));
@@ -296,7 +322,7 @@ const target = (name, e) => {
   if (!e) return;
   const tol = e.source ? 0.0005 * Math.max(screen.width, screen.height) : 0;
   const min = Math.min(e.frame.width, e.frame.height);
-  add(name, `target ≥ ${MIN_TARGET}pt`, min >= MIN_TARGET - tol, `${Math.round(e.frame.width)}×${Math.round(e.frame.height)}pt${tol ? ` (system tree, ±${tol.toFixed(1)} pt)` : ''}`);
+  add(name, `target ≥ ${MIN_TARGET}${unit}`, min >= MIN_TARGET - tol, `${dim(e.frame.width)}×${dim(e.frame.height)}${unit}${tol ? ` (system tree, ±${tol.toFixed(1)} pt)` : ''}`);
 };
 // Some kits' elements are in the system accessibility tree (what VoiceOver
 // gets) but not in the view-hierarchy walk, e.g. Tamagui's Progress and its
@@ -305,6 +331,7 @@ const target = (name, e) => {
 // detail says "(system tree)".
 const axTraits = { AXButton: ['button'], AXAdjustable: ['adjustable'], AXHeading: ['header'], AXLink: ['link'], AXStaticText: ['staticText'], AXImage: ['image'] };
 async function scan(id) {
+  if (android) return reachAndroid(id).catch(() => null);
   for (const dir of [0.35, -0.35]) {
     for (let i = 0; i < 14; i++) {
       const e = byId(axTree(), id);
@@ -317,6 +344,7 @@ async function scan(id) {
   return null;
 }
 async function element(id) {
+  if (android) return byId(main, id) ? reachAndroid(id).catch(() => null) : null;
   const n = byId(tree(), id);
   if (n) return n;
   const a = await scan(id);
@@ -361,7 +389,7 @@ try {
   const open = await element('test-accordion-0');
   add('Accordion', 'expanded state exposed', !!h0 && shut(`${h0.value} ${h0.label}`) && !shut(`${open?.value} ${open?.label}`), `closed: ${desc2(h0)}; open: ${desc2(open)}`);
   await tapId('test-accordion-0');
-  const hidden = await waitFor((els) => !hasLabel(els, copyPanel));
+  const hidden = await waitFor((els) => !hasShown(els, copyPanel));
   add('Accordion', 'content shows and hides', !!shown && !!hidden, `${shown ? 'panel text appeared' : 'panel text never appeared'}; ${hidden ? 'gone after second tap' : 'still there after second tap'}`);
 } catch (err) {
   add('Accordion', 'test could run', false, String(err.message ?? err));
@@ -373,17 +401,17 @@ try {
   add('Menu', 'trigger name and role', !!trig && trig.traits.includes('button') && /Workout options/.test(trig.label ?? ''), desc2(trig));
   target('Menu', trig);
   await tapId('test-menu-open');
-  let mn = await waitFor((els) => menuItems.every((m) => hasLabel(els, m)));
+  let mn = await waitFor((els) => menuItems.every((m) => hasShown(els, m)));
   if (mn) { await sleep(1000); mn = axTree(); }
   states.menu = mn ?? axTree();
   add('Menu', 'opens', !!mn, mn ? 'all three actions in tree' : 'actions not found');
   if (mn) {
-    const items = menuItems.map((m) => mn.find((e) => e.label === m) ?? mn.find((e) => e.label.includes(m)));
+    const items = menuItems.map((m) => shown(mn).find((e) => e.label === m) ?? shown(mn).find((e) => e.label.includes(m)));
     add('Menu', 'items are buttons', items.every((e) => e && (e.role === 'AXButton' || /menu/i.test(e.role))), items.map(axDesc).join(' | '));
     const l = leaks(mn, ['test-menu-open', 'test-menu']);
     add('Menu', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
     if (items[0]) tap(items[0]);
-    const closed = await waitFor((els) => !hasLabel(els, menuItems[2]));
+    const closed = await waitFor((els) => !hasShown(els, menuItems[2]));
     add('Menu', 'closes after an action', !!closed, closed ? 'actions gone' : 'still open');
   }
 } catch (err) {
@@ -408,19 +436,21 @@ try {
   add('Segmented control', 'test could run', false, String(err.message ?? err));
 }
 
-writeFileSync(new URL(`ios-a11y${suffix}.json`, outDir), JSON.stringify({ app, bundleId, udid, device, theme: themeName, date: new Date().toISOString(), findings, states }, null, 2));
+writeFileSync(new URL(`${platform}-a11y${suffix}.json`, outDir), JSON.stringify({ app, bundleId, udid, platform, device, theme: themeName, date: new Date().toISOString(), findings, states }, null, 2));
 const passed = findings.filter((f) => f.pass).length;
 const md = [
-  `# ${app}: iOS accessibility audit, ${themeName} theme`,
+  `# ${app}: ${android ? 'Android' : 'iOS'} accessibility audit, ${themeName} theme`,
   '',
-  `Run ${new Date().toISOString().slice(0, 10)} on the ${device.name} simulator (${device.runtime}, ${udid}), ${process.env.BUILD_CONFIG ?? 'Release'} build, ${themeName} theme, with \`scripts/a11y-audit.mjs\`. ${passed}/${findings.length} checks passed.`,
+  `Run ${new Date().toISOString().slice(0, 10)} on the ${android ? device.name : `${device.name} simulator`} (${device.runtime}, ${udid}), ${process.env.BUILD_CONFIG ?? 'Release'} build, ${themeName} theme, with \`scripts/a11y-audit.mjs\`. ${passed}/${findings.length} checks passed.`,
   '',
-  'Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.',
+  android
+    ? 'Roles, states, sizes and reachability come from the accessibility tree of the active window, read through UiAutomation by `scripts/android-a11y-dump` (what TalkBack is given, not what it speaks). Touch targets are checked against 48 dp. Elements of an overlay\'s own window are reachable; anything else in that window counts as exposed behind it.'
+    : 'Traits and sizes come from the view hierarchy (argent `native-describe-screen`). Reachability (what is exposed while an overlay is open) and taps come from the system accessibility tree (argent `describe`). Both show what VoiceOver is given, not what it speaks; spoken output needs a device.',
   '',
   '| Component | Check | Result | Detail |',
   '| --- | --- | --- | --- |',
-  ...findings.map((f) => `| ${f.component} | ${f.check} | ${f.pass ? 'pass' : '**fail**'} | ${String(f.detail).replace(/\|/g, '\\|')} |`),
+  ...findings.map((f) => `| ${f.component} | ${android ? f.check.replace('VoiceOver', 'TalkBack') : f.check} | ${f.pass ? 'pass' : '**fail**'} | ${String(f.detail).replace(/\|/g, '\\|')} |`),
   '',
 ].join('\n');
-writeFileSync(new URL(`ios-a11y${suffix}.md`, outDir), md);
+writeFileSync(new URL(`${platform}-a11y${suffix}.md`, outDir), md);
 console.log(md);

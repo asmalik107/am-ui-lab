@@ -9,7 +9,8 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-import { deviceInfo } from './device.mjs';
+import { androidA11y } from './android-a11y.mjs';
+import { deviceInfo, platformOf } from './device.mjs';
 
 const [app, bundleId, udid] = process.argv.slice(2);
 if (!app || !bundleId || !udid) {
@@ -17,6 +18,8 @@ if (!app || !bundleId || !udid) {
   process.exit(1);
 }
 const device = deviceInfo(udid);
+const android = platformOf(udid) === 'android';
+const platform = android ? 'android' : 'ios';
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
 
@@ -24,8 +27,32 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const argent = (tool, args) =>
   JSON.parse(execFileSync('argent', ['run', tool, '--json', '--args', JSON.stringify({ udid, ...args })], { encoding: 'utf8', maxBuffer: 64 << 20 }));
 const contentSize = (size) => execFileSync('xcrun', ['simctl', 'ui', udid, 'content_size', size]);
+const swipe = (dy) => argent('gesture-swipe', { fromX: 0.5, fromY: 0.5 + dy / 2, toX: 0.5, toY: 0.5 - dy / 2, momentum: false, durationMs: 300 });
+const droid = android && androidA11y({ udid, bundleId, swipe, sleep });
+const unit = android ? 'dp' : 'pt';
+
+async function launchAndroid() {
+  argent('restart-app', { bundleId });
+  for (let i = 0; i < 120 && !droid.focusable().some((e) => e.label.includes('Component test screen')); i++) await sleep(500);
+  await sleep(1200);
+  const all = await droid.everything();
+  const elements = [];
+  const pairs = new Set();
+  for (const id of ids) {
+    if (!all.some((e) => e.identifier === id)) continue;
+    const e = await droid.reach(id).catch(() => null);
+    if (!e) continue;
+    elements.push({ identifier: id, frame: e.frame });
+    const seen = droid.tree().filter((x) => x.visible && ids.includes(x.identifier));
+    for (let i = 0; i < seen.length; i++)
+      for (let j = i + 1; j < seen.length; j++) if (overlap(seen[i].frame, seen[j].frame) > 0) pairs.add([seen[i].identifier, seen[j].identifier].sort().join(' × '));
+  }
+  await droid.toTop();
+  return { elements, overlaps: [...pairs], screenFrame: { width: droid.screen.width, height: droid.screen.height } };
+}
 
 async function launch() {
+  if (android) return launchAndroid();
   argent('restart-app', { bundleId });
   for (let i = 0; i < 120; i++) {
     const d = argent('native-describe-screen', { bundleId });
@@ -44,10 +71,26 @@ const overlap = (a, b) => {
   return w > 2 && h > 2 ? w * h : 0;
 };
 
-contentSize('large'); // iOS default
-const normal = await launch();
-contentSize('accessibility-extra-extra-extra-large');
-const large = await launch();
+let restoreFont = () => {};
+let normal;
+let large;
+if (android) {
+  restoreFont = droid.setting('system', 'font_scale', 1.0);
+  process.on('exit', () => restoreFont());
+  try {
+    normal = await launch();
+    droid.setting('system', 'font_scale', 2.0);
+    large = await launch();
+  } catch (err) {
+    restoreFont();
+    throw err;
+  }
+} else {
+  contentSize('large');
+  normal = await launch();
+  contentSize('accessibility-extra-extra-extra-large');
+  large = await launch();
+}
 
 const growth = ids.map((id) => {
   const a = frame(normal, id);
@@ -55,12 +98,16 @@ const growth = ids.map((id) => {
   return { id, normal: a?.height ?? null, large: b?.height ?? null, ratio: a && b ? b.height / a.height : null };
 });
 const W = large.screenFrame.width;
+const atEdge = (f) => f.x + f.width >= W - 1;
 const offscreen = ids.filter((id) => {
   const f = frame(large, id);
-  return f && (f.x < -1 || f.x + f.width > W + 1);
+  if (android && !f) return !!frame(normal, id);
+  if (!f) return false;
+  if (android) return atEdge(f) && !(frame(normal, id) && atEdge(frame(normal, id)));
+  return f.x < -1 || f.x + f.width > W + 1;
 });
-const overlaps = [];
-for (let i = 0; i < ids.length; i++)
+const overlaps = android ? large.overlaps : [];
+for (let i = 0; !android && i < ids.length; i++)
   for (let j = i + 1; j < ids.length; j++) {
     const a = frame(large, ids[i]);
     const b = frame(large, ids[j]);
@@ -69,32 +116,36 @@ for (let i = 0; i < ids.length; i++)
 
 // Screenshots down the screen at AX5 for the visual check.
 const shots = [];
+if (android) await droid.toTop();
 for (let i = 0; i < 4; i++) {
-  const out = fileURLToPath(new URL(`textsize-${i + 1}.png`, outDir));
+  const out = fileURLToPath(new URL(`${android ? 'android-' : ''}textsize-${i + 1}.png`, outDir));
   execFileSync('argent', ['run', 'screenshot', '--udid', udid, '--scale', '0.5', '--out', out]);
-  shots.push(`textsize-${i + 1}.png`);
+  shots.push(`${android ? 'android-' : ''}textsize-${i + 1}.png`);
   argent('gesture-swipe', { fromX: 0.5, fromY: 0.8, toX: 0.5, toY: 0.25, momentum: false, durationMs: 400 });
   await sleep(700);
 }
-contentSize('large');
+if (android) restoreFont();
+else contentSize('large');
 
 const grew = growth.filter((g) => g.ratio && g.ratio > 1.2).length;
-const result = { app, bundleId, udid, device, date: new Date().toISOString(), growth, offscreen, overlaps, shots };
-writeFileSync(new URL('ios-textsize.json', outDir), JSON.stringify(result, null, 2));
+const result = { app, bundleId, udid, platform, device, date: new Date().toISOString(), growth, offscreen, overlaps, shots };
+writeFileSync(new URL(`${platform}-textsize.json`, outDir), JSON.stringify(result, null, 2));
 const md = [
-  `# ${app}: largest text size (AX5)`,
+  `# ${app}: largest text size (${android ? 'font scale 2.0' : 'AX5'})`,
   '',
-  `Run ${result.date.slice(0, 10)} on the ${device.name} simulator (${device.runtime}) with \`scripts/textsize-test.mjs\`. Control heights at the default size (large) against the largest accessibility size (accessibility-extra-extra-extra-large).`,
+  android
+    ? `Run ${result.date.slice(0, 10)} on the ${device.name} (${device.runtime}) with \`scripts/textsize-test.mjs\`. Control heights at the default font scale (1.0) against the largest (2.0). Android clips bounds at the screen edge, so "pushed past the edge" means the control reaches the edge at 2.0 but not at 1.0.`
+    : `Run ${result.date.slice(0, 10)} on the ${device.name} simulator (${device.runtime}) with \`scripts/textsize-test.mjs\`. Control heights at the default size (large) against the largest accessibility size (accessibility-extra-extra-extra-large).`,
   '',
   `- Controls that grew by more than 20%: ${grew} of ${growth.filter((g) => g.ratio).length}`,
   `- Controls pushed past the screen edge: ${offscreen.length ? offscreen.join(', ') : 'none'}`,
   `- Overlapping controls: ${overlaps.length ? overlaps.join('; ') : 'none'}`,
   `- Screenshots: ${shots.join(', ')}`,
   '',
-  '| Control | Height at default (pt) | Height at AX5 (pt) | Ratio |',
+  `| Control | Height at default (${unit}) | Height at ${android ? '2.0' : 'AX5'} (${unit}) | Ratio |`,
   '| --- | --- | --- | --- |',
   ...growth.map((g) => `| ${g.id} | ${g.normal?.toFixed(0) ?? 'missing'} | ${g.large?.toFixed(0) ?? 'missing'} | ${g.ratio?.toFixed(2) ?? '–'} |`),
   '',
 ].join('\n');
-writeFileSync(new URL('ios-textsize.md', outDir), md);
+writeFileSync(new URL(`${platform}-textsize.md`, outDir), md);
 console.log(md);

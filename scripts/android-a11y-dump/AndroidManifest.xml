@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="dev.asimmalik.uilab.a11ydump">
+    <uses-sdk android:minSdkVersion="30" android:targetSdkVersion="36" />
+    <application android:label="UI Lab a11y dump" android:hasCode="true" />
+    <instrumentation
+        android:name=".Dump"
+        android:targetPackage="dev.asimmalik.uilab.a11ydump"
+        android:label="UI Lab a11y dump" />
+</manifest>

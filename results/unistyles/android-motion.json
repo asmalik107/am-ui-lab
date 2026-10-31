@@ -1,0 +1,83 @@
+{
+  "app": "unistyles",
+  "bundleId": "dev.asimmalik.uilab.unistyles",
+  "udid": "R5CXA2TFTKP",
+  "platform": "android",
+  "device": {
+    "name": "SM-A156E",
+    "runtime": "Android 16 (API 36)"
+  },
+  "date": "2026-10-31T19:05:35.553Z",
+  "runs": [
+    {
+      "reduceMotion": false,
+      "component": "Dialog",
+      "label": "Dialog",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793473478792.mp4",
+      "fps": 30,
+      "peak": 30.2,
+      "ms": 500,
+      "frames": [
+        7.1,
+        2.5,
+        1.1,
+        1.8,
+        6.1,
+        4.2,
+        4.5,
+        4.7,
+        3,
+        6.4,
+        7.7,
+        15.3,
+        20.8,
+        16.6,
+        30.2
+      ]
+    },
+    {
+      "reduceMotion": false,
+      "component": "Bottom sheet",
+      "label": "Bottom sheet",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793473496988.mp4",
+      "fps": 30,
+      "peak": 48.2,
+      "ms": 267,
+      "frames": [
+        48.2,
+        30.1,
+        23.3,
+        10.2,
+        8.5,
+        3.6,
+        1.7,
+        2.1
+      ]
+    },
+    {
+      "reduceMotion": true,
+      "component": "Dialog",
+      "label": "Dialog",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793473514477.mp4",
+      "fps": 30,
+      "peak": 98.2,
+      "ms": 33,
+      "frames": [
+        98.2
+      ]
+    },
+    {
+      "reduceMotion": true,
+      "component": "Bottom sheet",
+      "label": "Bottom sheet",
+      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793473531249.mp4",
+      "fps": 30,
+      "peak": 89.6,
+      "ms": 67,
+      "frames": [
+        89.6,
+        9.7
+      ]
+    }
+  ]
+}

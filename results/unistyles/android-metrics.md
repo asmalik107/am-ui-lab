@@ -1,18 +1,18 @@
 # unistyles: startup, memory, scrolling and re-renders (Android)
 
-Run 2026-10-30 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, with `scripts/metrics-run.mjs`.
+Run 2026-10-31 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, with `scripts/metrics-run.mjs`.
 
 | Measure | Result |
 | --- | --- |
-| Startup until readable: launch call to the title in the accessibility tree, median of 10 | 2983 ms (2940–3056) |
-| of which the launch call itself, median | 1415 ms |
-| `am start -W` TotalTime (first frame of the activity, the splash screen), median | 1308 ms (1273–1390) |
-| Clock resolution (one describe poll, median) | 206 ms |
-| Memory at idle, 5 s after launch (total PSS, dumpsys meminfo) | 163.7 MiB |
-| Memory after the list and every overlay (total PSS, dumpsys meminfo) | 220.3 MiB |
-| App CPU time during 5 list flings (7.5 s) | 9120 ms (main thread 2360, JS thread 2720) |
-| Janky frames during the flings (dumpsys gfxinfo) | 0 of 1290 (0.0%) |
-| Frame time 50th / 90th / 99th percentile | 11 / 17 / 21 ms |
+| Startup until readable: launch call to the title in the accessibility tree, median of 10 | 2871 ms (2475–2948) |
+| of which the launch call itself, median | 1288 ms |
+| `am start -W` TotalTime (first frame of the activity, the splash screen), median | 1166 ms (1140–1217) |
+| Clock resolution (one describe poll, median) | 229 ms |
+| Memory at idle, 5 s after launch (total PSS, dumpsys meminfo) | 170.5 MiB |
+| Memory after the list and every overlay (total PSS, dumpsys meminfo) | 224.6 MiB |
+| App CPU time during 5 list flings (7.6 s) | 8950 ms (main thread 2320, JS thread 2730) |
+| Janky frames during the flings (dumpsys gfxinfo) | 0 of 1244 (0.0%) |
+| Frame time 50th / 90th / 99th percentile | 11 / 18 / 22 ms |
 
 Overlays opened for the memory figure: test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-select, test-menu-open, test-toast-show.
 

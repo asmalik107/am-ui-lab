@@ -44,3 +44,6 @@ android/
 
 # argent recordings and logs
 .argent/
+
+# Android accessibility reader build
+scripts/android-a11y-dump/build/

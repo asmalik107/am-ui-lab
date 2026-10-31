@@ -49,9 +49,29 @@ Items 15–19 were added on 27 October 2026. Test IDs and copy are in `shared/co
 
 All apps use the same tokens: colours, spacing, radii and type scale from `packages/tokens`.
 
-## Accessibility checks
+## iOS and Android
 
-Measured on the iOS simulator (argent `describe` reads the iOS accessibility tree) and the Android emulator (uiautomator dump).
+Every check runs on both platforms with the same script, the same flows and the same check names, so each result has an iOS and an Android value. Where a platform has its own guideline or setting, each platform is held to its own.
+
+| What | iOS | Android |
+| --- | --- | --- |
+| Device | iPhone 17 simulator, iOS 27.0 | Samsung Galaxy A15 5G (SM-A156E), Android 16. A physical budget phone; the Android emulator crashed repeatedly on this Mac. |
+| Accessibility tree | What VoiceOver is given: the system accessibility tree (argent `describe`) and the view hierarchy (argent `native-describe-screen`) | What TalkBack is given: the active window's accessibility tree, read through UiAutomation by `scripts/android-a11y-dump`. A tappable element with no label of its own is named by the text inside it, as TalkBack does. |
+| Role and state | VoiceOver traits (button, adjustable, header, selected, not enabled) | Class and role description (Button, Switch, CheckBox, RadioButton, SeekBar, "Combo box", "Tab"), heading, checked, selected, enabled, state description, expand and collapse actions |
+| Screen hidden behind an overlay | Nothing from the screen is in the system tree while the overlay is open | Nothing from the screen is in the active window while the overlay is open |
+| Touch target | ≥ 44 × 44 pt (Apple's default control size) | ≥ 48 × 48 dp (Google's minimum) |
+| Largest text size | AX5 (accessibility-extra-extra-extra-large) | Font scale 2.0, the largest Android offers. Android 14+ scales large text less than small text. |
+| Pushed off screen at the largest size | Frame outside the screen | Present at the default size but gone from the tree, or newly touching the screen edge (Android clips bounds to the screen) |
+| Reduced motion | Reduce Motion on, set before launch | Remove animations (animator, transition and window scales 0), set before launch. Restored afterwards. |
+| Recording for motion | Simulator recording at 30 fps | Phone recording, resampled to 30 fps |
+| Timings, startup, CPU | Simulator on a Mac | Budget phone; compare apps within a platform |
+| Memory | `footprint` phys_footprint | `dumpsys meminfo` total PSS. A different measure, so compare apps within a platform. |
+| Scrolling | CPU during 5 flings and main-thread hangs; frame hitches can't be recorded on the simulator | CPU during 5 flings (from `/proc`) and janky frames (`dumpsys gfxinfo`) |
+| Re-renders, bundle size | Measured (Debug build with Metro; `expo export`) | Not measured: the JS is the same, so counts and bundle size would match iOS |
+
+`scripts/run-all.sh <udid>` runs everything on iOS and `scripts/run-all-android.sh <serial>` on Android.
+
+## Accessibility checks
 
 | Check | Pass condition | Reference |
 | --- | --- | --- |
@@ -59,7 +79,7 @@ Measured on the iOS simulator (argent `describe` reads the iOS accessibility tre
 | Focus on modal open | Focus moves into the dialog or sheet, background content is hidden from assistive technology, and focus returns to the trigger on close | WCAG 2.2 SC 2.4.3; RN `aria-modal`/`accessibilityViewIsModal` (iOS-only) and `importantForAccessibility` (Android) |
 | Announcements | Form errors and toasts are announced. Live regions (`aria-live`) are Android-only in React Native, so iOS needs `AccessibilityInfo.announceForAccessibility` | WCAG 2.2 SC 4.1.3 (AA) |
 | Text scaling | At the largest accessibility text size, nothing is clipped, overlapping or truncated without a way to read it | WCAG 2.2 SC 1.4.4; Apple Dynamic Type |
-| Reduce Motion | With Reduce Motion on, sheet, dialog and toast animations are removed or reduced. Checked both when the setting is on at launch and when it's switched on while the app runs | WCAG 2.2 SC 2.3.3 (AAA, not AA); Apple HIG |
+| Reduce Motion | With Reduce Motion (iOS) or Remove animations (Android) on at launch, the dialog and sheet open without their animation. Switching it on while the app runs isn't tested | WCAG 2.2 SC 2.3.3 (AAA, not AA); Apple HIG |
 | Touch targets | At least 44×44pt on iOS (Apple's default control size; 28pt is its minimum) and 48×48dp on Android, measured from accessibility-tree frames | Apple HIG; Material; WCAG 2.2 SC 2.5.8 (24px at AA) |
 | Contrast | The default theme's text/background token pairs meet 4.5:1 (3:1 for large text and UI components) | WCAG 2.2 SC 1.4.3, 1.4.11 |
 
@@ -69,17 +89,17 @@ Checks for items 15–19:
 
 | Item | Checks |
 | --- | --- |
-| Slider | Name, `adjustable` trait and value; target ≥ 44 pt; dragging the thumb changes the value. VoiceOver's swipe up can't be performed on the simulator without VoiceOver, so the drag stands in for it. |
+| Slider | Name, `adjustable` role and value; touch target; dragging the thumb changes the value. The screen reader's own adjust gesture needs it running, so the drag stands in for it on both platforms. |
 | Progress | Name and value |
 | Accordion | Header is a button; its expanded state is exposed; content appears and disappears |
-| Menu | Trigger name and role; target ≥ 44 pt; opens; items are buttons; screen behind hidden; closes after an action |
-| Segmented control | Each option has a name and role; the selected one is marked; target ≥ 44 pt; selection moves on tap |
+| Menu | Trigger name and role; touch target; opens; items are buttons; screen behind hidden; closes after an action |
+| Segmented control | Each option has a name and role; the selected one is marked; touch target; selection moves on tap |
 
-**Not covered by simulators:** spoken VoiceOver/TalkBack output, swipe navigation order as heard, and Switch Control. These are listed as `needs device` in the results until they've been run on hardware.
+**Not covered:** spoken VoiceOver and TalkBack output, swipe navigation order as heard, and Switch Control. The scripts read what each screen reader is given, not what it says.
 
 ## Performance checks
 
-Run on the same simulator, as a release-mode build where the library supports one. Three runs each, reporting the median and the range.
+Run on the iOS simulator and the Android phone, as Release builds. Ten runs each, reporting the median and the range.
 
 - Mount time and commit count for the 200-row list (React profiler)
 - Commits and time to re-render after switching theme

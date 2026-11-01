@@ -2,7 +2,7 @@
 // text size, Reduce Motion, timings and bundle size. Reads only results/*.
 // Usage: node scripts/report-html.mjs
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { columns, headline, heroSvg, href, kind, kinds, libraries, names, picks, points, scorecard, stack, versions } from './scorecard.mjs';
+import { columns, headline, heroSvg, href, kind, kinds, libraries, names, pages, picks, points, scorecard, stack, versions } from './scorecard.mjs';
 
 const root = new URL('../', import.meta.url);
 const apps = [
@@ -333,7 +333,6 @@ const devcost = existsSync(devcostFile) ? JSON.parse(readFileSync(devcostFile, '
 const devRow = (label, fn, note) => `<tr><th scope="row">${label}<span class="what">${esc(note)}</span></th>${apps.map(([a]) => `<td>${esc(fn(devcost.rows.find((r) => r.app === a)))}</td>`).join('')}</tr>`;
 const devcostRows = devcost
   ? [
-      devRow('Lines of screen code you write', (r) => r.screenLines, devcost.how.screenLines),
       devRow('Library code copied into your app (lines)', (r) => r.copiedLines, devcost.how.copiedLines),
       devRow('Config files added or changed', (r) => r.configFiles.length, devcost.how.configFiles),
       devRow('Setup steps', (r) => r.setupSteps ?? 'n/a (reference app)', devcost.how.setupSteps),
@@ -359,7 +358,7 @@ const verdictHtml = `<section class="verdict" aria-labelledby="answer">
 <aside class="caveat" aria-label="Note">${headline.map(([where, what]) => `<p><strong>${esc(where)}:</strong> ${esc(what)}.</p>`).join('')}</aside>
 <ul class="points">${points.map((p) => `<li><strong>${esc(p.lead)}</strong><ul>${p.items.map((i) => li(i)).join('')}</ul></li>`).join('')}</ul>
 <h3>Pick by what you need</h3>
-<dl class="picks">${picks.map(([want, pick, why]) => `<div><dt>${esc(want)}</dt><dd><strong>${esc(pick)}</strong><ul>${why.map((w) => li(w)).join('')}</ul></dd></div>`).join('')}</dl>
+<dl class="picks">${picks.map(([want, pick, why]) => `<div><dt>${esc(want)}</dt><dd>${pick ? `<strong>${esc(pick)}</strong>` : ''}<ul>${why.map((w) => li(w)).join('')}</ul></dd></div>`).join('')}</dl>
 </section>
 <h2>Scorecard</h2>
 <ul class="intro"><li><span class="best">Green</span> is the best in each column, <span class="worst">red</span> the worst.</li><li><strong>Accessibility:</strong> every check, light theme.</li><li><strong>Theme switch and memory:</strong> on the Galaxy A15.</li><li><strong>Bundle size and re-renders:</strong> on iOS.</li></ul>
@@ -372,8 +371,7 @@ const verdictHtml = `<section class="verdict" aria-labelledby="answer">
 <ul class="intro"><li>Best first.</li><li>✅ what it is good at</li><li>⚠️ its problems</li></ul>
 <div class="libs">${libraries.map((l) => `<section class="lib"><h3>${esc(names[l.app])}${versions[l.app] ? ` ${esc(versions[l.app][0])}` : ''}: ${esc(l.role)}</h3><p class="kind">${esc(kind(l.app))}</p><ul>${l.good.map((g) => li(g, '✅&nbsp; ')).join('')}${l.bad.map((b) => li(b, '⚠️&nbsp; ')).join('')}</ul></section>`).join('\n')}</div>`;
 // The same nav bar as the markdown docs.
-const navPages = [['README', 'README.md'], ['Results', 'docs/results.md'], ['Method', 'docs/method.md'], ['iOS accessibility', 'docs/ios-accessibility.md'], ['All checks', 'docs/checks.html']];
-const navHtml = `<nav class="docnav" aria-label="Docs">${navPages.map(([label, path]) => (label === 'All checks' ? `<strong aria-current="page">${label}</strong>` : `<a href="${href(path, 'docs')}">${label}</a>`)).join(' · ')}</nav>`;
+const navHtml = `<nav class="docnav" aria-label="Docs"><strong>The docs:</strong><ul>${pages.map(([label, path, what]) => (label === 'All checks' ? `<li><strong aria-current="page">${label}</strong> (this page): ${esc(what)}</li>` : `<li><a href="${href(path, 'docs')}">${label}</a>: ${esc(what)}</li>`)).join('')}</ul></nav>`;
 
 const html = `<!doctype html>
 <html lang="en">
@@ -456,7 +454,7 @@ tr.score th[scope="row"] { background: var(--bg); }
 .picks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; margin: 16px 0 0; }
 .picks div { padding: 10px 12px; border-radius: 8px; background: var(--bg); }
 .picks dt { font-size: 13px; color: var(--muted); }
-.picks dd { margin: 2px 0 0; } .picks dd strong { display: block; } .picks dd ul { margin: 4px 0 0; padding-left: 18px; font-size: 14px; color: var(--muted); }
+.picks dd { margin: 2px 0 0; } .picks dd > strong { display: block; } .picks dd ul { margin: 4px 0 0; padding-left: 18px; font-size: 14px; color: var(--muted); }
 .points ul { margin: 4px 0 0; padding-left: 18px; }
 table.scorecard { min-width: 900px; }
 table.scorecard td { white-space: nowrap; }
@@ -472,7 +470,7 @@ table.scorecard td.worst { color: var(--fail); background: var(--fail-bg); font-
 .libs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 12px; }
 .lib { padding: 12px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .lib h3 { margin: 0 0 6px; font-size: 16px; } .lib > ul { margin: 0; padding: 0; list-style: none; } .lib ul ul { margin: 2px 0 4px; padding-left: 30px; list-style: disc; } .lib li { margin: 4px 0; font-size: 14px; }
-.docnav { font-size: 14px; color: var(--muted); margin: 0 0 16px; } .docnav a { color: var(--accent); } .docnav.foot { margin: 48px 0 0; padding-top: 16px; border-top: 1px solid var(--line); }
+.docnav { font-size: 14px; color: var(--muted); margin: 0 0 16px; } .docnav ul { margin: 4px 0 0; padding-left: 20px; } .docnav li { margin: 2px 0; } .docnav a { color: var(--accent); } .docnav.foot { margin: 48px 0 0; padding-top: 16px; border-top: 1px solid var(--line); }
 .hero { margin: 16px 0 0; } .hero img { display: block; max-width: 100%; height: auto; border-radius: 12px; }
 </style>
 </head>
@@ -481,7 +479,7 @@ table.scorecard td.worst { color: var(--fail); background: var(--fail-bg); font-
 ${navHtml}
 <h1>UI library checks</h1>
 <p>The same checks, run on iOS and Android for every app, side by side.</p>
-<ul class="intro"><li><strong>Stack:</strong><ul>${stack.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></li><li><strong>iOS:</strong> Release builds on ${esc(deviceText)}</li><li><strong>Android:</strong> Release builds on ${esc(androidDeviceText)}</li><li><strong>Accessibility checks</strong> read the tree each screen reader is given (VoiceOver, TalkBack). They don't hear what it says.</li><li><strong>Hover a result</strong> for the measured detail.</li><li><strong>Generated</strong> from <code>results/</code> by <code>scripts/report-html.mjs</code>.</li></ul>
+<ul class="intro"><li><strong>Built on:</strong><ul>${stack.map(([text, url]) => `<li><a href="${esc(url)}">${esc(text)}</a></li>`).join('')}</ul></li><li><strong>iOS:</strong> Release builds on ${esc(deviceText)}</li><li><strong>Android:</strong> Release builds on ${esc(androidDeviceText)}</li><li><strong>Accessibility checks</strong> read the tree each screen reader is given (VoiceOver, TalkBack). They don't hear what it says.</li><li><strong>Hover a result</strong> for the measured detail.</li><li><strong>Generated</strong> from <code>results/</code> by <code>scripts/report-html.mjs</code>.</li></ul>
 <div class="legend"><span><span class="r pass">✓</span> pass</span><span><span class="r fail">✗</span> fail</span><span>– not applicable (no such element)</span><span>n/r not run (the test could not start)</span><span>⚠ different result on iOS and Android</span><span>* NativeWind results use a line-height workaround; see apps/nativewind/NOTES.md</span></div>
 <p class="legend">In every cell, the left result is <strong>iOS</strong> and the right result is <strong>Android</strong>.</p>
 

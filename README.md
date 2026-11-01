@@ -3,17 +3,24 @@
 # am-ui-lab
 
 <!-- begin:nav -->
-**README** · [Results](docs/results.md) · [Method](docs/method.md) · [iOS accessibility](docs/ios-accessibility.md) · [All checks](docs/checks.html)
+**The docs:**
+
+- **README** (this page): the answer, the scorecard and each library
+- [Results](docs/results.md): every check, with the iOS and Android numbers
+- [Method](docs/method.md): how each check was measured, its limits, and how to reproduce it
+- [iOS accessibility](docs/ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
+- [All checks](docs/checks.html): every check for every app in one grid, with charts. Open it in a browser
 <!-- end:nav -->
 
 A side-by-side comparison of React Native UI libraries on iOS and Android.
 
 - **Built on**
   <!-- begin:stack -->
-  - Expo SDK 57 (expo 57.0.31)
-  - React Native 0.86.3, New Architecture
-  - React 19.2.3
-  - Reanimated 4.5.1
+  - [Expo SDK 57 (expo 57.0.31)](https://docs.expo.dev/versions/v57.0.0/)
+  - [React Native 0.86.3](https://github.com/react/react-native/releases/tag/v0.86.3)
+  - [New Architecture](https://reactnative.dev/architecture/landing-page)
+  - [React 19.2.3](https://github.com/react/react/releases/tag/v19.2.3)
+  - [Reanimated 4.5.1](https://github.com/software-mansion/react-native-reanimated/releases/tag/4.5.1)
   <!-- end:stack -->
 - **Same screen:** every library builds the same test screen, from the same tokens and copy.
 - **Compared against:** a plain React Native app with no library, the baseline.
@@ -83,10 +90,7 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
   - Fastest theme switch on the phone
   - Fewest re-renders
   - The baseline’s accessibility
-- **Component libraries cut the code you write, but each costs you something**
-  - **Screen code you write**
-    - Component libraries: 671–833 lines
-    - Baseline: 912 lines
+- **Each component library costs you something**
   - **HeroUI:** memory grows by 216 MiB
   - **Their code copied into your app**
     - gluestack: 7,488 lines
@@ -105,15 +109,23 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
   - Faster than NativeWind on the phone
     - Uniwind: 137 ms
     - NativeWind: 183 ms
-  - Not a release candidate
-- **Least code, ready-made components: HeroUI**
-  - 671 lines of screen code, the fewest
+- **Ready-made components: HeroUI**
+  - The most accessible component library
+    - TalkBack: 47 of 67
+    - VoiceOver: 44 of 67
   - Its memory grows the most on the phone: +216 MiB after use
   - Accessibility gaps you’d fix yourself
     - Labelled switch and checkbox rows hide the control’s name, role and state
     - The field error isn’t linked to the field
-- **A low-end Android phone: Not Tamagui**
-  - Its theme switch is about 6 times the baseline’s
+- **Theme switching on a budget Android phone**
+  - **Slowest:** Tamagui, 630 ms, about 6 times the baseline
+  - **Fastest:** Unistyles, 71 ms
+  - **Level with the baseline (99 ms):** Reusables, 97 ms
+  - **The rest:** 137–239 ms
+    - Uniwind: 137 ms
+    - NativeWind: 183 ms
+    - gluestack: 192 ms
+    - HeroUI: 239 ms
 <!-- end:verdict -->
 
 <a id="scorecard"></a>
@@ -137,7 +149,7 @@ One row per app.
 | [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | **58 / 62** | **60 / 62** | 183 ms | **+32 MiB** | 4.47 MB | 460 | 0 |
 | [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 630 ms (worst) | +46 MiB | 5.44 MB | not measured | 0 |
 | [gluestack](#gluestack-5015-most-code-to-own) | 35 / 66 (worst) | 36 / 66 (worst) | 192 ms | +103 MiB | 5.66 MB | 815 | 7,488 (worst) |
-| [HeroUI](#heroui-1011-least-code-to-write) | 44 / 67 | 47 / 67 | 239 ms | +216 MiB (worst) | 5.24 MB | 1,137 (worst) | 0 |
+| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 47 / 67 | 239 ms | +216 MiB (worst) | 5.24 MB | 1,137 (worst) | 0 |
 | [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 37 / 62 | 97 ms | +48 MiB | 6.83 MB (worst) | 603 | 1,519 |
 <!-- end:scorecard -->
 
@@ -181,7 +193,7 @@ Best first.
 - ✅ The baseline’s accessibility, as the components are hand-built
   - TalkBack: 60 of 62
   - VoiceOver: 58 of 62
-- ⚠️ Most screen code to write yourself: 1,050 lines
+- ⚠️ You build every component yourself, as with the baseline
 
 [Setup notes](apps/unistyles/NOTES.md) · [Raw results](results/unistyles/)
 
@@ -195,6 +207,7 @@ Best first.
   - TalkBack: 60 of 62
   - VoiceOver: 58 of 62
 - ✅ No setup problems hit
+- ⚠️ You build every component yourself, as with the baseline
 - ⚠️ Slower theme switch on the phone
   - Uniwind: 137 ms
   - Baseline: 99 ms
@@ -214,6 +227,7 @@ Best first.
   - TalkBack: 60 of 62
   - VoiceOver: 58 of 62
 - ✅ Least memory growth on the phone: +32 MiB
+- ⚠️ You build every component yourself, as with the baseline
 - ⚠️ Still a release candidate (5.0.0-rc.0)
   - Needed a line-height workaround
   - Without it, the page was 18 screens tall
@@ -237,13 +251,12 @@ Best first.
 
 [Raw results](results/baseline/)
 
-<a id="heroui-1011-least-code-to-write"></a>
+<a id="heroui-1011-the-most-accessible-component-library"></a>
 
-### HeroUI 1.0.11: Least code to write
+### HeroUI 1.0.11: The most accessible component library
 
 *Component library*
 
-- ✅ Fewest lines of screen code: 671
 - ✅ Best accessibility of the component libraries
   - TalkBack: 47 of 67
   - VoiceOver: 44 of 67
@@ -374,5 +387,11 @@ Best first.
 
 ---
 
-**README** · [Results](docs/results.md) · [Method](docs/method.md) · [iOS accessibility](docs/ios-accessibility.md) · [All checks](docs/checks.html)
+**The docs:**
+
+- **README** (this page): the answer, the scorecard and each library
+- [Results](docs/results.md): every check, with the iOS and Android numbers
+- [Method](docs/method.md): how each check was measured, its limits, and how to reproduce it
+- [iOS accessibility](docs/ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
+- [All checks](docs/checks.html): every check for every app in one grid, with charts. Open it in a browser
 <!-- end:navfoot -->

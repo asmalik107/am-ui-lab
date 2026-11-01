@@ -92,7 +92,7 @@ const readme = {
     ['> [!NOTE]', ...headline.map(([where, what]) => `> **${where}:** ${what}.`).join('\n>\n').split('\n')].join('\n'),
     points.map((p) => [`- **${p.lead}**`, ...p.items.map((i) => item(i, '  '))].join('\n')).join('\n'),
     '### Pick by what you need',
-    picks.map(([want, pick, why]) => [`- **${want}: ${pick}**`, ...why.map((w) => item(w, '  '))].join('\n')).join('\n'),
+    picks.map(([want, pick, why]) => [`- **${pick ? `${want}: ${pick}` : want}**`, ...why.map((w) => item(w, '  '))].join('\n')).join('\n'),
   ].join('\n\n'),
   scorecard: table(
     ['App', ...columns.map((c) => `[${c.head}](docs/results.md#${c.link})`)],
@@ -116,7 +116,7 @@ const foot = (current, from) => (from === 'root' ? `\n---\n\n${nav(current, from
 const libItem = ([name, url, app]) => { const [v, ...on] = versions[app]; return [`- [${name}](${url}) ${v}`, ...on.map((o) => `  - ${o}`)].join('\n'); };
 const kindsMd = kinds.map((k) => [`**${k.title}**`, k.what, k.items.map((i) => (Array.isArray(i) ? libItem(i) : `- ${i}`)).join('\n')].join('\n\n')).join('\n\n');
 const files = {
-  'README.md': { nav: nav('README', 'root'), stack: stack.map((x) => `  - ${x}`).join('\n'), kinds: kindsMd, ...readme, navfoot: foot('README', 'root') },
+  'README.md': { nav: nav('README', 'root'), stack: stack.map(([text, url]) => `  - [${text}](${url})`).join('\n'), kinds: kindsMd, ...readme, navfoot: foot('README', 'root') },
   'docs/results.md': { nav: nav('Results', 'docs'), kinds: kindsMd, ...tables, navfoot: foot('Results', 'docs') },
   'docs/method.md': { nav: nav('Method', 'docs'), navfoot: foot('Method', 'docs') },
   'docs/ios-accessibility.md': { nav: nav('iOS accessibility', 'docs'), navfoot: foot('iOS accessibility', 'docs') },

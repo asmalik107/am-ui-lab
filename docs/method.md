@@ -3,7 +3,13 @@
 # Method
 
 <!-- begin:nav -->
-[README](../README.md) · [Results](results.md) · **Method** · [iOS accessibility](ios-accessibility.md) · [All checks](checks.html)
+**The docs:**
+
+- [README](../README.md): the answer, the scorecard and each library
+- [Results](results.md): every check, with the iOS and Android numbers
+- **Method** (this page): how each check was measured, its limits, and how to reproduce it
+- [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
+- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
 <!-- end:nav -->
 
 How every number in [Results](results.md) was measured.
@@ -286,5 +292,11 @@ node scripts/report-html.mjs
 
 ← [Back to README](../README.md)
 
-[README](../README.md) · [Results](results.md) · **Method** · [iOS accessibility](ios-accessibility.md) · [All checks](checks.html)
+**The docs:**
+
+- [README](../README.md): the answer, the scorecard and each library
+- [Results](results.md): every check, with the iOS and Android numbers
+- **Method** (this page): how each check was measured, its limits, and how to reproduce it
+- [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
+- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
 <!-- end:navfoot -->

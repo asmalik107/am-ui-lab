@@ -3,7 +3,13 @@
 # Results
 
 <!-- begin:nav -->
-[README](../README.md) · **Results** · [Method](method.md) · [iOS accessibility](ios-accessibility.md) · [All checks](checks.html)
+**The docs:**
+
+- [README](../README.md): the answer, the scorecard and each library
+- **Results** (this page): every check, with the iOS and Android numbers
+- [Method](method.md): how each check was measured, its limits, and how to reproduce it
+- [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
+- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
 <!-- end:nav -->
 
 Every check, one section each, with iOS and Android side by side.
@@ -380,7 +386,6 @@ What it would cost a developer to build the same test screen with each library.
 
 | What it counts | baseline | unistyles | uniwind | nativewind | heroui | gluestack | tamagui | reusables |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Lines of screen code you write | 912 | 1,050 | 888 | 877 | 671 | 812 | 833 | 705 |
 | Library code copied into your app (lines) | 0 | 0 | 0 | 0 | 0 | 7,488 | 0 | 1,519 |
 | Config files added or changed | 0 | 2 | 3 | 6 | 3 | 8 | 5 | 4 |
 | Setup steps | n/a | 8 | 11 | 14 | 10 | 5 | 11 | 12 |
@@ -411,5 +416,11 @@ What it would cost a developer to build the same test screen with each library.
 
 ← [Back to README](../README.md)
 
-[README](../README.md) · **Results** · [Method](method.md) · [iOS accessibility](ios-accessibility.md) · [All checks](checks.html)
+**The docs:**
+
+- [README](../README.md): the answer, the scorecard and each library
+- **Results** (this page): every check, with the iOS and Android numbers
+- [Method](method.md): how each check was measured, its limits, and how to reproduce it
+- [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
+- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
 <!-- end:navfoot -->

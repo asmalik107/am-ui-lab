@@ -130,11 +130,14 @@ export const headline = [
 // words "styling engine" and "component library" are used.
 // Installed versions, read from each app's node_modules so they can't drift.
 export const ver = (app, pkg) => load(`apps/${app}/node_modules/${pkg}/package.json`)?.version ?? '?';
+// [text, link]: each links to the docs or release notes for that exact version.
+const sdk = ver('baseline', 'expo').split('.')[0];
 export const stack = [
-  `Expo SDK ${ver('baseline', 'expo').split('.')[0]} (expo ${ver('baseline', 'expo')})`,
-  `React Native ${ver('baseline', 'react-native')}, New Architecture`,
-  `React ${ver('baseline', 'react')}`,
-  `Reanimated ${ver('baseline', 'react-native-reanimated')}`,
+  [`Expo SDK ${sdk} (expo ${ver('baseline', 'expo')})`, `https://docs.expo.dev/versions/v${sdk}.0.0/`],
+  [`React Native ${ver('baseline', 'react-native')}`, `https://github.com/react/react-native/releases/tag/v${ver('baseline', 'react-native')}`],
+  ['New Architecture', 'https://reactnative.dev/architecture/landing-page'],
+  [`React ${ver('baseline', 'react')}`, `https://github.com/react/react/releases/tag/v${ver('baseline', 'react')}`],
+  [`Reanimated ${ver('baseline', 'react-native-reanimated')}`, `https://github.com/software-mansion/react-native-reanimated/releases/tag/${ver('baseline', 'react-native-reanimated')}`],
 ];
 // The version shown after each library's name, and what it was built on.
 export const versions = {
@@ -166,7 +169,6 @@ export const kind = (app) => kindOf[app];
 const n = (v) => v.toLocaleString('en-GB');
 
 // Each point: a short bold lead, then one fact per bullet.
-const screenRange = `${Math.min(...kits.map((k) => devRow(k).screenLines))}–${Math.max(...kits.map((k) => devRow(k).screenLines))}`;
 // An item is a string, or [text, sub-items] when it holds more than one value.
 export const points = [
   { lead: 'Accessibility depends on who writes the components', items: [
@@ -182,38 +184,52 @@ export const points = [
     'Fewest re-renders',
     'The baseline’s accessibility',
   ] },
-  { lead: 'Component libraries cut the code you write, but each costs you something', items: [
-    ['**Screen code you write**', [`Component libraries: ${screenRange} lines`, `Baseline: ${devRow('baseline').screenLines} lines`]],
+  { lead: 'Each component library costs you something', items: [
     `**HeroUI:** memory grows by ${Math.round(by.heroui.memGrowth)} MiB`,
     ['**Their code copied into your app**', [`gluestack: ${n(by.gluestack.copied)} lines`, `Reusables: ${n(by.reusables.copied)} lines`]],
     '**Reusables:** button labels cut off at large text sizes',
     `**Tamagui:** the slowest app, ${ms('tamagui')} ms per theme switch on the phone`,
   ] },
 ];
-// [what you want, the pick, the reasons]
+const access = (app, text = 'Accessibility') => [text, [`TalkBack: ${by[app].a11yAndroid.pass} of ${by[app].a11yAndroid.total}`, `VoiceOver: ${by[app].a11yIos.pass} of ${by[app].a11yIos.total}`]];
+
+// Where each library lands on the phone's theme switch, slowest and fastest first.
+function themeSwitching() {
+  const sorted = rows.filter((x) => x.app !== 'baseline' && x.themeAndroid != null).sort((p, q) => p.themeAndroid - q.themeAndroid);
+  const [fast, slow] = [sorted[0], sorted.at(-1)];
+  const near = sorted.filter((x) => x !== fast && Math.abs(x.themeAndroid - by.baseline.themeAndroid) < 10);
+  const rest = sorted.filter((x) => x !== fast && x !== slow && !near.includes(x));
+  return [
+    `**Slowest:** ${names[slow.app]}, ${ms(slow.app)} ms, about ${Math.round(slow.themeAndroid / by.baseline.themeAndroid)} times the baseline`,
+    `**Fastest:** ${names[fast.app]}, ${ms(fast.app)} ms`,
+    ...near.map((x) => `**Level with the baseline (${ms('baseline')} ms):** ${names[x.app]}, ${ms(x.app)} ms`),
+    [`**The rest:** ${ms(rest[0].app)}–${ms(rest.at(-1).app)} ms`, rest.map((x) => `${names[x.app]}: ${ms(x.app)} ms`)],
+  ];
+}
+
+// [what you want, the pick (or null for a heading on its own), the reasons]
 export const picks = [
   ['Accessibility and speed first', 'Unistyles', ['Fastest theme switch on the phone', 'The baseline’s accessibility']],
-  ['Tailwind classes', 'Uniwind', [['Faster than NativeWind on the phone', [`Uniwind: ${ms('uniwind')} ms`, `NativeWind: ${ms('nativewind')} ms`]], 'Not a release candidate']],
-  ['Least code, ready-made components', 'HeroUI', [`${devRow('heroui')?.screenLines} lines of screen code, the fewest`, `Its memory grows the most on the phone: +${Math.round(by.heroui.memGrowth)} MiB after use`, ['Accessibility gaps you’d fix yourself', ['Labelled switch and checkbox rows hide the control’s name, role and state', 'The field error isn’t linked to the field']]]],
-  ['A low-end Android phone', 'Not Tamagui', [`Its theme switch is about ${Math.round(by.tamagui.themeAndroid / by.baseline.themeAndroid)} times the baseline’s`]],
+  ['Tailwind classes', 'Uniwind', [['Faster than NativeWind on the phone', [`Uniwind: ${ms('uniwind')} ms`, `NativeWind: ${ms('nativewind')} ms`]]]],
+  ['Ready-made components', 'HeroUI', [access('heroui', 'The most accessible component library'), `Its memory grows the most on the phone: +${Math.round(by.heroui.memGrowth)} MiB after use`, ['Accessibility gaps you’d fix yourself', ['Labelled switch and checkbox rows hide the control’s name, role and state', 'The field error isn’t linked to the field']]]],
+  ['Theme switching on a budget Android phone', null, themeSwitching()],
 ];
 
 // One section per library: a one-line role, then what's good (✅) and what to
 // watch (⚠️), one fact per bullet.
 const a11y = (app) => `${by[app].a11yAndroid.pass}/${by[app].a11yAndroid.total} TalkBack, ${by[app].a11yIos.pass}/${by[app].a11yIos.total} VoiceOver`;
-const lines = (app) => n(devRow(app).screenLines);
 // An entry is a string, or [text, sub-items] when it holds more than one value.
-const access = (app, text = 'Accessibility') => [text, [`TalkBack: ${by[app].a11yAndroid.pass} of ${by[app].a11yAndroid.total}`, `VoiceOver: ${by[app].a11yIos.pass} of ${by[app].a11yIos.total}`]];
 export const libraries = [
   { app: 'unistyles', role: 'Best all-rounder', good: [
     ['Fastest theme switch on the phone', [`Unistyles: ${ms('unistyles')} ms`, `Baseline: ${ms('baseline')} ms`]],
     ['Fewest re-renders per theme switch', [`Unistyles: ${by.unistyles.rerenders}`, `Baseline: ${by.baseline.rerenders}`]],
     access('unistyles', 'The baseline’s accessibility, as the components are hand-built'),
-  ], bad: [`Most screen code to write yourself: ${lines('unistyles')} lines`] },
+  ], bad: ['You build every component yourself, as with the baseline'] },
   { app: 'uniwind', role: 'Best if you want Tailwind classes', good: [
     access('uniwind', 'The baseline’s accessibility'),
     'No setup problems hit',
   ], bad: [
+    'You build every component yourself, as with the baseline',
     ['Slower theme switch on the phone', [`Uniwind: ${ms('uniwind')} ms`, `Baseline: ${ms('baseline')} ms`]],
     ['More re-renders per theme switch', [`Uniwind: ${by.uniwind.rerenders}`, `Unistyles: ${by.unistyles.rerenders}`]],
   ] },
@@ -221,6 +237,7 @@ export const libraries = [
     access('nativewind', 'The baseline’s accessibility'),
     `Least memory growth on the phone: +${Math.round(by.nativewind.memGrowth)} MiB`,
   ], bad: [
+    'You build every component yourself, as with the baseline',
     ['Still a release candidate (5.0.0-rc.0)', ['Needed a line-height workaround', 'Without it, the page was 18 screens tall']],
     `Theme switch on the phone: ${ms('nativewind')} ms`,
   ] },
@@ -228,8 +245,7 @@ export const libraries = [
     access('baseline', 'Top accessibility score'),
     `Smallest bundle: ${by.baseline.bundle.toFixed(2)} MB`,
   ], bad: [['Everything written by hand', ['Every component', `All ${devRow('baseline').a11yProps} accessibility props`]]] },
-  { app: 'heroui', role: 'Least code to write', good: [
-    `Fewest lines of screen code: ${lines('heroui')}`,
+  { app: 'heroui', role: 'The most accessible component library', good: [
     access('heroui', 'Best accessibility of the component libraries'),
   ], bad: [
     `Memory grows the most on the phone: +${Math.round(by.heroui.memGrowth)} MiB after use`,
@@ -268,9 +284,16 @@ export const libraries = [
 
 // The nav bar every doc carries, top and bottom. `from` is 'root' for the
 // README and 'docs' for files in docs/.
-const pages = [['README', 'README.md'], ['Results', 'docs/results.md'], ['Method', 'docs/method.md'], ['iOS accessibility', 'docs/ios-accessibility.md'], ['All checks', 'docs/checks.html']];
+// [label, path, what it is]
+export const pages = [
+  ['README', 'README.md', 'the answer, the scorecard and each library'],
+  ['Results', 'docs/results.md', 'every check, with the iOS and Android numbers'],
+  ['Method', 'docs/method.md', 'how each check was measured, its limits, and how to reproduce it'],
+  ['iOS accessibility', 'docs/ios-accessibility.md', 'every iOS accessibility failure, with the line of code that causes it'],
+  ['All checks', 'docs/checks.html', 'every check for every app in one grid, with charts. Open it in a browser'],
+];
 export const href = (path, from) => (from === 'root' ? path : path === 'README.md' ? '../README.md' : path.replace(/^docs\//, ''));
-export const nav = (current, from) => pages.map(([label, path]) => (label === current ? `**${label}**` : `[${label}](${href(path, from)})`)).join(' · ');
+export const nav = (current, from) => ['**The docs:**', pages.map(([label, path, what]) => (label === current ? `- **${label}** (this page): ${what}` : `- [${label}](${href(path, from)}): ${what}`)).join('\n')].join('\n\n');
 
 // GitHub's heading anchors: lower case, punctuation dropped, spaces to hyphens.
 export const slug = (h) => h.toLowerCase().replace(/[^\p{L}\p{N}\s_-]/gu, '').trim().replace(/\s/g, '-');

@@ -3,7 +3,13 @@
 # iOS accessibility: what failed and why
 
 <!-- begin:nav -->
-[README](../README.md) · [Results](results.md) · [Method](method.md) · **iOS accessibility** · [All checks](checks.html)
+**The docs:**
+
+- [README](../README.md): the answer, the scorecard and each library
+- [Results](results.md): every check, with the iOS and Android numbers
+- [Method](method.md): how each check was measured, its limits, and how to reproduce it
+- **iOS accessibility** (this page): every iOS accessibility failure, with the line of code that causes it
+- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
 <!-- end:nav -->
 
 The detail behind the accessibility scores in [Results](results.md#accessibility).
@@ -174,5 +180,11 @@ The detail behind the accessibility scores in [Results](results.md#accessibility
 
 ← [Back to README](../README.md)
 
-[README](../README.md) · [Results](results.md) · [Method](method.md) · **iOS accessibility** · [All checks](checks.html)
+**The docs:**
+
+- [README](../README.md): the answer, the scorecard and each library
+- [Results](results.md): every check, with the iOS and Android numbers
+- [Method](method.md): how each check was measured, its limits, and how to reproduce it
+- **iOS accessibility** (this page): every iOS accessibility failure, with the line of code that causes it
+- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
 <!-- end:navfoot -->

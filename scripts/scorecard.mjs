@@ -218,6 +218,28 @@ export const picks = [
 // watch (⚠️), one fact per bullet.
 const a11y = (app) => `${by[app].a11yAndroid.pass}/${by[app].a11yAndroid.total} TalkBack, ${by[app].a11yIos.pass}/${by[app].a11yIos.total} VoiceOver`;
 // An entry is a string, or [text, sub-items] when it holds more than one value.
+// Controls under Google's 48 dp minimum on the phone, smallest first, with
+// the variants of one control (Button, Button (disabled)…) counted once.
+// The @expo/ui switch is left out: it fails in every app, the baseline too.
+const tooSmall = (app) => {
+  const fs = (load(`results/${app}/android-a11y.json`)?.findings ?? []).filter((f) => /^target ≥/.test(f.check) && !f.pass && !f.component.startsWith('Native switch'));
+  const tall = new Map();
+  for (const f of fs) {
+    const h = Number(f.detail.match(/×([\d.]+)dp/)?.[1]);
+    const name = f.component.replace(/ \(.*\)$/, '');
+    if (!Number.isNaN(h) && !tall.has(name)) tall.set(name, h);
+  }
+  return [...tall].sort((x, y) => x[1] - y[1]).map(([name, h]) => `${name}: ${h} dp`);
+};
+// The problems an app's NOTES.md lists under "Errors hit, and fixes", by the
+// bold title each one starts with.
+const setupProblems = (app) => {
+  const file = new URL(`apps/${app}/NOTES.md`, root);
+  const notes = existsSync(file) ? readFileSync(file, 'utf8') : '';
+  const section = notes.split(/^## /m).find((x) => /^Errors? hit/i.test(x)) ?? '';
+  return [...section.matchAll(/^\d+\. \*\*(.+?)\*\*/gm)].map((m) => m[1].replace(/[.:]$/, '').replace(/`/g, ''));
+};
+
 export const libraries = [
   { app: 'unistyles', role: 'Best all-rounder', good: [
     ['Fastest theme switch on the phone', [`Unistyles: ${ms('unistyles')} ms`, `Baseline: ${ms('baseline')} ms`]],
@@ -258,15 +280,15 @@ export const libraries = [
     ['Largest bundle', [`${by.reusables.bundle.toFixed(2)} MB`, 'Bundles all 1,917 lucide icons and uses 4']],
     'Button labels are cut off at the largest text size, on both platforms',
     access('reusables', 'Low accessibility'),
-    'The checkbox is 16 tall',
+    `The checkbox is ${tooSmall('reusables').find((x) => x.startsWith('Checkbox')).split(': ')[1]} tall on the phone, under the 48 dp minimum`,
     'Progress always reads 0%',
     `Copies ${n(by.reusables.copied)} lines of its code into your app`,
   ] },
   { app: 'gluestack', role: 'Most code to own', good: [`Fewest setup steps: ${devRow('gluestack').setupSteps}`], bad: [
     ['Copies its code into your app', [`${n(by.gluestack.copied)} lines`, `${devRow('gluestack').tsc.all - devRow('gluestack').tsc.src} type errors in them`]],
     access('gluestack', 'Lowest accessibility'),
-    'Controls are 22 to 40 tall',
-    `Most setup problems hit: ${devRow('gluestack').errorsHit}`,
+    ['Controls too small to tap on the phone, under Google’s 48 dp minimum', tooSmall('gluestack')],
+    [`Most setup problems hit: ${devRow('gluestack').errorsHit}, listed in [its notes](apps/gluestack/NOTES.md#errors-hit-and-fixes)`, setupProblems('gluestack')],
     `Memory grows by ${Math.round(by.gluestack.memGrowth)} MiB on the phone`,
   ] },
   { app: 'tamagui', role: 'Slowest on both platforms', good: [

@@ -284,7 +284,7 @@ Best first.
 - ⚠️ Low accessibility
   - TalkBack: 37 of 62
   - VoiceOver: 37 of 62
-- ⚠️ The checkbox is 16 tall
+- ⚠️ The checkbox is 16 dp tall on the phone, under the 48 dp minimum
 - ⚠️ Progress always reads 0%
 - ⚠️ Copies 1,519 lines of its code into your app
 
@@ -303,8 +303,26 @@ Best first.
 - ⚠️ Lowest accessibility
   - TalkBack: 36 of 66
   - VoiceOver: 35 of 66
-- ⚠️ Controls are 22 to 40 tall
-- ⚠️ Most setup problems hit: 8
+- ⚠️ Controls too small to tap on the phone, under Google’s 48 dp minimum
+  - Slider: 6 dp
+  - Accordion: 20 dp
+  - Checkbox: 22 dp
+  - Radio option: 22 dp
+  - Switch: 27 dp
+  - Tab: 31 dp
+  - Button: 36 dp
+  - Menu: 38 dp
+  - Select trigger: 40 dp
+  - Segmented control: 44 dp
+- ⚠️ Most setup problems hit: 8, listed in [its notes](apps/gluestack/NOTES.md#errors-hit-and-fixes)
+  - The CLI hung while cloning
+  - The CLI dropped Metro watchFolders
+  - The CLI mangled _layout.tsx
+  - The CLI moved native modules off the SDK pins
+  - The CLI added a redundant worklets Babel plugin
+  - The docs and the code disagree
+  - TS6 side-effect import error
+  - withUniwind lost gorhom's generic
 - ⚠️ Memory grows by 103 MiB on the phone
 
 [Setup notes](apps/gluestack/NOTES.md) · [Raw results](results/gluestack/)

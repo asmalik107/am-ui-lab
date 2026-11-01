@@ -111,15 +111,17 @@ const readme = {
 
 // Each file and the blocks it carries. The nav bar is the same everywhere,
 // with the current page in bold; the docs/ pages also link back to the README.
-const foot = (current, from) => (from === 'root' ? `\n---\n\n${nav(current, from)}` : `\n---\n\n← [Back to README](../README.md)\n\n${nav(current, from)}`);
+// The docs list is at the top of every page; the bottom of a page in docs/
+// only links back to the README.
+const foot = '\n---\n\n← [Back to README](../README.md)';
 // A library: linked name and version, then what it was built on, one per line.
 const libItem = ([name, url, app]) => { const [v, ...on] = versions[app]; return [`- [${name}](${url}) ${v}`, ...on.map((o) => `  - ${o}`)].join('\n'); };
 const kindsMd = kinds.map((k) => [`**${k.title}**`, k.what, k.items.map((i) => (Array.isArray(i) ? libItem(i) : `- ${i}`)).join('\n')].join('\n\n')).join('\n\n');
 const files = {
-  'README.md': { nav: nav('README', 'root'), stack: stack.map(([text, url]) => `  - [${text}](${url})`).join('\n'), kinds: kindsMd, ...readme, navfoot: foot('README', 'root') },
-  'docs/results.md': { nav: nav('Results', 'docs'), kinds: kindsMd, ...tables, navfoot: foot('Results', 'docs') },
-  'docs/method.md': { nav: nav('Method', 'docs'), navfoot: foot('Method', 'docs') },
-  'docs/ios-accessibility.md': { nav: nav('iOS accessibility', 'docs'), navfoot: foot('iOS accessibility', 'docs') },
+  'README.md': { nav: nav('README', 'root'), stack: stack.map(([text, url]) => `  - [${text}](${url})`).join('\n'), kinds: kindsMd, ...readme },
+  'docs/results.md': { nav: nav('Results', 'docs'), kinds: kindsMd, ...tables, navfoot: foot },
+  'docs/method.md': { nav: nav('Method', 'docs'), navfoot: foot },
+  'docs/ios-accessibility.md': { nav: nav('iOS accessibility', 'docs'), navfoot: foot },
 };
 
 for (const [path, blocks] of Object.entries(files)) {

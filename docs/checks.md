@@ -953,13 +953,4 @@ Compare apps within a platform. iOS is a simulator on a Mac, Android a budget ph
 ---
 
 ← [Back to README](../README.md)
-
-**The docs:**
-
-- [README](../README.md): the answer, the scorecard and each library
-- [Results](results.md): every check, with the iOS and Android numbers
-- [Method](method.md): how each check was measured, its limits, and how to reproduce it
-- [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [Android accessibility](android-accessibility.md): every Android accessibility failure, from the audit’s output
-- **All checks** (this page): every accessibility check for every app, one table per component, plus the charts
 <!-- end:navfoot -->

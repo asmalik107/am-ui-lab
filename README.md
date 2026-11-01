@@ -22,6 +22,7 @@ A side-by-side comparison of React Native UI libraries on iOS and Android.
   - [New Architecture](https://reactnative.dev/architecture/landing-page)
   - [React 19.2.3](https://github.com/react/react/releases/tag/v19.2.3)
   - [Reanimated 4.5.1](https://github.com/software-mansion/react-native-reanimated/releases/tag/4.5.1)
+  - [expo-router 57.0.29](https://docs.expo.dev/versions/v57.0.0/sdk/router/)
   <!-- end:stack -->
 - **Same screen:** every library builds the same test screen, from the same tokens and copy.
 - **Compared against:** a plain React Native app with no library, the baseline.
@@ -358,25 +359,8 @@ Best first.
 | Screen reader whose tree is checked | VoiceOver | TalkBack |
 | Last run | 30 October 2026 | 30–31 October 2026 |
 
-- **Stack**
-  - Expo SDK 57
-  - React Native 0.86.3, New Architecture
-  - React 19.2.3
-  - Reanimated 4.5.1
-  - expo-router
 - **Builds:** Release
   - Except the re-render counts: Debug, iOS only
-
-| App | Library | What it is |
-| --- | --- | --- |
-| `apps/baseline` | none | Plain React Native with accessibility written by hand. The reference point. |
-| `apps/unistyles` | react-native-unistyles 3.6.0 | Styling engine only, so components are hand-built (the baseline's, restyled) |
-| `apps/uniwind` | uniwind 1.13.0 (free), Tailwind 4.3.3 | Styling engine only; the baseline's components restyled with `className` |
-| `apps/nativewind` | nativewind 5.0.0-rc.0 (react-native-css 3.1.0-rc.0), Tailwind 4.1.12 | Styling engine only, release candidate; the baseline's components restyled with `className` |
-| `apps/tamagui` | tamagui 3.1.2 | Styling engine, compiler and component library |
-| `apps/gluestack` | gluestack-ui 5 (core 5.0.15) on Uniwind 1.13.0 | Copy-paste components on react-aria |
-| `apps/heroui` | heroui-native 1.0.11 on Uniwind 1.13.0 | Component library |
-| `apps/reusables` | React Native Reusables (CLI 0.7.1, @rn-primitives 1.5.2) on Uniwind 1.13.0 | shadcn-style copy-paste components |
 
 **The test screen** has 19 items. Its full spec is in [Method](docs/method.md#the-test-screen).
 
@@ -391,17 +375,3 @@ Best first.
 - Every setup step and config file touched
 - Every error hit, and how it was fixed
 - Which items use the library's components and which are hand-built
-
-<!-- begin:navfoot -->
-
----
-
-**The docs:**
-
-- **README** (this page): the answer, the scorecard and each library
-- [Results](docs/results.md): every check, with the iOS and Android numbers
-- [Method](docs/method.md): how each check was measured, its limits, and how to reproduce it
-- [iOS accessibility](docs/ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [Android accessibility](docs/android-accessibility.md): every Android accessibility failure, from the audit’s output
-- [All checks](docs/checks.md): every accessibility check for every app, one table per component, plus the charts
-<!-- end:navfoot -->

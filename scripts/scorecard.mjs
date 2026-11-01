@@ -137,6 +137,7 @@ export const stack = [
   ['New Architecture', 'https://reactnative.dev/architecture/landing-page'],
   [`React ${ver('baseline', 'react')}`, `https://github.com/react/react/releases/tag/v${ver('baseline', 'react')}`],
   [`Reanimated ${ver('baseline', 'react-native-reanimated')}`, `https://github.com/software-mansion/react-native-reanimated/releases/tag/${ver('baseline', 'react-native-reanimated')}`],
+  [`expo-router ${ver('baseline', 'expo-router')}`, `https://docs.expo.dev/versions/v${sdk}.0.0/sdk/router/`],
 ];
 // The version shown after each library's name, and what it was built on.
 export const versions = {

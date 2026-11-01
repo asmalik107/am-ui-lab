@@ -374,8 +374,6 @@ ${chartMd('janky-frames')}
 ---
 
 ← [Back to README](../README.md)
-
-${nav('All checks', 'docs')}
 <!-- end:navfoot -->
 `;
 writeFileSync(new URL('docs/checks.md', root), anchored(md));
@@ -456,8 +454,6 @@ ${apps.map(platformDiffs).filter(Boolean).join('\n')}
 ---
 
 ← [Back to README](../README.md)
-
-${nav('Android accessibility', 'docs')}
 <!-- end:navfoot -->
 `;
 writeFileSync(new URL('docs/android-accessibility.md', root), anchored(android));

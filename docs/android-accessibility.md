@@ -328,13 +328,4 @@ Checks that pass on one platform and fail on the other.
 ---
 
 ← [Back to README](../README.md)
-
-**The docs:**
-
-- [README](../README.md): the answer, the scorecard and each library
-- [Results](results.md): every check, with the iOS and Android numbers
-- [Method](method.md): how each check was measured, its limits, and how to reproduce it
-- [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- **Android accessibility** (this page): every Android accessibility failure, from the audit’s output
-- [All checks](checks.md): every accessibility check for every app, one table per component, plus the charts
 <!-- end:navfoot -->

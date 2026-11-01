@@ -2,6 +2,7 @@
 // text size, Reduce Motion, timings and bundle size. Reads only results/*.
 // Usage: node scripts/report-html.mjs
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { columns, headline, heroSvg, href, kind, kinds, libraries, names, picks, points, scorecard, stack, versions } from './scorecard.mjs';
 
 const root = new URL('../', import.meta.url);
 const apps = [
@@ -9,10 +10,10 @@ const apps = [
   ['unistyles', 'Unistyles', 'Engine, hand-built'],
   ['uniwind', 'Uniwind', 'Engine, hand-built'],
   ['nativewind', 'NativeWind v5 RC', 'Engine, hand-built*'],
-  ['heroui', 'HeroUI Native', 'Component kit'],
-  ['gluestack', 'gluestack v5', 'Component kit'],
-  ['tamagui', 'Tamagui', 'Component kit'],
-  ['reusables', 'Reusables', 'Component kit'],
+  ['heroui', 'HeroUI Native', 'Component library'],
+  ['gluestack', 'gluestack v5', 'Component library'],
+  ['tamagui', 'Tamagui', 'Component library'],
+  ['reusables', 'Reusables', 'Component library'],
 ];
 const load = (app, file) => {
   const u = new URL(`results/${app}/${file}`, root);
@@ -211,8 +212,8 @@ const tally = (findings, which) => {
 const themesDiffer = themeDiffs.length > 0;
 const themeNote = themesDiffer ? 'light theme' : 'the same in the light, dark and brand themes';
 const scoreParts = [
-  ['Test screen', `All 19 items of the test screen, from buttons, form controls, dialog, sheet, tabs and toast to the slider, progress bar, accordion, menu and segmented control. Results are ${themeNote}.`, (a, p) => tally(findingsOf(a, p), 'screen')],
-  ['Extra bottom sheets', 'The @expo/ui sheet in every app, plus Tamagui’s and gluestack’s own sheets, and a raw @gorhom sheet in the HeroUI app (whose own sheet is on the test screen): 5 checks per sheet.', (a, p) => tally(findingsOf(a, p), 'sheets')],
+  ['Test screen', `All 19 items of the test screen. Results are ${themeNote}.`, (a, p) => tally(findingsOf(a, p), 'screen')],
+  ['Extra bottom sheets', '5 checks per sheet. Sheets: @expo/ui in every app, Tamagui’s and gluestack’s own, and a raw @gorhom sheet in HeroUI.', (a, p) => tally(findingsOf(a, p), 'sheets')],
   ...(themesDiffer
     ? [
         ['Everything, dark theme', 'All the checks above, re-run with the app switched to its dark theme.', (a, p) => tally(findingsOf(a, p, 'dark'))],
@@ -237,14 +238,16 @@ function bars(rows, max) {
     })
     .join('')}</svg>`;
 }
+// "How to read it" under a chart: one point per line.
+const readHtml = (read) => `<div class="read"><strong>How to read it:</strong><ul>${[].concat(read).map((r) => `<li>${esc(r)}</li>`).join('')}</ul></div>`;
 function figure(id, title, note, rows, max, head, read) {
   const table = `<table class="sr"><caption>${esc(title)}</caption><thead><tr><th scope="col">App</th><th scope="col">${esc(head)}</th></tr></thead><tbody>${rows.map((r) => `<tr><th scope="row">${esc(r.label)}</th><td>${esc(r.text)}</td></tr>`).join('')}</tbody></table>`;
-  return `<figure class="fig" aria-labelledby="${id}"><figcaption id="${id}"><strong>${esc(title)}</strong>${note ? ` <span>${esc(note)}</span>` : ''}</figcaption>${bars(rows, max)}${read ? `<p class="read"><strong>How to read it:</strong> ${esc(read)}</p>` : ''}${table}</figure>`;
+  return `<figure class="fig" aria-labelledby="${id}"><figcaption id="${id}"><strong>${esc(title)}</strong>${note ? ` <span>${esc(note)}</span>` : ''}</figcaption>${bars(rows, max)}${read ? readHtml(read) : ''}${table}</figure>`;
 }
 const scoreCharts = () => scoreParts.map(([title, note, fn], i) => {
   const val = (t) => ({ value: t ? (t.pass / t.total) * 100 : null, text: t ? `${t.pass} / ${t.total}` : 'not run' });
   const rows = apps.map(([a, name]) => ({ label: name, ios: val(fn(a, 'ios')), android: val(fn(a, 'android')) }));
-  return pairedFigure(`score-${i}`, title, note, rows, 'The baseline and the three engines are the same hand-built components, so their bars are what careful hand-built accessibility reaches; a library’s gap to them is what you would have to fix yourself. A library that scores differently on the two platforms handles the platforms’ accessibility APIs differently.');
+  return pairedFigure(`score-${i}`, title, note, rows, ['The baseline and the three styling engines share the same hand-built components. Their bars are what careful hand-built accessibility reaches.', 'A library’s gap to them is what you would have to fix yourself.', 'A library that scores differently on the two platforms handles their accessibility APIs differently.']);
 }).join('\n');
 const num = (a, f) => {
   try {
@@ -277,15 +280,15 @@ const pairedKey = '<span class="key"><i class="sw ios"></i>iOS, iPhone 17 simula
 function pairedFigure(id, title, note, rows, read) {
   const max = Math.max(...rows.flatMap((r) => [r.ios.value ?? 0, r.android.value ?? 0])) || 1;
   const table = `<table class="sr"><caption>${esc(title)}</caption><thead><tr><th scope="col">App</th><th scope="col">iOS</th><th scope="col">Android</th></tr></thead><tbody>${rows.map((r) => `<tr><th scope="row">${esc(r.label)}</th><td>${esc(r.ios.text)}</td><td>${esc(r.android.text)}</td></tr>`).join('')}</tbody></table>`;
-  return `<figure class="fig" aria-labelledby="${id}"><figcaption id="${id}"><strong>${esc(title)}</strong> <span>${esc(note)}</span>${pairedKey}</figcaption>${pairedBars(rows, max)}<p class="read"><strong>How to read it:</strong> ${esc(read)}</p>${table}</figure>`;
+  return `<figure class="fig" aria-labelledby="${id}"><figcaption id="${id}"><strong>${esc(title)}</strong> <span>${esc(note)}</span>${pairedKey}</figcaption>${pairedBars(rows, max)}${readHtml(read)}${table}</figure>`;
 }
 const pairedCharts = [
-  ['Theme switch, median', 'From the tap to the second frame after the update. Lower is better.', 'iOS: every app finishes within a frame (about 32 ms) except Tamagui (99 ms). Android, on a budget phone: Tamagui (632 ms) and HeroUI (246 ms) stand out; the other gaps are within each app’s run-to-run spread.', (d) => d.perf.theme.median, (d) => d.androidPerf.theme.median, (v) => `${v.toFixed(1)} ms`],
-  ['200-row list mount, median', 'From the tap to the second frame after the list’s first layout. Lower is better.', 'iOS: about 83 ms everywhere except Tamagui (115 ms). Android: most apps 150–180 ms with overlapping ranges, Tamagui 374 ms.', (d) => d.perf.list.median, (d) => d.androidPerf.list.median, (v) => `${v.toFixed(1)} ms`],
-  ['Startup until readable, median of 10', 'From the launch call until the screen title is in the accessibility tree, when VoiceOver or TalkBack could first read it. Not first paint.', 'Within each platform the apps sit close together (iOS 7.9–8.4 s, Android 2.9–3.4 s), so read them as groups. Don’t compare the platforms: the simulator’s accessibility tree is slow to become readable.', (d) => d.metrics.startup.median, (d) => d.androidMetrics.startup.median, (v) => `${(v / 1000).toFixed(2)} s`],
-  ['Memory at idle', '5 s after launch. Lower is better. iOS is phys_footprint, Android is total PSS: different measures.', 'Compare apps within a platform, not across. On both, the kits use more than the baseline, and HeroUI the most.', (d) => d.metrics.memory.idle.physFootprint / 1048576, (d) => d.androidMetrics.memory.idle.pss / 1048576, (v) => `${v.toFixed(1)} MiB`],
-  ['Memory after use', 'After scrolling the list and opening every overlay once. Lower is better. Same measures as above.', 'iOS: Tamagui (161 MiB) stands out. Android: HeroUI (416 MiB) and gluestack (292 MiB) grow far more than the rest.', (d) => d.metrics.memory.used.physFootprint / 1048576, (d) => d.androidMetrics.memory.used.pss / 1048576, (v) => `${v.toFixed(1)} MiB`],
-  ['App CPU time during 5 list flings', 'CPU used by the app’s threads over about 7.5 s of flinging the list. Lower is better.', 'The simulator runs on the Mac’s CPU and the phone on a budget one, so compare apps within a platform. HeroUI uses the most on both.', (d) => d.metrics.scroll.cpuMs.total, (d) => d.androidMetrics.scroll.cpuMs.total, (v) => `${(v / 1000).toFixed(2)} s`],
+  ['Theme switch, median', 'From the tap to the second frame after the update. Lower is better.', ['iOS: every app finishes within a frame (about 32 ms), except Tamagui (99 ms).', 'Android: Tamagui (630 ms) stands out.', 'Android: HeroUI (239 ms) stands out.', 'The other gaps are within each app’s run-to-run spread.'], (d) => d.perf.theme.median, (d) => d.androidPerf.theme.median, (v) => `${v.toFixed(1)} ms`],
+  ['200-row list mount, median', 'From the tap to the second frame after the list’s first layout. Lower is better.', ['iOS: about 83 ms everywhere, except Tamagui (115 ms).', 'Android: most apps take 150–180 ms, with overlapping ranges.', 'Android: Tamagui takes 365 ms.'], (d) => d.perf.list.median, (d) => d.androidPerf.list.median, (v) => `${v.toFixed(1)} ms`],
+  ['Startup until readable, median of 10', 'From the launch call until the screen title is in the accessibility tree, when VoiceOver or TalkBack could first read it. Not first paint.', ['Within each platform the apps sit close together, so read them as groups.', 'iOS: 7.9–8.4 s.', 'Android: 2.9–3.4 s.', 'Don’t compare the platforms: the simulator’s accessibility tree is slow to become readable.'], (d) => d.metrics.startup.median, (d) => d.androidMetrics.startup.median, (v) => `${(v / 1000).toFixed(2)} s`],
+  ['Memory at idle', '5 s after launch. Lower is better. iOS is phys_footprint, Android is total PSS: different measures.', ['Compare apps within a platform, not across.', 'On both, the component libraries use more than the baseline.', 'HeroUI uses the most.'], (d) => d.metrics.memory.idle.physFootprint / 1048576, (d) => d.androidMetrics.memory.idle.pss / 1048576, (v) => `${v.toFixed(1)} MiB`],
+  ['Memory after use', 'After scrolling the list and opening every overlay once. Lower is better. Same measures as above.', ['iOS: Tamagui (161 MiB) stands out.', 'Android: HeroUI (416 MiB) grows far more than the rest.', 'Android: gluestack (286 MiB) does too.'], (d) => d.metrics.memory.used.physFootprint / 1048576, (d) => d.androidMetrics.memory.used.pss / 1048576, (v) => `${v.toFixed(1)} MiB`],
+  ['App CPU time during 5 list flings', 'CPU used by the app’s threads over about 7.5 s of flinging the list. Lower is better.', ['The simulator runs on the Mac’s CPU, the phone on a budget one. Compare apps within a platform.', 'HeroUI uses the most on both.'], (d) => d.metrics.scroll.cpuMs.total, (d) => d.androidMetrics.scroll.cpuMs.total, (v) => `${(v / 1000).toFixed(2)} s`],
 ].map(([title, note, read, ios, android, fmt], i) => {
   const val = (a, get) => {
     const v = num(a, get);
@@ -296,9 +299,9 @@ const pairedCharts = [
 }).join('\n');
 
 const singleCharts = [
-  ['iOS JS bundle', 'Hermes bytecode from expo export, with all 19 items. Lower is better.', 'Exact, with no run-to-run noise. The baseline is plain React Native, so the gap to it is what the library adds.', (d) => d.bundle.iosHbcBytes / 1e6, (v) => `${v.toFixed(2)} MB`],
-  ['iOS: components re-rendered on one theme switch', 'Light → dark, counted by argent’s React profiler on a Debug build. Fewer means less work for React.', 'Counts repeat closely for light → dark and dark → brand in every app, but brand → light can be lower (Uniwind 302 against 507). Tamagui isn’t measured: its Debug build aborts.', (d) => d.metrics.rerenders.switches[0].renders, (v) => `${v}`],
-  ['Android: janky frames during the flings', 'Frames dumpsys gfxinfo marks as janky, out of about 1,250. Lower is better. The iOS simulator can’t record frame hitches.', 'At most 1 janky frame in any app, so scrolling is smooth everywhere.', (d) => d.androidMetrics.scroll.frames.janky, (v) => `${v}`],
+  ['iOS JS bundle', 'Hermes bytecode from expo export, with all 19 items. Lower is better.', ['Exact, with no run-to-run noise.', 'The baseline is plain React Native, so the gap to it is what the library adds.'], (d) => d.bundle.iosHbcBytes / 1e6, (v) => `${v.toFixed(2)} MB`],
+  ['iOS: components re-rendered on one theme switch', 'Light → dark, counted by argent’s React profiler on a Debug build. Fewer means less work for React.', ['Light → dark and dark → brand counts repeat closely in every app.', 'Brand → light can be lower: Uniwind 302, against 507.', 'Tamagui isn’t measured: its Debug build aborts.'], (d) => d.metrics.rerenders.switches[0].renders, (v) => `${v}`],
+  ['Android: janky frames during the flings', 'Frames dumpsys gfxinfo marks as janky, out of about 1,250. Lower is better. The iOS simulator can’t record frame hitches.', ['At most 1 janky frame in any app.', 'Scrolling is smooth everywhere.'], (d) => d.androidMetrics.scroll.frames.janky, (v) => `${v}`],
 ].map(([title, note, read, get, fmt], i) => {
   const rows = apps.map(([a, name]) => {
     const v = num(a, get);
@@ -331,12 +334,12 @@ const devRow = (label, fn, note) => `<tr><th scope="row">${label}<span class="wh
 const devcostRows = devcost
   ? [
       devRow('Lines of screen code you write', (r) => r.screenLines, devcost.how.screenLines),
-      devRow('Kit code copied into your app (lines)', (r) => r.copiedLines, devcost.how.copiedLines),
+      devRow('Library code copied into your app (lines)', (r) => r.copiedLines, devcost.how.copiedLines),
       devRow('Config files added or changed', (r) => r.configFiles.length, devcost.how.configFiles),
       devRow('Setup steps', (r) => r.setupSteps ?? 'n/a (reference app)', devcost.how.setupSteps),
       devRow('Setup problems hit', (r) => r.errorsHit ?? 'n/a (reference app)', devcost.how.errorsHit),
       devRow('Type errors in your own code', (r) => r.tsc.src, devcost.how.tscOwn),
-      devRow('Type errors in copied kit code', (r) => r.tsc.all - r.tsc.src, devcost.how.tscKit),
+      devRow('Type errors in copied library code', (r) => r.tsc.all - r.tsc.src, devcost.how.tscKit),
       devRow('Accessibility props written by hand', (r) => r.a11yProps, devcost.how.a11yProps),
     ].join('\n')
   : '';
@@ -344,6 +347,33 @@ const devcostRows = devcost
 // The device each app's audit actually ran on, as recorded in its results.
 const devices = [...new Set(apps.map(([a]) => data[a].a11y?.device).filter(Boolean).map((d) => `an ${d.name} simulator running ${d.runtime}`))];
 const deviceText = devices.length ? devices.join(' and ') : 'a simulator (device not recorded in these results)';
+
+
+// The answer and the scorecard, the same as the top of the README.
+const strong = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+// A list item, with a nested list when it holds more than one value.
+const li = (i, mark = '') => (Array.isArray(i) ? `<li>${mark}${strong(i[0])}<ul>${i[1].map((x) => `<li>${strong(x)}</li>`).join('')}</ul></li>` : `<li>${mark}${strong(i)}</li>`);
+const verdictHtml = `<section class="verdict" aria-labelledby="answer">
+<div class="kinds">${kinds.map((k) => `<section><h3>${esc(k.title)}</h3><p>${esc(k.what)}</p><ul>${k.items.map((i) => `<li>${Array.isArray(i) ? `<a href="${esc(i[1])}">${esc(i[0])}</a> ${esc(versions[i[2]][0])}${versions[i[2]].length > 1 ? `<ul>${versions[i[2]].slice(1).map((o) => `<li>${esc(o)}</li>`).join('')}</ul>` : ''}` : esc(i)}</li>`).join('')}</ul></section>`).join('')}</div>
+<h2 id="answer">The answer</h2>
+<aside class="caveat" aria-label="Note">${headline.map(([where, what]) => `<p><strong>${esc(where)}:</strong> ${esc(what)}.</p>`).join('')}</aside>
+<ul class="points">${points.map((p) => `<li><strong>${esc(p.lead)}</strong><ul>${p.items.map((i) => li(i)).join('')}</ul></li>`).join('')}</ul>
+<h3>Pick by what you need</h3>
+<dl class="picks">${picks.map(([want, pick, why]) => `<div><dt>${esc(want)}</dt><dd><strong>${esc(pick)}</strong><ul>${why.map((w) => li(w)).join('')}</ul></dd></div>`).join('')}</dl>
+</section>
+<h2>Scorecard</h2>
+<ul class="intro"><li><span class="best">Green</span> is the best in each column, <span class="worst">red</span> the worst.</li><li><strong>Accessibility:</strong> every check, light theme.</li><li><strong>Theme switch and memory:</strong> on the Galaxy A15.</li><li><strong>Bundle size and re-renders:</strong> on iOS.</li></ul>
+<div class="wrap"><table class="scorecard">
+<thead><tr><th scope="col" class="check">App</th>${columns.map((c) => `<th scope="col"><a href="results.md#${c.link}">${esc(c.head)}</a></th>`).join('')}</tr></thead>
+<tbody>${scorecard().map((x) => `<tr><th scope="row">${esc(x.name)}</th>${x.cells.map((c) => `<td${c.mark ? ` class="${c.mark}"` : ''}>${esc(c.text)}${c.mark ? `<span class="sr"> (${c.mark})</span>` : ''}</td>`).join('')}</tr>`).join('\n')}</tbody>
+</table></div>
+<figure class="hero"><img src="hero.svg" alt="Accessibility against theme-switch time on a Galaxy A15 5G: the baseline and the three styling engines sit top left, the component libraries lower and to the right, Tamagui far right" width="720" height="400"></figure>
+<h2>Library by library</h2>
+<ul class="intro"><li>Best first.</li><li>✅ what it is good at</li><li>⚠️ its problems</li></ul>
+<div class="libs">${libraries.map((l) => `<section class="lib"><h3>${esc(names[l.app])}${versions[l.app] ? ` ${esc(versions[l.app][0])}` : ''}: ${esc(l.role)}</h3><p class="kind">${esc(kind(l.app))}</p><ul>${l.good.map((g) => li(g, '✅&nbsp; ')).join('')}${l.bad.map((b) => li(b, '⚠️&nbsp; ')).join('')}</ul></section>`).join('\n')}</div>`;
+// The same nav bar as the markdown docs.
+const navPages = [['README', 'README.md'], ['Results', 'docs/results.md'], ['Method', 'docs/method.md'], ['iOS accessibility', 'docs/ios-accessibility.md'], ['All checks', 'docs/checks.html']];
+const navHtml = `<nav class="docnav" aria-label="Docs">${navPages.map(([label, path]) => (label === 'All checks' ? `<strong aria-current="page">${label}</strong>` : `<a href="${href(path, 'docs')}">${label}</a>`)).join(' · ')}</nav>`;
 
 const html = `<!doctype html>
 <html lang="en">
@@ -408,7 +438,7 @@ tr.score th[scope="row"] { background: var(--bg); }
 .charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 16px; }
 .fig { position: relative; overflow: hidden; margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .fig figcaption { font-size: 14px; margin-bottom: 4px; }
-.fig .read { font-size: 13px; color: var(--muted); margin: 6px 0 0; max-width: none; }
+.fig .read { font-size: 13px; color: var(--muted); margin: 6px 0 0; max-width: none; } .fig .read ul { margin: 2px 0 0; padding-left: 18px; }
 .fig figcaption span { display: block; color: var(--muted); font-size: 13px; margin-top: 2px; }
 .chart .lbl, .chart .val { font-size: 12px; fill: var(--fg); }
 .chart .val { fill: var(--muted); }
@@ -419,14 +449,43 @@ tr.score th[scope="row"] { background: var(--bg); }
 .key .sw.android { background: var(--android); margin-left: 12px; }
 .chart .bar.full { fill: var(--pass); }
 .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--muted); margin: 8px 0 16px; }
+.verdict { margin: 24px 0 8px; padding: 20px 22px; border: 1px solid var(--line); border-left: 4px solid var(--pass); border-radius: 10px; background: var(--surface); }
+.verdict h2 { margin-top: 0; }
+.verdict p { color: var(--fg); }
+.caveat { margin: 0 0 16px; padding: 10px 14px; border-left: 4px solid var(--accent); border-radius: 6px; background: var(--bg); } .verdict .caveat p { margin: 2px 0; color: var(--fg); }
+.picks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; margin: 16px 0 0; }
+.picks div { padding: 10px 12px; border-radius: 8px; background: var(--bg); }
+.picks dt { font-size: 13px; color: var(--muted); }
+.picks dd { margin: 2px 0 0; } .picks dd strong { display: block; } .picks dd ul { margin: 4px 0 0; padding-left: 18px; font-size: 14px; color: var(--muted); }
+.points ul { margin: 4px 0 0; padding-left: 18px; }
+table.scorecard { min-width: 900px; }
+table.scorecard td { white-space: nowrap; }
+table.scorecard tbody th[scope="row"], table.scorecard thead th.check { min-width: 0; }
+table.scorecard td.best { color: var(--pass); background: var(--pass-bg); font-weight: 700; }
+table.scorecard td.worst { color: var(--fail); background: var(--fail-bg); font-weight: 700; }
+.best { color: var(--pass); font-weight: 700; } .worst { color: var(--fail); font-weight: 700; }
+.kinds { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; margin: 0 0 20px; }
+.kinds section { padding: 12px 14px; border-radius: 8px; background: var(--bg); } .kinds h3 { margin: 0 0 4px; font-size: 16px; } .kinds p { margin: 0 0 6px; font-size: 14px; } .kinds ul { margin: 0; padding-left: 18px; font-size: 14px; } .kinds a { color: var(--accent); }
+.lib .kind { margin: -4px 0 6px; font-size: 13px; }
+.intro { margin: 0 0 12px; padding-left: 20px; max-width: 75ch; color: var(--muted); } .intro li { margin: 2px 0; } .intro ul { padding-left: 18px; }
+.points { margin: 0 0 12px; padding-left: 20px; max-width: 75ch; } .points li { margin: 0 0 8px; }
+.libs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 12px; }
+.lib { padding: 12px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.lib h3 { margin: 0 0 6px; font-size: 16px; } .lib > ul { margin: 0; padding: 0; list-style: none; } .lib ul ul { margin: 2px 0 4px; padding-left: 30px; list-style: disc; } .lib li { margin: 4px 0; font-size: 14px; }
+.docnav { font-size: 14px; color: var(--muted); margin: 0 0 16px; } .docnav a { color: var(--accent); } .docnav.foot { margin: 48px 0 0; padding-top: 16px; border-top: 1px solid var(--line); }
+.hero { margin: 16px 0 0; } .hero img { display: block; max-width: 100%; height: auto; border-radius: 12px; }
 </style>
 </head>
 <body>
 <main>
+${navHtml}
 <h1>UI library checks</h1>
-<p>The same checks, run on iOS and Android for every app, side by side. Generated from <code>results/</code> by <code>scripts/report-html.mjs</code>. All apps build the same test screen. iOS: Release builds on ${esc(deviceText)}. Android: Release builds on ${esc(androidDeviceText)}. The accessibility checks read the tree each screen reader is given (VoiceOver on iOS, TalkBack on Android); they don't hear what it says. Hover a result for the measured detail.</p>
+<p>The same checks, run on iOS and Android for every app, side by side.</p>
+<ul class="intro"><li><strong>Stack:</strong><ul>${stack.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></li><li><strong>iOS:</strong> Release builds on ${esc(deviceText)}</li><li><strong>Android:</strong> Release builds on ${esc(androidDeviceText)}</li><li><strong>Accessibility checks</strong> read the tree each screen reader is given (VoiceOver, TalkBack). They don't hear what it says.</li><li><strong>Hover a result</strong> for the measured detail.</li><li><strong>Generated</strong> from <code>results/</code> by <code>scripts/report-html.mjs</code>.</li></ul>
 <div class="legend"><span><span class="r pass">✓</span> pass</span><span><span class="r fail">✗</span> fail</span><span>– not applicable (no such element)</span><span>n/r not run (the test could not start)</span><span>⚠ different result on iOS and Android</span><span>* NativeWind results use a line-height workaround; see apps/nativewind/NOTES.md</span></div>
 <p class="legend">In every cell, the left result is <strong>iOS</strong> and the right result is <strong>Android</strong>.</p>
+
+${verdictHtml}
 
 <h2>Platform differences in how things are tested</h2>
 <div class="wrap"><table class="diffs">
@@ -443,13 +502,14 @@ tr.score th[scope="row"] { background: var(--bg); }
 </table></div>
 
 <h2>Accessibility scores at a glance</h2>
-<p>Each chart is one group of accessibility checks. For each app, the blue bar is iOS and the orange bar Android: the share of that group’s checks the app passed, with the count at the end. The full spec is in <code>docs/method.md</code>, and every check is in the grid below.</p>
+<ul class="intro"><li><strong>Each chart</strong> is one group of accessibility checks.</li><li><strong>Each bar</strong> is the share of that group’s checks the app passed, with the count at the end.<ul><li>Blue: iOS</li><li>Orange: Android</li></ul></li><li><strong>Every check</strong> is in the grid below. The spec is in <a href="method.md#accessibility-checks">Method</a>.</li></ul>
 <div class="charts">
 ${scoreCharts()}
 </div>
 
 <h2>Accessibility checks</h2>
-<p>Results that differ between iOS and Android, per app: ${differCount.map((d) => `${esc(d.name)} ${d.n}`).join(', ')}.</p>
+<p>Results that differ between iOS and Android, per app:</p>
+<ul class="intro">${differCount.map((d) => `<li><strong>${esc(d.name)}:</strong> ${d.n}</li>`).join('')}</ul>
 <div class="wrap"><table>
 <thead><tr><th>#</th><th scope="col" class="check">Check</th>${apps.map(([, name, kind]) => `<th scope="col">${esc(name)}<small>${esc(kind)}</small><small class="pl"><span>iOS</span><span>Android</span></small></th>`).join('')}</tr></thead>
 <tbody>
@@ -461,11 +521,11 @@ ${checkRows}
 </table></div>
 
 <h2>Dark and brand themes</h2>
-<p>Every check also ran with the app switched to its dark and brand themes, on both platforms. The grid above shows light; this lists every check whose result changed.</p>
+<ul class="intro"><li><strong>Every check also ran</strong> in the dark and brand themes, on both platforms.</li><li><strong>The grid above</strong> shows the light theme.</li><li><strong>This lists</strong> every check whose result changed.</li></ul>
 ${themeDiffHtml}
 
 <h2>Text size and reduced motion</h2>
-<p>Left value iOS, right value Android. Transition times come from a real-time screen recording at 30 fps; an instant change is one frame (33 ms).</p>
+<ul class="intro"><li><strong>Left value:</strong> iOS. <strong>Right value:</strong> Android.</li><li><strong>Transition times</strong> come from a real-time screen recording at 30 fps.</li><li><strong>An instant change</strong> is one frame: 33 ms.</li></ul>
 <div class="wrap"><table>
 <thead><tr><th scope="col" class="check">Measure</th>${apps.map(([, name]) => `<th scope="col">${esc(name)}<small class="pl"><span>iOS</span><span>Android</span></small></th>`).join('')}</tr></thead>
 <tbody>
@@ -474,19 +534,19 @@ ${otherRows}
 </table></div>
 
 <h2>Speed, memory and scrolling</h2>
-<p>For each app, the blue bar is iOS and the orange bar Android. Shorter is better on every chart. The same scripts measured both, but the devices are very different (a simulator on a Mac and a budget phone), so compare apps within a platform; the pairs show whether a library is slow on both or only on one. Under each chart, “How to read it” says which gaps are real.</p>
+<ul class="intro"><li><strong>Bars:</strong> blue is iOS, orange is Android.</li><li><strong>Shorter is better</strong> on every chart.</li><li><strong>Compare apps within a platform.</strong> The devices are very different:<ul><li>iOS: a simulator on a Mac</li><li>Android: a budget phone</li></ul></li><li><strong>The pairs</strong> show whether a library is slow on both platforms or only on one.</li><li><strong>“How to read it”</strong> under each chart says which gaps are real.</li></ul>
 <div class="charts">
 ${pairedCharts}
 </div>
 
 <h2>Measured on one platform only</h2>
-<p>Bundle size and re-render counts come from iOS builds; janky frames can only be recorded on Android.</p>
+<ul class="intro"><li><strong>Bundle size and re-renders:</strong> iOS builds.</li><li><strong>Janky frames:</strong> Android only. The simulator can’t record them.</li></ul>
 <div class="charts">
 ${singleCharts}
 </div>
 
 <h2>Speed, memory and scrolling: exact values</h2>
-<p>Left value iOS, right value Android. Medians of 10 runs, with the range for the timings.</p>
+<ul class="intro"><li><strong>Left value:</strong> iOS. <strong>Right value:</strong> Android.</li><li><strong>Medians</strong> of 10 runs, with the range for the timings.</li></ul>
 <div class="wrap"><table>
 <thead><tr><th scope="col" class="check">Measure</th>${apps.map(([, name]) => `<th scope="col">${esc(name)}<small class="pl"><span>iOS</span><span>Android</span></small></th>`).join('')}</tr></thead>
 <tbody>
@@ -495,16 +555,18 @@ ${exactRows}
 </table></div>
 
 <h2>Developer cost (both platforms)</h2>
-<p>Counted with <code>scripts/devcost.mjs</code>${devcost ? ` on ${esc(devcost.date)}` : ''}. What it would cost a developer to build the same screen with each library. Each row says what it counts and how.</p>
+<ul class="intro"><li><strong>What it would cost a developer</strong> to build the same screen with each library.</li><li><strong>Counted</strong> with <code>scripts/devcost.mjs</code>${devcost ? ` on ${esc(devcost.date)}` : ''}.</li><li><strong>Each row</strong> says what it counts and how.</li></ul>
 <div class="wrap"><table>
 <thead><tr><th scope="col" class="check">Count</th>${apps.map(([, name]) => `<th scope="col">${esc(name)}</th>`).join('')}</tr></thead>
 <tbody>
 ${devcostRows}
 </tbody>
 </table></div>
+${navHtml.replace('class="docnav"', 'class="docnav foot"')}
 </main>
 </body>
 </html>
 `;
 writeFileSync(new URL('docs/checks.html', root), html);
+writeFileSync(new URL('docs/hero.svg', root), heroSvg());
 console.log(`docs/checks.html: ${rows.length} checks × ${apps.length} apps (${rows.filter(isSheet).length} of them sheet checks, shown as ${sheetKinds.length} rows)`);

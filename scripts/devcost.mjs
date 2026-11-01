@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const apps = ['baseline', 'unistyles', 'uniwind', 'nativewind', 'tamagui', 'gluestack', 'heroui', 'reusables'];
-// Where each kit's CLI copies its components into the app. Lines there were
+// Where each library's CLI copies its components into the app. Lines there were
 // written by the library, not by hand, so they're counted separately.
 const copied = { gluestack: 'components/ui', reusables: 'src/components/ui' };
 
@@ -50,7 +50,7 @@ const notesCount = (app, heading) => {
 };
 
 // Hand-written accessibility: role/aria-*/accessibility* props in the app's own
-// source (not the copied kit components).
+// source (not the copied library components).
 const a11yProps = (app) => {
   const dir = join(root, 'apps', app, 'src');
   const own = files(dir, (f) => tsx(f) && !(copied[app] && f.includes(join(root, 'apps', app, copied[app]))));
@@ -84,14 +84,14 @@ const rows = apps.map((app) => {
 });
 
 const how = {
-  screenLines: "Non-blank lines of TypeScript in the app's own src/ folder: the test screen, any components built by hand and the theme setup. Code a kit's CLI copied in isn't counted here.",
-  copiedLines: "Non-blank lines a kit's CLI copied into the app (gluestack's components/ui, Reusables' src/components/ui). This code is now yours to maintain and fix. The other kits ship as npm packages, so they show 0.",
+  screenLines: "Non-blank lines of TypeScript in the app's own src/ folder: the test screen, any components built by hand and the theme setup. Code a library's CLI copied in isn't counted here.",
+  copiedLines: "Non-blank lines a library's CLI copied into the app (gluestack's components/ui, Reusables' src/components/ui). This code is now yours to maintain and fix. The other libraries ship as npm packages, so they show 0.",
   configFiles: "Files at the app root, and .css or .d.ts files in src/, that are new or differ from the baseline app's (Babel, Metro, Tailwind, theme and type files). package.json, the lockfile and app.json are left out, because every app changes them.",
   setupSteps: "How many numbered steps the setup section of the app's NOTES.md lists. A rough guide only: each app's notes split steps differently. The iOS 27 step, the same in every app, is left out.",
   errorsHit: "How many problems came up while setting the app up and had to be worked around (a CLI that hung or overwrote files, docs that disagree with the code, wrong package versions), as listed in the app's NOTES.md. A count, not a measure of effort: one took two minutes, another twenty.",
   tscOwn: "TypeScript errors that npx tsc --noEmit reports in the app's own files.",
-  tscKit: "TypeScript errors that npx tsc --noEmit reports in the files a kit's CLI copied in. The app still builds and runs, because Metro doesn't type-check, but the project's type-check fails until someone fixes code they didn't write.",
-  a11yProps: "role, aria-*, accessibility* and importantForAccessibility props in the app's own code. Higher means more accessibility written by hand; the kits supply some of it themselves.",
+  tscKit: "TypeScript errors that npx tsc --noEmit reports in the files a library's CLI copied in. The app still builds and runs, because Metro doesn't type-check, but the project's type-check fails until someone fixes code they didn't write.",
+  a11yProps: "role, aria-*, accessibility* and importantForAccessibility props in the app's own code. Higher means more accessibility written by hand; the component libraries supply some of it themselves.",
 };
 writeFileSync(join(root, 'results/devcost.json'), JSON.stringify({ date: new Date().toISOString().slice(0, 10), how, rows }, null, 2) + '\n');
 const md = [
@@ -99,7 +99,7 @@ const md = [
   '',
   `Counted ${new Date().toISOString().slice(0, 10)} with \`scripts/devcost.mjs\`.`,
   '',
-  '| App | Lines of screen code you write | Kit code copied into your app (lines) | Config files added or changed | Setup steps | Setup problems hit | Type errors in your own code | Type errors in copied kit code | Accessibility props written by hand |',
+  '| App | Lines of screen code you write | Library code copied into your app (lines) | Config files added or changed | Setup steps | Setup problems hit | Type errors in your own code | Type errors in copied library code | Accessibility props written by hand |',
   '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',
   ...rows.map((r) => `| ${r.app} | ${r.screenLines} | ${r.copiedLines} | ${r.configFiles.length} | ${r.setupSteps ?? 'n/a (reference app)'} | ${r.errorsHit ?? 'n/a (reference app)'} | ${r.tsc.src} | ${r.tsc.all - r.tsc.src} | ${r.a11yProps} |`),
   '',

@@ -1,4 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { columns, headline, kind, kinds, libraries, names, nav, picks, points, scorecard, slug, stack, versions } from './scorecard.mjs';
 
 const root = new URL('../', import.meta.url);
 const apps = ['baseline', 'unistyles', 'uniwind', 'nativewind', 'tamagui', 'gluestack', 'heroui', 'reusables'];
@@ -81,12 +82,72 @@ const tables = {
   ),
 };
 
-const file = new URL('README.md', root);
-let md = readFileSync(file, 'utf8');
-for (const [name, body] of Object.entries(tables)) {
-  const re = new RegExp(`(<!-- begin:${name} -->)[\\s\\S]*?(<!-- end:${name} -->)`);
-  if (re.test(md)) md = md.replace(re, `$1\n${body}\n$2`);
-  else console.error(`README has no ${name} markers`);
+// A bullet, with its sub-bullets when it holds more than one value.
+const item = (i, indent, mark = '') => (Array.isArray(i) ? [`${indent}- ${mark}${i[0]}`, ...i[1].map((x) => `${indent}  - ${x}`)].join('\n') : `${indent}- ${mark}${i}`);
+
+// The README's own blocks: the verdict, the scorecard and one section per library.
+const heading = (l) => `${names[l.app]} ${versions[l.app]?.[0] ?? ''}`.trim() + `: ${l.role}`;
+const readme = {
+  verdict: [
+    ['> [!NOTE]', ...headline.map(([where, what]) => `> **${where}:** ${what}.`).join('\n>\n').split('\n')].join('\n'),
+    points.map((p) => [`- **${p.lead}**`, ...p.items.map((i) => item(i, '  '))].join('\n')).join('\n'),
+    '### Pick by what you need',
+    picks.map(([want, pick, why]) => [`- **${want}: ${pick}**`, ...why.map((w) => item(w, '  '))].join('\n')).join('\n'),
+  ].join('\n\n'),
+  scorecard: table(
+    ['App', ...columns.map((c) => `[${c.head}](docs/results.md#${c.link})`)],
+    scorecard().map((x) => [`[${names[x.app]}](#${slug(heading(libraries.find((l) => l.app === x.app)))})`, ...x.cells.map((c) => (c.mark === 'best' ? `**${c.text}**` : c.mark === 'worst' ? `${c.text} (worst)` : c.text))]),
+  ),
+  // The same links as the column headers, outside the table, for viewers that
+  // don't render links in header cells.
+  scorecardlinks: ['**Where each column comes from,** in [Results](docs/results.md):', columns.map((c) => `- **${c.head}:** [${c.section}](docs/results.md#${c.link})`).join('\n')].join('\n\n'),
+  libraries: libraries.map((l) => [
+    `### ${heading(l)}`,
+    `*${kind(l.app)}*`,
+    [...l.good.map((g) => item(g, '', '✅ ')), ...l.bad.map((b) => item(b, '', '⚠️ '))].join('\n'),
+    [existsSync(new URL(`apps/${l.app}/NOTES.md`, root)) && `[Setup notes](apps/${l.app}/NOTES.md)`, `[Raw results](results/${l.app}/)`].filter(Boolean).join(' · '),
+  ].join('\n\n')).join('\n\n'),
+};
+
+// Each file and the blocks it carries. The nav bar is the same everywhere,
+// with the current page in bold; the docs/ pages also link back to the README.
+const foot = (current, from) => (from === 'root' ? `\n---\n\n${nav(current, from)}` : `\n---\n\n← [Back to README](../README.md)\n\n${nav(current, from)}`);
+// A library: linked name and version, then what it was built on, one per line.
+const libItem = ([name, url, app]) => { const [v, ...on] = versions[app]; return [`- [${name}](${url}) ${v}`, ...on.map((o) => `  - ${o}`)].join('\n'); };
+const kindsMd = kinds.map((k) => [`**${k.title}**`, k.what, k.items.map((i) => (Array.isArray(i) ? libItem(i) : `- ${i}`)).join('\n')].join('\n\n')).join('\n\n');
+const files = {
+  'README.md': { nav: nav('README', 'root'), stack: stack.map((x) => `  - ${x}`).join('\n'), kinds: kindsMd, ...readme, navfoot: foot('README', 'root') },
+  'docs/results.md': { nav: nav('Results', 'docs'), kinds: kindsMd, ...tables, navfoot: foot('Results', 'docs') },
+  'docs/method.md': { nav: nav('Method', 'docs'), navfoot: foot('Method', 'docs') },
+  'docs/ios-accessibility.md': { nav: nav('iOS accessibility', 'docs'), navfoot: foot('iOS accessibility', 'docs') },
+};
+// An explicit <a id> above every heading, named as GitHub names the heading,
+// so previews that don't make heading anchors still jump to the section.
+// Re-running replaces the anchors rather than adding more.
+function anchored(md) {
+  const lines = md.replace(/<a id="[^"]*"><\/a>\n\n(?=#{1,6} )/g, '').split('\n');
+  const seen = {};
+  let code = false;
+  return lines.flatMap((l) => {
+    if (l.startsWith('\`\`\`')) code = !code;
+    const h = !code && l.match(/^#{1,6} (.+)$/);
+    if (!h) return [l];
+    const base = slug(h[1].replace(/[\`*]/g, '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1'));
+    const n = seen[base] ?? 0;
+    seen[base] = n + 1;
+    return [`<a id="${n ? `${base}-${n}` : base}"></a>`, '', l];
+  }).join('\n');
 }
-writeFileSync(file, md);
-console.log(`README tables updated: ${Object.keys(tables).join(', ')}`);
+
+for (const [path, blocks] of Object.entries(files)) {
+  const file = new URL(path, root);
+  let md = readFileSync(file, 'utf8');
+  for (const [name, body] of Object.entries(blocks)) {
+    // The end marker keeps the begin marker's indent, so a block can sit inside a list item.
+    const re = new RegExp(`([ \\t]*)(<!-- begin:${name} -->)[\\s\\S]*?(<!-- end:${name} -->)`);
+    if (re.test(md)) md = md.replace(re, `$1$2\n${body}\n$1$3`);
+    else console.error(`${path} has no ${name} markers`);
+  }
+  writeFileSync(file, anchored(md));
+}
+console.log(`Updated ${Object.keys(files).join(', ')}`);

@@ -1,0 +1,415 @@
+<a id="results"></a>
+
+# Results
+
+<!-- begin:nav -->
+[README](../README.md) · **Results** · [Method](method.md) · [iOS accessibility](ios-accessibility.md) · [All checks](checks.html)
+<!-- end:nav -->
+
+Every check, one section each, with iOS and Android side by side.
+
+- **Apps and devices:** listed in the [README](../README.md#what-was-tested).
+- **How each check works:** in [Method](method.md).
+- **Every number was measured.** Where something couldn't be, it says so.
+
+<!-- begin:kinds -->
+**Baseline**
+
+This project’s own reference app, not a library.
+
+- Plain React Native, with every component written by hand
+- Accessibility written by hand too
+- Every library is measured against it
+
+**Styling engines**
+
+They style components you write yourself. Here they restyle the baseline’s components, so they keep its accessibility.
+
+- [Unistyles](https://www.unistyl.es) 3.6.0
+- [Uniwind](https://uniwind.dev) 1.13.0
+  - Tailwind 4.3.3
+- [NativeWind](https://www.nativewind.dev) 5.0.0-rc.0
+  - react-native-css 3.1.0-rc.0
+  - Tailwind 4.1.12
+
+**Component libraries**
+
+Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
+
+- [Tamagui](https://tamagui.dev) 3.1.2
+- [gluestack](https://gluestack.io) 5.0.15
+  - The version of @gluestack-ui/core
+  - On Uniwind 1.13.0
+- [HeroUI Native](https://heroui.com/docs/native) 1.0.11
+  - On Uniwind 1.13.0
+- [React Native Reusables](https://reactnativereusables.com) CLI 0.7.1
+  - @rn-primitives 1.5.2
+  - On Uniwind 1.13.0
+<!-- end:kinds -->
+
+<a id="contents"></a>
+
+## Contents
+
+- [In brief](#in-brief)
+- [Accessibility](#accessibility)
+- [Largest text size](#largest-text-size)
+- [Reduced motion](#reduced-motion)
+- [Timings](#timings)
+- [Startup, memory and scrolling](#startup-memory-and-scrolling)
+- [Bundle size and re-renders](#bundle-size-and-re-renders-ios)
+- [Developer cost](#developer-cost)
+
+<a id="in-brief"></a>
+
+## In brief
+
+- **Accessibility**
+  - Baseline and styling engines
+    - iOS: 58 of 62 checks
+    - Android: 60 of 62 checks
+  - Component libraries: 35 to 47 checks, with much the same gaps on both platforms
+  - Light, dark and brand themes: no check changed on either platform
+- **Where the platforms disagree**
+  - The `combobox` and `tab` roles reach TalkBack but not VoiceOver, so every app passes those two on Android only
+  - Controls 44 tall
+    - Pass Apple's 44 pt
+    - Fail Google's 48 dp
+  - Each component library has a few more of its own, listed under [Accessibility](#accessibility)
+  - How the platforms are measured differently: [Method](method.md#ios-and-android)
+- **Largest text size**
+  - iOS: controls grow with the text
+  - Android: most controls are already 48 dp tall and the text fits inside, so few change height
+  - Reusables' button labels are cut off on both
+- **Reduced motion:** every animated overlay drops to one or two frames, on both platforms.
+- **Speed**
+  - iOS: every app switches theme within a frame, except Tamagui (99 ms)
+  - Android: the apps spread out
+    - Tamagui: 630 ms, about 6 times the baseline
+    - HeroUI, gluestack and NativeWind: 180 to 240 ms
+    - Unistyles: the fastest, ahead of the baseline
+- **Memory**
+  - Android, growth after use
+    - HeroUI: roughly doubles (199 → 416 MiB)
+    - gluestack: +103 MiB
+    - The others: about +50 MiB
+  - iOS: Tamagui uses the most
+- **Scrolling:** smooth on the phone in every app
+  - At most 1 janky frame in about 1,250
+
+<a id="accessibility"></a>
+
+## Accessibility
+
+`scripts/a11y-audit.mjs` checks every control's name, role, state and touch-target size. Then the harder cases:
+
+- that a text-field error is reachable from the field
+- that the screen behind a dialog, bottom sheet, select or menu is hidden from the screen reader
+- that toasts reach the accessibility tree
+- the slider, progress bar, accordion, menu and segmented control
+
+- **Themes:** every check runs in the light, dark and brand themes. The table shows light.
+- **Checks that differ:** checks that pass on one platform and fail on the other.
+
+<!-- begin:accessibility -->
+| App | Test screen, iOS | Test screen, Android | Extra sheets, iOS | Extra sheets, Android | All checks, iOS | All checks, Android | Checks that differ |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| baseline | 53 / 57 | 55 / 57 | 5 / 5 | 5 / 5 | 58 / 62 | 60 / 62 | 2 |
+| unistyles | 53 / 57 | 55 / 57 | 5 / 5 | 5 / 5 | 58 / 62 | 60 / 62 | 2 |
+| uniwind | 53 / 57 | 55 / 57 | 5 / 5 | 5 / 5 | 58 / 62 | 60 / 62 | 2 |
+| nativewind | 53 / 57 | 55 / 57 | 5 / 5 | 5 / 5 | 58 / 62 | 60 / 62 | 2 |
+| tamagui | 27 / 47 | 33 / 57 | 9 / 10 | 9 / 10 | 36 / 57 | 42 / 67 | 9 |
+| gluestack | 29 / 57 | 29 / 57 | 6 / 9 | 7 / 9 | 35 / 66 | 36 / 66 | 5 |
+| heroui | 36 / 57 | 38 / 57 | 8 / 10 | 9 / 10 | 44 / 67 | 47 / 67 | 7 |
+| reusables | 32 / 57 | 32 / 57 | 5 / 5 | 5 / 5 | 37 / 62 | 37 / 62 | 6 |
+<!-- end:accessibility -->
+
+<a id="failing-in-every-app-on-both-platforms"></a>
+
+### Failing in every app, on both platforms
+
+The baseline included.
+
+- **`@expo/ui` Switch is too small to tap**
+  - iOS: 28 pt tall, 44 needed
+  - Android: 47.6 dp, one pixel short of 48
+- **@gorhom bottom sheet leaves the screen behind it reachable**
+  - Only the `@expo/ui` BottomSheet passes every sheet check on both platforms
+
+<a id="where-the-platforms-disagree"></a>
+
+### Where the platforms disagree
+
+- **Every app**
+  - `role="combobox"` (the select trigger) and `role="tab"` reach TalkBack but give VoiceOver no trait, so they fail on iOS only
+  - These are the baseline's 2 differences
+- **Touch targets 44 tall**
+  - Pass Apple's 44 pt
+  - Fail Google's 48 dp
+  - Affected:
+    - Tamagui's buttons, tabs, menu and segmented control
+    - gluestack's and HeroUI's segmented control
+    - Reusables' slider
+- **Tamagui**
+  - Disabled button and slider: usable element on Android only
+  - Menu: hides the screen behind it on Android only
+  - Menu items: buttons on iOS only
+  - Select and Accordion: tested on Android only
+    - On iOS they're not in the tree, so they couldn't be tested
+- **gluestack**
+  - Loading button says "In progress" on iOS only
+  - Its own BottomSheet's text: readable on Android only
+  - Menu items are menu items on Android only
+- **HeroUI**
+  - Dialog title is a heading on iOS only
+  - Sheet text: readable on Android only
+  - Slider and menu items get a role on Android only
+- **Reusables**
+  - Select marks the current option on Android only
+  - Select and menu hide the screen behind them on iOS only
+
+<a id="failing-on-both-platforms-by-library"></a>
+
+### Failing on both platforms, by library
+
+- **Tamagui**
+  - Switch and checkbox have no name
+  - Select trigger reads only its value
+  - The dialog and every sheet but `@expo/ui`'s leave the screen behind reachable
+- **gluestack**
+  - Controls are 22 to 40 tall
+  - Switch has no name
+  - Field error isn't linked to the field
+  - Slider has no value
+  - Its own BottomSheet doesn't close
+- **HeroUI**
+  - Labelled switch and checkbox rows swallow the control's name, role and state
+  - Field error isn't linked to the field
+- **Reusables**
+  - Small controls: the checkbox is 16 tall
+  - Text field and checkbox have no name
+  - Field error isn't linked to the field
+  - Progress always reads 0%
+
+<a id="notes"></a>
+
+### Notes
+
+- **Every iOS failure**, with the line of code that causes it: [iOS accessibility](ios-accessibility.md).
+- **NativeWind's score** is with a line-height workaround. Without it the page was 18 screens tall (see `apps/nativewind/NOTES.md`).
+
+[How this was measured →](method.md#accessibility-checks)
+
+<a id="largest-text-size"></a>
+
+## Largest text size
+
+`scripts/textsize-test.mjs` compares control heights at the default text size and the largest one.
+
+- **iOS screenshots:** `results/<app>/textsize-*.png`
+- **Android screenshots:** `results/<app>/android-textsize-*.png`
+
+<!-- begin:textsize -->
+| App | Controls that grew, iOS (AX5) | Controls that grew, Android (2.0) | Pushed off screen, iOS | Pushed off screen, Android |
+| --- | --- | --- | --- | --- |
+| baseline | 16 / 17 | 1 / 16 | native-switch | native-switch |
+| unistyles | 16 / 17 | 1 / 16 | native-switch | native-switch |
+| uniwind | 16 / 17 | 1 / 16 | native-switch | native-switch |
+| nativewind | 16 / 17 | 1 / 16 | native-switch | native-switch |
+| tamagui | 9 / 13 | 5 / 16 | native-switch | native-switch |
+| gluestack | 15 / 16 | 13 / 16 | tabs-2, native-switch | native-switch |
+| heroui | 11 / 16 | 9 / 16 | tabs-2, native-switch | native-switch |
+| reusables | 2 / 17 | 1 / 16 | tabs-0, tabs-2, native-switch | native-switch |
+<!-- end:textsize -->
+
+- **Growth works differently on the two platforms**
+  - iOS (AX5): controls grow with their text
+    - The baseline's button goes from 44 to 72 pt
+  - Android (font scale 2.0): the baseline's controls are already 48 dp tall, and the bigger text fits inside
+    - Only the text field gets taller
+  - gluestack, HeroUI and Tamagui size their controls from the text, so more of theirs grow
+- **Pushed off screen**
+  - The `@expo/ui` Switch, in every app, on both platforms
+  - Some tabs in gluestack, HeroUI and Reusables, on iOS
+- **Clipping seen in the screenshots**
+  - Reusables: button labels cut off on both platforms (fixed-height buttons)
+  - HeroUI: partly cut off on iOS only
+  - No other app clips
+
+[How this was measured →](method.md#accessibility-checks)
+
+<a id="reduced-motion"></a>
+
+## Reduced motion
+
+`scripts/motion-test.mjs` times how long each overlay takes to open.
+
+- Measured from a real-time screen recording
+- Reduced motion off, then on
+- One frame is 33 ms
+
+<!-- begin:motion -->
+| App | Dialog, iOS | Dialog, Android | Bottom sheet, iOS | Bottom sheet, Android |
+| --- | --- | --- | --- | --- |
+| baseline | 333 → 67 ms | 200 → 67 ms | 400 → 33 ms | 200 → 33 ms |
+| unistyles | 333 → 67 ms | 500 → 33 ms | 400 → 33 ms | 267 → 67 ms |
+| uniwind | 333 → 67 ms | 233 → 33 ms | 400 → 33 ms | 200 → 33 ms |
+| nativewind | 433 → 67 ms | 200 → 67 ms | 400 → 33 ms | 267 → 33 ms |
+| tamagui | 100 → 100 ms | 33 → 33 ms | 400 → 33 ms | 267 → 33 ms |
+| gluestack | 233 → 33 ms | 267 → 67 ms | 467 → 33 ms | 233 → 33 ms |
+| heroui | 233 → 33 ms | 233 → 67 ms | 567 → 67 ms | 433 → 33 ms |
+| reusables | 133 → 33 ms | 233 → 67 ms | 367 → 33 ms | 233 → 33 ms |
+<!-- end:motion -->
+
+- **Every animated overlay respects reduced motion** on both platforms, dropping to one or two frames.
+- **Tamagui's dialog** has no open animation on either platform.
+- **Each figure is one recording,** so a frame or two either way is noise.
+  - Example: Unistyles' Android dialog took 500 ms
+    - It's the baseline's own component, which took 200 ms
+    - So one high figure on its own may be noise, not a real difference
+- **Not tested:** turning reduced motion on while the app runs.
+
+[How this was measured →](method.md#accessibility-checks)
+
+<a id="timings"></a>
+
+## Timings
+
+`scripts/perf-run.mjs` times from the tap to the second frame after the update.
+
+- 10 runs each, shown as median (range)
+- One frame is 16.7 ms on both devices
+
+<!-- begin:timings -->
+| App | Theme switch, iOS | Theme switch, Android | List mount, iOS | List mount, Android |
+| --- | --- | --- | --- | --- |
+| baseline | 32.3 ms (32–32) | 98.9 ms (87–164) | 82.1 ms (77–99) | 147.6 ms (141–177) |
+| unistyles | 32.5 ms (32–33) | 70.6 ms (54–139) | 82.8 ms (82–100) | 150.4 ms (137–173) |
+| uniwind | 32.3 ms (32–33) | 136.8 ms (104–178) | 82.7 ms (82–99) | 163.9 ms (139–183) |
+| nativewind | 32.4 ms (32–33) | 183.4 ms (154–207) | 82.9 ms (82–117) | 189.3 ms (171–294) |
+| tamagui | 99.2 ms (99–116) | 629.6 ms (583–676) | 115.2 ms (99–116) | 365.1 ms (290–447) |
+| gluestack | 32.4 ms (32–33) | 192.0 ms (137–244) | 83.0 ms (82–83) | 142.6 ms (134–164) |
+| heroui | 32.2 ms (32–67) | 238.7 ms (206–324) | 82.8 ms (82–99) | 203.5 ms (188–253) |
+| reusables | 32.1 ms (16–33) | 96.8 ms (82–123) | 83.2 ms (82–100) | 161.3 ms (143–199) |
+<!-- end:timings -->
+
+- **iOS:** the simulator runs on a Mac. Every app but Tamagui finishes within a frame or two, so they can't be told apart.
+- **Android:** the apps spread out. Tamagui is the slowest on both platforms.
+- **Unistyles** is the fastest theme switch on Android
+  - Unistyles: 71 ms
+  - Baseline: 99 ms
+  - It applies styles natively
+- **Reusables** is level with the baseline.
+- **iOS run counts**
+  - A run only counts when the readout changes
+  - Two runs in a row with exactly the same time can't be told apart from no update
+  - So some iOS apps have fewer than 10 runs (Unistyles has 4)
+
+[How this was measured →](method.md#performance-checks)
+
+<a id="startup-memory-and-scrolling"></a>
+
+## Startup, memory and scrolling
+
+`scripts/metrics-run.mjs`: Release builds, 10 cold launches.
+
+<!-- begin:metrics -->
+| App | Startup, iOS | Startup, Android | Memory idle → used, iOS | Memory idle → used, Android | CPU in flings, iOS | CPU in flings, Android | Janky frames, Android |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| baseline | 8.03 s | 2.80 s | 62.9 → 124.5 MiB | 163.1 → 212.9 MiB | 2.00 s | 8.62 s | 0 of 1232 |
+| unistyles | 7.95 s | 2.87 s | 64.2 → 125.2 MiB | 170.5 → 224.6 MiB | 1.69 s | 8.95 s | 0 of 1244 |
+| uniwind | 7.86 s | 2.95 s | 64.0 → 131.2 MiB | 163.7 → 214.5 MiB | 1.91 s | 8.60 s | 0 of 1238 |
+| nativewind | 8.04 s | 3.02 s | 66.9 → 132.5 MiB | 164.4 → 196.8 MiB | 2.08 s | 8.77 s | 0 of 1212 |
+| tamagui | 8.40 s | 3.42 s | 82.2 → 160.8 MiB | 182.8 → 228.3 MiB | 1.98 s | 9.65 s | 1 of 1296 |
+| gluestack | 7.87 s | 3.34 s | 74.2 → 127.0 MiB | 182.3 → 285.7 MiB | 2.15 s | 8.89 s | 0 of 1232 |
+| heroui | 7.85 s | 3.53 s | 91.4 → 127.6 MiB | 199.3 → 415.6 MiB | 2.46 s | 10.26 s | 0 of 1250 |
+| reusables | 7.86 s | 3.21 s | 75.5 → 143.0 MiB | 173.8 → 221.8 MiB | 1.91 s | 8.39 s | 1 of 1240 |
+<!-- end:metrics -->
+
+- **Startup**
+  - From the launch call until the screen title is in the accessibility tree, when the screen reader could first read it. Not first paint
+  - Within each platform the apps sit close together, and the figure moves from day to day. Read it as a group
+  - Android's own first-frame time (`am start -W`, the splash screen) is in `results/<app>/android-metrics.md`
+- **Memory**
+  - Idle: 5 s after launch
+  - Used: after scrolling the list and opening and closing every overlay once
+- **CPU**
+  - User plus system time of the app's threads while the list is flung 5 times
+  - No iOS app had a main-thread hang
+- **Janky frames:** from `dumpsys gfxinfo`. The simulator has no equivalent.
+
+[How this was measured →](method.md#performance-checks)
+
+<a id="bundle-size-and-re-renders-ios"></a>
+
+## Bundle size and re-renders (iOS)
+
+The JS is the same on both platforms, so these were measured once, on iOS.
+
+- **Bundle size:** the Hermes bytecode from `npx expo export --platform ios` (`scripts/bundle-size.mjs`).
+- **Re-renders:** components React rendered for light → dark, dark → brand and brand → light.
+  - Counted with argent's React profiler on a Debug build (`scripts/rerender-run.mjs`)
+
+<!-- begin:ioscode -->
+| App | JS bundle | Components rendered per theme switch |
+| --- | --- | --- |
+| baseline | 3.95 MB | 298 / 298 / 290 |
+| unistyles | 4.15 MB | 128 / 128 / 126 |
+| uniwind | 4.24 MB | 507 / 509 / 302 |
+| nativewind | 4.47 MB | 460 / 460 / 456 |
+| tamagui | 5.44 MB | not measured |
+| gluestack | 5.66 MB | 815 / 815 / 508 |
+| heroui | 5.24 MB | 1137 / 1135 / 948 |
+| reusables | 6.83 MB | 603 / 608 / 356 |
+<!-- end:ioscode -->
+
+- **Reusables** bundles every lucide icon (1,917 of them), although it uses 4.
+- **Tamagui's** Debug build aborts on a Yoga layout assertion, so its re-renders aren't counted.
+
+[How this was measured →](method.md#performance-checks)
+
+<a id="developer-cost"></a>
+
+## Developer cost
+
+What it would cost a developer to build the same test screen with each library.
+
+- **Code, not a platform measure.**
+- **Counted** by `scripts/devcost.mjs` on 1 November, after the one-component-per-file refactor.
+- **Raw output:** `results/devcost.md`.
+
+| What it counts | baseline | unistyles | uniwind | nativewind | heroui | gluestack | tamagui | reusables |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Lines of screen code you write | 912 | 1,050 | 888 | 877 | 671 | 812 | 833 | 705 |
+| Library code copied into your app (lines) | 0 | 0 | 0 | 0 | 0 | 7,488 | 0 | 1,519 |
+| Config files added or changed | 0 | 2 | 3 | 6 | 3 | 8 | 5 | 4 |
+| Setup steps | n/a | 8 | 11 | 14 | 10 | 5 | 11 | 12 |
+| Setup problems hit | n/a | 2 | 0 | 0 | 4 | 8 | 6 | 6 |
+| Type errors in your own code | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Type errors in copied library code | 0 | 0 | 0 | 0 | 0 | 17 | 0 | 0 |
+| Accessibility props written by hand | 75 | 75 | 75 | 75 | 20 | 11 | 12 | 21 |
+
+- **Library code copied into your app**
+  - gluestack and Reusables don't ship as npm packages
+  - Their CLI copies each component's source into the app. From then on it's yours to maintain
+- **Setup steps and problems**
+  - Counted from each app's `NOTES.md`
+  - A rough guide: one problem took two minutes, another twenty
+- **Type errors**
+  - From `npx tsc --noEmit`
+  - All 17 of gluestack's are in its copied components
+  - The app still builds, but the type-check fails until someone fixes code they didn't write
+- **Accessibility props written by hand**
+  - The styling engines repeat the baseline's 75
+  - The component libraries supply some of it themselves
+
+[How this was measured →](method.md#ease-of-use-log)
+
+<!-- begin:navfoot -->
+
+---
+
+← [Back to README](../README.md)
+
+[README](../README.md) · **Results** · [Method](method.md) · [iOS accessibility](ios-accessibility.md) · [All checks](checks.html)
+<!-- end:navfoot -->

@@ -1,5 +1,5 @@
 // The one-row-per-app scorecard and the hero chart, shared by readme-tables.mjs
-// (README) and report-html.mjs (docs/checks.html). Reads only results/*.
+// (README and docs/results.md) and checks-md.mjs (docs/checks.md). Reads only results/*.
 import { existsSync, readFileSync } from 'node:fs';
 
 const root = new URL('../', import.meta.url);
@@ -69,7 +69,7 @@ const place = { unistyles: 'above', baseline: 'below', uniwind: 'above', nativew
 
 // Accessibility (share of checks passed on TalkBack) against the theme switch
 // on the Galaxy A15. Top left is best. Colours follow the light and dark
-// tokens of docs/checks.html, so it reads on GitHub in either theme.
+// colours of the other charts, so it reads on GitHub in either theme.
 export function heroSvg() {
   const W = 720;
   const H = 400;
@@ -113,7 +113,6 @@ ${grid}${dots}
 }
 
 // The conclusion, in plain sentences, with every number read from results/.
-// **bold** is markdown; report-html.mjs turns it into <strong>.
 const by = Object.fromEntries(rows.map((x) => [x.app, x]));
 const pct = (t) => Math.round(ratio(t) * 100);
 const ms = (app) => Math.round(by[app].themeAndroid);
@@ -290,10 +289,29 @@ export const pages = [
   ['Results', 'docs/results.md', 'every check, with the iOS and Android numbers'],
   ['Method', 'docs/method.md', 'how each check was measured, its limits, and how to reproduce it'],
   ['iOS accessibility', 'docs/ios-accessibility.md', 'every iOS accessibility failure, with the line of code that causes it'],
-  ['All checks', 'docs/checks.html', 'every check for every app in one grid, with charts. Open it in a browser'],
+  ['Android accessibility', 'docs/android-accessibility.md', 'every Android accessibility failure, from the audit’s output'],
+  ['All checks', 'docs/checks.md', 'every accessibility check for every app, one table per component, plus the charts'],
 ];
 export const href = (path, from) => (from === 'root' ? path : path === 'README.md' ? '../README.md' : path.replace(/^docs\//, ''));
 export const nav = (current, from) => ['**The docs:**', pages.map(([label, path, what]) => (label === current ? `- **${label}** (this page): ${what}` : `- [${label}](${href(path, from)}): ${what}`)).join('\n')].join('\n\n');
 
 // GitHub's heading anchors: lower case, punctuation dropped, spaces to hyphens.
 export const slug = (h) => h.toLowerCase().replace(/[^\p{L}\p{N}\s_-]/gu, '').trim().replace(/\s/g, '-');
+
+// An explicit <a id> above every heading, named as GitHub names the heading,
+// so previews that don't make heading anchors still jump to the section.
+// Re-running replaces the anchors rather than adding more.
+export function anchored(md) {
+  const lines = md.replace(/<a id="[^"]*"><\/a>\n\n(?=#{1,6} )/g, '').split('\n');
+  const seen = {};
+  let code = false;
+  return lines.flatMap((l) => {
+    if (l.startsWith('\`\`\`')) code = !code;
+    const h = !code && l.match(/^#{1,6} (.+)$/);
+    if (!h) return [l];
+    const base = slug(h[1].replace(/[\`*]/g, '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1'));
+    const n = seen[base] ?? 0;
+    seen[base] = n + 1;
+    return [`<a id="${n ? `${base}-${n}` : base}"></a>`, '', l];
+  }).join('\n');
+}

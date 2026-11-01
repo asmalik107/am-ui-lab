@@ -9,7 +9,8 @@
 - [Results](results.md): every check, with the iOS and Android numbers
 - [Method](method.md): how each check was measured, its limits, and how to reproduce it
 - **iOS accessibility** (this page): every iOS accessibility failure, with the line of code that causes it
-- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
+- [Android accessibility](android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [All checks](checks.md): every accessibility check for every app, one table per component, plus the charts
 <!-- end:nav -->
 
 The detail behind the accessibility scores in [Results](results.md#accessibility).
@@ -19,7 +20,7 @@ The detail behind the accessibility scores in [Results](results.md#accessibility
   - Light theme: `results/<app>/ios-a11y.md`
   - Dark theme: `ios-a11y-dark.md`
   - Brand theme: `ios-a11y-brand.md`
-  - Side by side: [All checks](checks.html)
+  - Side by side: [All checks](checks.md)
 - **The styling engines** (Unistyles, Uniwind, NativeWind) carry the baseline's hand-written accessibility, so they score the same as it. That's the point of comparison: what you get when you build the components yourself.
 
 <a id="failures-in-every-app-the-baseline-included"></a>
@@ -186,5 +187,6 @@ The detail behind the accessibility scores in [Results](results.md#accessibility
 - [Results](results.md): every check, with the iOS and Android numbers
 - [Method](method.md): how each check was measured, its limits, and how to reproduce it
 - **iOS accessibility** (this page): every iOS accessibility failure, with the line of code that causes it
-- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
+- [Android accessibility](android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [All checks](checks.md): every accessibility check for every app, one table per component, plus the charts
 <!-- end:navfoot -->

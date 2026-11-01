@@ -9,7 +9,8 @@
 - [Results](results.md): every check, with the iOS and Android numbers
 - **Method** (this page): how each check was measured, its limits, and how to reproduce it
 - [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
+- [Android accessibility](android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [All checks](checks.md): every accessibility check for every app, one table per component, plus the charts
 <!-- end:nav -->
 
 How every number in [Results](results.md) was measured.
@@ -277,7 +278,7 @@ node scripts/readme-tables.mjs
 ```
 
 ```bash
-node scripts/report-html.mjs
+node scripts/checks-md.mjs
 ```
 
 **Other scripts:**
@@ -298,5 +299,6 @@ node scripts/report-html.mjs
 - [Results](results.md): every check, with the iOS and Android numbers
 - **Method** (this page): how each check was measured, its limits, and how to reproduce it
 - [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
+- [Android accessibility](android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [All checks](checks.md): every accessibility check for every app, one table per component, plus the charts
 <!-- end:navfoot -->

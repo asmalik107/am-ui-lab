@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { columns, headline, kind, kinds, libraries, names, nav, picks, points, scorecard, slug, stack, versions } from './scorecard.mjs';
+import { anchored, columns, headline, heroSvg, kind, kinds, libraries, names, nav, picks, points, scorecard, slug, stack, versions } from './scorecard.mjs';
 
 const root = new URL('../', import.meta.url);
 const apps = ['baseline', 'unistyles', 'uniwind', 'nativewind', 'tamagui', 'gluestack', 'heroui', 'reusables'];
@@ -121,23 +121,6 @@ const files = {
   'docs/method.md': { nav: nav('Method', 'docs'), navfoot: foot('Method', 'docs') },
   'docs/ios-accessibility.md': { nav: nav('iOS accessibility', 'docs'), navfoot: foot('iOS accessibility', 'docs') },
 };
-// An explicit <a id> above every heading, named as GitHub names the heading,
-// so previews that don't make heading anchors still jump to the section.
-// Re-running replaces the anchors rather than adding more.
-function anchored(md) {
-  const lines = md.replace(/<a id="[^"]*"><\/a>\n\n(?=#{1,6} )/g, '').split('\n');
-  const seen = {};
-  let code = false;
-  return lines.flatMap((l) => {
-    if (l.startsWith('\`\`\`')) code = !code;
-    const h = !code && l.match(/^#{1,6} (.+)$/);
-    if (!h) return [l];
-    const base = slug(h[1].replace(/[\`*]/g, '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1'));
-    const n = seen[base] ?? 0;
-    seen[base] = n + 1;
-    return [`<a id="${n ? `${base}-${n}` : base}"></a>`, '', l];
-  }).join('\n');
-}
 
 for (const [path, blocks] of Object.entries(files)) {
   const file = new URL(path, root);
@@ -150,4 +133,5 @@ for (const [path, blocks] of Object.entries(files)) {
   }
   writeFileSync(file, anchored(md));
 }
-console.log(`Updated ${Object.keys(files).join(', ')}`);
+writeFileSync(new URL('docs/hero.svg', root), heroSvg());
+console.log(`Updated ${Object.keys(files).join(', ')} and docs/hero.svg`);

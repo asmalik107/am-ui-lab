@@ -9,7 +9,8 @@
 - [Results](docs/results.md): every check, with the iOS and Android numbers
 - [Method](docs/method.md): how each check was measured, its limits, and how to reproduce it
 - [iOS accessibility](docs/ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [All checks](docs/checks.html): every check for every app in one grid, with charts. Open it in a browser
+- [Android accessibility](docs/android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [All checks](docs/checks.md): every accessibility check for every app, one table per component, plus the charts
 <!-- end:nav -->
 
 A side-by-side comparison of React Native UI libraries on iOS and Android.
@@ -373,16 +374,6 @@ Best first.
 - Every error hit, and how it was fixed
 - Which items use the library's components and which are hand-built
 
-<a id="more-detail"></a>
-
-## More detail
-
-- **[Results](docs/results.md):** every check, one section each, iOS and Android side by side.
-- **[Method](docs/method.md):** how each check works, its limits, and how to reproduce it.
-- **[iOS accessibility](docs/ios-accessibility.md):** every iOS failure, with the line of code that causes it.
-- **[All checks](docs/checks.html):** every check for all eight apps in one grid, with charts.
-  - GitHub shows this file as code. Open it in a browser from a clone.
-
 <!-- begin:navfoot -->
 
 ---
@@ -393,5 +384,6 @@ Best first.
 - [Results](docs/results.md): every check, with the iOS and Android numbers
 - [Method](docs/method.md): how each check was measured, its limits, and how to reproduce it
 - [iOS accessibility](docs/ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [All checks](docs/checks.html): every check for every app in one grid, with charts. Open it in a browser
+- [Android accessibility](docs/android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [All checks](docs/checks.md): every accessibility check for every app, one table per component, plus the charts
 <!-- end:navfoot -->

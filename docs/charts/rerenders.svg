@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 262" width="640" height="262" role="img" aria-label="iOS: components re-rendered on one theme switch">
+<style>
+svg { font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+.bg { fill: #ffffff; } .h { fill: #1d1d21; font-size: 15px; font-weight: 700; } .sub, .val { fill: #5d5a55; } .lbl { fill: #1d1d21; }
+.ios { fill: #3d5a98; } .android { fill: #b5651d; }
+@media (prefers-color-scheme: dark) { .bg { fill: #1d1d21; } .h, .lbl { fill: #ececee; } .sub, .val { fill: #a3a09b; } .ios { fill: #8fb0ef; } .android { fill: #f0a868; } }
+</style>
+<rect width="640" height="262" rx="10" class="bg"/>
+<text x="16" y="26" class="h">iOS: components re-rendered on one theme switch</text>
+<text x="16" y="44" class="sub">Light → dark, React profiler on a Debug build. Fewer is better.</text>
+<text x="112" y="73" text-anchor="end" class="lbl">Baseline</text><rect x="120" y="62" width="107.5" height="14" rx="2" class="ios"/><text x="233.45822339489885" y="73" class="val">298</text><text x="112" y="97" text-anchor="end" class="lbl">Unistyles</text><rect x="120" y="86" width="46.2" height="14" rx="2" class="ios"/><text x="172.1565523306948" y="97" class="val">128</text><text x="112" y="121" text-anchor="end" class="lbl">Uniwind</text><rect x="120" y="110" width="182.8" height="14" rx="2" class="ios"/><text x="308.8232189973615" y="121" class="val">507</text><text x="112" y="145" text-anchor="end" class="lbl">NativeWind</text><rect x="120" y="134" width="165.9" height="14" rx="2" class="ios"/><text x="291.87510993843443" y="145" class="val">460</text><text x="112" y="169" text-anchor="end" class="lbl">HeroUI</text><rect x="120" y="158" width="410.0" height="14" rx="2" class="ios"/><text x="536" y="169" class="val">1137</text><text x="112" y="193" text-anchor="end" class="lbl">gluestack</text><rect x="120" y="182" width="293.9" height="14" rx="2" class="ios"/><text x="419.88742304309585" y="193" class="val">815</text><text x="112" y="217" text-anchor="end" class="lbl">Tamagui</text><text x="126" y="217" class="val">not measured</text><text x="112" y="241" text-anchor="end" class="lbl">Reusables</text><rect x="120" y="230" width="217.4" height="14" rx="2" class="ios"/><text x="343.4406332453826" y="241" class="val">603</text></svg>

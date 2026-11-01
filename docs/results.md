@@ -9,7 +9,8 @@
 - **Results** (this page): every check, with the iOS and Android numbers
 - [Method](method.md): how each check was measured, its limits, and how to reproduce it
 - [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
+- [Android accessibility](android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [All checks](checks.md): every accessibility check for every app, one table per component, plus the charts
 <!-- end:nav -->
 
 Every check, one section each, with iOS and Android side by side.
@@ -202,6 +203,7 @@ The baseline included.
 ### Notes
 
 - **Every iOS failure**, with the line of code that causes it: [iOS accessibility](ios-accessibility.md).
+- **Every Android failure**, from the audit’s output: [Android accessibility](android-accessibility.md).
 - **NativeWind's score** is with a line-height workaround. Without it the page was 18 screens tall (see `apps/nativewind/NOTES.md`).
 
 [How this was measured →](method.md#accessibility-checks)
@@ -422,5 +424,6 @@ What it would cost a developer to build the same test screen with each library.
 - **Results** (this page): every check, with the iOS and Android numbers
 - [Method](method.md): how each check was measured, its limits, and how to reproduce it
 - [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [All checks](checks.html): every check for every app in one grid, with charts. Open it in a browser
+- [Android accessibility](android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [All checks](checks.md): every accessibility check for every app, one table per component, plus the charts
 <!-- end:navfoot -->

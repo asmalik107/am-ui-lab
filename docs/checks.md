@@ -953,9 +953,9 @@ Compare apps within a platform. iOS is an iPhone 12 Pro, Android a budget Galaxy
 
 - At most 1 in any app on either phone, so scrolling is smooth everywhere.
 
-<a id="bundle-size"></a>
+<a id="bundle-size-and-re-renders"></a>
 
-### Bundle size
+### Bundle size and re-renders
 
 ![JS bundle](charts/bundle.svg)
 
@@ -966,17 +966,14 @@ Compare apps within a platform. iOS is an iPhone 12 Pro, Android a budget Galaxy
 - Exact, with no run-to-run noise.
 - The baseline is plain React Native, so the gap to it is what the library adds.
 
-<a id="measured-on-one-platform-only"></a>
+![Components re-rendered on one theme switch](charts/rerenders.svg)
 
-### Measured on one platform only
-
-![iOS: components re-rendered on one theme switch](charts/rerenders.svg)
-
-**Measured on** iOS: iPhone 17 simulator (iOS 27.0).
+**Measured on** iOS: iPhone 17 simulator (iOS 27.0). Android: Galaxy A15 5G (Android 16).
 
 **How to read it:**
 
-- Tamagui isn’t measured: its Debug build aborts.
+- Unistyles re-renders the fewest on both platforms, HeroUI and Tamagui the most.
+- Tamagui has Android counts only: its Debug build aborts on iOS.
 
 <!-- begin:navfoot -->
 

@@ -33,8 +33,7 @@ export const rows = apps.map((app) => {
     bundle: r('bundle.json') ? r('bundle.json').iosHbcBytes / 1e6 : null,
     bundleAndroid: r('bundle.json')?.androidHbcBytes ? r('bundle.json').androidHbcBytes / 1e6 : null,
     rerenders: iMet?.rerenders?.switches?.[0]?.renders ?? null,
-    // Not counted on Android yet: it needs a Debug build profiled on the phone.
-    rerendersAndroid: null,
+    rerendersAndroid: aMet?.rerenders?.switches?.[0]?.renders ?? null,
     copied: devcost?.rows.find((x) => x.app === app)?.copiedLines ?? null,
   };
 });
@@ -58,7 +57,7 @@ export const measuredOn = {
   motion: [simName, droidName],
   timings: [phoneName, droidName],
   metrics: [phoneName, droidName],
-  rerenders: [simName, 'not measured'],
+  rerenders: [simName, load('results/baseline/android-metrics.json')?.rerenders?.switches ? droidName : 'not measured'],
   bundle: ['no device: built with expo export', 'no device: built with expo export'],
 };
 export const measuredText = (key) => `iOS: ${measuredOn[key][0]}. Android: ${measuredOn[key][1]}.`;
@@ -222,7 +221,7 @@ export const points = [
   ] },
   { lead: 'Unistyles is the best all-rounder', items: [
     'Fastest theme switch on the Galaxy A15',
-    'Fewest re-renders, on iOS',
+    'Fewest re-renders, on both platforms',
     'The baseline’s accessibility',
   ] },
   { lead: 'Each component library costs you something', items: [
@@ -285,7 +284,7 @@ const setupProblems = (app) => {
 export const libraries = [
   { app: 'unistyles', role: 'Best all-rounder', good: [
     ['Fastest theme switch on the Galaxy A15', [`Unistyles: ${ms('unistyles')} ms`, `Baseline: ${ms('baseline')} ms`]],
-    ['Fewest re-renders per theme switch, on iOS', [`Unistyles: ${by.unistyles.rerenders}`, `Baseline: ${by.baseline.rerenders}`]],
+    ['Fewest re-renders per theme switch, on both platforms', [`Unistyles: ${by.unistyles.rerenders} on iOS, ${by.unistyles.rerendersAndroid} on Android`, `Baseline: ${by.baseline.rerenders} on iOS, ${by.baseline.rerendersAndroid} on Android`]],
     access('unistyles', 'The baseline’s accessibility, as the components are hand-built'),
   ], bad: ['You build every component yourself, as with the baseline'] },
   { app: 'uniwind', role: 'Best if you want Tailwind classes', good: [
@@ -294,7 +293,7 @@ export const libraries = [
   ], bad: [
     'You build every component yourself, as with the baseline',
     ['Slower theme switch on the Galaxy A15', [`Uniwind: ${ms('uniwind')} ms`, `Baseline: ${ms('baseline')} ms`]],
-    ['More re-renders per theme switch, on iOS', [`Uniwind: ${by.uniwind.rerenders}`, `Unistyles: ${by.unistyles.rerenders}`]],
+    ['More re-renders per theme switch, on both platforms', [`Uniwind: ${by.uniwind.rerenders} on iOS, ${by.uniwind.rerendersAndroid} on Android`, `Unistyles: ${by.unistyles.rerenders} on iOS, ${by.unistyles.rerendersAndroid} on Android`]],
   ] },
   { app: 'nativewind', role: 'Tailwind, still a release candidate', good: [
     access('nativewind', 'The baseline’s accessibility'),
@@ -312,7 +311,7 @@ export const libraries = [
     access('heroui', 'Best accessibility of the component libraries'),
   ], bad: [
     `Memory grows the most on the Galaxy A15: +${Math.round(by.heroui.memGrowth)} MiB after use`,
-    `Most re-renders per theme switch, on iOS: ${n(by.heroui.rerenders)}`,
+    `Most re-renders per theme switch: ${n(by.heroui.rerenders)} on iOS, ${n(by.heroui.rerendersAndroid)} on Android`,
     `Theme switch on the Galaxy A15: ${ms('heroui')} ms`,
     'Labelled switch and checkbox rows hide the control’s name, role and state',
   ] },
@@ -340,7 +339,7 @@ export const libraries = [
     ['Slowest theme switch', [`Phone: ${ms('tamagui')} ms, about ${Math.round(by.tamagui.themeAndroid / by.baseline.themeAndroid)} times the baseline`, `iOS: ${Math.round((load('results/tamagui/iphone-perf.json') ?? load('results/tamagui/ios-perf.json')).theme.median)} ms`]],
     access('tamagui', 'Low accessibility'),
     'The switch and checkbox have no name',
-    'Its Debug build crashes, so re-renders aren’t counted',
+    `Its Debug build crashes on iOS, so re-renders are counted on Android only: ${n(by.tamagui.rerendersAndroid)} per theme switch`,
     'Select and Accordion couldn’t be tested on iOS',
   ] },
 ];

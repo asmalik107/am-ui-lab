@@ -207,11 +207,9 @@ ${chartMd('cpu-flings')}
 
 ${chartMd('dropped-frames')}
 
-### Bundle size
+### Bundle size and re-renders
 
 ${chartMd('bundle')}
-
-### Measured on one platform only
 
 ${chartMd('rerenders')}
 

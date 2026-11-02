@@ -369,25 +369,25 @@ The baseline included.
   - Android measured on 2 November 2026
 - **Re-renders:** components React rendered for light → dark, dark → brand and brand → light.
   - Counted with argent's React profiler on a Debug build (`scripts/rerender-run.mjs`)
-  - **Android not measured yet:** it needs a Debug build profiled on the phone
 
 <!-- begin:ioscode -->
-**Measured on** bundle size: no device, built with `npx expo export`. Re-renders: iPhone 17 simulator (iOS 27.0) on iOS, not measured on Android.
+**Measured on** bundle size: no device, built with `npx expo export`. Re-renders: iPhone 17 simulator (iOS 27.0) on iOS, Galaxy A15 5G (Android 16) on Android.
 
 | App | JS bundle, iOS | JS bundle, Android | Components rendered per theme switch, iOS | Components rendered per theme switch, Android |
 | --- | --- | --- | --- | --- |
-| baseline | 3.95 MB | 4.09 MB | 298 / 298 / 290 | not measured |
-| unistyles | 4.15 MB | 4.29 MB | 128 / 128 / 126 | not measured |
-| uniwind | 4.24 MB | 4.38 MB | 507 / 509 / 302 | not measured |
-| nativewind | 4.47 MB | 4.61 MB | 460 / 460 / 456 | not measured |
-| tamagui | 5.44 MB | 5.59 MB | not measured | not measured |
-| gluestack | 5.67 MB | 5.81 MB | 815 / 815 / 508 | not measured |
-| heroui | 5.24 MB | 5.39 MB | 1137 / 1135 / 948 | not measured |
-| reusables | 6.83 MB | 7.00 MB | 603 / 608 / 356 | not measured |
+| baseline | 3.95 MB | 4.09 MB | 298 / 298 / 290 | 294 / 294 / 285 |
+| unistyles | 4.15 MB | 4.29 MB | 128 / 128 / 126 | 123 / 123 / 121 |
+| uniwind | 4.24 MB | 4.38 MB | 507 / 509 / 302 | 503 / 299 / 503 |
+| nativewind | 4.47 MB | 4.61 MB | 460 / 460 / 456 | 457 / 457 / 453 |
+| tamagui | 5.44 MB | 5.59 MB | not measured | 1029 / 1029 / 1029 |
+| gluestack | 5.67 MB | 5.81 MB | 815 / 815 / 508 | 520 / 515 / 510 |
+| heroui | 5.24 MB | 5.39 MB | 1137 / 1135 / 948 | 1040 / 839 / 1088 |
+| reusables | 6.83 MB | 7.00 MB | 603 / 608 / 356 | 601 / 353 / 601 |
 <!-- end:ioscode -->
 
 - **Reusables** bundles every lucide icon (1,917 of them), although it uses 4.
-- **Tamagui's** Debug build aborts on a Yoga layout assertion, so its re-renders aren't counted.
+- **Tamagui's** Debug build aborts on a Yoga layout assertion on iOS, so its re-renders are counted on Android only.
+- **gluestack** re-renders more on iOS's first switch (815) than on Android's (520). The other apps are within a few percent across platforms.
 
 [How this was measured →](method.md#performance-checks)
 

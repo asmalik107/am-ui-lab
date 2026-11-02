@@ -174,9 +174,10 @@ export const charts = [
     'Exact, with no run-to-run noise.',
     'The baseline is plain React Native, so the gap to it is what the library adds.',
   ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.bundle.iosHbcBytes / 1e6, mbF), android: val(a, (d) => d.bundle.androidHbcBytes / 1e6, mbF) })))],
-  ['rerenders', 'iOS: components re-rendered on one theme switch', 'Light → dark, React profiler on a Debug build. Fewer is better.', [
-    'Tamagui isn’t measured: its Debug build aborts.',
-  ], single(apps.map(([a, name]) => ({ label: name, ...val(a, (d) => d.metrics.rerenders.switches[0].renders, String) })), 'ios')],
+  ['rerenders', 'Components re-rendered on one theme switch', 'Light → dark, React profiler on a Debug build. Fewer is better.', [
+    'Unistyles re-renders the fewest on both platforms, HeroUI and Tamagui the most.',
+    'Tamagui has Android counts only: its Debug build aborts on iOS.',
+  ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.metrics.rerenders.switches[0].renders, String), android: val(a, (d) => d.androidMetrics.rerenders.switches[0].renders, String) })))],
 ];
 
 // The devices behind each chart, from the shared map in scorecard.mjs.

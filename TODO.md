@@ -6,10 +6,7 @@ What's left before the results are complete. Each item says how to run it and wh
 
 ## Still to measure, on the Galaxy A15
 
-- [ ] **Android re-renders**
-  - Build Debug, install it on the phone and start Metro
-  - Run `scripts/rerender-run.mjs`, which only writes iOS results today. It needs an Android output (`results/<app>/android-metrics.json`)
-  - Then `rerendersAndroid` in `scripts/scorecard.mjs` and the `ioscode` table in `scripts/readme-tables.mjs` read it instead of "not measured"
+- [x] **Android re-renders:** measured on 2 November 2026 with `scripts/rerender-android.sh <serial>`
 - [ ] **Android reduced motion, 3 runs**
   - Each app has one run of the dialog and one of the bottom sheet, with motion on and off
   - Repeat with `node scripts/motion-test.mjs <app> <bundleId> <serial>`, 3 times per app, and report the median
@@ -20,7 +17,7 @@ What's left before the results are complete. Each item says how to run it and wh
 
 ## Gaps in the current results
 
-- [ ] **Tamagui re-renders:** its Debug build crashes, so there are no counts on either platform. See `apps/tamagui/NOTES.md`
+- [ ] **Tamagui re-renders on iOS:** its Debug build crashes there, so it has Android counts only. See `apps/tamagui/NOTES.md`
 - [ ] **Tamagui Select and Accordion on iOS:** they couldn't be tested
 - [ ] **gluestack's own bottom sheet:** tested on 4 of the 5 sheet checks
 

@@ -105,7 +105,7 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
     - Tamagui: 116 ms
 - **Unistyles is the best all-rounder**
   - Fastest theme switch on the Galaxy A15
-  - Fewest re-renders, on iOS
+  - Fewest re-renders, on both platforms
   - The baseline’s accessibility
 - **Each component library costs you something**
   - **HeroUI:** memory grows by 216 MiB on the Galaxy A15
@@ -161,20 +161,20 @@ One row per app.
   - Speed and memory depend on the hardware, so they're measured on a real iPhone
   - Accessibility checks read what the screen reader sees, which is the same on the simulator
   - argent's React profiler, which counts the re-renders, doesn't support physical iPhones
-- **Re-renders, Android:** not measured yet. It needs a Debug build profiled on the phone.
+- **Re-renders, Android:** the Galaxy A15, Debug build.
 - **Each column** links to its section in [Results](docs/results.md), listed under the table.
 
 <!-- begin:scorecard -->
 | App | [Accessibility, iOS](docs/results.md#accessibility) | [Accessibility, Android](docs/results.md#accessibility) | [Theme switch, iOS](docs/results.md#timings) | [Theme switch, Android](docs/results.md#timings) | [Memory growth, iOS](docs/results.md#startup-memory-and-scrolling) | [Memory growth, Android](docs/results.md#startup-memory-and-scrolling) | [JS bundle, iOS](docs/results.md#bundle-size-and-re-renders) | [JS bundle, Android](docs/results.md#bundle-size-and-re-renders) | [Re-renders per theme switch, iOS](docs/results.md#bundle-size-and-re-renders) | [Re-renders per theme switch, Android](docs/results.md#bundle-size-and-re-renders) | [Library code copied in](docs/results.md#developer-cost) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [Baseline](#baseline-plain-react-native-the-reference-point) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 99 ms | +68 MiB | +50 MiB | 🟢 **3.95 MB** | 🟢 **4.09 MB** | 298 | not measured | 0 |
-| [Unistyles](#unistyles-360-best-all-rounder) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 🟢 **71 ms** | +67 MiB | +54 MiB | 4.15 MB | 4.29 MB | 🟢 **128** | not measured | 0 |
-| [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 137 ms | +38 MiB | +51 MiB | 4.24 MB | 4.38 MB | 507 | not measured | 0 |
-| [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 183 ms | +51 MiB | 🟢 **+32 MiB** | 4.47 MB | 4.61 MB | 460 | not measured | 0 |
-| [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 🔴 116 ms | 🔴 630 ms | 🔴 +69 MiB | +46 MiB | 5.44 MB | 5.59 MB | not measured | not measured | 0 |
-| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 36 / 66 | 65 ms | 192 ms | +47 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | not measured | 🔴 7,488 |
-| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 47 / 67 | 65 ms | 239 ms | 🟢 **+29 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | not measured | 0 |
-| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 37 / 62 | 33 ms | 97 ms | +43 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | not measured | 1,519 |
+| [Baseline](#baseline-plain-react-native-the-reference-point) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 99 ms | +68 MiB | +50 MiB | 🟢 **3.95 MB** | 🟢 **4.09 MB** | 298 | 294 | 0 |
+| [Unistyles](#unistyles-360-best-all-rounder) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 🟢 **71 ms** | +67 MiB | +54 MiB | 4.15 MB | 4.29 MB | 🟢 **128** | 🟢 **123** | 0 |
+| [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 137 ms | +38 MiB | +51 MiB | 4.24 MB | 4.38 MB | 507 | 503 | 0 |
+| [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 183 ms | +51 MiB | 🟢 **+32 MiB** | 4.47 MB | 4.61 MB | 460 | 457 | 0 |
+| [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 🔴 116 ms | 🔴 630 ms | 🔴 +69 MiB | +46 MiB | 5.44 MB | 5.59 MB | not measured | 1,029 | 0 |
+| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 36 / 66 | 65 ms | 192 ms | +47 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | 520 | 🔴 7,488 |
+| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 47 / 67 | 65 ms | 239 ms | 🟢 **+29 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | 🔴 1,040 | 0 |
+| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 37 / 62 | 33 ms | 97 ms | +43 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | 601 | 1,519 |
 <!-- end:scorecard -->
 
 <!-- begin:scorecardlinks -->
@@ -215,9 +215,9 @@ Best first.
 - ✅ Fastest theme switch on the Galaxy A15
   - Unistyles: 71 ms
   - Baseline: 99 ms
-- ✅ Fewest re-renders per theme switch, on iOS
-  - Unistyles: 128
-  - Baseline: 298
+- ✅ Fewest re-renders per theme switch, on both platforms
+  - Unistyles: 128 on iOS, 123 on Android
+  - Baseline: 298 on iOS, 294 on Android
 - ✅ The baseline’s accessibility, as the components are hand-built
   - TalkBack: 60 of 62
   - VoiceOver: 58 of 62
@@ -239,9 +239,9 @@ Best first.
 - ⚠️ Slower theme switch on the Galaxy A15
   - Uniwind: 137 ms
   - Baseline: 99 ms
-- ⚠️ More re-renders per theme switch, on iOS
-  - Uniwind: 507
-  - Unistyles: 128
+- ⚠️ More re-renders per theme switch, on both platforms
+  - Uniwind: 507 on iOS, 503 on Android
+  - Unistyles: 128 on iOS, 123 on Android
 
 [Setup notes](apps/uniwind/NOTES.md) · [Raw results](results/uniwind/)
 
@@ -291,7 +291,7 @@ Best first.
   - TalkBack: 47 of 67
   - VoiceOver: 44 of 67
 - ⚠️ Memory grows the most on the Galaxy A15: +216 MiB after use
-- ⚠️ Most re-renders per theme switch, on iOS: 1,137
+- ⚠️ Most re-renders per theme switch: 1,137 on iOS, 1,040 on Android
 - ⚠️ Theme switch on the Galaxy A15: 239 ms
 - ⚠️ Labelled switch and checkbox rows hide the control’s name, role and state
 
@@ -372,7 +372,7 @@ Best first.
   - TalkBack: 42 of 67
   - VoiceOver: 36 of 57
 - ⚠️ The switch and checkbox have no name
-- ⚠️ Its Debug build crashes, so re-renders aren’t counted
+- ⚠️ Its Debug build crashes on iOS, so re-renders are counted on Android only: 1,029 per theme switch
 - ⚠️ Select and Accordion couldn’t be tested on iOS
 
 [Setup notes](apps/tamagui/NOTES.md) · [Raw results](results/tamagui/)
@@ -389,7 +389,7 @@ Best first.
 | Last run | Simulator 30 October 2026, iPhone 2 November 2026 | 30–31 October 2026 |
 
 - **Builds:** Release
-  - Except the re-render counts: Debug, iOS only
+  - Except the re-render counts: Debug, on both platforms
 
 **The test screen** has 19 items. Its full spec is in [Method](docs/method.md#the-test-screen).
 

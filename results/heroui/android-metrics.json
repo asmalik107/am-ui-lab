@@ -133,5 +133,67 @@
       "p90": 20,
       "p99": 26
     }
+  },
+  "rerenders": {
+    "date": "2026-11-02T18:49:08.229Z",
+    "build": "Debug",
+    "switches": [
+      {
+        "from": "light",
+        "to": "dark",
+        "commits": 6,
+        "renders": 1040,
+        "raw": {
+          "duration_ms": 3080.357,
+          "sample_count": 304,
+          "fiber_renders_captured": 1040,
+          "total_react_commits": 6,
+          "hot_commit_indices": [
+            1,
+            2
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 975,
+          "selection_note": "2 of 6 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "dark",
+        "to": "brand",
+        "commits": 5,
+        "renders": 839,
+        "raw": {
+          "duration_ms": 2954.957,
+          "sample_count": 284,
+          "fiber_renders_captured": 839,
+          "total_react_commits": 5,
+          "hot_commit_indices": [
+            1
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 703,
+          "selection_note": "1 of 5 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "brand",
+        "to": "light",
+        "commits": 6,
+        "renders": 1088,
+        "raw": {
+          "duration_ms": 2949.211,
+          "sample_count": 265,
+          "fiber_renders_captured": 1088,
+          "total_react_commits": 6,
+          "hot_commit_indices": [
+            1,
+            2
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 960,
+          "selection_note": "2 of 6 commits at ≥16ms absolute floor"
+        }
+      }
+    ]
   }
 }

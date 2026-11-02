@@ -80,13 +80,13 @@ const tables = {
   ),
   ioscode: table(
     ['App', 'JS bundle, iOS', 'JS bundle, Android', 'Components rendered per theme switch, iOS', 'Components rendered per theme switch, Android'],
-    apps.map((a) => [a, mb(d[a].bundle?.iosHbcBytes), mb(d[a].bundle?.androidHbcBytes), d[a].iMet?.rerenders?.switches?.map((s) => s.renders).join(' / ') ?? 'not measured', 'not measured']),
+    apps.map((a) => [a, mb(d[a].bundle?.iosHbcBytes), mb(d[a].bundle?.androidHbcBytes), d[a].iMet?.rerenders?.switches?.map((s) => s.renders).join(' / ') ?? 'not measured', d[a].aMet?.rerenders?.switches?.map((s) => s.renders).join(' / ') ?? 'not measured']),
   ),
 };
 
 // Each table opens with the devices it was measured on.
 for (const k of ['accessibility', 'textsize', 'motion', 'timings', 'metrics']) tables[k] = `${measuredMd(k)}\n\n${tables[k]}`;
-tables.ioscode = `**Measured on** bundle size: no device, built with \`npx expo export\`. Re-renders: ${measuredOn.rerenders[0]} on iOS, not measured on Android.\n\n${tables.ioscode}`;
+tables.ioscode = `**Measured on** bundle size: no device, built with \`npx expo export\`. Re-renders: ${measuredOn.rerenders[0]} on iOS, ${measuredOn.rerenders[1]} on Android.\n\n${tables.ioscode}`;
 
 // A bullet, with its sub-bullets when it holds more than one value.
 const item = (i, indent, mark = '') => (Array.isArray(i) ? [`${indent}- ${mark}${i[0]}`, ...i[1].map((x) => `${indent}  - ${x}`)].join('\n') : `${indent}- ${mark}${i}`);

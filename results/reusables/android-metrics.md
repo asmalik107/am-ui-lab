@@ -17,3 +17,13 @@ Run 2026-10-31 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build
 Overlays opened for the memory figure: test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-select, test-menu-open, test-toast-show.
 
 Memory is total PSS from `dumpsys meminfo`, which is not the same measure as iOS phys_footprint, so compare apps within a platform only. CPU time is utime + stime of the app's threads from /proc during the flings (10 ms ticks). Startup until readable is when TalkBack could first read the screen; TotalTime is Android's own first-frame time, which here is the splash screen.
+
+## Re-renders on theme switch
+
+Run 2026-11-02, Debug build with Metro, argent React profiler (`scripts/rerender-run.mjs`). Counts only: Debug timings aren't representative.
+
+| Switch | React commits | Component renders |
+| --- | --- | --- |
+| light → dark | 4 | 601 |
+| dark → brand | 4 | 353 |
+| brand → light | 5 | 601 |

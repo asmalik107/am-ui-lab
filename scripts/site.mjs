@@ -311,7 +311,7 @@ footer h2 { color: var(--text); }
     <ul class="hint reveal">
       <li>One row per app. Click a column to rank by it.</li>
       <li>🟢 best, 🔴 worst.</li>
-      <li><strong>Android:</strong> ${devices.android}, a real budget phone, for everything. The Android emulator kept crashing on this Mac</li>
+      <li><strong>Android:</strong> ${devices.android}, a real budget phone, for everything, re-renders included. The Android emulator kept crashing on this Mac</li>
       <li><strong>iOS speed and memory:</strong> ${devices.iphone}, a real phone</li>
       <li><strong>iOS accessibility and re-renders:</strong> ${devices.simulator}</li>
       <li><strong>Why two iOS devices:</strong>
@@ -321,7 +321,6 @@ footer h2 { color: var(--text); }
           <li>argent’s React profiler, which counts the re-renders, doesn’t support physical iPhones</li>
         </ul></li>
       <li><strong>Accessibility:</strong> checks passed, light theme.</li>
-      <li><strong>Re-renders on Android:</strong> not measured yet.</li>
     </ul>
     <div class="scroll reveal"><table class="card" id="card"></table></div>
   </section>

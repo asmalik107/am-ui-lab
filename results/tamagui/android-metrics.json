@@ -133,5 +133,83 @@
       "p90": 19,
       "p99": 22
     }
+  },
+  "rerenders": {
+    "date": "2026-11-02T18:46:46.637Z",
+    "build": "Debug",
+    "switches": [
+      {
+        "from": "light",
+        "to": "dark",
+        "commits": 6,
+        "renders": 1029,
+        "raw": {
+          "duration_ms": 2911.261,
+          "sample_count": 275,
+          "fiber_renders_captured": 1029,
+          "total_react_commits": 6,
+          "hot_commit_indices": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "any_compiler_optimized": true,
+          "fiber_renders_analyzed": 1029,
+          "selection_note": "4 of 6 commits at ≥16ms absolute floor",
+          "unattributed_ms": 3.94,
+          "unattributed_fiber_count": 6,
+          "unattributed_commit_count": 3
+        }
+      },
+      {
+        "from": "dark",
+        "to": "brand",
+        "commits": 6,
+        "renders": 1029,
+        "raw": {
+          "duration_ms": 2971.486,
+          "sample_count": 284,
+          "fiber_renders_captured": 1029,
+          "total_react_commits": 6,
+          "hot_commit_indices": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "any_compiler_optimized": true,
+          "fiber_renders_analyzed": 1029,
+          "selection_note": "4 of 6 commits at ≥16ms absolute floor",
+          "unattributed_ms": 4.52,
+          "unattributed_fiber_count": 6,
+          "unattributed_commit_count": 3
+        }
+      },
+      {
+        "from": "brand",
+        "to": "light",
+        "commits": 7,
+        "renders": 1029,
+        "raw": {
+          "duration_ms": 2881.988,
+          "sample_count": 277,
+          "fiber_renders_captured": 1029,
+          "total_react_commits": 7,
+          "hot_commit_indices": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "any_compiler_optimized": true,
+          "fiber_renders_analyzed": 1027,
+          "selection_note": "4 of 7 commits at ≥16ms absolute floor",
+          "unattributed_ms": 4.29,
+          "unattributed_fiber_count": 6,
+          "unattributed_commit_count": 3
+        }
+      }
+    ]
   }
 }

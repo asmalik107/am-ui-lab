@@ -116,7 +116,7 @@ How every number in [Results](results.md) was measured.
 | Memory | phys_footprint, from Instruments' Activity Monitor on the phone | `dumpsys meminfo` total PSS. A different measure, so compare apps within a platform. |
 | Scrolling | CPU during 5 flings and frame hitches (Instruments' Animation Hitches) | CPU during 5 flings (from `/proc`) and janky frames (`dumpsys gfxinfo`) |
 | Bundle size | `expo export --platform ios` | `expo export --platform android` |
-| Re-renders | Measured (Debug build with Metro) | Not measured yet: needs a Debug build profiled on the phone |
+| Re-renders | iPhone 17 simulator, Debug build with Metro | Galaxy A15, Debug build with Metro over `adb reverse` |
 
 **Don't compare memory or speed across platforms.**
 
@@ -194,7 +194,9 @@ How every number in [Results](results.md) was measured.
 - **Re-renders on a theme switch**
   - React commits and component renders, from argent's React profiler
   - Debug build, counts only
-  - iOS only so far: Android needs a Debug build profiled on the phone
+  - iOS on the simulator: argent's React profiler doesn't support a physical iPhone
+  - Android on the Galaxy A15 (added on 2 November 2026). The first profiling session after connecting records no renders, so one unmeasured session goes first
+  - Tamagui's Debug build crashes on iOS but runs on Android, so it has Android counts only
 
 <a id="ease-of-use-log"></a>
 
@@ -288,6 +290,12 @@ adb -s <serial> install -r -g apps/<app>/android/app/build/outputs/apk/release/a
 
 ```bash
 scripts/run-all-android.sh <serial> baseline unistyles
+```
+
+**3. Re-render counts.** Builds each app's Debug .apk, installs it, starts Metro and runs the profiler. Release builds have to be reinstalled afterwards for the other checks:
+
+```bash
+scripts/rerender-android.sh <serial> baseline unistyles
 ```
 
 **Tables and report**

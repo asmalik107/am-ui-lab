@@ -4,7 +4,7 @@
 // step on GitHub. Reads only results/* (through the shared modules).
 // Usage: node scripts/site.mjs
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { columns, heading, headline, kind, libraries, pages, points, scope, scorecard, slug, stack, versions } from './scorecard.mjs';
+import { columns, heading, headline, kind, kinds, libraries, pages, points, scope, scorecard, slug, stack, versions } from './scorecard.mjs';
 import { apps, charts, detail, differs, get, result, root, rows, sheetChecks, sheetKinds, shown, what } from './checks-data.mjs';
 
 const repo = 'https://github.com/asmalik107/am-ui-lab';
@@ -69,6 +69,8 @@ const data = {
   apps: apps.map(([a, name]) => ({ app: a, name, version: versions[a]?.[0] ?? '' })),
   headline,
   scope,
+  // The three kinds of app, each library with its link and versions.
+  kinds: kinds.map((k) => ({ title: k.title, what: k.what, items: k.items.map((i) => (typeof i === 'string' ? { text: i } : { name: i[0], url: i[1], versions: versions[i[2]] })) })),
   points,
   stack,
   card,
@@ -170,6 +172,14 @@ section { padding: 64px 0 8px; scroll-margin-top: 56px; }
 .points > li::before { content: counter(pt, decimal-leading-zero); display: block; font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
 .points ul { margin: 8px 0 0; padding-left: 18px; font-size: 15px; }
 .points ul ul { margin: 2px 0; }
+.kinds { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.kinds > li { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; box-shadow: var(--shadow); }
+.kinds > li:first-child { border-top: 3px solid var(--accent); }
+.kinds > li > p { color: var(--muted); font-size: 14px; margin: 4px 0 10px; }
+.kinds ul { margin: 0; padding-left: 18px; font-size: 15px; }
+.kinds ul li + li { margin-top: 4px; }
+.kinds .ver { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+.kinds small { display: block; color: var(--muted); font-size: 12px; }
 .hint { color: var(--muted); font-size: 15px; margin: 4px 0 16px; max-width: 75ch; }
 .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
 table { border-collapse: collapse; width: 100%; font-size: 14px; }
@@ -276,6 +286,7 @@ footer h2 { color: var(--text); }
   </div>
 </header>
 <nav class="jump" aria-label="Sections"><div class="wrap"><ul>
+  <li><a href="#compared">What is compared</a></li>
   <li><a href="#answer">The answer</a></li>
   <li><a href="#scorecard">Scorecard</a></li>
   <li><a href="#checks">Every check</a></li>
@@ -283,19 +294,24 @@ footer h2 { color: var(--text); }
   <li><a href="#docs">The docs</a></li>
 </ul></div></nav>
 <main class="wrap">
+  <section id="compared">
+    <div class="reveal"><span class="sec-num">01</span><h2>What is compared</h2></div>
+    <p class="hint reveal">Eight apps, each building the same test screen. One is plain React Native, the reference point for the other seven.</p>
+    <ul class="kinds" id="kinds"></ul>
+  </section>
   <section id="answer">
-    <div class="reveal"><span class="sec-num">01</span><h2>The answer</h2></div>
+    <div class="reveal"><span class="sec-num">02</span><h2>The answer</h2></div>
     <div class="note reveal" id="headline"></div>
     <div class="note scope reveal"><p><strong>What this covers</strong></p><ul id="scope"></ul></div>
     <ul class="points" id="points"></ul>
   </section>
   <section id="scorecard">
-    <div class="reveal"><span class="sec-num">02</span><h2>Scorecard</h2></div>
+    <div class="reveal"><span class="sec-num">03</span><h2>Scorecard</h2></div>
     <p class="hint reveal">One row per app. Click a column to rank by it. 🟢 best, 🔴 worst. Accessibility is checks passed, light theme. Theme switch and memory are on the Galaxy A15; bundle and re-renders on iOS.</p>
     <div class="scroll reveal"><table class="card" id="card"></table></div>
   </section>
   <section id="checks">
-    <div class="reveal"><span class="sec-num">03</span><h2>Every check</h2></div>
+    <div class="reveal"><span class="sec-num">04</span><h2>Every check</h2></div>
     <p class="hint reveal">Each cell is iOS / Android. Click a cell to see why a check failed.</p>
     <div class="filters">
       <div class="chips" id="lib-filter" role="group" aria-label="Libraries"></div>
@@ -313,14 +329,14 @@ footer h2 { color: var(--text); }
     <div class="scroll"><table class="grid" id="grid"></table></div>
   </section>
   <section id="charts">
-    <div class="reveal"><span class="sec-num">04</span><h2>Charts</h2></div>
+    <div class="reveal"><span class="sec-num">05</span><h2>Charts</h2></div>
     <p class="hint reveal">Click a library to pick it out in every chart. Paired charts sort by the Android bar, the real phone. Compare apps within a platform: iOS is a simulator on a Mac, Android a budget phone.</p>
     <div class="legend"><span class="key"><i style="background:var(--ios)"></i>iOS, iPhone 17 simulator</span><span class="key"><i style="background:var(--android)"></i>Android, Galaxy A15 5G</span></div>
     <div class="charts" id="chart-list"></div>
   </section>
 </main>
 <footer id="docs"><div class="wrap">
-  <span class="sec-num">05</span><h2>The docs</h2>
+  <span class="sec-num">06</span><h2>The docs</h2>
   <p>Generated from the same results as this page, in <a id="repo-link"></a>.</p>
   <ul class="docs" id="doc-list"></ul>
 </div></footer>
@@ -346,6 +362,8 @@ $('#theme').onclick = () => {
 };
 
 $('#stack').innerHTML = D.stack.map(([t, u]) => '<li><a href="' + esc(u) + '">' + esc(t) + '</a></li>').join('');
+$('#kinds').innerHTML = D.kinds.map((k, i) => '<li class="reveal" style="--d:' + i * 80 + 'ms"><h3>' + esc(k.title) + '</h3><p>' + esc(k.what) + '</p><ul>'
+  + k.items.map((x) => x.text ? '<li>' + esc(x.text) + '</li>' : '<li><a href="' + esc(x.url) + '">' + esc(x.name) + '</a> <span class="ver">' + esc(x.versions[0]) + '</span>' + (x.versions.length > 1 ? '<small>' + x.versions.slice(1).map(esc).join(' · ') + '</small>' : '') + '</li>').join('') + '</ul></li>').join('');
 $('#scope').innerHTML = D.scope.map((x) => '<li>' + md(x) + '</li>').join('');
 $('#headline').innerHTML = D.headline.map(([w, x]) => '<p><strong>' + esc(w) + ':</strong> ' + esc(x) + '.</p>').join('');
 $('#stats').innerHTML = D.stats.map((x, i) => '<li class="reveal ' + x.tone + '" style="--d:' + i * 80 + 'ms"><span class="v">' + esc(x.value) + '</span><span class="l">' + esc(x.label) + '</span></li>').join('');

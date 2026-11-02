@@ -304,18 +304,22 @@ export const libraries = [
   ] },
 ];
 
+// A library section's heading in the README: name, version and role.
+export const heading = (l) => `${names[l.app]} ${versions[l.app]?.[0] ?? ''}`.trim() + `: ${l.role}`;
+
 // The nav bar every doc carries, top and bottom. `from` is 'root' for the
 // README and 'docs' for files in docs/.
 // [label, path, what it is]
 export const pages = [
   ['README', 'README.md', 'the answer, the scorecard and each library'],
+  ['Site', 'https://asmalik107.github.io/am-ui-lab/', 'the scorecard, every check and the charts, sortable and filterable'],
   ['Results', 'docs/results.md', 'every check, with the iOS and Android numbers'],
   ['Method', 'docs/method.md', 'how each check was measured, its limits, and how to reproduce it'],
   ['iOS accessibility', 'docs/ios-accessibility.md', 'every iOS accessibility failure, with the line of code that causes it'],
   ['Android accessibility', 'docs/android-accessibility.md', 'every Android accessibility failure, from the audit’s output'],
   ['All checks', 'docs/checks.md', 'every accessibility check for every app, one table per component, plus the charts'],
 ];
-export const href = (path, from) => (from === 'root' ? path : path === 'README.md' ? '../README.md' : path.replace(/^docs\//, ''));
+export const href = (path, from) => (/^https?:/.test(path) || from === 'root' ? path : path === 'README.md' ? '../README.md' : path.replace(/^docs\//, ''));
 export const nav = (current, from) => ['**The docs:**', pages.map(([label, path, what]) => (label === current ? `- **${label}** (this page): ${what}` : `- [${label}](${href(path, from)}): ${what}`)).join('\n')].join('\n\n');
 
 // GitHub's heading anchors: lower case, punctuation dropped, spaces to hyphens.

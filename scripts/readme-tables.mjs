@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { anchored, columns, headline, heroSvg, kind, kinds, libraries, names, nav, picks, points, scorecard, slug, stack, versions } from './scorecard.mjs';
+import { anchored, columns, heading, headline, heroSvg, kind, kinds, libraries, names, nav, picks, points, scorecard, slug, stack, versions } from './scorecard.mjs';
 
 const root = new URL('../', import.meta.url);
 const apps = ['baseline', 'unistyles', 'uniwind', 'nativewind', 'tamagui', 'gluestack', 'heroui', 'reusables'];
@@ -86,7 +86,6 @@ const tables = {
 const item = (i, indent, mark = '') => (Array.isArray(i) ? [`${indent}- ${mark}${i[0]}`, ...i[1].map((x) => `${indent}  - ${x}`)].join('\n') : `${indent}- ${mark}${i}`);
 
 // The README's own blocks: the verdict, the scorecard and one section per library.
-const heading = (l) => `${names[l.app]} ${versions[l.app]?.[0] ?? ''}`.trim() + `: ${l.role}`;
 const readme = {
   verdict: [
     ['> [!NOTE]', ...headline.map(([where, what]) => `> **${where}:** ${what}.`).join('\n>\n').split('\n')].join('\n'),

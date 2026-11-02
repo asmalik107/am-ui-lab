@@ -5,7 +5,7 @@
 // Usage: node scripts/site.mjs
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { columns, heading, headline, kind, libraries, pages, points, scorecard, slug, stack, versions } from './scorecard.mjs';
-import { apps, charts, detail, differs, get, root, rows, shown, what } from './checks-data.mjs';
+import { apps, charts, detail, differs, get, result, root, rows, sheetChecks, sheetKinds, shown, what } from './checks-data.mjs';
 
 const repo = 'https://github.com/asmalik107/am-ui-lab';
 const blob = `${repo}/blob/main/`;
@@ -13,17 +13,29 @@ const blob = `${repo}/blob/main/`;
 // Every check, with each app's result on each platform:
 // 'pass' | 'fail' | 'na' (no such element) | 'nr' (not run), plus why it failed.
 const state = (f) => (f?.notRun ? 'nr' : !f ? 'na' : f.pass ? 'pass' : 'fail');
-const checks = rows.map((r) => ({
-  component: r.component,
-  check: shown(r.check),
-  what: what[r.check] ?? '',
-  cells: Object.fromEntries(apps.map(([a]) => {
-    const i = get(a, r, 'ios');
-    const d = get(a, r, 'android');
-    const cell = (f) => ({ s: state(f), d: f && !f.pass && !f.notRun ? detail(f) ?? '' : '' });
-    return [a, { ios: cell(i), android: cell(d), differs: differs(i, d) }];
+const cell = (f) => ({ s: state(f), d: f && !f.pass && !f.notRun ? detail(f) ?? '' : '' });
+const both = (i, d) => ({ ios: cell(i), android: cell(d), differs: differs(i, d) });
+const isSheet = (c) => c.startsWith('Bottom sheet');
+const checks = [
+  ...rows.filter((r) => !isSheet(r.component)).map((r) => ({
+    component: r.component,
+    check: shown(r.check),
+    what: what[r.check] ?? '',
+    cells: Object.fromEntries(apps.map(([a]) => [a, both(get(a, r, 'ios'), get(a, r, 'android'))])),
   })),
-}));
+  // Sheets by kind, as in docs/checks.md: each app names its sheets
+  // differently, so one row per component name would scatter them.
+  ...sheetKinds.flatMap(([label, , pick]) => sheetChecks.map((c) => ({
+    component: `Bottom sheet: ${label}`,
+    check: shown(c),
+    what: what[c] ?? '',
+    cells: Object.fromEntries(apps.map(([a]) => {
+      const comp = pick(a);
+      const f = (p) => (comp ? result(a, `${comp} | ${c}`, p) : null);
+      return [a, both(f('ios'), f('android'))];
+    })),
+  }))),
+];
 
 // The scorecard with each raw value kept for sorting.
 const card = {
@@ -254,7 +266,7 @@ footer h2 { color: var(--text); }
       <button class="theme-btn" id="theme" type="button" aria-label="Switch colour theme">◐ Theme</button>
     </div>
     <p class="eyebrow">React Native · 8 apps · 2 platforms</p>
-    <h1>Which React Native <span class="grad">UI library</span> should you use?</h1>
+    <h1>React Native UI libraries: <span class="grad">the pros and cons</span> of each, measured</h1>
     <p class="lede">The same test screen built eight times: plain React Native, three styling engines and four component libraries. Each was checked for accessibility, theming speed and memory, on an iPhone simulator and a budget Android phone.</p>
     <ul class="stack" id="stack"></ul>
     <ul class="stats" id="stats"></ul>

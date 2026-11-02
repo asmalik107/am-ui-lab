@@ -25,6 +25,7 @@ export const rows = apps.map((app) => {
     name: names[app],
     a11yIos: pass(r('ios-a11y.json')),
     a11yAndroid: pass(r('android-a11y.json')),
+    themeIos: r('ios-perf.json')?.theme.median ?? null,
     themeAndroid: r('android-perf.json')?.theme.median ?? null,
     memGrowth: aMet ? (aMet.memory.used.pss - aMet.memory.idle.pss) / 1048576 : null,
     bundle: r('bundle.json') ? r('bundle.json').iosHbcBytes / 1e6 : null,
@@ -39,6 +40,8 @@ export const rows = apps.map((app) => {
 export const columns = [
   { head: 'Accessibility, iOS', link: 'accessibility', section: 'Accessibility', get: (x) => ratio(x.a11yIos), better: 'high', fmt: (x) => `${x.a11yIos.pass} / ${x.a11yIos.total}` },
   { head: 'Accessibility, Android', link: 'accessibility', section: 'Accessibility', get: (x) => ratio(x.a11yAndroid), better: 'high', fmt: (x) => `${x.a11yAndroid.pass} / ${x.a11yAndroid.total}` },
+  // On iOS every app but one takes two frames, so only the worst is marked.
+  { head: 'Theme switch, iOS', link: 'timings', section: 'Timings', get: (x) => x.themeIos, better: 'low', fmt: (x) => `${Math.round(x.themeIos)} ms`, worstOnly: true },
   { head: 'Theme switch, Android', link: 'timings', section: 'Timings', get: (x) => x.themeAndroid, better: 'low', fmt: (x) => `${Math.round(x.themeAndroid)} ms` },
   { head: 'Memory growth, Android', link: 'startup-memory-and-scrolling', section: 'Startup, memory and scrolling', get: (x) => x.memGrowth, better: 'low', fmt: (x) => `+${Math.round(x.memGrowth)} MiB` },
   { head: 'JS bundle', link: 'bundle-size-and-re-renders-ios', section: 'Bundle size and re-renders', get: (x) => x.bundle, better: 'low', fmt: (x) => `${x.bundle.toFixed(2)} MB` },

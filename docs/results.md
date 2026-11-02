@@ -121,6 +121,8 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
 - **Checks that differ:** checks that pass on one platform and fail on the other.
 
 <!-- begin:accessibility -->
+**Measured on** iOS: iPhone 17 simulator (iOS 27.0). Android: Galaxy A15 5G (Android 16).
+
 | App | Test screen, iOS | Test screen, Android | Extra sheets, iOS | Extra sheets, Android | All checks, iOS | All checks, Android | Checks that differ |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | baseline | 53 / 57 | 55 / 57 | 5 / 5 | 5 / 5 | 58 / 62 | 60 / 62 | 2 |
@@ -220,6 +222,8 @@ The baseline included.
 - **Android screenshots:** `results/<app>/android-textsize-*.png`
 
 <!-- begin:textsize -->
+**Measured on** iOS: iPhone 17 simulator (iOS 27.0). Android: Galaxy A15 5G (Android 16).
+
 | App | Controls that grew, iOS (AX5) | Controls that grew, Android (2.0) | Pushed off screen, iOS | Pushed off screen, Android |
 | --- | --- | --- | --- | --- |
 | baseline | 16 / 17 | 1 / 16 | native-switch | native-switch |
@@ -259,6 +263,8 @@ The baseline included.
 - One frame is 33 ms
 
 <!-- begin:motion -->
+**Measured on** iOS: iPhone 17 simulator (iOS 27.0). Android: Galaxy A15 5G (Android 16).
+
 | App | Dialog, iOS | Dialog, Android | Bottom sheet, iOS | Bottom sheet, Android |
 | --- | --- | --- | --- | --- |
 | baseline | 333 → 67 ms | 200 → 67 ms | 400 → 33 ms | 200 → 33 ms |
@@ -291,19 +297,21 @@ The baseline included.
 - One frame is 16.7 ms on both devices
 
 <!-- begin:timings -->
+**Measured on** iOS: iPhone 12 Pro (iOS 26.6.1). Android: Galaxy A15 5G (Android 16).
+
 | App | Theme switch, iOS | Theme switch, Android | List mount, iOS | List mount, Android |
 | --- | --- | --- | --- | --- |
-| baseline | 32.3 ms (32–32) | 98.9 ms (87–164) | 82.1 ms (77–99) | 147.6 ms (141–177) |
-| unistyles | 32.5 ms (32–33) | 70.6 ms (54–139) | 82.8 ms (82–100) | 150.4 ms (137–173) |
-| uniwind | 32.3 ms (32–33) | 136.8 ms (104–178) | 82.7 ms (82–99) | 163.9 ms (139–183) |
-| nativewind | 32.4 ms (32–33) | 183.4 ms (154–207) | 82.9 ms (82–117) | 189.3 ms (171–294) |
-| tamagui | 99.2 ms (99–116) | 629.6 ms (583–676) | 115.2 ms (99–116) | 365.1 ms (290–447) |
-| gluestack | 32.4 ms (32–33) | 192.0 ms (137–244) | 83.0 ms (82–83) | 142.6 ms (134–164) |
-| heroui | 32.2 ms (32–67) | 238.7 ms (206–324) | 82.8 ms (82–99) | 203.5 ms (188–253) |
-| reusables | 32.1 ms (16–33) | 96.8 ms (82–123) | 83.2 ms (82–100) | 161.3 ms (143–199) |
+| baseline | 32.5 ms (32–33) | 98.9 ms (87–164) | 100.5 ms (82–119) | 147.6 ms (141–177) |
+| unistyles | 32.5 ms (32–33) | 70.6 ms (54–139) | 101.7 ms (100–103) | 150.4 ms (137–173) |
+| uniwind | 32.7 ms (20–33) | 136.8 ms (104–178) | 101.3 ms (69–103) | 163.9 ms (139–183) |
+| nativewind | 32.6 ms (32–37) | 183.4 ms (154–207) | 118.1 ms (99–136) | 189.3 ms (171–294) |
+| tamagui | 115.9 ms (116–116) | 629.6 ms (583–676) | 135.1 ms (115–152) | 365.1 ms (290–447) |
+| gluestack | 65.5 ms (32–66) | 192.0 ms (137–244) | 98.9 ms (82–117) | 142.6 ms (134–164) |
+| heroui | 65.2 ms (32–82) | 238.7 ms (206–324) | 98.4 ms (82–117) | 203.5 ms (188–253) |
+| reusables | 32.5 ms (32–66) | 96.8 ms (82–123) | 94.0 ms (82–120) | 161.3 ms (143–199) |
 <!-- end:timings -->
 
-- **iOS:** the simulator runs on a Mac. Every app but Tamagui finishes within a frame or two, so they can't be told apart.
+- **iOS:** on the iPhone 12 Pro five apps switch theme in two frames. gluestack and HeroUI take about 65 ms, Tamagui 116 ms.
 - **Android:** the apps spread out. Tamagui is the slowest on both platforms.
 - **Unistyles** is the fastest theme switch on Android
   - Unistyles: 71 ms
@@ -313,7 +321,7 @@ The baseline included.
 - **iOS run counts**
   - A run only counts when the readout changes
   - Two runs in a row with exactly the same time can't be told apart from no update
-  - So some iOS apps have fewer than 10 runs (Unistyles has 4)
+  - So some iOS apps have fewer than 10 runs (as few as 8)
 
 [How this was measured →](method.md#performance-checks)
 
@@ -324,16 +332,18 @@ The baseline included.
 `scripts/metrics-run.mjs`: Release builds, 10 cold launches.
 
 <!-- begin:metrics -->
-| App | Startup, iOS | Startup, Android | Memory idle → used, iOS | Memory idle → used, Android | CPU in flings, iOS | CPU in flings, Android | Janky frames, Android |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| baseline | 8.03 s | 2.80 s | 62.9 → 124.5 MiB | 163.1 → 212.9 MiB | 2.00 s | 8.62 s | 0 of 1232 |
-| unistyles | 7.95 s | 2.87 s | 64.2 → 125.2 MiB | 170.5 → 224.6 MiB | 1.69 s | 8.95 s | 0 of 1244 |
-| uniwind | 7.86 s | 2.95 s | 64.0 → 131.2 MiB | 163.7 → 214.5 MiB | 1.91 s | 8.60 s | 0 of 1238 |
-| nativewind | 8.04 s | 3.02 s | 66.9 → 132.5 MiB | 164.4 → 196.8 MiB | 2.08 s | 8.77 s | 0 of 1212 |
-| tamagui | 8.40 s | 3.42 s | 82.2 → 160.8 MiB | 182.8 → 228.3 MiB | 1.98 s | 9.65 s | 1 of 1296 |
-| gluestack | 7.87 s | 3.34 s | 74.2 → 127.0 MiB | 182.3 → 285.7 MiB | 2.15 s | 8.89 s | 0 of 1232 |
-| heroui | 7.85 s | 3.53 s | 91.4 → 127.6 MiB | 199.3 → 415.6 MiB | 2.46 s | 10.26 s | 0 of 1250 |
-| reusables | 7.86 s | 3.21 s | 75.5 → 143.0 MiB | 173.8 → 221.8 MiB | 1.91 s | 8.39 s | 1 of 1240 |
+**Measured on** iOS: iPhone 12 Pro (iOS 26.6.1). Android: Galaxy A15 5G (Android 16).
+
+| App | Startup, iOS | Startup, Android | Memory idle → used, iOS | Memory idle → used, Android | CPU in flings, iOS | CPU in flings, Android | Frame hitches, iOS | Janky frames, Android |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| baseline | 1.25 s | 2.80 s | 54.9 → 123.1 MiB | 163.1 → 212.9 MiB | 8.14 s | 8.62 s | 1 of 940 | 0 of 1232 |
+| unistyles | 1.30 s | 2.87 s | 56.6 → 123.8 MiB | 170.5 → 224.6 MiB | 7.22 s | 8.95 s | 1 of 906 | 0 of 1244 |
+| uniwind | 1.19 s | 2.95 s | 56.2 → 94.4 MiB | 163.7 → 214.5 MiB | 8.11 s | 8.60 s | 0 of 913 | 0 of 1238 |
+| nativewind | 1.30 s | 3.02 s | 58.7 → 110.0 MiB | 164.4 → 196.8 MiB | 8.99 s | 8.77 s | 0 of 1010 | 0 of 1212 |
+| tamagui | 1.32 s | 3.42 s | 75.1 → 143.7 MiB | 182.8 → 228.3 MiB | 18.59 s | 9.65 s | 1 of 1017 | 1 of 1296 |
+| gluestack | 1.30 s | 3.34 s | 69.4 → 116.6 MiB | 182.3 → 285.7 MiB | 8.35 s | 8.89 s | 1 of 977 | 0 of 1232 |
+| heroui | 1.31 s | 3.53 s | 90.0 → 119.1 MiB | 199.3 → 415.6 MiB | 11.49 s | 10.26 s | 1 of 1085 | 0 of 1250 |
+| reusables | 1.31 s | 3.21 s | 69.7 → 112.4 MiB | 173.8 → 221.8 MiB | 8.70 s | 8.39 s | 0 of 1016 | 1 of 1240 |
 <!-- end:metrics -->
 
 - **Startup**
@@ -345,8 +355,9 @@ The baseline included.
   - Used: after scrolling the list and opening and closing every overlay once
 - **CPU**
   - User plus system time of the app's threads while the list is flung 5 times
-  - No iOS app had a main-thread hang
-- **Janky frames:** from `dumpsys gfxinfo`. The simulator has no equivalent.
+  - On the iPhone each fling is injected by XCUITest, which adds its own work and spreads the 5 flings over about 27 s, so compare iOS apps with each other only
+- **Frame hitches, iOS:** from Instruments' Animation Hitches template on the iPhone, out of the frames rendered during the flings. At most one 17 ms hitch in any app
+- **Janky frames, Android:** from `dumpsys gfxinfo`
 
 [How this was measured →](method.md#performance-checks)
 
@@ -361,6 +372,8 @@ The baseline included.
   - **Android not measured yet:** it needs a Debug build profiled on the phone
 
 <!-- begin:ioscode -->
+**Measured on** bundle size: no device, built with `npx expo export`. Re-renders: iPhone 17 simulator (iOS 27.0) on iOS, not measured on Android.
+
 | App | JS bundle, iOS | JS bundle, Android | Components rendered per theme switch, iOS | Components rendered per theme switch, Android |
 | --- | --- | --- | --- | --- |
 | baseline | 3.95 MB | 4.09 MB | 298 / 298 / 290 | not measured |

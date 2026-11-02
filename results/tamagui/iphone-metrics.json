@@ -1,0 +1,122 @@
+{
+  "app": "tamagui",
+  "bundleId": "dev.asimmalik.uilab.tamagui",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T16:45:53.081Z",
+  "poll": {
+    "n": 5,
+    "median": 1357.2555830000006,
+    "min": 1338.5656669999998,
+    "max": 1368.190584,
+    "samples": [
+      1368.190584,
+      1359.222583,
+      1357.2555830000006,
+      1338.5656669999998,
+      1338.9662499999995
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 1316.6027499999982,
+    "min": 1181.7245000000003,
+    "max": 1495.5365409999995,
+    "samples": [
+      1495.5365409999995,
+      1190.1109160000015,
+      1436.5659160000032,
+      1191.1534169999977,
+      1430.0149999999994,
+      1181.7245000000003,
+      1435.027750000001,
+      1197.5380829999995,
+      1377.3283749999973,
+      1255.877124999999
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 535.5346874999996,
+    "min": 417.2960829999938,
+    "max": 700.661250000001,
+    "samples": [
+      700.661250000001,
+      420.89787500000057,
+      674.7565830000021,
+      424.7371669999993,
+      669.3929580000004,
+      421.502457999999,
+      618.1623749999999,
+      417.2960829999938,
+      599.6318749999991,
+      471.4375
+    ]
+  },
+  "memory": {
+    "idle": {
+      "physFootprint": 78776704
+    },
+    "used": {
+      "physFootprint": 150719104
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 43161,
+    "cpuMs": {
+      "main": 15277,
+      "js": 3036,
+      "other": 273,
+      "total": 18586
+    },
+    "hitches": {
+      "count": 1,
+      "hitchMs": 16.767541,
+      "frames": 1017,
+      "ratio": 0.3884882416996826
+    }
+  },
+  "rerenders": {
+    "date": "2026-10-30T17:13:38.105Z",
+    "build": "Debug",
+    "error": "the Debug build aborts on a React Native Yoga layout assertion (__assert_rtn in YogaLayoutableShadowNode::layout, crash report UILabTamagui-2026-10-30-171250.ips), as it did on 28 October; Release builds are unaffected"
+  }
+}

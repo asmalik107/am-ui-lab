@@ -1,5 +1,5 @@
-// Startup, memory and scrolling smoothness for one app on a booted simulator,
-// against a Release build. Nothing else should be running while it does.
+// Startup, memory and scrolling smoothness for one app on a booted simulator
+// or a cabled iPhone, against a Release build. Nothing else should be running while it does.
 //
 // - Startup: cold launches until the screen is in the accessibility tree;
 //   see the comment at that step. Median of N runs.
@@ -10,14 +10,15 @@
 //   records; see the comment at that step for what can and can't be measured.
 //
 // Usage: node scripts/metrics-run.mjs <app> <bundleId> <udid> [runs=10]
-// Output: results/<app>/ios-metrics.json and .md (re-render counts are added
-// by scripts/rerender-run.mjs from a Debug build).
+// Output: results/<app>/ios-metrics.json and .md, iphone-metrics.* on a phone
+// (re-render counts are added by scripts/rerender-run.mjs from a Debug build).
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { deviceInfo, platformOf } from './device.mjs';
+import { deviceInfo, isPhysical, platformOf } from './device.mjs';
+import { iphone } from './iphone.mjs';
 import { readMetrics, writeMetrics } from './metrics-md.mjs';
 
 const [app, bundleId, udid, runsArg] = process.argv.slice(2);
@@ -28,11 +29,13 @@ if (!app || !bundleId || !udid) {
 }
 const platform = platformOf(udid);
 const android = platform === 'android';
+const physical = isPhysical(udid);
 const device = deviceInfo(udid);
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
 const work = join(tmpdir(), `uilab-metrics-${app}`);
 mkdirSync(work, { recursive: true });
+const phone = physical && iphone(udid, bundleId, work);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const step = (msg) => console.error(`[metrics ${new Date().toISOString().slice(11, 19)}] ${msg}`);
@@ -41,7 +44,10 @@ function argent(tool, args, tries = 3) {
     try {
       return JSON.parse(execFileSync('argent', ['run', tool, '--json', '--args', JSON.stringify({ udid, ...args })], { encoding: 'utf8', maxBuffer: 64 << 20 }));
     } catch (err) {
-      if (i >= tries || !['describe', 'list-devices'].includes(tool)) throw err;
+      // A phone's XCUITest runner sometimes drops and respawns on the next call.
+      const respawn = physical && /runner/i.test(String(err.stderr ?? err.message));
+      if (i >= tries || !(respawn || ['describe', 'list-devices'].includes(tool))) throw err;
+      if (respawn) Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5000);
     }
   }
 }
@@ -86,7 +92,8 @@ async function scrollTo(id) {
     const seen = els.map((x) => x.label).join('|');
     if (!e && seen === last) down = !down;
     last = seen;
-    const up = android ? (e ? e.y < 0.12 : !down) : aboveOnIos(id);
+    // A phone has no view-hierarchy tool, so it uses the same rule as Android.
+    const up = android || physical ? (e ? e.y < 0.12 : !down) : aboveOnIos(id);
     argent('gesture-swipe', { fromX: 0.5, fromY: up ? 0.35 : 0.65, toX: 0.5, toY: up ? 0.65 : 0.35, momentum: false, durationMs: 300 });
     await sleep(400);
   }
@@ -99,6 +106,7 @@ const stats = (xs) => {
 };
 const terminate = () => {
   if (android) return void adb('shell', 'am', 'force-stop', bundleId);
+  if (physical) return void phone.terminate();
   try {
     execFileSync('xcrun', ['simctl', 'terminate', udid, bundleId], { stdio: 'ignore' });
   } catch {
@@ -109,6 +117,11 @@ const terminate = () => {
 function pid() {
   if (android) {
     const p = Number(adb('shell', 'pidof', bundleId).trim().split(/\s+/)[0]);
+    if (!p) throw new Error(`no running process for ${bundleId}`);
+    return p;
+  }
+  if (physical) {
+    const p = phone.pid();
     if (!p) throw new Error(`no running process for ${bundleId}`);
     return p;
   }
@@ -126,6 +139,7 @@ function footprint() {
     const kb = (re) => Number(out.match(re)?.[1] ?? NaN) * 1024;
     return { pss: kb(/TOTAL PSS:\s+(\d+)/), rss: kb(/TOTAL RSS:\s+(\d+)/) };
   }
+  if (physical) return phone.memory(pid());
   const file = join(work, 'footprint.json');
   execFileSync('footprint', ['--pid', String(pid()), '-j', file, '--noCategories'], { stdio: 'ignore' });
   return JSON.parse(readFileSync(file, 'utf8'));
@@ -179,6 +193,21 @@ async function androidScroll(p) {
   const cpuMs = { main: after.main - before.main, js: after.js - before.js, other: after.other - before.other };
   cpuMs.total = cpuMs.main + cpuMs.js + cpuMs.other;
   return { flings: 5, windowMs, cpuMs, frames: gfxinfo() };
+}
+// On a phone: the same 5 flings while Instruments' Animation Hitches template
+// records. Its trace also has a Time Profiler table, read as on the simulator.
+async function phoneScroll(p) {
+  const rec = await phone.startHitches(p);
+  await sleep(3000);
+  // One run-sequence call: a single gesture-swipe on a phone is followed by an
+  // accessibility snapshot, which keeps the app's main thread busy.
+  const t0 = performance.now();
+  argent('run-sequence', {
+    steps: Array.from({ length: 5 }, (_, i) => ({ tool: 'gesture-swipe', args: { fromX: 0.5, fromY: i % 2 ? 0.25 : 0.8, toX: 0.5, toY: i % 2 ? 0.8 : 0.25, durationMs: 150 }, delayMs: 1200 })),
+  });
+  const windowMs = Math.round(performance.now() - t0);
+  const { hitches, cpuFile } = await rec.stop();
+  return { flings: 5, windowMs, ...cpuByThread(cpuFile, p), hitches: { ...hitches, ratio: hitches.hitchMs / (windowMs / 1000) } };
 }
 const goBack = () => (android ? argent('button', { button: 'back' }) : argent('gesture-swipe', { fromX: 0.0, fromY: 0.5, toX: 0.7, toY: 0.5, durationMs: 300 }));
 function launch() {
@@ -248,7 +277,8 @@ const appPid = pid();
 let scroll;
 const attempts = [];
 if (android) scroll = await androidScroll(appPid);
-for (let attempt = 0; !android && attempt < 2 && !scroll?.cpuMs; attempt++) {
+if (physical) scroll = await phoneScroll(appPid);
+for (let attempt = 0; !android && !physical && attempt < 2 && !scroll?.cpuMs; attempt++) {
   try {
     const exe = execFileSync('ps', ['-p', String(appPid), '-o', 'comm='], { encoding: 'utf8' }).trim().split('/').pop();
     argent('native-profiler-start', { device_id: udid, app_process: exe, udid: undefined });
@@ -312,8 +342,9 @@ for (const [open, sign, closeId, closeLabel] of overlays) {
 await sleep(2000);
 const used = footprint();
 
-const mem = (f) => (android ? f : { physFootprint: f.processes[0].auxiliary.phys_footprint, footprint: f.processes[0].footprint });
+const mem = (f) => (android || physical ? f : { physFootprint: f.processes[0].auxiliary.phys_footprint, footprint: f.processes[0].footprint });
 // Re-render counts come from a separate Debug run, so they are kept.
+// On a phone they come from the simulator's file: argent can't profile React there.
 const { rerenders } = readMetrics(app, platform);
 writeMetrics(app, { app, bundleId, udid, platform, device, date: new Date().toISOString(), poll: stats(polls), startup: stats(startup), launchCall: stats(launchCall), firstFrame: firstFrame.length ? stats(firstFrame) : undefined, memory: { idle: mem(idle), used: mem(used), overlays: opened }, scroll, rerenders });
-console.log(readFileSync(new URL(`${platform}-metrics.md`, outDir), 'utf8'));
+console.log(readFileSync(new URL(`${physical ? 'iphone' : platform}-metrics.md`, outDir), 'utf8'));

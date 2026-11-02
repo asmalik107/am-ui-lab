@@ -1,0 +1,179 @@
+{
+  "app": "reusables",
+  "bundleId": "dev.asimmalik.uilab.reusables",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T17:18:27.979Z",
+  "poll": {
+    "n": 5,
+    "median": 484.6470840000002,
+    "min": 460.46233300000006,
+    "max": 493.68887500000005,
+    "samples": [
+      460.46233300000006,
+      492.019,
+      475.101541,
+      493.68887500000005,
+      484.6470840000002
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 1311.7419995000018,
+    "min": 1145.1949590000004,
+    "max": 1462.8972079999985,
+    "samples": [
+      1445.4089159999994,
+      1155.9877080000006,
+      1462.8972079999985,
+      1145.1949590000004,
+      1402.4949589999997,
+      1209.7587920000005,
+      1338.025791,
+      1285.4582080000037,
+      1396.6562080000003,
+      1252.3394159999953
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 552.2975620000016,
+    "min": 410.38537499999984,
+    "max": 707.1568749999988,
+    "samples": [
+      689.3454999999994,
+      410.38537499999984,
+      707.1568749999988,
+      413.291874999999,
+      643.8240000000005,
+      476.2185000000027,
+      586.7401659999996,
+      517.8549580000035,
+      606.3744999999981,
+      498.00541599999997
+    ]
+  },
+  "memory": {
+    "idle": {
+      "physFootprint": 73058624
+    },
+    "used": {
+      "physFootprint": 117836288
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 27590,
+    "cpuMs": {
+      "main": 5818,
+      "js": 2698,
+      "other": 188,
+      "total": 8704
+    },
+    "hitches": {
+      "count": 0,
+      "hitchMs": 0,
+      "frames": 1016,
+      "ratio": 0
+    }
+  },
+  "rerenders": {
+    "date": "2026-10-30T17:47:47.179Z",
+    "build": "Debug",
+    "switches": [
+      {
+        "from": "light",
+        "to": "dark",
+        "commits": 4,
+        "renders": 603,
+        "raw": {
+          "duration_ms": 2834.422,
+          "sample_count": 239,
+          "fiber_renders_captured": 603,
+          "total_react_commits": 4,
+          "hot_commit_indices": [
+            0,
+            1
+          ],
+          "any_compiler_optimized": true,
+          "fiber_renders_analyzed": 600,
+          "selection_note": "2 of 4 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "dark",
+        "to": "brand",
+        "commits": 5,
+        "renders": 608,
+        "raw": {
+          "duration_ms": 2827.577,
+          "sample_count": 237,
+          "fiber_renders_captured": 608,
+          "total_react_commits": 5,
+          "hot_commit_indices": [
+            1,
+            2
+          ],
+          "any_compiler_optimized": true,
+          "fiber_renders_analyzed": 603,
+          "selection_note": "2 of 5 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "brand",
+        "to": "light",
+        "commits": 4,
+        "renders": 356,
+        "raw": {
+          "duration_ms": 2856.483,
+          "sample_count": 245,
+          "fiber_renders_captured": 356,
+          "total_react_commits": 4,
+          "hot_commit_indices": [
+            1
+          ],
+          "any_compiler_optimized": true,
+          "fiber_renders_analyzed": 353,
+          "selection_note": "1 of 4 commits at ≥16ms absolute floor"
+        }
+      }
+    ]
+  }
+}

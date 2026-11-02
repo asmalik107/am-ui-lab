@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-import { anchored, columns, heading, headline, scope, heroSvg, kind, kinds, libraries, names, nav, picks, points, scorecard, slug, stack, versions } from './scorecard.mjs';
+import { anchored, columns, measuredMd, measuredOn, heading, headline, scope, heroSvg, kind, kinds, libraries, names, nav, picks, points, scorecard, slug, stack, versions } from './scorecard.mjs';
 
 const root = new URL('../', import.meta.url);
 const apps = ['baseline', 'unistyles', 'uniwind', 'nativewind', 'tamagui', 'gluestack', 'heroui', 'reusables'];
@@ -15,9 +15,10 @@ const d = Object.fromEntries(apps.map((a) => [a, {
   aText: load(a, 'android-textsize.json'),
   iMotion: load(a, 'ios-motion.json'),
   aMotion: load(a, 'android-motion.json'),
-  iPerf: load(a, 'ios-perf.json'),
+  // iOS performance is from the cabled iPhone where it has been run, else the simulator.
+  iPerf: load(a, 'iphone-perf.json') ?? load(a, 'ios-perf.json'),
   aPerf: load(a, 'android-perf.json'),
-  iMet: load(a, 'ios-metrics.json'),
+  iMet: load(a, 'iphone-metrics.json') ?? load(a, 'ios-metrics.json'),
   aMet: load(a, 'android-metrics.json'),
   bundle: load(a, 'bundle.json'),
 }]));
@@ -70,11 +71,11 @@ const tables = {
     apps.map((a) => [a, med(d[a].iPerf?.theme), med(d[a].aPerf?.theme), med(d[a].iPerf?.list), med(d[a].aPerf?.list)]),
   ),
   metrics: table(
-    ['App', 'Startup, iOS', 'Startup, Android', 'Memory idle → used, iOS', 'Memory idle → used, Android', 'CPU in flings, iOS', 'CPU in flings, Android', 'Janky frames, Android'],
+    ['App', 'Startup, iOS', 'Startup, Android', 'Memory idle → used, iOS', 'Memory idle → used, Android', 'CPU in flings, iOS', 'CPU in flings, Android', 'Frame hitches, iOS', 'Janky frames, Android'],
     apps.map((a) => {
       const i = d[a].iMet;
       const n = d[a].aMet;
-      return [a, sec(i?.startup.median), sec(n?.startup.median), memPair(i?.memory.idle.physFootprint, i?.memory.used.physFootprint), memPair(n?.memory.idle.pss, n?.memory.used.pss), sec(i?.scroll.cpuMs?.total), sec(n?.scroll.cpuMs?.total), n ? `${n.scroll.frames.janky} of ${n.scroll.frames.total}` : '–'];
+      return [a, sec(i?.startup.median), sec(n?.startup.median), memPair(i?.memory.idle.physFootprint, i?.memory.used.physFootprint), memPair(n?.memory.idle.pss, n?.memory.used.pss), sec(i?.scroll.cpuMs?.total), sec(n?.scroll.cpuMs?.total), i?.scroll.hitches ? `${i.scroll.hitches.count} of ${i.scroll.hitches.frames}` : '–', n ? `${n.scroll.frames.janky} of ${n.scroll.frames.total}` : '–'];
     }),
   ),
   ioscode: table(
@@ -82,6 +83,10 @@ const tables = {
     apps.map((a) => [a, mb(d[a].bundle?.iosHbcBytes), mb(d[a].bundle?.androidHbcBytes), d[a].iMet?.rerenders?.switches?.map((s) => s.renders).join(' / ') ?? 'not measured', 'not measured']),
   ),
 };
+
+// Each table opens with the devices it was measured on.
+for (const k of ['accessibility', 'textsize', 'motion', 'timings', 'metrics']) tables[k] = `${measuredMd(k)}\n\n${tables[k]}`;
+tables.ioscode = `**Measured on** bundle size: no device, built with \`npx expo export\`. Re-renders: ${measuredOn.rerenders[0]} on iOS, not measured on Android.\n\n${tables.ioscode}`;
 
 // A bullet, with its sub-bullets when it holds more than one value.
 const item = (i, indent, mark = '') => (Array.isArray(i) ? [`${indent}- ${mark}${i[0]}`, ...i[1].map((x) => `${indent}  - ${x}`)].join('\n') : `${indent}- ${mark}${i}`);

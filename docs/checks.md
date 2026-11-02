@@ -34,6 +34,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 ## How to read the tables
 
 - **Each cell** is iOS / Android.
+- **Measured on** iOS: iPhone 17 simulator (iOS 27.0). Android: Galaxy A15 5G (Android 16).
 - ✅ pass, ❌ fail.
 - ➖ not applicable: the app has no such element.
 - **n/r** not run: the test could not start.
@@ -867,12 +868,16 @@ Every check also ran in the dark and brand themes, on both platforms. The tables
 
 ![Accessibility: the test screen](charts/accessibility-test-screen.svg)
 
+**Measured on** iOS: iPhone 17 simulator (iOS 27.0). Android: Galaxy A15 5G (Android 16).
+
 **How to read it:**
 
 - The baseline and the three styling engines share the same hand-built components. Their bars are what careful hand-built accessibility reaches.
 - A library’s gap to them is what you would have to fix yourself.
 
 ![Accessibility: the extra bottom sheets](charts/accessibility-extra-sheets.svg)
+
+**Measured on** iOS: iPhone 17 simulator (iOS 27.0). Android: Galaxy A15 5G (Android 16).
 
 **How to read it:**
 
@@ -882,31 +887,40 @@ Every check also ran in the dark and brand themes, on both platforms. The tables
 
 ### Speed, memory and scrolling
 
-Compare apps within a platform. iOS is a simulator on a Mac, Android a budget phone.
+Compare apps within a platform. iOS is an iPhone 12 Pro, Android a budget Galaxy A15.
 
 ![Theme switch, median of 10](charts/theme-switch.svg)
 
+**Measured on** iOS: iPhone 12 Pro (iOS 26.6.1). Android: Galaxy A15 5G (Android 16).
+
 **How to read it:**
 
-- iOS: every app finishes within a frame (about 32 ms), except Tamagui (99 ms).
+- iOS: five apps take two frames (about 33 ms), gluestack and HeroUI about 65 ms, Tamagui 116 ms.
 - Android: Tamagui (630 ms) stands out, then HeroUI (239 ms).
 - The other gaps are within each app’s run-to-run spread.
 
 ![200-row list mount, median of 10](charts/list-mount.svg)
 
+**Measured on** iOS: iPhone 12 Pro (iOS 26.6.1). Android: Galaxy A15 5G (Android 16).
+
 **How to read it:**
 
-- iOS: about 83 ms everywhere, except Tamagui (115 ms).
+- iOS: 94–102 ms in most apps, NativeWind 118 ms and Tamagui 135 ms.
 - Android: most apps take 150–180 ms, with overlapping ranges. Tamagui takes 365 ms.
 
 ![Startup until readable, median of 10](charts/startup.svg)
 
+**Measured on** iOS: iPhone 12 Pro (iOS 26.6.1). Android: Galaxy A15 5G (Android 16).
+
 **How to read it:**
 
 - Within each platform the apps sit close together, so read them as groups.
-- Don’t compare the platforms: the simulator’s accessibility tree is slow to become readable.
+- iOS: 1.2–1.3 s in every app, which is within one poll of the accessibility tree (about 0.5 s), so they can’t be told apart.
+- Android: 2.8–3.5 s, with the component libraries at the slow end.
 
 ![Memory at idle](charts/memory-idle.svg)
+
+**Measured on** iOS: iPhone 12 Pro (iOS 26.6.1). Android: Galaxy A15 5G (Android 16).
 
 **How to read it:**
 
@@ -915,23 +929,37 @@ Compare apps within a platform. iOS is a simulator on a Mac, Android a budget ph
 
 ![Memory after use](charts/memory-used.svg)
 
+**Measured on** iOS: iPhone 12 Pro (iOS 26.6.1). Android: Galaxy A15 5G (Android 16).
+
 **How to read it:**
 
-- iOS: Tamagui (161 MiB) stands out.
+- iOS: Tamagui (144 MiB) stands out.
 - Android: HeroUI (416 MiB) and gluestack (286 MiB) grow far more than the rest.
 
 ![App CPU time during 5 list flings](charts/cpu-flings.svg)
 
+**Measured on** iOS: iPhone 12 Pro (iOS 26.6.1). Android: Galaxy A15 5G (Android 16).
+
 **How to read it:**
 
-- Compare apps within a platform: the simulator runs on a Mac, the phone on a budget CPU.
-- HeroUI uses the most on both.
+- Compare apps within a platform: on the iPhone each fling is injected by XCUITest, which spreads the 5 over about 27 s and adds its own work.
+- Tamagui uses the most on iOS, HeroUI on Android, and each is second on the other.
+
+![Dropped frames during the flings](charts/dropped-frames.svg)
+
+**Measured on** iOS: iPhone 12 Pro (iOS 26.6.1). Android: Galaxy A15 5G (Android 16).
+
+**How to read it:**
+
+- At most 1 in any app on either phone, so scrolling is smooth everywhere.
 
 <a id="bundle-size"></a>
 
 ### Bundle size
 
 ![JS bundle](charts/bundle.svg)
+
+**Measured on** no device, built with expo export.
 
 **How to read it:**
 
@@ -944,15 +972,11 @@ Compare apps within a platform. iOS is a simulator on a Mac, Android a budget ph
 
 ![iOS: components re-rendered on one theme switch](charts/rerenders.svg)
 
+**Measured on** iOS: iPhone 17 simulator (iOS 27.0).
+
 **How to read it:**
 
 - Tamagui isn’t measured: its Debug build aborts.
-
-![Android: janky frames during the flings](charts/janky-frames.svg)
-
-**How to read it:**
-
-- At most 1 janky frame in any app, so scrolling is smooth everywhere.
 
 <!-- begin:navfoot -->
 

@@ -1,6 +1,7 @@
 // Check results and chart series read from results/*, shared by
 // scripts/checks-md.mjs (the markdown) and scripts/site.mjs (the Pages site).
 import { existsSync, readFileSync } from 'node:fs';
+import { measuredOn } from './scorecard.mjs';
 
 export const root = new URL('../', import.meta.url);
 export const apps = [
@@ -21,8 +22,9 @@ export const data = Object.fromEntries(apps.map(([a]) => [a, {
   a11y: load(a, 'ios-a11y.json'),
   dark: load(a, 'ios-a11y-dark.json'),
   brand: load(a, 'ios-a11y-brand.json'),
-  metrics: load(a, 'ios-metrics.json'),
-  perf: load(a, 'ios-perf.json'),
+  // iOS performance is from the cabled iPhone where it has been run, else the simulator.
+  metrics: load(a, 'iphone-metrics.json') ?? load(a, 'ios-metrics.json'),
+  perf: load(a, 'iphone-perf.json') ?? load(a, 'ios-perf.json'),
   bundle: load(a, 'bundle.json'),
   androidPerf: load(a, 'android-perf.json'),
   androidMetrics: load(a, 'android-metrics.json'),
@@ -140,30 +142,34 @@ export const charts = [
     'Sheets: @expo/ui in every app, Tamagui’s and gluestack’s own, and a raw @gorhom sheet in HeroUI.',
   ], paired(apps.map(([a, name]) => ({ label: name, ios: score(tally(findingsOf(a, 'ios'), 'sheets')), android: score(tally(findingsOf(a, 'android'), 'sheets')) })))],
   ['theme-switch', 'Theme switch, median of 10', 'From the tap to the second frame after the update. Shorter is better.', [
-    'iOS: every app finishes within a frame (about 32 ms), except Tamagui (99 ms).',
+    'iOS: five apps take two frames (about 33 ms), gluestack and HeroUI about 65 ms, Tamagui 116 ms.',
     'Android: Tamagui (630 ms) stands out, then HeroUI (239 ms).',
     'The other gaps are within each app’s run-to-run spread.',
   ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.perf.theme.median, msF), android: val(a, (d) => d.androidPerf.theme.median, msF) })))],
   ['list-mount', '200-row list mount, median of 10', 'From the tap to the second frame after the list’s first layout. Shorter is better.', [
-    'iOS: about 83 ms everywhere, except Tamagui (115 ms).',
+    'iOS: 94–102 ms in most apps, NativeWind 118 ms and Tamagui 135 ms.',
     'Android: most apps take 150–180 ms, with overlapping ranges. Tamagui takes 365 ms.',
   ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.perf.list.median, msF), android: val(a, (d) => d.androidPerf.list.median, msF) })))],
   ['startup', 'Startup until readable, median of 10', 'Until the screen title is in the accessibility tree. Not first paint.', [
     'Within each platform the apps sit close together, so read them as groups.',
-    'Don’t compare the platforms: the simulator’s accessibility tree is slow to become readable.',
+    'iOS: 1.2–1.3 s in every app, which is within one poll of the accessibility tree (about 0.5 s), so they can’t be told apart.',
+    'Android: 2.8–3.5 s, with the component libraries at the slow end.',
   ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.metrics.startup.median, sF), android: val(a, (d) => d.androidMetrics.startup.median, sF) })))],
   ['memory-idle', 'Memory at idle', '5 s after launch. Shorter is better. iOS phys_footprint, Android total PSS.', [
     'Compare apps within a platform, not across: the two are different measures.',
     'On both, the component libraries use more than the baseline, and HeroUI the most.',
   ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.metrics.memory.idle.physFootprint / 1048576, mibF), android: val(a, (d) => d.androidMetrics.memory.idle.pss / 1048576, mibF) })))],
   ['memory-used', 'Memory after use', 'After scrolling the list and opening every overlay once. Shorter is better.', [
-    'iOS: Tamagui (161 MiB) stands out.',
+    'iOS: Tamagui (144 MiB) stands out.',
     'Android: HeroUI (416 MiB) and gluestack (286 MiB) grow far more than the rest.',
   ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.metrics.memory.used.physFootprint / 1048576, mibF), android: val(a, (d) => d.androidMetrics.memory.used.pss / 1048576, mibF) })))],
-  ['cpu-flings', 'App CPU time during 5 list flings', 'CPU used by the app over about 7.5 s of flinging. Shorter is better.', [
-    'Compare apps within a platform: the simulator runs on a Mac, the phone on a budget CPU.',
-    'HeroUI uses the most on both.',
+  ['cpu-flings', 'App CPU time during 5 list flings', 'CPU used by the app while the list is flung 5 times. Shorter is better.', [
+    'Compare apps within a platform: on the iPhone each fling is injected by XCUITest, which spreads the 5 over about 27 s and adds its own work.',
+    'Tamagui uses the most on iOS, HeroUI on Android, and each is second on the other.',
   ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.metrics.scroll.cpuMs.total, sF), android: val(a, (d) => d.androidMetrics.scroll.cpuMs.total, sF) })))],
+  ['dropped-frames', 'Dropped frames during the flings', 'iOS: hitches from Instruments, of about 1,000 frames. Android: janky frames from dumpsys gfxinfo, of about 1,250. Fewer is better.', [
+    'At most 1 in any app on either phone, so scrolling is smooth everywhere.',
+  ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.metrics.scroll.hitches.count, String), android: val(a, (d) => d.androidMetrics.scroll.frames.janky, String) })))],
   ['bundle', 'JS bundle', 'Hermes bytecode from expo export. Shorter is better.', [
     'Exact, with no run-to-run noise.',
     'The baseline is plain React Native, so the gap to it is what the library adds.',
@@ -171,7 +177,18 @@ export const charts = [
   ['rerenders', 'iOS: components re-rendered on one theme switch', 'Light → dark, React profiler on a Debug build. Fewer is better.', [
     'Tamagui isn’t measured: its Debug build aborts.',
   ], single(apps.map(([a, name]) => ({ label: name, ...val(a, (d) => d.metrics.rerenders.switches[0].renders, String) })), 'ios')],
-  ['janky-frames', 'Android: janky frames during the flings', 'Out of about 1,250 frames, from dumpsys gfxinfo. Fewer is better.', [
-    'At most 1 janky frame in any app, so scrolling is smooth everywhere.',
-  ], single(apps.map(([a, name]) => ({ label: name, ...val(a, (d) => d.androidMetrics.scroll.frames.janky, String) })), 'android')],
 ];
+
+// The devices behind each chart, from the shared map in scorecard.mjs.
+export const chartGroup = {
+  'accessibility-test-screen': 'accessibility', 'accessibility-extra-sheets': 'accessibility',
+  'theme-switch': 'timings', 'list-mount': 'timings',
+  startup: 'metrics', 'memory-idle': 'metrics', 'memory-used': 'metrics', 'cpu-flings': 'metrics', 'dropped-frames': 'metrics',
+  bundle: 'bundle', rerenders: 'rerenders',
+};
+export const chartDevices = (file) => {
+  const [ios, android] = measuredOn[chartGroup[file]];
+  const one = charts.find((c) => c[0] === file)[4];
+  if (one.kind === 'single') return one.cls === 'ios' ? `iOS: ${ios}.` : `Android: ${android}.`;
+  return file === 'bundle' ? 'no device, built with expo export.' : `iOS: ${ios}. Android: ${android}.`;
+};

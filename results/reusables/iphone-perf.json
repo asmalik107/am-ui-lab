@@ -1,0 +1,47 @@
+{
+  "app": "reusables",
+  "bundleId": "dev.asimmalik.uilab.reusables",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T17:45:34.574Z",
+  "theme": {
+    "n": 9,
+    "median": 32.5,
+    "min": 32.3,
+    "max": 65.6,
+    "samples": [
+      65.6,
+      32.5,
+      38,
+      32.3,
+      32.4,
+      32.5,
+      32.6,
+      32.4,
+      32.5
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 94,
+    "min": 81.7,
+    "max": 119.6,
+    "samples": [
+      117.7,
+      86.1,
+      86.1,
+      101.9,
+      102,
+      119.6,
+      102.6,
+      81.7,
+      86.1,
+      86.1
+    ]
+  }
+}

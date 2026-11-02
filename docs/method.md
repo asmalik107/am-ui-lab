@@ -103,7 +103,7 @@ How every number in [Results](results.md) was measured.
 
 | What | iOS | Android |
 | --- | --- | --- |
-| Device | iPhone 17 simulator, iOS 27.0 | Samsung Galaxy A15 5G (SM-A156E), Android 16. A physical budget phone; the Android emulator crashed repeatedly on this Mac. |
+| Device | Performance: iPhone 12 Pro, iOS 26.6.1, by cable. Everything else: iPhone 17 simulator, iOS 27.0 | Samsung Galaxy A15 5G (SM-A156E), Android 16. A physical budget phone; the Android emulator crashed repeatedly on this Mac. |
 | Accessibility tree | What VoiceOver is given: the system accessibility tree (argent `describe`) and the view hierarchy (argent `native-describe-screen`) | What TalkBack is given: the active window's accessibility tree, read through UiAutomation by `scripts/android-a11y-dump`. A tappable element with no label of its own is named by the text inside it, as TalkBack does. |
 | Role and state | VoiceOver traits (button, adjustable, header, selected, not enabled) | Class and role description (Button, Switch, CheckBox, RadioButton, SeekBar, "Combo box", "Tab"), heading, checked, selected, enabled, state description, expand and collapse actions |
 | Screen hidden behind an overlay | Nothing from the screen is in the system tree while the overlay is open | Nothing from the screen is in the active window while the overlay is open |
@@ -112,16 +112,17 @@ How every number in [Results](results.md) was measured.
 | Pushed off screen at the largest size | Frame outside the screen | Present at the default size but gone from the tree, or newly touching the screen edge (Android clips bounds to the screen) |
 | Reduced motion | Reduce Motion on, set before launch | Remove animations (animator, transition and window scales 0), set before launch. Restored afterwards. |
 | Recording for motion | Simulator recording at 30 fps | Phone recording, resampled to 30 fps |
-| Timings, startup, CPU | Simulator on a Mac | Budget phone; compare apps within a platform |
-| Memory | `footprint` phys_footprint | `dumpsys meminfo` total PSS. A different measure, so compare apps within a platform. |
-| Scrolling | CPU during 5 flings and main-thread hangs; frame hitches can't be recorded on the simulator | CPU during 5 flings (from `/proc`) and janky frames (`dumpsys gfxinfo`) |
+| Timings, startup, CPU | iPhone 12 Pro | Budget phone; compare apps within a platform |
+| Memory | phys_footprint, from Instruments' Activity Monitor on the phone | `dumpsys meminfo` total PSS. A different measure, so compare apps within a platform. |
+| Scrolling | CPU during 5 flings and frame hitches (Instruments' Animation Hitches) | CPU during 5 flings (from `/proc`) and janky frames (`dumpsys gfxinfo`) |
 | Bundle size | `expo export --platform ios` | `expo export --platform android` |
 | Re-renders | Measured (Debug build with Metro) | Not measured yet: needs a Debug build profiled on the phone |
 
 **Don't compare memory or speed across platforms.**
 
-- iOS is a simulator on a Mac
-- Android is a budget phone
+- iOS is a 2020 flagship, the iPhone 12 Pro
+- Android is a 2023 budget phone
+- Memory is measured differently on each
 - Compare the apps within each platform, and how each app ranks on the two
 
 **Run everything:**
@@ -165,7 +166,8 @@ How every number in [Results](results.md) was measured.
 
 ## Performance checks
 
-- **Devices:** the iOS simulator and the Android phone.
+- **Devices:** an iPhone 12 Pro and the Android phone, both by cable.
+  - Until 2 November 2026 the iOS numbers came from the iPhone 17 simulator. Those results are kept in `results/<app>/ios-perf.*` and `ios-metrics.*`; the phone's are in `iphone-perf.*` and `iphone-metrics.*`
 - **Builds:** Release.
 - **Runs:** ten each, reported as the median and the range.
 
@@ -186,8 +188,9 @@ How every number in [Results](results.md) was measured.
   - At idle
   - After using the list and every overlay
 - **Scrolling**
-  - Frame hitches can't be recorded on the simulator. xctrace's Animation Hitches template says "Hitches is not supported on this platform"
-  - Recorded instead: main-thread hangs, and the app's CPU time during 5 list flings
+  - The app's CPU time during 5 list flings
+  - Frame hitches, from Instruments' Animation Hitches template on the iPhone (added on 2 November 2026). The simulator can't record them: the template says "Hitches is not supported on this platform"
+  - On the phone, XCUITest injects each fling, which takes a few seconds and makes the app answer accessibility queries, so the CPU time includes that work. It is the same for every app
 - **Re-renders on a theme switch**
   - React commits and component renders, from argent's React profiler
   - Debug build, counts only
@@ -212,11 +215,12 @@ Each app's `NOTES.md` records:
   - They don't listen to what is spoken or check the swipe order
   - Switch Control and Switch Access aren't tested
 - **One device each**
-  - iOS: a simulator
+  - iOS: an iPhone 12 Pro for performance, the simulator for everything else
   - Android: one budget phone
   - An Android emulator was tried first. Emulator 37.1 and 37.2 crashed repeatedly, so no emulator numbers are reported
 - **iOS**
-  - Frame hitches and first paint aren't measured
+  - First paint isn't measured
+  - On the phone, Instruments can't attach to the app's process, so it records every process and the app's rows are picked out by process id
   - The timing clock runs in JS, so libraries that apply styles natively (Unistyles, Tamagui's native runtime) may do work it doesn't see
   - Some Tamagui elements aren't in argent's view-hierarchy walk. Those checks read the system tree, which gives no selected state
   - Tamagui's RadioGroup doesn't draw the selected dot, although the tree reports it as checked
@@ -242,6 +246,16 @@ scripts/build-ios.sh <app> Release
 
 ```bash
 scripts/run-all.sh <simulator-udid>
+```
+
+**Performance on an iPhone:** keep it unlocked (Auto-Lock: Never), plugged in and out of Low Power Mode. The build is signed with team 5ES874S4M4; set `TEAM` for another.
+
+```bash
+scripts/build-ios.sh <app> Release <iphone-udid>
+```
+
+```bash
+scripts/run-all-iphone.sh <iphone-udid>
 ```
 
 **Re-render counts:**

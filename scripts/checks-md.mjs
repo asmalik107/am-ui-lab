@@ -3,8 +3,8 @@
 // docs/android-accessibility.md (every Android failure).
 // Reads only results/*. Usage: node scripts/checks-md.mjs
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { anchored, nav } from './scorecard.mjs';
-import { apps, charts, data, detail, differs, findingsOf, get, keyOf, norm, order, platform, result, root, rows, sheetChecks, sheetKinds, shown, what } from './checks-data.mjs';
+import { anchored, measuredMd, measuredOn, nav } from './scorecard.mjs';
+import { apps, chartDevices, chartGroup, charts, data, detail, differs, findingsOf, get, keyOf, norm, order, platform, result, root, rows, sheetChecks, sheetKinds, shown, what } from './checks-data.mjs';
 
 // Table cells can't hold a line break on every renderer, so pipes are escaped
 // and nothing here spans lines.
@@ -93,7 +93,7 @@ ${body}</svg>
 `;
 // rows: [{ label, ios: {value, text}, android: {value, text} }] or, for one
 // platform, [{ label, value, text }].
-function pairedSvg(title, sub, rows) {
+function pairedSvg(title, sub, rows, [iosDev, androidDev]) {
   const max = Math.max(...rows.flatMap((r) => [r.ios.value ?? 0, r.android.value ?? 0])) || 1;
   const inner = W - LABEL - 110;
   const per = 34;
@@ -102,7 +102,10 @@ function pairedSvg(title, sub, rows) {
     return (v.value == null ? '' : `<rect x="${LABEL}" y="${y}" width="${w.toFixed(1)}" height="12" rx="2" class="${cls}"/>`) + `<text x="${LABEL + w + 6}" y="${y + 11}" class="val">${esc(v.text)}</text>`;
   };
   const top = 78;
-  const key = `<rect x="16" y="56" width="10" height="10" class="ios"/><text x="30" y="65" class="sub">iOS, iPhone 17 simulator</text><rect x="200" y="56" width="10" height="10" class="android"/><text x="214" y="65" class="sub">Android, Galaxy A15 5G</text>`;
+  // The key names the devices this chart came from; the Android key starts after the iOS text.
+  const iosKey = `iOS, ${iosDev.replace(/ \(.*\)$/, '')}`;
+  const ax = 30 + Math.ceil(iosKey.length * 6.8) + 24;
+  const key = `<rect x="16" y="56" width="10" height="10" class="ios"/><text x="30" y="65" class="sub">${esc(iosKey)}</text><rect x="${ax}" y="56" width="10" height="10" class="android"/><text x="${ax + 14}" y="65" class="sub">Android, ${esc(androidDev.replace(/ \(.*\)$/, ''))}</text>`;
   const body = rows.map((r, i) => {
     const y = top + i * per;
     return `<text x="${LABEL - 8}" y="${y + 18}" text-anchor="end" class="lbl">${esc(r.label)}</text>${bar(r.ios, y, 'ios')}${bar(r.android, y + 14, 'android')}`;
@@ -124,11 +127,11 @@ function singleSvg(title, sub, rows, cls) {
   return svgDoc(title, sub, top + rows.length * per + 10, body);
 }
 mkdirSync(new URL('docs/charts/', root), { recursive: true });
-const draw = (title, sub, s) => (s.kind === 'paired' ? pairedSvg(title, sub, s.rows) : singleSvg(title, sub, s.rows, s.cls));
-for (const [file, title, sub, , series] of charts) writeFileSync(new URL(`docs/charts/${file}.svg`, root), draw(title, sub, series));
+const draw = (file, title, sub, s) => (s.kind === 'paired' ? pairedSvg(title, sub, s.rows, measuredOn[chartGroup[file]]) : singleSvg(title, sub, s.rows, s.cls));
+for (const [file, title, sub, , series] of charts) writeFileSync(new URL(`docs/charts/${file}.svg`, root), draw(file, title, sub, series));
 const chartMd = (file) => {
   const [, title, , read] = charts.find((c) => c[0] === file);
-  return [`![${title}](charts/${file}.svg)`, `**How to read it:**\n\n${read.map((r) => `- ${r}`).join('\n')}`].join('\n\n');
+  return [`![${title}](charts/${file}.svg)`, `**Measured on** ${chartDevices(file)}`, `**How to read it:**\n\n${read.map((r) => `- ${r}`).join('\n')}`].join('\n\n');
 };
 
 const differCount = apps.map(([a, name]) => `- **${name}:** ${rows.filter((r) => differs(result(a, r.key, 'ios'), result(a, r.key, 'android'))).length}`);
@@ -154,6 +157,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 ## How to read the tables
 
 - **Each cell** is iOS / Android.
+- ${measuredMd('accessibility')}
 - ✅ pass, ❌ fail.
 - ➖ not applicable: the app has no such element.
 - **n/r** not run: the test could not start.
@@ -187,7 +191,7 @@ ${chartMd('accessibility-extra-sheets')}
 
 ### Speed, memory and scrolling
 
-Compare apps within a platform. iOS is a simulator on a Mac, Android a budget phone.
+Compare apps within a platform. iOS is an iPhone 12 Pro, Android a budget Galaxy A15.
 
 ${chartMd('theme-switch')}
 
@@ -201,6 +205,8 @@ ${chartMd('memory-used')}
 
 ${chartMd('cpu-flings')}
 
+${chartMd('dropped-frames')}
+
 ### Bundle size
 
 ${chartMd('bundle')}
@@ -208,8 +214,6 @@ ${chartMd('bundle')}
 ### Measured on one platform only
 
 ${chartMd('rerenders')}
-
-${chartMd('janky-frames')}
 
 <!-- begin:navfoot -->
 

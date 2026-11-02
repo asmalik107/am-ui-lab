@@ -4,8 +4,8 @@
 // step on GitHub. Reads only results/* (through the shared modules).
 // Usage: node scripts/site.mjs
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { columns, heading, headline, kind, kinds, libraries, pages, points, scope, scorecard, slug, stack, versions } from './scorecard.mjs';
-import { apps, charts, detail, differs, get, result, root, rows, sheetChecks, sheetKinds, shown, what } from './checks-data.mjs';
+import { columns, devices, heading, headline, kind, kinds, libraries, pages, points, scope, scorecard, slug, stack, versions } from './scorecard.mjs';
+import { apps, chartDevices, charts, detail, differs, get, result, root, rows, sheetChecks, sheetKinds, shown, what } from './checks-data.mjs';
 
 const repo = 'https://github.com/asmalik107/am-ui-lab';
 const blob = `${repo}/blob/main/`;
@@ -75,7 +75,7 @@ const data = {
   stack,
   card,
   checks,
-  charts: charts.map(([file, title, sub, read, series]) => ({ file, title, sub, read, ...series })),
+  charts: charts.map(([file, title, sub, read, series]) => ({ file, title, sub, read, on: chartDevices(file), ...series })),
   pages: pages.filter(([label]) => label !== 'Site').map(([label, path, about]) => ({ label, href: blob + path, about })),
   repo,
 };
@@ -89,7 +89,7 @@ const html = `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>React Native UI Lab</title>
 <script>document.documentElement.classList.add('js');</script>
-<meta name="description" content="Eight React Native UI libraries compared on accessibility, theming speed and memory, on an iPhone simulator and a budget Android phone.">
+<meta name="description" content="Eight React Native UI libraries compared on accessibility, theming speed and memory, on an iPhone and a budget Android phone.">
 <style>
 :root {
   --bg: #f6f5f1; --surface: #ffffff; --raised: #fbfaf7; --text: #18181b; --muted: #5d5a55; --line: #e3dfd6;
@@ -181,6 +181,7 @@ section { padding: 64px 0 8px; scroll-margin-top: 56px; }
 .kinds .ver { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
 .kinds small { display: block; color: var(--muted); font-size: 12px; }
 .hint { color: var(--muted); font-size: 15px; margin: 4px 0 16px; max-width: 75ch; }
+ul.hint { padding-left: 20px; } ul.hint li { margin: 2px 0; } ul.hint ul { padding-left: 18px; margin: 2px 0; }
 .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
 table { border-collapse: collapse; width: 100%; font-size: 14px; }
 th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
@@ -280,7 +281,7 @@ footer h2 { color: var(--text); }
     </div>
     <p class="eyebrow">React Native · 8 apps · 2 platforms</p>
     <h1>React Native UI libraries: <span class="grad">the pros and cons</span> of each, measured</h1>
-    <p class="lede">The same test screen built eight times: plain React Native, three styling engines and four component libraries. Each was checked for accessibility, theming speed and memory, on an iPhone simulator and a budget Android phone.</p>
+    <p class="lede">The same test screen built eight times: plain React Native, three styling engines and four component libraries. Each was checked for accessibility, theming speed and memory, on an iPhone and a budget Android phone.</p>
     <ul class="stack" id="stack"></ul>
     <ul class="stats" id="stats"></ul>
   </div>
@@ -307,12 +308,31 @@ footer h2 { color: var(--text); }
   </section>
   <section id="scorecard">
     <div class="reveal"><span class="sec-num">03</span><h2>Scorecard</h2></div>
-    <p class="hint reveal">One row per app. Click a column to rank by it. 🟢 best, 🔴 worst. Every measure is shown for iOS (the iPhone 17 simulator) and Android (the Galaxy A15). Accessibility is checks passed, light theme. Re-renders on Android aren’t measured yet.</p>
+    <ul class="hint reveal">
+      <li>One row per app. Click a column to rank by it.</li>
+      <li>🟢 best, 🔴 worst.</li>
+      <li><strong>Android:</strong> ${devices.android}, a real budget phone, for everything. The Android emulator kept crashing on this Mac</li>
+      <li><strong>iOS speed and memory:</strong> ${devices.iphone}, a real phone</li>
+      <li><strong>iOS accessibility and re-renders:</strong> ${devices.simulator}</li>
+      <li><strong>Why two iOS devices:</strong>
+        <ul>
+          <li>Speed and memory depend on the hardware, so they’re measured on a real iPhone</li>
+          <li>Accessibility checks read what the screen reader sees, which is the same on the simulator</li>
+          <li>argent’s React profiler, which counts the re-renders, doesn’t support physical iPhones</li>
+        </ul></li>
+      <li><strong>Accessibility:</strong> checks passed, light theme.</li>
+      <li><strong>Re-renders on Android:</strong> not measured yet.</li>
+    </ul>
     <div class="scroll reveal"><table class="card" id="card"></table></div>
   </section>
   <section id="checks">
     <div class="reveal"><span class="sec-num">04</span><h2>Every check</h2></div>
-    <p class="hint reveal">Each cell is iOS / Android. Click a cell to see why a check failed.</p>
+    <ul class="hint reveal">
+      <li>Each cell is iOS / Android.</li>
+      <li>Click a cell to see why a check failed.</li>
+      <li><strong>iOS:</strong> ${devices.simulator}. Accessibility doesn’t depend on the hardware.</li>
+      <li><strong>Android:</strong> ${devices.android}.</li>
+    </ul>
     <div class="filters">
       <div class="chips" id="lib-filter" role="group" aria-label="Libraries"></div>
     </div>
@@ -330,8 +350,13 @@ footer h2 { color: var(--text); }
   </section>
   <section id="charts">
     <div class="reveal"><span class="sec-num">05</span><h2>Charts</h2></div>
-    <p class="hint reveal">Click a library to pick it out in every chart. Paired charts sort by the Android bar, the real phone. Compare apps within a platform: iOS is a simulator on a Mac, Android a budget phone.</p>
-    <div class="legend"><span class="key"><i style="background:var(--ios)"></i>iOS, iPhone 17 simulator</span><span class="key"><i style="background:var(--android)"></i>Android, Galaxy A15 5G</span></div>
+    <ul class="hint reveal">
+      <li>Click a library to pick it out in every chart.</li>
+      <li>Paired charts sort by the Android bar.</li>
+      <li>Each chart says which devices it was measured on.</li>
+      <li><strong>Compare apps within a platform:</strong> the iPhone 12 Pro is a 2020 flagship, the Galaxy A15 a budget phone.</li>
+    </ul>
+    <div class="legend"><span class="key"><i style="background:var(--ios)"></i>iOS</span><span class="key"><i style="background:var(--android)"></i>Android</span></div>
     <div class="charts" id="chart-list"></div>
   </section>
 </main>
@@ -465,7 +490,7 @@ function drawCharts() {
     const dir = /Longer is better/.test(c.sub) ? -1 : 1;
     if (sorted.has(ci)) rows.sort((a, b) => { const x = v(a).at(-1).value, y = v(b).at(-1).value; return x == null ? 1 : y == null ? -1 : (x - y) * dir; });
     const cls = c.kind === 'paired' ? ['ios', 'android'] : [c.cls];
-    return '<figure class="chart' + (grown.has(ci) ? ' in' : '') + '" data-ci="' + ci + '" style="margin:0"><div class="tools"><h3>' + esc(c.title) + '</h3><button type="button" data-sort="' + ci + '">' + (sorted.has(ci) ? 'Original order' : c.kind === 'paired' ? 'Sort by Android' : 'Sort by value') + '</button></div><p class="sub">' + esc(c.sub) + '</p>'
+    return '<figure class="chart' + (grown.has(ci) ? ' in' : '') + '" data-ci="' + ci + '" style="margin:0"><div class="tools"><h3>' + esc(c.title) + '</h3><button type="button" data-sort="' + ci + '">' + (sorted.has(ci) ? 'Original order' : c.kind === 'paired' ? 'Sort by Android' : 'Sort by value') + '</button></div><p class="sub">' + esc(c.sub) + '</p><p class="sub"><strong>Measured on</strong> ' + esc(c.on) + '</p>'
       + rows.map((r) => '<div class="row ' + (picked ? (picked === r.app ? 'on' : 'dim') : '') + '" data-app="' + r.app + '" role="button" tabindex="0" aria-pressed="' + (picked === r.app) + '"><span class="lbl">' + esc(r.label) + '</span><span class="bars">'
         + v(r).map((x, i) => '<span class="b" title="' + esc(r.label + ': ' + x.text) + '"><span class="fill ' + cls[i] + '" style="width:calc(' + ((x.value ?? 0) / max * 100).toFixed(1) + '% - 70px)"></span>' + esc(x.text) + '</span>').join('')
         + '</span></div>').join('')

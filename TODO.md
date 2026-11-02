@@ -26,7 +26,7 @@ What's left before the results are complete. Each item says how to run it and wh
 
 ## Optional
 
-- [ ] **A physical iPhone:** the iOS numbers are from a simulator on a Mac
+- [x] **A physical iPhone:** speed, memory and scrolling now run on an iPhone 12 Pro (`scripts/run-all-iphone.sh`); accessibility stays on the simulator
 - [ ] **Neutral wording:** "The answer" and the library roles (such as "Best all-rounder") rank the libraries. The site title no longer does
 
 ## After any new results

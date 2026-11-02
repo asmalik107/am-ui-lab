@@ -1,0 +1,46 @@
+{
+  "app": "nativewind",
+  "bundleId": "dev.asimmalik.uilab.nativewind",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T17:29:42.777Z",
+  "theme": {
+    "n": 8,
+    "median": 32.6,
+    "min": 32,
+    "max": 36.8,
+    "samples": [
+      32,
+      32.6,
+      32.7,
+      32.6,
+      32.2,
+      32.6,
+      36.8,
+      32.7
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 118.1,
+    "min": 98.5,
+    "max": 136.3,
+    "samples": [
+      132.4,
+      132,
+      119.6,
+      98.6,
+      116.6,
+      136.2,
+      115.8,
+      136.3,
+      115.3,
+      98.5
+    ]
+  }
+}

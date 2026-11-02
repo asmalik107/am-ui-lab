@@ -1,0 +1,177 @@
+{
+  "app": "uniwind",
+  "bundleId": "dev.asimmalik.uilab.uniwind",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T16:19:42.863Z",
+  "poll": {
+    "n": 5,
+    "median": 390.407375,
+    "min": 388.62629200000003,
+    "max": 401.8732080000002,
+    "samples": [
+      397.355667,
+      388.62629200000003,
+      389.2538750000001,
+      390.407375,
+      401.8732080000002
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 1193.521146,
+    "min": 864.1759999999995,
+    "max": 1432.6704160000008,
+    "samples": [
+      1335.4210410000005,
+      1216.6883749999997,
+      1397.1552920000013,
+      864.1759999999995,
+      1010.9320000000007,
+      864.4802500000005,
+      1340.4334579999995,
+      899.8110829999932,
+      1432.6704160000008,
+      1170.3539170000004
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 542.7244789999986,
+    "min": 407.46662500000093,
+    "max": 696.3580829999992,
+    "samples": [
+      607.4037910000006,
+      475.1194579999992,
+      653.0212090000005,
+      479.62254199999734,
+      640.2049160000024,
+      407.46662500000093,
+      602.8887080000022,
+      482.560249999995,
+      696.3580829999992,
+      440.7062089999963
+    ]
+  },
+  "memory": {
+    "idle": {
+      "physFootprint": 58919104
+    },
+    "used": {
+      "physFootprint": 99027456
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 25984,
+    "cpuMs": {
+      "main": 5473,
+      "js": 2469,
+      "other": 170,
+      "total": 8112
+    },
+    "hitches": {
+      "count": 0,
+      "hitchMs": 0,
+      "frames": 913,
+      "ratio": 0
+    }
+  },
+  "rerenders": {
+    "date": "2026-10-30T16:52:38.413Z",
+    "build": "Debug",
+    "switches": [
+      {
+        "from": "light",
+        "to": "dark",
+        "commits": 5,
+        "renders": 507,
+        "raw": {
+          "duration_ms": 2858.484,
+          "sample_count": 244,
+          "fiber_renders_captured": 507,
+          "total_react_commits": 5,
+          "hot_commit_indices": [
+            1
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 497,
+          "selection_note": "1 of 5 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "dark",
+        "to": "brand",
+        "commits": 5,
+        "renders": 509,
+        "raw": {
+          "duration_ms": 2868.815,
+          "sample_count": 240,
+          "fiber_renders_captured": 509,
+          "total_react_commits": 5,
+          "hot_commit_indices": [
+            1
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 499,
+          "selection_note": "1 of 5 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "brand",
+        "to": "light",
+        "commits": 4,
+        "renders": 302,
+        "raw": {
+          "duration_ms": 2863.306,
+          "sample_count": 242,
+          "fiber_renders_captured": 302,
+          "total_react_commits": 4,
+          "hot_commit_indices": [
+            1
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 297,
+          "selection_note": "1 of 4 commits at ≥16ms absolute floor"
+        }
+      }
+    ]
+  }
+}

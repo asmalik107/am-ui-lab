@@ -1,0 +1,47 @@
+{
+  "app": "uniwind",
+  "bundleId": "dev.asimmalik.uilab.uniwind",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T16:13:33.114Z",
+  "theme": {
+    "n": 9,
+    "median": 32.7,
+    "min": 20.1,
+    "max": 32.8,
+    "samples": [
+      32.1,
+      32.7,
+      32.8,
+      32.5,
+      32.6,
+      32.7,
+      32.8,
+      20.1,
+      32.7
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 101.3,
+    "min": 69.3,
+    "max": 102.8,
+    "samples": [
+      99.2,
+      102.8,
+      69.3,
+      101.1,
+      102.1,
+      101.5,
+      101.8,
+      102.7,
+      98.4,
+      100.6
+    ]
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "app": "baseline",
+  "bundleId": "dev.asimmalik.uilab.baseline",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T15:59:20.835Z",
+  "poll": {
+    "n": 5,
+    "median": 493.19295799999986,
+    "min": 456.459625,
+    "max": 548.2847080000001,
+    "samples": [
+      456.459625,
+      504.1852080000001,
+      493.19295799999986,
+      490.72254099999986,
+      548.2847080000001
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 1251.0204169999997,
+    "min": 817.0671250000014,
+    "max": 1376.3866669999989,
+    "samples": [
+      1351.255333,
+      1241.501959000001,
+      1053.317500000001,
+      1143.1991250000028,
+      1376.3866669999989,
+      817.0671250000014,
+      1346.8945830000011,
+      1260.5388749999984,
+      1369.3629160000055,
+      1175.3415000000023
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 570.3142079999984,
+    "min": 407.9802500000005,
+    "max": 688.8068750000002,
+    "samples": [
+      618.2089160000005,
+      429.55154200000106,
+      688.8068750000002,
+      407.9802500000005,
+      647.2048749999994,
+      447.7447920000013,
+      624.7422499999993,
+      522.4194999999963,
+      622.4352080000026,
+      445.81666699999914
+    ]
+  },
+  "memory": {
+    "idle": {
+      "physFootprint": 57559360
+    },
+    "used": {
+      "physFootprint": 129043008
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 26335,
+    "cpuMs": {
+      "main": 5548,
+      "js": 2406,
+      "other": 184,
+      "total": 8138
+    },
+    "hitches": {
+      "count": 1,
+      "hitchMs": 16.775291,
+      "frames": 940,
+      "ratio": 0.6369960508828555
+    }
+  },
+  "rerenders": {
+    "date": "2026-10-30T16:21:52.329Z",
+    "build": "Debug",
+    "switches": [
+      {
+        "from": "light",
+        "to": "dark",
+        "commits": 3,
+        "renders": 298,
+        "raw": {
+          "duration_ms": 2817.332,
+          "sample_count": 238,
+          "fiber_renders_captured": 298,
+          "total_react_commits": 3,
+          "hot_commit_indices": [
+            0
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 295,
+          "selection_note": "1 of 3 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "dark",
+        "to": "brand",
+        "commits": 2,
+        "renders": 298,
+        "raw": {
+          "duration_ms": 2820.973,
+          "sample_count": 226,
+          "fiber_renders_captured": 298,
+          "total_react_commits": 2,
+          "hot_commit_indices": [
+            0
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 298,
+          "selection_note": "1 of 2 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "brand",
+        "to": "light",
+        "commits": 2,
+        "renders": 290,
+        "raw": {
+          "duration_ms": 2848.842,
+          "sample_count": 248,
+          "fiber_renders_captured": 290,
+          "total_react_commits": 2,
+          "hot_commit_indices": [
+            0
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 290,
+          "selection_note": "1 of 2 commits at ≥16ms absolute floor"
+        }
+      }
+    ]
+  }
+}

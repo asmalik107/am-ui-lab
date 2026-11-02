@@ -19,13 +19,14 @@ const ratio = (t) => (t ? t.pass / t.total : null);
 export const rows = apps.map((app) => {
   const r = (f) => load(`results/${app}/${f}`);
   const aMet = r('android-metrics.json');
-  const iMet = r('ios-metrics.json');
+  // iOS performance is from the cabled iPhone where it has been run, else the simulator.
+  const iMet = r('iphone-metrics.json') ?? r('ios-metrics.json');
   return {
     app,
     name: names[app],
     a11yIos: pass(r('ios-a11y.json')),
     a11yAndroid: pass(r('android-a11y.json')),
-    themeIos: r('ios-perf.json')?.theme.median ?? null,
+    themeIos: (r('iphone-perf.json') ?? r('ios-perf.json'))?.theme.median ?? null,
     themeAndroid: r('android-perf.json')?.theme.median ?? null,
     memGrowthIos: iMet ? (iMet.memory.used.physFootprint - iMet.memory.idle.physFootprint) / 1048576 : null,
     memGrowth: aMet ? (aMet.memory.used.pss - aMet.memory.idle.pss) / 1048576 : null,
@@ -38,13 +39,38 @@ export const rows = apps.map((app) => {
   };
 });
 
+// Which device each group of results comes from, named from the result files
+// themselves so the docs can't disagree with the data. iOS performance is from
+// the cabled iPhone where it has been run; everything else iOS is the simulator.
+const devOf = (f) => load(`results/baseline/${f}`)?.device;
+const androidNames = { 'SM-A156E': 'Galaxy A15 5G' };
+const sim = devOf('ios-a11y.json');
+const phone = devOf('iphone-metrics.json');
+const droid = devOf('android-a11y.json');
+const simName = sim ? `${sim.name} simulator (${sim.runtime})` : 'iOS simulator';
+const phoneName = phone ? `${phone.name} (${phone.runtime})` : simName;
+const droidName = droid ? `${androidNames[droid.name] ?? droid.name} (${droid.runtime.replace(/ \(.*\)$/, '')})` : 'Android phone';
+export const devices = { simulator: simName, iphone: phoneName, android: droidName };
+// [iOS, Android] per group of results.
+export const measuredOn = {
+  accessibility: [simName, droidName],
+  textsize: [simName, droidName],
+  motion: [simName, droidName],
+  timings: [phoneName, droidName],
+  metrics: [phoneName, droidName],
+  rerenders: [simName, 'not measured'],
+  bundle: ['no device: built with expo export', 'no device: built with expo export'],
+};
+export const measuredText = (key) => `iOS: ${measuredOn[key][0]}. Android: ${measuredOn[key][1]}.`;
+export const measuredMd = (key) => `**Measured on** iOS: ${measuredOn[key][0]}. Android: ${measuredOn[key][1]}.`;
+
 // Each column: how to read a value for ranking, which way is better, and how to
 // print it. Ties all get the mark; a column where most apps tie (library code
 // copied) only marks the worst.
 export const columns = [
   { head: 'Accessibility, iOS', link: 'accessibility', section: 'Accessibility', get: (x) => ratio(x.a11yIos), better: 'high', fmt: (x) => `${x.a11yIos.pass} / ${x.a11yIos.total}` },
   { head: 'Accessibility, Android', link: 'accessibility', section: 'Accessibility', get: (x) => ratio(x.a11yAndroid), better: 'high', fmt: (x) => `${x.a11yAndroid.pass} / ${x.a11yAndroid.total}` },
-  // On iOS every app but one takes two frames, so only the worst is marked.
+  // On iOS five apps take two frames, within a few hundredths of a ms, so only the worst is marked.
   { head: 'Theme switch, iOS', link: 'timings', section: 'Timings', get: (x) => x.themeIos, better: 'low', fmt: (x) => `${Math.round(x.themeIos)} ms`, worstOnly: true },
   { head: 'Theme switch, Android', link: 'timings', section: 'Timings', get: (x) => x.themeAndroid, better: 'low', fmt: (x) => `${Math.round(x.themeAndroid)} ms` },
   { head: 'Memory growth, iOS', link: 'startup-memory-and-scrolling', section: 'Startup, memory and scrolling', get: (x) => x.memGrowthIos, better: 'low', fmt: (x) => `+${Math.round(x.memGrowthIos)} MiB` },
@@ -132,7 +158,7 @@ const devRow = (app) => devcost?.rows.find((x) => x.app === app);
 
 // [where, what happens there]: one line each.
 export const headline = [
-  ['On the iPhone simulator', 'the libraries are almost equally fast'],
+  ['On an iPhone 12 Pro', 'most libraries are equally fast'],
   ['On a budget Android phone', 'some are much slower'],
 ];
 // What the two kinds of library are, shown above the answer wherever the
@@ -190,20 +216,20 @@ export const points = [
     ['**Baseline and styling engines**', [`TalkBack: ${by.baseline.a11yAndroid.pass} of ${by.baseline.a11yAndroid.total} checks`, `VoiceOver: ${by.baseline.a11yIos.pass} of ${by.baseline.a11yIos.total} checks`]],
     `**Component libraries:** ${Math.min(...kitPct)}–${Math.max(...kitPct)}% of checks`,
   ] },
-  { lead: 'Speed differences only show on the real phone', items: [
+  { lead: 'Speed differences are largest on the budget phone', items: [
     ['**Galaxy A15:** a theme switch takes', [`Unistyles: ${ms('unistyles')} ms, the fastest`, `Tamagui: ${ms('tamagui')} ms, the slowest`]],
-    '**iPhone simulator:** every app but Tamagui finishes within a frame or two',
+    ['**iPhone 12 Pro:** a theme switch takes', ['Five apps: two frames, about 33 ms', `gluestack and HeroUI: about ${Math.round(by.heroui.themeIos)} ms`, `Tamagui: ${Math.round(by.tamagui.themeIos)} ms`]],
   ] },
   { lead: 'Unistyles is the best all-rounder', items: [
-    'Fastest theme switch on the phone',
+    'Fastest theme switch on the Galaxy A15',
     'Fewest re-renders, on iOS',
     'The baseline’s accessibility',
   ] },
   { lead: 'Each component library costs you something', items: [
-    `**HeroUI:** memory grows by ${Math.round(by.heroui.memGrowth)} MiB on the phone`,
+    `**HeroUI:** memory grows by ${Math.round(by.heroui.memGrowth)} MiB on the Galaxy A15`,
     ['**Their code copied into your app**', [`gluestack: ${n(by.gluestack.copied)} lines`, `Reusables: ${n(by.reusables.copied)} lines`]],
     '**Reusables:** button labels cut off at large text sizes',
-    `**Tamagui:** the slowest app, ${ms('tamagui')} ms per theme switch on the phone`,
+    `**Tamagui:** the slowest app, ${ms('tamagui')} ms per theme switch on the Galaxy A15`,
   ] },
 ];
 const access = (app, text = 'Accessibility') => [text, [`TalkBack: ${by[app].a11yAndroid.pass} of ${by[app].a11yAndroid.total}`, `VoiceOver: ${by[app].a11yIos.pass} of ${by[app].a11yIos.total}`]];
@@ -224,9 +250,9 @@ function themeSwitching() {
 
 // [what you want, the pick (or null for a heading on its own), the reasons]
 export const picks = [
-  ['Accessibility and speed first', 'Unistyles', ['Fastest theme switch on the phone', 'The baseline’s accessibility']],
-  ['Tailwind classes', 'Uniwind', [['Faster than NativeWind on the phone', [`Uniwind: ${ms('uniwind')} ms`, `NativeWind: ${ms('nativewind')} ms`]]]],
-  ['Ready-made components', 'HeroUI', [access('heroui', 'The most accessible component library'), `Its memory grows the most on the phone: +${Math.round(by.heroui.memGrowth)} MiB after use`, ['Accessibility gaps you’d fix yourself', ['Labelled switch and checkbox rows hide the control’s name, role and state', 'The field error isn’t linked to the field']]]],
+  ['Accessibility and speed first', 'Unistyles', ['Fastest theme switch on the Galaxy A15', 'The baseline’s accessibility']],
+  ['Tailwind classes', 'Uniwind', [['Faster than NativeWind on the Galaxy A15', [`Uniwind: ${ms('uniwind')} ms`, `NativeWind: ${ms('nativewind')} ms`]]]],
+  ['Ready-made components', 'HeroUI', [access('heroui', 'The most accessible component library'), `Its memory grows the most on the Galaxy A15: +${Math.round(by.heroui.memGrowth)} MiB after use`, ['Accessibility gaps you’d fix yourself', ['Labelled switch and checkbox rows hide the control’s name, role and state', 'The field error isn’t linked to the field']]]],
   ['Theme switching on a budget Android phone', null, themeSwitching()],
 ];
 
@@ -258,7 +284,7 @@ const setupProblems = (app) => {
 
 export const libraries = [
   { app: 'unistyles', role: 'Best all-rounder', good: [
-    ['Fastest theme switch on the phone', [`Unistyles: ${ms('unistyles')} ms`, `Baseline: ${ms('baseline')} ms`]],
+    ['Fastest theme switch on the Galaxy A15', [`Unistyles: ${ms('unistyles')} ms`, `Baseline: ${ms('baseline')} ms`]],
     ['Fewest re-renders per theme switch, on iOS', [`Unistyles: ${by.unistyles.rerenders}`, `Baseline: ${by.baseline.rerenders}`]],
     access('unistyles', 'The baseline’s accessibility, as the components are hand-built'),
   ], bad: ['You build every component yourself, as with the baseline'] },
@@ -267,16 +293,16 @@ export const libraries = [
     'No setup problems hit',
   ], bad: [
     'You build every component yourself, as with the baseline',
-    ['Slower theme switch on the phone', [`Uniwind: ${ms('uniwind')} ms`, `Baseline: ${ms('baseline')} ms`]],
+    ['Slower theme switch on the Galaxy A15', [`Uniwind: ${ms('uniwind')} ms`, `Baseline: ${ms('baseline')} ms`]],
     ['More re-renders per theme switch, on iOS', [`Uniwind: ${by.uniwind.rerenders}`, `Unistyles: ${by.unistyles.rerenders}`]],
   ] },
   { app: 'nativewind', role: 'Tailwind, still a release candidate', good: [
     access('nativewind', 'The baseline’s accessibility'),
-    `Least memory growth on the phone: +${Math.round(by.nativewind.memGrowth)} MiB`,
+    `Least memory growth on the Galaxy A15: +${Math.round(by.nativewind.memGrowth)} MiB`,
   ], bad: [
     'You build every component yourself, as with the baseline',
     ['Still a release candidate (5.0.0-rc.0)', ['Needed a line-height workaround', 'Without it, the page was 18 screens tall']],
-    `Theme switch on the phone: ${ms('nativewind')} ms`,
+    `Theme switch on the Galaxy A15: ${ms('nativewind')} ms`,
   ] },
   { app: 'baseline', role: 'Plain React Native, the reference point', good: [
     access('baseline', 'Top accessibility score'),
@@ -285,13 +311,13 @@ export const libraries = [
   { app: 'heroui', role: 'The most accessible component library', good: [
     access('heroui', 'Best accessibility of the component libraries'),
   ], bad: [
-    `Memory grows the most on the phone: +${Math.round(by.heroui.memGrowth)} MiB after use`,
+    `Memory grows the most on the Galaxy A15: +${Math.round(by.heroui.memGrowth)} MiB after use`,
     `Most re-renders per theme switch, on iOS: ${n(by.heroui.rerenders)}`,
-    `Theme switch on the phone: ${ms('heroui')} ms`,
+    `Theme switch on the Galaxy A15: ${ms('heroui')} ms`,
     'Labelled switch and checkbox rows hide the control’s name, role and state',
   ] },
   { app: 'reusables', role: 'Fast, with rough edges', good: [
-    ['Theme switch on the phone level with the baseline', [`Reusables: ${ms('reusables')} ms`, `Baseline: ${ms('baseline')} ms`]],
+    ['Theme switch on the Galaxy A15 level with the baseline', [`Reusables: ${ms('reusables')} ms`, `Baseline: ${ms('baseline')} ms`]],
   ], bad: [
     ['Largest JS bundle', [`iOS: ${by.reusables.bundle.toFixed(2)} MB`, `Android: ${by.reusables.bundleAndroid.toFixed(2)} MB`, 'Bundles all 1,917 lucide icons and uses 4']],
     'Button labels are cut off at the largest text size, on both platforms',
@@ -305,13 +331,13 @@ export const libraries = [
     access('gluestack', 'Lowest accessibility'),
     ['Controls too small to tap on the phone, under Google’s 48 dp minimum', tooSmall('gluestack')],
     [`Most setup problems hit: ${devRow('gluestack').errorsHit}, listed in [its notes](apps/gluestack/NOTES.md#errors-hit-and-fixes)`, setupProblems('gluestack')],
-    `Memory grows by ${Math.round(by.gluestack.memGrowth)} MiB on the phone`,
+    `Memory grows by ${Math.round(by.gluestack.memGrowth)} MiB on the Galaxy A15`,
   ] },
   { app: 'tamagui', role: 'Slowest on both platforms', good: [
     'A full component library with its own compiler',
     `Only ${devRow('tamagui').a11yProps} accessibility props written by hand`,
   ], bad: [
-    ['Slowest theme switch', [`Phone: ${ms('tamagui')} ms, about ${Math.round(by.tamagui.themeAndroid / by.baseline.themeAndroid)} times the baseline`, `iOS: ${Math.round(load('results/tamagui/ios-perf.json').theme.median)} ms`]],
+    ['Slowest theme switch', [`Phone: ${ms('tamagui')} ms, about ${Math.round(by.tamagui.themeAndroid / by.baseline.themeAndroid)} times the baseline`, `iOS: ${Math.round((load('results/tamagui/iphone-perf.json') ?? load('results/tamagui/ios-perf.json')).theme.median)} ms`]],
     access('tamagui', 'Low accessibility'),
     'The switch and checkbox have no name',
     'Its Debug build crashes, so re-renders aren’t counted',

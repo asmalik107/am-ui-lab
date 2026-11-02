@@ -86,7 +86,7 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
 
 <!-- begin:verdict -->
 > [!NOTE]
-> **On the iPhone simulator:** the libraries are almost equally fast.
+> **On an iPhone 12 Pro:** most libraries are equally fast.
 >
 > **On a budget Android phone:** some are much slower.
 
@@ -95,39 +95,42 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
     - TalkBack: 60 of 62 checks
     - VoiceOver: 58 of 62 checks
   - **Component libraries:** 55–70% of checks
-- **Speed differences only show on the real phone**
+- **Speed differences are largest on the budget phone**
   - **Galaxy A15:** a theme switch takes
     - Unistyles: 71 ms, the fastest
     - Tamagui: 630 ms, the slowest
-  - **iPhone simulator:** every app but Tamagui finishes within a frame or two
+  - **iPhone 12 Pro:** a theme switch takes
+    - Five apps: two frames, about 33 ms
+    - gluestack and HeroUI: about 65 ms
+    - Tamagui: 116 ms
 - **Unistyles is the best all-rounder**
-  - Fastest theme switch on the phone
+  - Fastest theme switch on the Galaxy A15
   - Fewest re-renders, on iOS
   - The baseline’s accessibility
 - **Each component library costs you something**
-  - **HeroUI:** memory grows by 216 MiB on the phone
+  - **HeroUI:** memory grows by 216 MiB on the Galaxy A15
   - **Their code copied into your app**
     - gluestack: 7,488 lines
     - Reusables: 1,519 lines
   - **Reusables:** button labels cut off at large text sizes
-  - **Tamagui:** the slowest app, 630 ms per theme switch on the phone
+  - **Tamagui:** the slowest app, 630 ms per theme switch on the Galaxy A15
 
 <a id="pick-by-what-you-need"></a>
 
 ### Pick by what you need
 
 - **Accessibility and speed first: Unistyles**
-  - Fastest theme switch on the phone
+  - Fastest theme switch on the Galaxy A15
   - The baseline’s accessibility
 - **Tailwind classes: Uniwind**
-  - Faster than NativeWind on the phone
+  - Faster than NativeWind on the Galaxy A15
     - Uniwind: 137 ms
     - NativeWind: 183 ms
 - **Ready-made components: HeroUI**
   - The most accessible component library
     - TalkBack: 47 of 67
     - VoiceOver: 44 of 67
-  - Its memory grows the most on the phone: +216 MiB after use
+  - Its memory grows the most on the Galaxy A15: +216 MiB after use
   - Accessibility gaps you’d fix yourself
     - Labelled switch and checkbox rows hide the control’s name, role and state
     - The field error isn’t linked to the field
@@ -150,22 +153,28 @@ One row per app.
 
 - 🟢 **Bold** is the best in each column, 🔴 the worst.
 - **Accessibility:** every check, in the light theme.
-- **Theme switch, iOS:** every app but one takes two frames (about 32 ms), so only the worst is marked.
-- **Android:** the Galaxy A15. **iOS:** the iPhone 17 simulator.
+- **Theme switch, iOS:** five apps take two frames (about 33 ms), so only the worst is marked.
+- **Android:** the Galaxy A15, a real budget phone, for everything. The Android emulator kept crashing on this Mac.
+- **iOS speed and memory:** an iPhone 12 Pro, a real phone.
+- **iOS accessibility and re-renders:** the iPhone 17 simulator.
+- **Why two iOS devices:**
+  - Speed and memory depend on the hardware, so they're measured on a real iPhone
+  - Accessibility checks read what the screen reader sees, which is the same on the simulator
+  - argent's React profiler, which counts the re-renders, doesn't support physical iPhones
 - **Re-renders, Android:** not measured yet. It needs a Debug build profiled on the phone.
 - **Each column** links to its section in [Results](docs/results.md), listed under the table.
 
 <!-- begin:scorecard -->
 | App | [Accessibility, iOS](docs/results.md#accessibility) | [Accessibility, Android](docs/results.md#accessibility) | [Theme switch, iOS](docs/results.md#timings) | [Theme switch, Android](docs/results.md#timings) | [Memory growth, iOS](docs/results.md#startup-memory-and-scrolling) | [Memory growth, Android](docs/results.md#startup-memory-and-scrolling) | [JS bundle, iOS](docs/results.md#bundle-size-and-re-renders) | [JS bundle, Android](docs/results.md#bundle-size-and-re-renders) | [Re-renders per theme switch, iOS](docs/results.md#bundle-size-and-re-renders) | [Re-renders per theme switch, Android](docs/results.md#bundle-size-and-re-renders) | [Library code copied in](docs/results.md#developer-cost) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [Baseline](#baseline-plain-react-native-the-reference-point) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 99 ms | +62 MiB | +50 MiB | 🟢 **3.95 MB** | 🟢 **4.09 MB** | 298 | not measured | 0 |
-| [Unistyles](#unistyles-360-best-all-rounder) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 🟢 **71 ms** | +61 MiB | +54 MiB | 4.15 MB | 4.29 MB | 🟢 **128** | not measured | 0 |
-| [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 137 ms | +67 MiB | +51 MiB | 4.24 MB | 4.38 MB | 507 | not measured | 0 |
-| [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 183 ms | +66 MiB | 🟢 **+32 MiB** | 4.47 MB | 4.61 MB | 460 | not measured | 0 |
-| [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 🔴 99 ms | 🔴 630 ms | 🔴 +79 MiB | +46 MiB | 5.44 MB | 5.59 MB | not measured | not measured | 0 |
-| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 36 / 66 | 32 ms | 192 ms | +53 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | not measured | 🔴 7,488 |
-| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 47 / 67 | 32 ms | 239 ms | 🟢 **+36 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | not measured | 0 |
-| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 37 / 62 | 32 ms | 97 ms | +67 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | not measured | 1,519 |
+| [Baseline](#baseline-plain-react-native-the-reference-point) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 99 ms | +68 MiB | +50 MiB | 🟢 **3.95 MB** | 🟢 **4.09 MB** | 298 | not measured | 0 |
+| [Unistyles](#unistyles-360-best-all-rounder) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 🟢 **71 ms** | +67 MiB | +54 MiB | 4.15 MB | 4.29 MB | 🟢 **128** | not measured | 0 |
+| [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 137 ms | +38 MiB | +51 MiB | 4.24 MB | 4.38 MB | 507 | not measured | 0 |
+| [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 183 ms | +51 MiB | 🟢 **+32 MiB** | 4.47 MB | 4.61 MB | 460 | not measured | 0 |
+| [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 🔴 116 ms | 🔴 630 ms | 🔴 +69 MiB | +46 MiB | 5.44 MB | 5.59 MB | not measured | not measured | 0 |
+| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 36 / 66 | 65 ms | 192 ms | +47 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | not measured | 🔴 7,488 |
+| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 47 / 67 | 65 ms | 239 ms | 🟢 **+29 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | not measured | 0 |
+| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 37 / 62 | 33 ms | 97 ms | +43 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | not measured | 1,519 |
 <!-- end:scorecard -->
 
 <!-- begin:scorecardlinks -->
@@ -203,7 +212,7 @@ Best first.
 
 *Styling engine*
 
-- ✅ Fastest theme switch on the phone
+- ✅ Fastest theme switch on the Galaxy A15
   - Unistyles: 71 ms
   - Baseline: 99 ms
 - ✅ Fewest re-renders per theme switch, on iOS
@@ -227,7 +236,7 @@ Best first.
   - VoiceOver: 58 of 62
 - ✅ No setup problems hit
 - ⚠️ You build every component yourself, as with the baseline
-- ⚠️ Slower theme switch on the phone
+- ⚠️ Slower theme switch on the Galaxy A15
   - Uniwind: 137 ms
   - Baseline: 99 ms
 - ⚠️ More re-renders per theme switch, on iOS
@@ -245,12 +254,12 @@ Best first.
 - ✅ The baseline’s accessibility
   - TalkBack: 60 of 62
   - VoiceOver: 58 of 62
-- ✅ Least memory growth on the phone: +32 MiB
+- ✅ Least memory growth on the Galaxy A15: +32 MiB
 - ⚠️ You build every component yourself, as with the baseline
 - ⚠️ Still a release candidate (5.0.0-rc.0)
   - Needed a line-height workaround
   - Without it, the page was 18 screens tall
-- ⚠️ Theme switch on the phone: 183 ms
+- ⚠️ Theme switch on the Galaxy A15: 183 ms
 
 [Setup notes](apps/nativewind/NOTES.md) · [Raw results](results/nativewind/)
 
@@ -281,9 +290,9 @@ Best first.
 - ✅ Best accessibility of the component libraries
   - TalkBack: 47 of 67
   - VoiceOver: 44 of 67
-- ⚠️ Memory grows the most on the phone: +216 MiB after use
+- ⚠️ Memory grows the most on the Galaxy A15: +216 MiB after use
 - ⚠️ Most re-renders per theme switch, on iOS: 1,137
-- ⚠️ Theme switch on the phone: 239 ms
+- ⚠️ Theme switch on the Galaxy A15: 239 ms
 - ⚠️ Labelled switch and checkbox rows hide the control’s name, role and state
 
 [Setup notes](apps/heroui/NOTES.md) · [Raw results](results/heroui/)
@@ -294,7 +303,7 @@ Best first.
 
 *Component library*
 
-- ✅ Theme switch on the phone level with the baseline
+- ✅ Theme switch on the Galaxy A15 level with the baseline
   - Reusables: 97 ms
   - Baseline: 99 ms
 - ⚠️ Largest JS bundle
@@ -344,7 +353,7 @@ Best first.
   - The docs and the code disagree
   - TS6 side-effect import error
   - withUniwind lost gorhom's generic
-- ⚠️ Memory grows by 103 MiB on the phone
+- ⚠️ Memory grows by 103 MiB on the Galaxy A15
 
 [Setup notes](apps/gluestack/NOTES.md) · [Raw results](results/gluestack/)
 
@@ -358,7 +367,7 @@ Best first.
 - ✅ Only 12 accessibility props written by hand
 - ⚠️ Slowest theme switch
   - Phone: 630 ms, about 6 times the baseline
-  - iOS: 99 ms
+  - iOS: 116 ms
 - ⚠️ Low accessibility
   - TalkBack: 42 of 67
   - VoiceOver: 36 of 57
@@ -375,9 +384,9 @@ Best first.
 
 |  | iOS | Android |
 | --- | --- | --- |
-| Device | iPhone 17 simulator, iOS 27.0 (Xcode 27.1) | Samsung Galaxy A15 5G (SM-A156E), Android 16. A physical budget phone. |
+| Device | iPhone 12 Pro, iOS 26.6.1, for speed, memory and scrolling. iPhone 17 simulator, iOS 27.0 (Xcode 27.1), for accessibility and re-renders | Samsung Galaxy A15 5G (SM-A156E), Android 16. A physical budget phone. |
 | Screen reader whose tree is checked | VoiceOver | TalkBack |
-| Last run | 30 October 2026 | 30–31 October 2026 |
+| Last run | Simulator 30 October 2026, iPhone 2 November 2026 | 30–31 October 2026 |
 
 - **Builds:** Release
   - Except the re-render counts: Debug, iOS only

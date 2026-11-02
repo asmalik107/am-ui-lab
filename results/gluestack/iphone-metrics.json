@@ -1,0 +1,180 @@
+{
+  "app": "gluestack",
+  "bundleId": "dev.asimmalik.uilab.gluestack",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T16:56:29.253Z",
+  "poll": {
+    "n": 5,
+    "median": 494.29495800000007,
+    "min": 456.408417,
+    "max": 547.4678330000002,
+    "samples": [
+      456.408417,
+      494.29495800000007,
+      495.22,
+      488.0867089999999,
+      547.4678330000002
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 1302.277250500003,
+    "min": 1162.0835000000006,
+    "max": 1489.3217910000003,
+    "samples": [
+      1381.8923340000001,
+      1184.1475840000003,
+      1489.3217910000003,
+      1192.6346669999984,
+      1485.2751250000001,
+      1162.0835000000006,
+      1483.6916249999995,
+      1199.570915999997,
+      1356.8452089999992,
+      1247.7092920000068
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 550.1032085000006,
+    "min": 417.99662499999977,
+    "max": 740.9514999999992,
+    "samples": [
+      627.7482500000006,
+      417.99662499999977,
+      740.9514999999992,
+      431.53770799999984,
+      732.887917,
+      424.5086670000019,
+      646.5740409999999,
+      448.9031659999964,
+      612.1666669999977,
+      488.03975000000355
+    ]
+  },
+  "memory": {
+    "idle": {
+      "physFootprint": 72730944
+    },
+    "used": {
+      "physFootprint": 122259968
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 26486,
+    "cpuMs": {
+      "main": 5573,
+      "js": 2585,
+      "other": 194,
+      "total": 8352
+    },
+    "hitches": {
+      "count": 1,
+      "hitchMs": 16.770708,
+      "frames": 977,
+      "ratio": 0.633191421883259
+    }
+  },
+  "rerenders": {
+    "date": "2026-10-30T17:23:39.869Z",
+    "build": "Debug",
+    "switches": [
+      {
+        "from": "light",
+        "to": "dark",
+        "commits": 6,
+        "renders": 815,
+        "raw": {
+          "duration_ms": 2838.384,
+          "sample_count": 217,
+          "fiber_renders_captured": 815,
+          "total_react_commits": 6,
+          "hot_commit_indices": [
+            2,
+            3
+          ],
+          "any_compiler_optimized": true,
+          "fiber_renders_analyzed": 791,
+          "selection_note": "2 of 6 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "dark",
+        "to": "brand",
+        "commits": 7,
+        "renders": 815,
+        "raw": {
+          "duration_ms": 2814.931,
+          "sample_count": 204,
+          "fiber_renders_captured": 815,
+          "total_react_commits": 7,
+          "hot_commit_indices": [
+            1,
+            2,
+            4
+          ],
+          "any_compiler_optimized": true,
+          "fiber_renders_analyzed": 810,
+          "selection_note": "3 of 7 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "brand",
+        "to": "light",
+        "commits": 6,
+        "renders": 508,
+        "raw": {
+          "duration_ms": 2840.091,
+          "sample_count": 206,
+          "fiber_renders_captured": 508,
+          "total_react_commits": 6,
+          "hot_commit_indices": [
+            2
+          ],
+          "any_compiler_optimized": true,
+          "fiber_renders_analyzed": 457,
+          "selection_note": "1 of 6 commits at ≥16ms absolute floor"
+        }
+      }
+    ]
+  }
+}

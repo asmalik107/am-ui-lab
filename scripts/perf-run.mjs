@@ -1,12 +1,13 @@
-// Drives the in-app timings (src/perf.ts in each app) on a booted simulator
-// and records median and range. Run against a Release build.
+// Drives the in-app timings (src/perf.ts in each app) on a booted simulator,
+// a cabled iPhone or an Android phone, and records median and range. Run
+// against a Release build.
 //
 // Usage: node scripts/perf-run.mjs <app> <bundleId> <udid> [runs=10]
-// Output: results/<app>/ios-perf.json and results/<app>/ios-perf.md
+// Output: results/<app>/<ios|iphone|android>-perf.json and .md
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 
-import { deviceInfo, platformOf } from './device.mjs';
+import { deviceInfo, isPhysical, platformOf, resultsPrefix } from './device.mjs';
 
 const [app, bundleId, udid, runsArg] = process.argv.slice(2);
 const runs = Number(runsArg ?? 10);
@@ -15,6 +16,8 @@ if (!app || !bundleId || !udid) {
   process.exit(1);
 }
 const platform = platformOf(udid);
+const physical = isPhysical(udid);
+const prefix = resultsPrefix(udid);
 const device = deviceInfo(udid);
 const outDir = new URL(`../results/${app}/`, import.meta.url);
 mkdirSync(outDir, { recursive: true });
@@ -25,7 +28,10 @@ function argent(tool, args, tries = 3) {
     try {
       return JSON.parse(execFileSync('argent', ['run', tool, '--json', '--args', JSON.stringify({ udid, ...args })], { encoding: 'utf8', maxBuffer: 64 << 20 }));
     } catch (err) {
-      if (i >= tries || !['describe', 'list-devices'].includes(tool)) throw err;
+      // A phone's XCUITest runner sometimes drops and respawns on the next call.
+      const respawn = physical && /runner/i.test(String(err.stderr ?? err.message));
+      if (i >= tries || !(respawn || ['describe', 'list-devices'].includes(tool))) throw err;
+      if (respawn) Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5000);
     }
   }
 }
@@ -64,11 +70,13 @@ async function scrollTo(id) {
     const seen = els.map((x) => x.label).join('|');
     if (!e && seen === last) down = !down;
     last = seen;
-    const up = platform === 'android' ? (e ? e.y < 0.12 : !down) : aboveOnIos(id);
+    // A phone has no view-hierarchy tool, so it uses the same rule as Android.
+    const up = platform === 'android' || physical ? (e ? e.y < 0.12 : !down) : aboveOnIos(id);
     argent('gesture-swipe', { fromX: 0.5, fromY: up ? 0.35 : 0.65, toX: 0.5, toY: up ? 0.65 : 0.35, momentum: false, durationMs: 300 });
     await sleep(400);
   }
-  throw new Error(`could not reach ${id}`);
+  const els = axTree();
+  throw new Error(`could not reach ${id}; on screen: ${els.slice(0, 12).map((x) => `${x.label || x.identifier}@${x.y.toFixed(2)}`).join(", ")}`);
 }
 function aboveOnIos(id) {
   const d = argent('native-describe-screen', { bundleId });
@@ -82,9 +90,9 @@ const goBack = () =>
     : argent('gesture-swipe', { fromX: 0.0, fromY: 0.5, toX: 0.7, toY: 0.5, durationMs: 300 });
 // The readout's testIDs are not exposed on text in the system tree, so the
 // value is found by its label prefix.
-const prefix = { 'perf-theme': 'Theme switch:', 'perf-list': 'List mount:' };
+const labelPrefix = { 'perf-theme': 'Theme switch:', 'perf-list': 'List mount:' };
 const readMs = (els, id) => {
-  const e = els.find((x) => x.label.startsWith(prefix[id]));
+  const e = els.find((x) => x.label.startsWith(labelPrefix[id]));
   const m = e?.label.match(/([\d.]+) ms/);
   return m ? Number(m[1]) : null;
 };
@@ -122,18 +130,21 @@ for (let i = 0; i < runs; i++) {
   tap(await scrollTo('test-list-link'));
   const ms = await waitFor((els) => readMs(els, 'perf-list'));
   if (ms != null) list.push(ms);
-  goBack();
-  await waitFor((els) => byId(els, 'test-list-link') || els.some((e) => e.label.includes('Native control')));
+  // On a phone the edge swipe back sometimes doesn't take, so it is retried.
+  for (let tries = 0; tries < 3; tries++) {
+    goBack();
+    if (await waitFor((els) => byId(els, 'test-list-link') || els.some((e) => e.label.includes('Native control')))) break;
+  }
   await sleep(700);
 }
 
 const result = { app, bundleId, udid, platform, device, date: new Date().toISOString(), theme: stats(theme), list: stats(list) };
-writeFileSync(new URL(`${platform}-perf.json`, outDir), JSON.stringify(result, null, 2));
+writeFileSync(new URL(`${prefix}-perf.json`, outDir), JSON.stringify(result, null, 2));
 const row = (name, s) => `| ${name} | ${s.n} | ${s.median.toFixed(1)} | ${s.min.toFixed(1)}–${s.max.toFixed(1)} |`;
 const md = [
   `# ${app}: ${platform === 'ios' ? 'iOS' : 'Android'} timings`,
   '',
-  `Run ${result.date.slice(0, 10)} on the ${platform === 'ios' ? `${device.name} simulator` : device.name} (${device.runtime}, ${udid}) with \`scripts/perf-run.mjs\`, Release build. Times are from the tap to the second frame after the update (\`src/perf.ts\`).`,
+  `Run ${result.date.slice(0, 10)} on the ${platform === 'ios' && !physical ? `${device.name} simulator` : device.name} (${device.runtime}, ${udid}) with \`scripts/perf-run.mjs\`, Release build. Times are from the tap to the second frame after the update (\`src/perf.ts\`).`,
   '',
   '| Measure | Runs | Median (ms) | Range (ms) |',
   '| --- | --- | --- | --- |',
@@ -141,5 +152,5 @@ const md = [
   row('200-row list mount', result.list),
   '',
 ].join('\n');
-writeFileSync(new URL(`${platform}-perf.md`, outDir), md);
+writeFileSync(new URL(`${prefix}-perf.md`, outDir), md);
 console.log(md);

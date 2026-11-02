@@ -1,0 +1,46 @@
+{
+  "app": "unistyles",
+  "bundleId": "dev.asimmalik.uilab.unistyles",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T17:48:28.311Z",
+  "theme": {
+    "n": 8,
+    "median": 32.55,
+    "min": 32.2,
+    "max": 32.7,
+    "samples": [
+      32.2,
+      32.3,
+      32.5,
+      32.7,
+      32.5,
+      32.6,
+      32.7,
+      32.6
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 101.65,
+    "min": 99.9,
+    "max": 102.8,
+    "samples": [
+      102.8,
+      101.7,
+      102.8,
+      100,
+      101.6,
+      102.8,
+      102.8,
+      99.9,
+      100.4,
+      100.7
+    ]
+  }
+}

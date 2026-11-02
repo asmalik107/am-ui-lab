@@ -1,0 +1,46 @@
+{
+  "app": "baseline",
+  "bundleId": "dev.asimmalik.uilab.baseline",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T17:21:36.597Z",
+  "theme": {
+    "n": 8,
+    "median": 32.5,
+    "min": 32.2,
+    "max": 32.7,
+    "samples": [
+      32.3,
+      32.7,
+      32.2,
+      32.5,
+      32.6,
+      32.4,
+      32.7,
+      32.5
+    ]
+  },
+  "list": {
+    "n": 10,
+    "median": 100.5,
+    "min": 81.8,
+    "max": 119.3,
+    "samples": [
+      116.7,
+      102.2,
+      86.1,
+      81.9,
+      99.6,
+      119.3,
+      81.8,
+      86.1,
+      101.4,
+      101.7
+    ]
+  }
+}

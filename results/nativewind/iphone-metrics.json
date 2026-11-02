@@ -1,0 +1,177 @@
+{
+  "app": "nativewind",
+  "bundleId": "dev.asimmalik.uilab.nativewind",
+  "udid": "00008101-001E44222298001E",
+  "platform": "ios",
+  "device": {
+    "name": "iPhone 12 Pro",
+    "runtime": "iOS 26.6.1",
+    "physical": true
+  },
+  "date": "2026-11-02T16:30:21.864Z",
+  "poll": {
+    "n": 5,
+    "median": 482.67995800000017,
+    "min": 463.405833,
+    "max": 490.61391700000013,
+    "samples": [
+      463.405833,
+      490.007792,
+      478.1924999999999,
+      482.67995800000017,
+      490.61391700000013
+    ]
+  },
+  "startup": {
+    "n": 10,
+    "median": 1297.4558750000006,
+    "min": 1151.3210000000036,
+    "max": 1452.3340420000022,
+    "samples": [
+      1373.2201669999995,
+      1228.7208330000012,
+      1407.7511669999985,
+      1173.239375000001,
+      1366.190917,
+      1187.253084,
+      1451.097249999999,
+      1165.7497079999957,
+      1452.3340420000022,
+      1151.3210000000036
+    ]
+  },
+  "launchCall": {
+    "n": 10,
+    "median": 563.4381875000008,
+    "min": 415.47812500000146,
+    "max": 709.7842920000039,
+    "samples": [
+      635.1985420000001,
+      491.67783300000156,
+      668.6121249999997,
+      442.69345800000156,
+      641.5533749999995,
+      463.0335840000007,
+      707.5869590000002,
+      431.4185409999991,
+      709.7842920000039,
+      415.47812500000146
+    ]
+  },
+  "memory": {
+    "idle": {
+      "physFootprint": 61589824
+    },
+    "used": {
+      "physFootprint": 115329600
+    },
+    "overlays": [
+      {
+        "overlay": "test-dialog-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-sheet-open-expoui",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-select",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-menu-open",
+        "opened": true,
+        "closed": true
+      },
+      {
+        "overlay": "test-toast-show",
+        "opened": true,
+        "closed": true
+      }
+    ]
+  },
+  "scroll": {
+    "flings": 5,
+    "windowMs": 27697,
+    "cpuMs": {
+      "main": 5697,
+      "js": 3059,
+      "other": 231,
+      "total": 8987
+    },
+    "hitches": {
+      "count": 0,
+      "hitchMs": 0,
+      "frames": 1010,
+      "ratio": 0
+    }
+  },
+  "rerenders": {
+    "date": "2026-10-30T17:02:15.674Z",
+    "build": "Debug",
+    "switches": [
+      {
+        "from": "light",
+        "to": "dark",
+        "commits": 3,
+        "renders": 460,
+        "raw": {
+          "duration_ms": 2829.919,
+          "sample_count": 223,
+          "fiber_renders_captured": 460,
+          "total_react_commits": 3,
+          "hot_commit_indices": [
+            0
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 455,
+          "selection_note": "1 of 3 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "dark",
+        "to": "brand",
+        "commits": 3,
+        "renders": 460,
+        "raw": {
+          "duration_ms": 2805.193,
+          "sample_count": 209,
+          "fiber_renders_captured": 460,
+          "total_react_commits": 3,
+          "hot_commit_indices": [
+            0
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 455,
+          "selection_note": "1 of 3 commits at ≥16ms absolute floor"
+        }
+      },
+      {
+        "from": "brand",
+        "to": "light",
+        "commits": 3,
+        "renders": 456,
+        "raw": {
+          "duration_ms": 2808.776,
+          "sample_count": 211,
+          "fiber_renders_captured": 456,
+          "total_react_commits": 3,
+          "hot_commit_indices": [
+            0
+          ],
+          "any_compiler_optimized": false,
+          "fiber_renders_analyzed": 451,
+          "selection_note": "1 of 3 commits at ≥16ms absolute floor"
+        }
+      }
+    ]
+  }
+}

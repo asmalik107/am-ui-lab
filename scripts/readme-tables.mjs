@@ -96,7 +96,7 @@ const readme = {
   ].join('\n\n'),
   scorecard: table(
     ['App', ...columns.map((c) => `[${c.head}](docs/results.md#${c.link})`)],
-    scorecard().map((x) => [`[${names[x.app]}](#${slug(heading(libraries.find((l) => l.app === x.app)))})`, ...x.cells.map((c) => (c.mark === 'best' ? `**${c.text}**` : c.mark === 'worst' ? `${c.text} (worst)` : c.text))]),
+    scorecard().map((x) => [`[${names[x.app]}](#${slug(heading(libraries.find((l) => l.app === x.app)))})`, ...x.cells.map((c) => (c.mark === 'best' ? `🟢 **${c.text}**` : c.mark === 'worst' ? `🔴 ${c.text}` : c.text))]),
   ),
   // The same links as the column headers, outside the table, for viewers that
   // don't render links in header cells.

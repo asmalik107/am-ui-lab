@@ -136,7 +136,7 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
 
 One row per app.
 
-- **Bold** is the best in each column, "(worst)" the worst.
+- 🟢 **Bold** is the best in each column, 🔴 the worst.
 - **Accessibility:** every check, in the light theme.
 - **Theme switch and memory:** on the Galaxy A15.
 - **Bundle size and re-renders:** on iOS. The JS is the same on both platforms.
@@ -145,14 +145,14 @@ One row per app.
 <!-- begin:scorecard -->
 | App | [Accessibility, iOS](docs/results.md#accessibility) | [Accessibility, Android](docs/results.md#accessibility) | [Theme switch, Android](docs/results.md#timings) | [Memory growth, Android](docs/results.md#startup-memory-and-scrolling) | [JS bundle](docs/results.md#bundle-size-and-re-renders-ios) | [Re-renders per theme switch](docs/results.md#bundle-size-and-re-renders-ios) | [Library code copied in](docs/results.md#developer-cost) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [Baseline](#baseline-plain-react-native-the-reference-point) | **58 / 62** | **60 / 62** | 99 ms | +50 MiB | **3.95 MB** | 298 | 0 |
-| [Unistyles](#unistyles-360-best-all-rounder) | **58 / 62** | **60 / 62** | **71 ms** | +54 MiB | 4.15 MB | **128** | 0 |
-| [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | **58 / 62** | **60 / 62** | 137 ms | +51 MiB | 4.24 MB | 507 | 0 |
-| [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | **58 / 62** | **60 / 62** | 183 ms | **+32 MiB** | 4.47 MB | 460 | 0 |
-| [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 630 ms (worst) | +46 MiB | 5.44 MB | not measured | 0 |
-| [gluestack](#gluestack-5015-most-code-to-own) | 35 / 66 (worst) | 36 / 66 (worst) | 192 ms | +103 MiB | 5.66 MB | 815 | 7,488 (worst) |
-| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 47 / 67 | 239 ms | +216 MiB (worst) | 5.24 MB | 1,137 (worst) | 0 |
-| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 37 / 62 | 97 ms | +48 MiB | 6.83 MB (worst) | 603 | 1,519 |
+| [Baseline](#baseline-plain-react-native-the-reference-point) | 🟢 **58 / 62** | 🟢 **60 / 62** | 99 ms | +50 MiB | 🟢 **3.95 MB** | 298 | 0 |
+| [Unistyles](#unistyles-360-best-all-rounder) | 🟢 **58 / 62** | 🟢 **60 / 62** | 🟢 **71 ms** | +54 MiB | 4.15 MB | 🟢 **128** | 0 |
+| [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | 🟢 **58 / 62** | 🟢 **60 / 62** | 137 ms | +51 MiB | 4.24 MB | 507 | 0 |
+| [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **58 / 62** | 🟢 **60 / 62** | 183 ms | 🟢 **+32 MiB** | 4.47 MB | 460 | 0 |
+| [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 🔴 630 ms | +46 MiB | 5.44 MB | not measured | 0 |
+| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 36 / 66 | 192 ms | +103 MiB | 5.66 MB | 815 | 🔴 7,488 |
+| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 47 / 67 | 239 ms | 🔴 +216 MiB | 5.24 MB | 🔴 1,137 | 0 |
+| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 37 / 62 | 97 ms | +48 MiB | 🔴 6.83 MB | 603 | 1,519 |
 <!-- end:scorecard -->
 
 <!-- begin:scorecardlinks -->

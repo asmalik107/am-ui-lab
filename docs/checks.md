@@ -32,10 +32,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 ## How to read the tables
 
 - **Each cell** is iOS / Android.
-- **✓** pass, **✗** fail.
-- **–** not applicable: the app has no such element.
+- ✅ pass, ❌ fail.
+- ➖ not applicable: the app has no such element.
 - **n/r** not run: the test could not start.
-- **⚠** the two platforms give different results.
+- ⚠️ the two platforms give different results.
 - **Under each table**, two fold-outs say what each check means and why any check failed.
 - **NativeWind** results use a line-height workaround. See `apps/nativewind/NOTES.md`.
 
@@ -58,10 +58,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Button
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✓ / ✗ ⚠ | ✗ / ✗ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ❌ ⚠️ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -89,10 +89,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Button (disabled)
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✓ ⚠ | ✓ / ✓ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | – / ✗ | ✗ / ✗ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ➖ / ❌ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -121,10 +121,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Button (loading)
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✓ / ✗ ⚠ | ✗ / ✗ | ✗ / ✗ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | – / ✗ | ✗ / ✗ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ❌ ⚠️ | ❌ / ❌ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ➖ / ❌ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -160,11 +160,11 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Text field
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ |
-| error shown | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
-| error reachable from field | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | ✓ / ✓ | ✗ / ✗ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ |
+| error shown | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| error reachable from field | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ✅ / ✅ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -198,10 +198,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Switch
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -241,10 +241,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Checkbox
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | – / ✗ | ✗ / ✗ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ➖ / ❌ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -283,10 +283,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Radio option
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -318,10 +318,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Select trigger
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | – / ✗ | ✗ / ✗ |
+| name, role, state | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ➖ / ❌ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -366,10 +366,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Tab (selected)
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | ✓ / ✗ ⚠ | ✗ / ✗ |
+| name, role, state | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ✅ / ❌ ⚠️ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -412,10 +412,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Native switch (@expo/ui)
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
-| touch target | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| touch target | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -459,10 +459,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 ### Radio group
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| all options exposed | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
-| group label read | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
+| all options exposed | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| group label read | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
@@ -478,13 +478,13 @@ No check failed for any app.
 
 ### Dialog
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| opens | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
-| screen behind is hidden from the screen reader | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ |
-| title is a heading | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✗ ⚠ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ |
-| actions are buttons | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
-| closes | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
+| opens | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
+| title is a heading | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ |
+| actions are buttons | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| closes | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
@@ -522,14 +522,14 @@ No check failed for any app.
 
 ### Select
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| opens | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | n/r / ✓ | ✓ / ✓ |
-| current option marked | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | n/r / ✓ | ✗ / ✓ ⚠ |
-| options are actionable | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | n/r / ✓ | ✗ / ✗ |
-| screen behind is hidden from the screen reader | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | n/r / ✗ | ✓ / ✗ ⚠ |
-| new value read on trigger | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | n/r / ✓ | ✓ / ✓ |
-| test could run | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✓ ⚠ | ✓ / ✓ |
+| opens | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | n/r / ✅ | ✅ / ✅ |
+| current option marked | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | n/r / ✅ | ❌ / ✅ ⚠️ |
+| options are actionable | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | n/r / ✅ | ❌ / ❌ |
+| screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | n/r / ❌ | ✅ / ❌ ⚠️ |
+| new value read on trigger | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | n/r / ✅ | ✅ / ✅ |
+| test could run | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
@@ -575,9 +575,9 @@ No check failed for any app.
 
 ### Toast
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| in accessibility tree | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
+| in accessibility tree | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
@@ -592,11 +592,11 @@ No check failed for any app.
 
 ### Slider
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, value | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✓ ⚠ | ✗ / ✗ | ✗ / ✓ ⚠ | ✓ / ✓ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | ✗ / ✗ | ✓ / ✗ ⚠ |
-| dragging changes the value | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✓ / ✓ | ✓ / ✓ |
+| name, role, value | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ❌ / ❌ | ❌ / ✅ ⚠️ | ✅ / ✅ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ✅ / ❌ ⚠️ |
+| dragging changes the value | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
@@ -634,9 +634,9 @@ No check failed for any app.
 
 ### Progress
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name and value | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✓ / ✓ | ✗ / ✗ |
+| name and value | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -661,13 +661,13 @@ No check failed for any app.
 
 ### Accordion
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| header is a button | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✓ / ✓ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | n/r / ✓ | ✓ / ✓ |
-| expanded state exposed | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | n/r / ✓ | ✓ / ✓ |
-| content shows and hides | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | n/r / ✓ | ✓ / ✓ |
-| test could run | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✓ ⚠ | ✓ / ✓ |
+| header is a button | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | n/r / ✅ | ✅ / ✅ |
+| expanded state exposed | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | n/r / ✅ | ✅ / ✅ |
+| content shows and hides | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | n/r / ✅ | ✅ / ✅ |
+| test could run | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
@@ -697,14 +697,14 @@ No check failed for any app.
 
 ### Menu
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| trigger name and role | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✓ / ✗ ⚠ | ✗ / ✗ |
-| opens | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
-| items are buttons | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✓ ⚠ | ✗ / ✓ ⚠ | ✓ / ✗ ⚠ | ✗ / ✓ ⚠ |
-| screen behind is hidden from the screen reader | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✗ / ✗ | ✗ / ✓ ⚠ | ✓ / ✗ ⚠ |
-| closes after an action | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ |
+| trigger name and role | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ❌ ⚠️ | ❌ / ❌ |
+| opens | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| items are buttons | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ✅ / ❌ ⚠️ | ❌ / ✅ ⚠️ |
+| screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ✅ ⚠️ | ✅ / ❌ ⚠️ |
+| closes after an action | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
@@ -747,12 +747,12 @@ No check failed for any app.
 
 ### Segmented control
 
-| Check | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| options have name and role | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✓ / ✓ |
-| selected option marked | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✓ / ✓ |
-| touch target | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✗ ⚠ | ✓ / ✗ ⚠ | ✓ / ✗ ⚠ | ✗ / ✗ |
-| selection moves on tap | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✓ / ✓ | ✗ / ✗ | ✓ / ✓ |
+| options have name and role | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ |
+| selected option marked | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ❌ ⚠️ | ✅ / ❌ ⚠️ | ❌ / ❌ |
+| selection moves on tap | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
@@ -789,13 +789,13 @@ No check failed for any app.
 
 ### Bottom sheets
 
-Each sheet gets the same 5 checks: opens, title and body readable, screen behind is hidden from the screen reader, closes, screen reachable again after close. Each cell is the number passed, iOS / Android. – means the app has no such sheet.
+Each sheet gets the same 5 checks: opens, title and body readable, screen behind is hidden from the screen reader, closes, screen reachable again after close. Each cell is the number passed, iOS / Android: ✅ all passed, ❌ at least one failed, ➖ the app has no such sheet.
 
-| Sheet | Baseline | Unistyles | Uniwind | NativeWind | HeroUI | gluestack | Tamagui | Reusables |
+| Sheet | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| @gorhom/bottom-sheet | 4/5 / 4/5 | 4/5 / 4/5 | 4/5 / 4/5 | 4/5 / 4/5 | 3/5 / 4/5 | 4/5 / 4/5 | 4/5 / 4/5 | 4/5 / 4/5 |
-| @expo/ui BottomSheet | 5/5 / 5/5 | 5/5 / 5/5 | 5/5 / 5/5 | 5/5 / 5/5 | 5/5 / 5/5 | 5/5 / 5/5 | 5/5 / 5/5 | 5/5 / 5/5 |
-| The library’s own sheet | – / – | – / – | – / – | – / – | 3/5 / 4/5 | 1/4 / 2/4 | 4/5 / 4/5 | – / – |
+| @gorhom/bottom-sheet | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 3/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 |
+| @expo/ui BottomSheet | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 |
+| The library’s own sheet | ➖ / ➖ | ➖ / ➖ | ➖ / ➖ | ➖ / ➖ | ❌ 3/5 / ❌ 4/5 | ❌ 1/4 / ❌ 2/4 | ❌ 4/5 / ❌ 4/5 | ➖ / ➖ |
 
 <details>
 <summary>The three sheets</summary>

@@ -105,7 +105,7 @@ const ran = (a, r, p) => {
   if (r.check === 'test could run') return own.length ? { pass: true, detail: 'test ran' } : null;
   return own.some((f) => f.check === 'test could run' && !f.pass) ? { notRun: true } : null;
 };
-const mark = (f) => (f?.notRun ? 'n/r' : !f ? '–' : f.pass ? '✓' : '✗');
+const mark = (f) => (f?.notRun ? 'n/r' : !f ? '➖' : f.pass ? '✅' : '❌');
 const differs = (i, d) => !!i && !!d && !i.notRun && !d.notRun && i.pass !== d.pass;
 const get = (a, r, p) => result(a, r.key, p) ?? ran(a, r, p);
 
@@ -116,12 +116,12 @@ const components = order.filter((c) => !isSheet(c));
 const componentSection = (c) => {
   const own = rows.filter((r) => r.component === c);
   const table = [
-    `| Check | ${apps.map(([, name]) => name).join(' | ')} |`,
+    `| Check | ${apps.map(([, name]) => `${name}<br>iOS / Android`).join(' | ')} |`,
     `| --- | ${apps.map(() => '---').join(' | ')} |`,
     ...own.map((r) => `| ${cellText(shown(r.check))} | ${apps.map(([a]) => {
       const i = get(a, r, 'ios');
       const d = get(a, r, 'android');
-      return `${mark(i)} / ${mark(d)}${differs(i, d) ? ' ⚠' : ''}`;
+      return `${mark(i)} / ${mark(d)}${differs(i, d) ? ' ⚠️' : ''}`;
     }).join(' | ')} |`),
   ].join('\n');
   const meanings = own.map((r) => `- **${shown(r.check)}:** ${what[r.check] ?? ''}`).join('\n');
@@ -149,11 +149,12 @@ const sheetKinds = [
 ];
 const sheetScore = (a, comp, p) => {
   const fs = comp ? sheetChecks.map((c) => result(a, `${comp} | ${c}`, p)).filter(Boolean) : [];
-  return fs.length ? `${fs.filter((f) => f.pass).length}/${fs.length}` : '–';
+  const n = fs.filter((f) => f.pass).length;
+  return fs.length ? `${n === fs.length ? '✅' : '❌'} ${n}/${fs.length}` : '➖';
 };
 const sheetSection = () => {
   const table = [
-    `| Sheet | ${apps.map(([, name]) => name).join(' | ')} |`,
+    `| Sheet | ${apps.map(([, name]) => `${name}<br>iOS / Android`).join(' | ')} |`,
     `| --- | ${apps.map(() => '---').join(' | ')} |`,
     ...sheetKinds.map(([label, , pick]) => `| ${label} | ${apps.map(([a]) => `${sheetScore(a, pick(a), 'ios')} / ${sheetScore(a, pick(a), 'android')}`).join(' | ')} |`),
   ].join('\n');
@@ -165,7 +166,7 @@ const sheetSection = () => {
   }).filter(Boolean).join('\n');
   return [
     '### Bottom sheets',
-    `Each sheet gets the same 5 checks: ${sheetChecks.map(shown).join(', ')}. Each cell is the number passed, iOS / Android. – means the app has no such sheet.`,
+    `Each sheet gets the same 5 checks: ${sheetChecks.map(shown).join(', ')}. Each cell is the number passed, iOS / Android: ✅ all passed, ❌ at least one failed, ➖ the app has no such sheet.`,
     table,
     `<details>\n<summary>The three sheets</summary>\n\n${kinds}\n\n</details>`,
     failures ? `<details>\n<summary>Why checks failed</summary>\n\n${failures}\n\n</details>` : '',
@@ -314,10 +315,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 ## How to read the tables
 
 - **Each cell** is iOS / Android.
-- **✓** pass, **✗** fail.
-- **–** not applicable: the app has no such element.
+- ✅ pass, ❌ fail.
+- ➖ not applicable: the app has no such element.
 - **n/r** not run: the test could not start.
-- **⚠** the two platforms give different results.
+- ⚠️ the two platforms give different results.
 - **Under each table**, two fold-outs say what each check means and why any check failed.
 - **NativeWind** results use a line-height workaround. See \`apps/nativewind/NOTES.md\`.
 

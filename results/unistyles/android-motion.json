@@ -7,76 +7,223 @@
     "name": "SM-A156E",
     "runtime": "Android 16 (API 36)"
   },
-  "date": "2026-10-31T19:05:35.553Z",
+  "date": "2026-11-02T19:18:13.266Z",
   "runs": [
     {
       "reduceMotion": false,
       "component": "Dialog",
       "label": "Dialog",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793473478792.mp4",
-      "fps": 30,
-      "peak": 30.2,
-      "ms": 500,
-      "frames": [
-        7.1,
-        2.5,
-        1.1,
-        1.8,
-        6.1,
-        4.2,
-        4.5,
-        4.7,
-        3,
-        6.4,
-        7.7,
-        15.3,
-        20.8,
-        16.6,
-        30.2
+      "ms": 267,
+      "samples": [
+        233,
+        267,
+        267
+      ],
+      "recordings": [
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793646896019.mp4",
+          "fps": 30,
+          "peak": 24,
+          "ms": 267,
+          "frames": [
+            4.9,
+            4.2,
+            7.7,
+            15.4,
+            13.1,
+            24,
+            20.1,
+            10.6
+          ]
+        },
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793646913745.mp4",
+          "fps": 30,
+          "peak": 30.3,
+          "ms": 233,
+          "frames": [
+            1.6,
+            11.6,
+            8.4,
+            10.9,
+            20.2,
+            17.3,
+            30.3
+          ]
+        },
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793646932229.mp4",
+          "fps": 30,
+          "peak": 19.4,
+          "ms": 267,
+          "frames": [
+            1.6,
+            7.9,
+            12.4,
+            17.5,
+            14.2,
+            17.5,
+            19.4,
+            11.8
+          ]
+        }
       ]
     },
     {
       "reduceMotion": false,
       "component": "Bottom sheet",
       "label": "Bottom sheet",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793473496988.mp4",
-      "fps": 30,
-      "peak": 48.2,
-      "ms": 267,
-      "frames": [
-        48.2,
-        30.1,
-        23.3,
-        10.2,
-        8.5,
-        3.6,
-        1.7,
-        2.1
+      "ms": 233,
+      "samples": [
+        200,
+        233,
+        367
+      ],
+      "recordings": [
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793646950939.mp4",
+          "fps": 30,
+          "peak": 76,
+          "ms": 200,
+          "frames": [
+            76,
+            21,
+            8.5,
+            2.7,
+            2.5,
+            2.6
+          ]
+        },
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793646968902.mp4",
+          "fps": 30,
+          "peak": 80.3,
+          "ms": 233,
+          "frames": [
+            80.3,
+            14.4,
+            8.6,
+            3.6,
+            1.7,
+            1.6,
+            1.2
+          ]
+        },
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793646986955.mp4",
+          "fps": 30,
+          "peak": 69.9,
+          "ms": 367,
+          "frames": [
+            1.5,
+            1.2,
+            3.2,
+            6.3,
+            69.9,
+            23.4,
+            10.2,
+            6.7,
+            4.6,
+            2.4,
+            2.5
+          ]
+        }
       ]
     },
     {
       "reduceMotion": true,
       "component": "Dialog",
       "label": "Dialog",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793473514477.mp4",
-      "fps": 30,
-      "peak": 98.2,
-      "ms": 33,
-      "frames": [
-        98.2
+      "ms": 67,
+      "samples": [
+        67,
+        67,
+        100
+      ],
+      "recordings": [
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647004469.mp4",
+          "fps": 30,
+          "peak": 92.3,
+          "ms": 67,
+          "frames": [
+            92.3,
+            23.1
+          ]
+        },
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647021506.mp4",
+          "fps": 30,
+          "peak": 92.2,
+          "ms": 100,
+          "frames": [
+            2.8,
+            92.2,
+            23.2
+          ]
+        },
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647038430.mp4",
+          "fps": 30,
+          "peak": 92.2,
+          "ms": 67,
+          "frames": [
+            92.2,
+            23
+          ]
+        }
       ]
     },
     {
       "reduceMotion": true,
       "component": "Bottom sheet",
       "label": "Bottom sheet",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793473531249.mp4",
-      "fps": 30,
-      "peak": 89.6,
-      "ms": 67,
-      "frames": [
-        89.6,
-        9.7
+      "ms": 33,
+      "samples": [
+        33,
+        33,
+        33
+      ],
+      "recordings": [
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647055260.mp4",
+          "fps": 30,
+          "peak": 89.9,
+          "ms": 33,
+          "frames": [
+            89.9
+          ]
+        },
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647072058.mp4",
+          "fps": 30,
+          "peak": 89.7,
+          "ms": 33,
+          "frames": [
+            89.7
+          ]
+        },
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647088914.mp4",
+          "fps": 30,
+          "peak": 89.9,
+          "ms": 33,
+          "frames": [
+            89.9
+          ]
+        }
       ]
     }
   ]

@@ -57,7 +57,9 @@ export function androidA11y({ udid, bundleId, swipe, sleep }) {
     const h = b.h / screen.height;
     return {
       identifier: n.id ?? undefined,
-      label: n.contentDescription ?? n.text ?? '',
+      // TalkBack skips an empty description, and names a control by its labelledby
+      // node; a text field's own text is its value, so the label comes first there.
+      label: n.contentDescription || (n.editable && n.labeledBy) || n.text || n.labeledBy || '',
       value: state.length ? state.join(', ') : n.editable ? n.text ?? '' : undefined,
       hint: [n.error, n.tooltip, n.hint].filter(Boolean).join(' ') || undefined,
       traits,
@@ -72,7 +74,10 @@ export function androidA11y({ udid, bundleId, swipe, sleep }) {
   function tree() {
     const nodes = dump();
     const stack = [];
-    const own = nodes.map((n) => n.clickable || n.screenReaderFocusable || n.editable || n.checkable);
+    // A focusable container (React Native's accessible={true}) is one TalkBack stop
+    // that reads its children; scroll containers are focusable too but aren't stops.
+    const scroller = (n) => n.actions.includes('scrollForward') || n.actions.includes('scrollBackward') || /ScrollView|RecyclerView|ListView$/.test(n.className ?? '');
+    const own = nodes.map((n) => n.clickable || n.screenReaderFocusable || n.editable || n.checkable || (n.focusable && !scroller(n)));
     const els = nodes.map((n, i) => {
       stack.length = n.depth;
       const inside = stack.some(Boolean);

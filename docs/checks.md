@@ -10,7 +10,7 @@
 - [Results](results.md): every check, with the iOS and Android numbers
 - [Method](method.md): how each check was measured, its limits, and how to reproduce it
 - [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [Android accessibility](android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [Android accessibility](android-accessibility.md): every Android accessibility failure, with the line of code that causes it
 - **All checks** (this page): every accessibility check for every app, one table per component, plus the charts
 - [To do](../TODO.md): what is left to measure, and how
 <!-- end:nav -->
@@ -52,10 +52,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 - **Unistyles:** 2
 - **Uniwind:** 2
 - **NativeWind:** 2
-- **HeroUI:** 7
-- **gluestack:** 5
+- **HeroUI:** 6
+- **gluestack:** 4
 - **Tamagui:** 9
-- **Reusables:** 6
+- **Reusables:** 8
 
 <a id="button"></a>
 
@@ -165,7 +165,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ |
 | error shown | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 | error reachable from field | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ✅ / ✅ | ❌ / ❌ |
 
@@ -183,17 +183,15 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 - **HeroUI**
   - iOS, name, role, state: label="" value="" traits=[] 368×46pt
-  - Android, name, role, state: label="" value="" traits=[] 352×48dp
   - iOS, error reachable from field: label="" value="not-an-email" traits=[] 368×46pt hint=""
-  - Android, error reachable from field: label="not-an-email" value="not-an-email" traits=[] 352×48dp hint=""
+  - Android, error reachable from field: label="Email" value="not-an-email" traits=[] 352×48dp hint=""
 - **gluestack**
   - iOS, error reachable from field: label="Email" value="not-an-email" traits=[] 344×34pt hint=""
   - Android, error reachable from field: label="Email" value="not-an-email" traits=[] 326×34dp hint=""
 - **Reusables**
   - iOS, name, role, state: label="" value="" traits=[] 368×38pt
-  - Android, name, role, state: label="" value="" traits=[] 352×40dp
   - iOS, error reachable from field: label="" value="not-an-email" traits=[] 366×36pt hint=""
-  - Android, error reachable from field: label="not-an-email" value="not-an-email" traits=[] 352×40dp hint=""
+  - Android, error reachable from field: label="Email" value="not-an-email" traits=[] 352×40dp hint=""
 
 </details>
 
@@ -246,7 +244,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ✅ ⚠️ |
 | touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ➖ / ❌ | ❌ / ❌ |
 
 <details>
@@ -276,7 +274,6 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
   - Android, touch target: 22×22dp
 - **Reusables**
   - iOS, name, role, state: label="" value="checkbox, unchecked" traits=[] 16×16pt
-  - Android, name, role, state: label="" value="unchecked" traits=[checkbox] 16×16dp
   - iOS, touch target: 16×16pt
   - Android, touch target: 16×16dp
 
@@ -796,9 +793,9 @@ Each sheet gets the same 5 checks: opens, title and body readable, screen behind
 
 | Sheet | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| @gorhom/bottom-sheet | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 3/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 |
+| @gorhom/bottom-sheet | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 3/5 / ❌ 3/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 | ❌ 4/5 / ❌ 4/5 |
 | @expo/ui BottomSheet | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 | ✅ 5/5 / ✅ 5/5 |
-| The library’s own sheet | ➖ / ➖ | ➖ / ➖ | ➖ / ➖ | ➖ / ➖ | ❌ 3/5 / ❌ 4/5 | ❌ 1/4 / ❌ 2/4 | ❌ 4/5 / ❌ 4/5 | ➖ / ➖ |
+| The library’s own sheet | ➖ / ➖ | ➖ / ➖ | ➖ / ➖ | ➖ / ➖ | ❌ 3/5 / ❌ 3/5 | ❌ 1/4 / ❌ 1/4 | ❌ 4/5 / ❌ 4/5 | ➖ / ➖ |
 
 <details>
 <summary>The three sheets</summary>
@@ -827,9 +824,11 @@ Each sheet gets the same 5 checks: opens, title and body readable, screen behind
 - **HeroUI**
   - @gorhom/bottom-sheet, iOS, title and body readable: title and body text not in the system tree
   - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 17 elements, such as test-switch, test-checkbox, test-radiogroup-0
+  - @gorhom/bottom-sheet, Android, title and body readable: title and body text not in the system tree
   - @gorhom/bottom-sheet, Android, screen behind is hidden from the screen reader: still exposed: 46 elements, such as test-sheet-close, Component test screen, test-theme
   - The library’s own sheet, iOS, title and body readable: title and body text not in the system tree
   - The library’s own sheet, iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-button-disabled, test-button-loading, Form
+  - The library’s own sheet, Android, title and body readable: title and body text not in the system tree
   - The library’s own sheet, Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
 - **gluestack**
   - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 19 elements, such as test-button-loading, Form, test-textfield
@@ -837,6 +836,7 @@ Each sheet gets the same 5 checks: opens, title and body readable, screen behind
   - The library’s own sheet, iOS, title and body readable: title and body text not in the system tree
   - The library’s own sheet, iOS, screen behind is hidden from the screen reader: still exposed: 17 elements, such as test-button-disabled, test-button-loading, Form
   - The library’s own sheet, iOS, closes: still open
+  - The library’s own sheet, Android, title and body readable: title and body text not in the system tree
   - The library’s own sheet, Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
   - The library’s own sheet, Android, closes: still open
 - **Tamagui**

@@ -3,6 +3,7 @@
 // docs/android-accessibility.md (every Android failure).
 // Reads only results/*. Usage: node scripts/checks-md.mjs
 import { mkdirSync, writeFileSync } from 'node:fs';
+import { everyApp as causesEveryApp, libraries as causesByLibrary, differences as causesDiffs } from './android-causes.mjs';
 import { anchored, measuredMd, measuredOn, nav } from './scorecard.mjs';
 import { apps, chartDevices, chartGroup, charts, data, detail, differs, findingsOf, get, keyOf, norm, order, platform, result, root, rows, sheetChecks, sheetKinds, shown, what } from './checks-data.mjs';
 
@@ -223,7 +224,7 @@ ${chartMd('rerenders')}
 writeFileSync(new URL('docs/checks.md', root), anchored(md));
 
 // --- docs/android-accessibility.md: every Android failure, from the audit's
-// output. Unlike the iOS page, nothing here was traced by hand.
+// output, with the causes traced by hand from scripts/android-causes.mjs.
 // Sheets are matched by kind: in the HeroUI app the shared "Bottom sheet"
 // slot is HeroUI's own sheet and the raw @gorhom one has its own name.
 const sheetName = (a, c) => (c === 'Bottom sheet' ? (a === 'heroui' ? 'HeroUI’s own bottom sheet' : '@gorhom bottom sheet') : c === 'Bottom sheet (@gorhom, raw)' ? '@gorhom bottom sheet' : c);
@@ -235,7 +236,9 @@ const byComponent = (fs) => {
   return groups.map((c) => [`- **${c}**`, ...fs.filter((f) => f.component === c).map((f) => `  - ${shown(norm(f.check))}: ${detail(f)}`)].join('\n')).join('\n');
 };
 const same = (a, b) => { const x = failKeys(a); const y = failKeys(b); return x.size === y.size && [...x].every((k) => y.has(k)); };
-const librarySection = ([a, name]) => {
+const withCauses = (a, md) => (causesByLibrary[a] ? `${md}\n\n${causesByLibrary[a]}` : md);
+const librarySection = ([a, name]) => withCauses(a, libraryFailures([a, name]));
+const libraryFailures = ([a, name]) => {
   const own = androidFails(a).filter((f) => !everyApp.includes(keyOf(f)));
   const total = (findingsOf(a, 'android') ?? []).length;
   const passed = total - androidFails(a).length;
@@ -252,15 +255,16 @@ const platformDiffs = ([a, name]) => {
   return [`- **${name}**`, ...(onlyAndroid.length ? ['  - **Passes on Android only:**', ...onlyAndroid.map((x) => `  ${x}`)] : []), ...(onlyIos.length ? ['  - **Passes on iOS only:**', ...onlyIos.map((x) => `  ${x}`)] : [])].join('\n');
 };
 const device = data.baseline.androidA11y;
-const android = `# Android accessibility: what failed
+const android = `# Android accessibility: what failed and why
 
 <!-- begin:nav -->
 ${nav('Android accessibility', 'docs')}
 <!-- end:nav -->
 
-Every Android accessibility failure, from the audit’s own output. Generated from \`results/\` by \`scripts/checks-md.mjs\`.
+Every Android accessibility failure, from the audit’s own output, with the code that causes it. Generated from \`results/\` by \`scripts/checks-md.mjs\`.
 
-- **Not checked by hand.** Unlike [iOS accessibility](ios-accessibility.md), these failures weren’t traced to the code that causes them. Each one is what the audit read from the tree TalkBack is given.
+- **Traced by hand.** Each failure was traced to the code that causes it, as on the [iOS page](ios-accessibility.md). Confirmed means the line that does it was read; Likely says how to confirm it on the device. The sheets were checked with TalkBack.
+- **Paths** are relative to \`apps/<app>/\` unless they say otherwise. \`RN/\` is \`node_modules/react-native/\`, and \`RN/…/uimanager/\` is \`RN/ReactAndroid/src/main/java/com/facebook/react/uimanager/\`.
 - **Device:** Samsung Galaxy A15 5G (${device?.device?.name ?? 'SM-A156E'}), ${device?.device?.runtime ?? 'Android 16'}.
 - **Touch targets** are checked against Google’s 48 × 48 dp.
 - **Per-check results for each app:**
@@ -281,6 +285,8 @@ The baseline included, so no library fixes these.
 
 ${byComponent(androidFails('baseline').filter((f) => everyApp.includes(keyOf(f))))}
 
+${causesEveryApp}
+
 ## Failures by library
 
 Each library’s failures beyond the ones above.
@@ -292,6 +298,8 @@ ${apps.map(librarySection).join('\n\n')}
 Checks that pass on one platform and fail on the other.
 
 ${apps.map(platformDiffs).filter(Boolean).join('\n')}
+
+${causesDiffs}
 
 <!-- begin:navfoot -->
 

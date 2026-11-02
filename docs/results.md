@@ -10,7 +10,7 @@
 - **Results** (this page): every check, with the iOS and Android numbers
 - [Method](method.md): how each check was measured, its limits, and how to reproduce it
 - [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [Android accessibility](android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [Android accessibility](android-accessibility.md): every Android accessibility failure, with the line of code that causes it
 - [All checks](checks.md): every accessibility check for every app, one table per component, plus the charts
 - [To do](../TODO.md): what is left to measure, and how
 <!-- end:nav -->
@@ -130,9 +130,9 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
 | uniwind | 53 / 57 | 55 / 57 | 5 / 5 | 5 / 5 | 58 / 62 | 60 / 62 | 2 |
 | nativewind | 53 / 57 | 55 / 57 | 5 / 5 | 5 / 5 | 58 / 62 | 60 / 62 | 2 |
 | tamagui | 27 / 47 | 33 / 57 | 9 / 10 | 9 / 10 | 36 / 57 | 42 / 67 | 9 |
-| gluestack | 29 / 57 | 29 / 57 | 6 / 9 | 7 / 9 | 35 / 66 | 36 / 66 | 5 |
-| heroui | 36 / 57 | 38 / 57 | 8 / 10 | 9 / 10 | 44 / 67 | 47 / 67 | 7 |
-| reusables | 32 / 57 | 32 / 57 | 5 / 5 | 5 / 5 | 37 / 62 | 37 / 62 | 6 |
+| gluestack | 29 / 57 | 29 / 57 | 6 / 9 | 6 / 9 | 35 / 66 | 35 / 66 | 4 |
+| heroui | 36 / 57 | 38 / 57 | 8 / 10 | 8 / 10 | 44 / 67 | 46 / 67 | 6 |
+| reusables | 32 / 57 | 34 / 57 | 5 / 5 | 5 / 5 | 37 / 62 | 39 / 62 | 8 |
 <!-- end:accessibility -->
 
 <a id="failing-in-every-app-on-both-platforms"></a>
@@ -207,7 +207,7 @@ The baseline included.
 ### Notes
 
 - **Every iOS failure**, with the line of code that causes it: [iOS accessibility](ios-accessibility.md).
-- **Every Android failure**, from the audit’s output: [Android accessibility](android-accessibility.md).
+- **Every Android failure**, with its cause: [Android accessibility](android-accessibility.md).
 - **NativeWind's score** is with a line-height workaround. Without it the page was 18 screens tall (see `apps/nativewind/NOTES.md`).
 
 [How this was measured →](method.md#accessibility-checks)
@@ -267,22 +267,22 @@ The baseline included.
 
 | App | Dialog, iOS | Dialog, Android | Bottom sheet, iOS | Bottom sheet, Android |
 | --- | --- | --- | --- | --- |
-| baseline | 333 → 67 ms | 200 → 67 ms | 400 → 33 ms | 200 → 33 ms |
-| unistyles | 333 → 67 ms | 500 → 33 ms | 400 → 33 ms | 267 → 67 ms |
-| uniwind | 333 → 67 ms | 233 → 33 ms | 400 → 33 ms | 200 → 33 ms |
-| nativewind | 433 → 67 ms | 200 → 67 ms | 400 → 33 ms | 267 → 33 ms |
+| baseline | 333 → 67 ms | 233 → 33 ms | 400 → 33 ms | 233 → 67 ms |
+| unistyles | 333 → 67 ms | 267 → 67 ms | 400 → 33 ms | 233 → 33 ms |
+| uniwind | 333 → 67 ms | 267 → 33 ms | 400 → 33 ms | 200 → 33 ms |
+| nativewind | 433 → 67 ms | 233 → 67 ms | 400 → 33 ms | 300 → 67 ms |
 | tamagui | 100 → 100 ms | 33 → 33 ms | 400 → 33 ms | 267 → 33 ms |
-| gluestack | 233 → 33 ms | 267 → 67 ms | 467 → 33 ms | 233 → 33 ms |
-| heroui | 233 → 33 ms | 233 → 67 ms | 567 → 67 ms | 433 → 33 ms |
-| reusables | 133 → 33 ms | 233 → 67 ms | 367 → 33 ms | 233 → 33 ms |
+| gluestack | 233 → 33 ms | 267 → 33 ms | 467 → 33 ms | 233 → 33 ms |
+| heroui | 233 → 33 ms | 267 → 67 ms | 567 → 67 ms | 467 → 33 ms |
+| reusables | 133 → 33 ms | 233 → 67 ms | 367 → 33 ms | 300 → 33 ms |
 <!-- end:motion -->
 
 - **Every animated overlay respects reduced motion** on both platforms, dropping to one or two frames.
 - **Tamagui's dialog** has no open animation on either platform.
-- **Each figure is one recording,** so a frame or two either way is noise.
-  - Example: Unistyles' Android dialog took 500 ms
-    - It's the baseline's own component, which took 200 ms
-    - So one high figure on its own may be noise, not a real difference
+- **HeroUI's bottom sheet** is the slowest open on both platforms (567 ms on iOS, 467 ms on Android).
+- **Android figures are the median of 3 recordings** (2 November 2026). The recordings are in `results/<app>/android-motion.md`.
+  - One recording put Unistyles' dialog at 500 ms; with 3 it's 267 ms, level with the other hand-built apps
+- **iOS figures are one recording each,** so a frame or two either way is noise.
 - **Not tested:** turning reduced motion on while the app runs.
 
 [How this was measured →](method.md#accessibility-checks)

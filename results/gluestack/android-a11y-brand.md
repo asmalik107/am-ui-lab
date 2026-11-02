@@ -1,6 +1,6 @@
 # gluestack: Android accessibility audit, brand theme
 
-Run 2026-10-31 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, brand theme, with `scripts/a11y-audit.mjs`. 36/66 checks passed.
+Run 2026-11-02 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, brand theme, with `scripts/a11y-audit.mjs`. 35/66 checks passed.
 
 Roles, states, sizes and reachability come from the accessibility tree of the active window, read through UiAutomation by `scripts/android-a11y-dump` (what TalkBack is given, not what it speaks). Touch targets are checked against 48 dp. Elements of an overlay's own window are reachable; anything else in that window counts as exposed behind it.
 
@@ -45,7 +45,7 @@ Roles, states, sizes and reachability come from the accessibility tree of the ac
 | Bottom sheet (@expo/ui) | closes | pass | sheet gone |
 | Bottom sheet (@expo/ui) | screen reachable again after close | pass | screen controls back in system tree |
 | Bottom sheet (gluestack BottomSheet) | opens | pass | sheet content in tree |
-| Bottom sheet (gluestack BottomSheet) | title and body readable | pass | title in tree |
+| Bottom sheet (gluestack BottomSheet) | title and body readable | **fail** | title and body text not in the system tree |
 | Bottom sheet (gluestack BottomSheet) | screen behind is hidden from TalkBack | **fail** | still exposed: Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-menu-open, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list |
 | Bottom sheet (gluestack BottomSheet) | closes | **fail** | still open |
 | Select | opens | pass | options in tree |

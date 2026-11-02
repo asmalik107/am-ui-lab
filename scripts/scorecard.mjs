@@ -356,7 +356,7 @@ export const pages = [
   ['Results', 'docs/results.md', 'every check, with the iOS and Android numbers'],
   ['Method', 'docs/method.md', 'how each check was measured, its limits, and how to reproduce it'],
   ['iOS accessibility', 'docs/ios-accessibility.md', 'every iOS accessibility failure, with the line of code that causes it'],
-  ['Android accessibility', 'docs/android-accessibility.md', 'every Android accessibility failure, from the audit’s output'],
+  ['Android accessibility', 'docs/android-accessibility.md', 'every Android accessibility failure, with the line of code that causes it'],
   ['All checks', 'docs/checks.md', 'every accessibility check for every app, one table per component, plus the charts'],
   ['To do', 'TODO.md', 'what is left to measure, and how'],
 ];

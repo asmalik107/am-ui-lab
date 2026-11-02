@@ -10,7 +10,7 @@
 - [Results](results.md): every check, with the iOS and Android numbers
 - **Method** (this page): how each check was measured, its limits, and how to reproduce it
 - [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [Android accessibility](android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [Android accessibility](android-accessibility.md): every Android accessibility failure, with the line of code that causes it
 - [All checks](checks.md): every accessibility check for every app, one table per component, plus the charts
 - [To do](../TODO.md): what is left to measure, and how
 <!-- end:nav -->
@@ -104,7 +104,7 @@ How every number in [Results](results.md) was measured.
 | What | iOS | Android |
 | --- | --- | --- |
 | Device | Performance: iPhone 12 Pro, iOS 26.6.1, by cable. Everything else: iPhone 17 simulator, iOS 27.0 | Samsung Galaxy A15 5G (SM-A156E), Android 16. A physical budget phone; the Android emulator crashed repeatedly on this Mac. |
-| Accessibility tree | What VoiceOver is given: the system accessibility tree (argent `describe`) and the view hierarchy (argent `native-describe-screen`) | What TalkBack is given: the active window's accessibility tree, read through UiAutomation by `scripts/android-a11y-dump`. A tappable element with no label of its own is named by the text inside it, as TalkBack does. |
+| Accessibility tree | What VoiceOver is given: the system accessibility tree (argent `describe`) and the view hierarchy (argent `native-describe-screen`) | What TalkBack is given: the active window's accessibility tree, read through UiAutomation by `scripts/android-a11y-dump`. A tappable element with no label of its own is named by the text inside it, as TalkBack does. A label linked with `aria-labelledby` (`labeledBy`) names an element with no description of its own, and a focusable container (React Native’s `accessible`) counts as one stop, as TalkBack reads it. These two were added on 2 November 2026; they moved 5 checks in HeroUI, gluestack and Reusables. |
 | Role and state | VoiceOver traits (button, adjustable, header, selected, not enabled) | Class and role description (Button, Switch, CheckBox, RadioButton, SeekBar, "Combo box", "Tab"), heading, checked, selected, enabled, state description, expand and collapse actions |
 | Screen hidden behind an overlay | Nothing from the screen is in the system tree while the overlay is open | Nothing from the screen is in the active window while the overlay is open |
 | Touch target | ≥ 44 × 44 pt (Apple's default control size) | ≥ 48 × 48 dp (Google's minimum) |

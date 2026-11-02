@@ -7,13 +7,8 @@ What's left before the results are complete. Each item says how to run it and wh
 ## Still to measure, on the Galaxy A15
 
 - [x] **Android re-renders:** measured on 2 November 2026 with `scripts/rerender-android.sh <serial>`
-- [ ] **Android reduced motion, 3 runs**
-  - Each app has one run of the dialog and one of the bottom sheet, with motion on and off
-  - Repeat with `node scripts/motion-test.mjs <app> <bundleId> <serial>`, 3 times per app, and report the median
-  - Updates `results/<app>/android-motion.json` and the Reduced motion table in [Results](docs/results.md#reduced-motion)
-- [ ] **TalkBack by hand**
-  - The Android failures come from the audit only. None were traced to the code that causes them, unlike [iOS accessibility](docs/ios-accessibility.md)
-  - Updates [Android accessibility](docs/android-accessibility.md)
+- [x] **Android reduced motion, 3 runs:** median of 3 per overlay since 2 November 2026 (`node scripts/motion-test.mjs <app> <bundleId> <serial> 3`)
+- [x] **TalkBack by hand:** every Android failure traced to its code on 2 November 2026, in [Android accessibility](docs/android-accessibility.md). A few causes are marked Likely, each with how to confirm it
 
 ## Gaps in the current results
 

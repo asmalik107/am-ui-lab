@@ -7,61 +7,199 @@
     "name": "SM-A156E",
     "runtime": "Android 16 (API 36)"
   },
-  "date": "2026-10-31T20:13:36.288Z",
+  "date": "2026-11-02T19:28:49.759Z",
   "runs": [
     {
       "reduceMotion": false,
       "component": "Dialog",
       "label": "Dialog",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793477559417.mp4",
-      "fps": 30,
-      "peak": 105,
       "ms": 33,
-      "frames": [
-        105
+      "samples": [
+        33,
+        33,
+        33
+      ],
+      "recordings": [
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647532504.mp4",
+          "fps": 30,
+          "peak": 96.7,
+          "ms": 33,
+          "frames": [
+            96.7
+          ]
+        },
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647548932.mp4",
+          "fps": 30,
+          "peak": 96.7,
+          "ms": 33,
+          "frames": [
+            96.7
+          ]
+        },
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647565493.mp4",
+          "fps": 30,
+          "peak": 97,
+          "ms": 33,
+          "frames": [
+            97
+          ]
+        }
       ]
     },
     {
       "reduceMotion": false,
       "component": "Bottom sheet",
       "label": "Bottom sheet",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793477578357.mp4",
-      "fps": 30,
-      "peak": 48.2,
       "ms": 267,
-      "frames": [
-        48.2,
-        30.5,
-        26.7,
-        10.3,
-        4.1,
-        3,
-        2.9,
-        1.2
+      "samples": [
+        267,
+        267,
+        267
+      ],
+      "recordings": [
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647584632.mp4",
+          "fps": 30,
+          "peak": 48.5,
+          "ms": 267,
+          "frames": [
+            29,
+            48.5,
+            18.6,
+            14.6,
+            6.8,
+            5.7,
+            1.7,
+            2.1
+          ]
+        },
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647603578.mp4",
+          "fps": 30,
+          "peak": 48.4,
+          "ms": 267,
+          "frames": [
+            48.4,
+            38.3,
+            14.4,
+            12.1,
+            6.5,
+            3.1,
+            2,
+            1.6
+          ]
+        },
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647622516.mp4",
+          "fps": 30,
+          "peak": 48.4,
+          "ms": 267,
+          "frames": [
+            48.4,
+            30.3,
+            23.4,
+            10,
+            8.7,
+            2.7,
+            3,
+            1.7
+          ]
+        }
       ]
     },
     {
       "reduceMotion": true,
       "component": "Dialog",
       "label": "Dialog",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793477594274.mp4",
-      "fps": 30,
-      "peak": 96.9,
       "ms": 33,
-      "frames": [
-        96.9
+      "samples": [
+        33,
+        33,
+        33
+      ],
+      "recordings": [
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647640731.mp4",
+          "fps": 30,
+          "peak": 101,
+          "ms": 33,
+          "frames": [
+            101
+          ]
+        },
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647656216.mp4",
+          "fps": 30,
+          "peak": 97.6,
+          "ms": 33,
+          "frames": [
+            97.6
+          ]
+        },
+        {
+          "label": "Dialog",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647671615.mp4",
+          "fps": 30,
+          "peak": 96.7,
+          "ms": 33,
+          "frames": [
+            96.7
+          ]
+        }
       ]
     },
     {
       "reduceMotion": true,
       "component": "Bottom sheet",
       "label": "Bottom sheet",
-      "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793477611936.mp4",
-      "fps": 30,
-      "peak": 90.7,
       "ms": 33,
-      "frames": [
-        90.7
+      "samples": [
+        33,
+        33,
+        33
+      ],
+      "recordings": [
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647689617.mp4",
+          "fps": 30,
+          "peak": 90.6,
+          "ms": 33,
+          "frames": [
+            90.6
+          ]
+        },
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647707499.mp4",
+          "fps": 30,
+          "peak": 90.4,
+          "ms": 33,
+          "frames": [
+            90.4
+          ]
+        },
+        {
+          "label": "Bottom sheet",
+          "video": "/Users/asimmalik/Documents/dev/am/am-ui-lab/.argent/recordings/screen-recording-R5CXA2TFTKP-1793647725426.mp4",
+          "fps": 30,
+          "peak": 91.3,
+          "ms": 33,
+          "frames": [
+            91.3
+          ]
+        }
       ]
     }
   ]

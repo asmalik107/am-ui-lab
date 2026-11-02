@@ -1,6 +1,6 @@
 # heroui: Android accessibility audit, light theme
 
-Run 2026-10-31 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, light theme, with `scripts/a11y-audit.mjs`. 47/67 checks passed.
+Run 2026-11-02 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, light theme, with `scripts/a11y-audit.mjs`. 46/67 checks passed.
 
 Roles, states, sizes and reachability come from the accessibility tree of the active window, read through UiAutomation by `scripts/android-a11y-dump` (what TalkBack is given, not what it speaks). Touch targets are checked against 48 dp. Elements of an overlay's own window are reachable; anything else in that window counts as exposed behind it.
 
@@ -12,7 +12,7 @@ Roles, states, sizes and reachability come from the accessibility tree of the ac
 | Button (disabled) | target ≥ 48dp | pass | 352×48dp |
 | Button (loading) | name, role, state | **fail** | label="Saving" value="" traits=[button, notEnabled] 352×48dp |
 | Button (loading) | target ≥ 48dp | pass | 352×48dp |
-| Text field | name, role, state | **fail** | label="" value="" traits=[] 352×48dp |
+| Text field | name, role, state | pass | label="Email" value="" traits=[] 352×48dp |
 | Switch | name, role, state | **fail** | label="" value="" traits=[] 352×24dp |
 | Switch | target ≥ 48dp | **fail** | 352×24dp |
 | Checkbox | name, role, state | **fail** | label="" value="" traits=[] 352×24dp |
@@ -28,14 +28,14 @@ Roles, states, sizes and reachability come from the accessibility tree of the ac
 | Radio group | all options exposed | pass | 3 options found |
 | Radio group | group label read | pass | label text "Experience level" in tree |
 | Text field | error shown | pass | error text in tree |
-| Text field | error reachable from field | **fail** | label="not-an-email" value="not-an-email" traits=[] 352×48dp hint="" |
+| Text field | error reachable from field | **fail** | label="Email" value="not-an-email" traits=[] 352×48dp hint="" |
 | Dialog | opens | pass | title in tree |
 | Dialog | screen behind is hidden from TalkBack | **fail** | still exposed: test-sheet-close, Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-gorhom, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-menu-open, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list |
 | Dialog | title is a heading | **fail** | AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this." |
 | Dialog | actions are buttons | pass | AXButton label="Cancel" |
 | Dialog | closes | pass | title gone |
 | Bottom sheet | opens | pass | sheet content in tree |
-| Bottom sheet | title and body readable | pass | title in tree |
+| Bottom sheet | title and body readable | **fail** | title and body text not in the system tree |
 | Bottom sheet | screen behind is hidden from TalkBack | **fail** | still exposed: Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-gorhom, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-menu-open, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list |
 | Bottom sheet | closes | pass | sheet gone |
 | Bottom sheet | screen reachable again after close | pass | screen controls back in system tree |
@@ -45,7 +45,7 @@ Roles, states, sizes and reachability come from the accessibility tree of the ac
 | Bottom sheet (@expo/ui) | closes | pass | sheet gone |
 | Bottom sheet (@expo/ui) | screen reachable again after close | pass | screen controls back in system tree |
 | Bottom sheet (@gorhom, raw) | opens | pass | sheet content in tree |
-| Bottom sheet (@gorhom, raw) | title and body readable | pass | title in tree |
+| Bottom sheet (@gorhom, raw) | title and body readable | **fail** | title and body text not in the system tree |
 | Bottom sheet (@gorhom, raw) | screen behind is hidden from TalkBack | **fail** | still exposed: test-sheet-close, Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-gorhom, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-menu-open, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list |
 | Bottom sheet (@gorhom, raw) | closes | pass | sheet gone |
 | Bottom sheet (@gorhom, raw) | screen reachable again after close | pass | screen controls back in system tree |
@@ -57,7 +57,7 @@ Roles, states, sizes and reachability come from the accessibility tree of the ac
 | Toast | in accessibility tree | pass | AXTextView label="Set logged" |
 | Slider | name, role, value | pass | label="Weight, 60" value="30" traits=[adjustable] 28×20dp |
 | Slider | target ≥ 48dp | **fail** | 28×20dp |
-| Slider | dragging changes the value | pass | value "30" → "35" |
+| Slider | dragging changes the value | pass | value "30" → "34" |
 | Progress | name and value | pass | label="Workout progress, 3 of 8 exercises" value="3" traits=[] role="Progress bar" 352×8dp |
 | Accordion | header is a button | pass | label="Warm-up" value="collapsed" traits=[button] 352×52dp |
 | Accordion | target ≥ 48dp | pass | 352×52dp |

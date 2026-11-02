@@ -7,7 +7,9 @@
 // is launched, so this tests "on at launch". Switching it while the app runs is
 // not tested: writing the default does not post the change notification.
 //
-// Usage: node scripts/motion-test.mjs <app> <bundleId> <udid>
+// Usage: node scripts/motion-test.mjs <app> <bundleId> <udid> [repeat]
+// With repeat > 1 each open is recorded that many times and ms is the median;
+// every recording is kept under `recordings`.
 // Output: results/<app>/ios-motion.json and results/<app>/ios-motion.md
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
@@ -15,7 +17,8 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { androidA11y } from './android-a11y.mjs';
 import { deviceInfo, platformOf } from './device.mjs';
 
-const [app, bundleId, udid] = process.argv.slice(2);
+const [app, bundleId, udid, repeatArg] = process.argv.slice(2);
+const repeat = Number(repeatArg ?? 1);
 if (!app || !bundleId || !udid) {
   console.error('Usage: node scripts/motion-test.mjs <app> <bundleId> <udid>');
   process.exit(1);
@@ -115,7 +118,15 @@ try {
   for (const rm of [false, true]) {
     setReduceMotion(rm);
     for (const [id, name] of [['test-dialog-open', 'Dialog'], ['test-sheet-open', 'Bottom sheet']]) {
-      runs.push({ reduceMotion: rm, component: name, ...(await measure(id, name)) });
+      if (repeat === 1) {
+        runs.push({ reduceMotion: rm, component: name, ...(await measure(id, name)) });
+        continue;
+      }
+      const recordings = [];
+      for (let k = 0; k < repeat; k++) recordings.push(await measure(id, name));
+      const samples = recordings.map((r) => r.ms).filter((ms) => ms != null).sort((a, b) => a - b);
+      const ms = samples.length ? samples[(samples.length - 1) >> 1] : null;
+      runs.push({ reduceMotion: rm, component: name, label: name, ms, samples, recordings });
     }
   }
 } finally {
@@ -130,14 +141,17 @@ const md = [
     ? `Run ${new Date().toISOString().slice(0, 10)} on the ${device.name} (${device.runtime}) with \`scripts/motion-test.mjs\`. Android's Remove animations sets the animator, transition and window animation scales to 0, which is what React Native's isReduceMotionEnabled and Reanimated read. The phone's variable-rate recording is resampled to 30 fps, so one frame is 33 ms as on iOS. Set before launch.`
     : `Run ${new Date().toISOString().slice(0, 10)} on the ${device.name} simulator (${device.runtime}) with \`scripts/motion-test.mjs\`. Transition duration of the open, from a real-time 30 fps screen recording: the run of visibly changing frames (mean luma difference above 1.0) around the largest change, which is the overlay appearing. An instant change is one frame (33 ms); an animation lasts as long as it runs. Reduce Motion was set before launch; switching it while the app runs was not tested.`,
   '',
+  repeat > 1 ? `Each figure is the median of ${repeat} recordings; every recording is in brackets.` : null,
+  repeat > 1 ? '' : null,
   '| Component | Reduce Motion off | Reduce Motion on |',
   '| --- | --- | --- |',
   ...['Dialog', 'Bottom sheet'].map((c) => {
     const off = runs.find((r) => r.component === c && !r.reduceMotion);
     const on = runs.find((r) => r.component === c && r.reduceMotion);
-    return `| ${c} | ${off.ms} ms | ${on.ms} ms |`;
+    const ms = (r) => (r.samples ? `${r.ms} ms (${r.samples.join(', ')})` : `${r.ms} ms`);
+    return `| ${c} | ${ms(off)} | ${ms(on)} |`;
   }),
   '',
-].join('\n');
+].filter((l) => l !== null).join('\n');
 writeFileSync(new URL(`${platform}-motion.md`, outDir), md);
 console.log(md);

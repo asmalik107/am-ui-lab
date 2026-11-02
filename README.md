@@ -12,7 +12,7 @@
 - [Results](docs/results.md): every check, with the iOS and Android numbers
 - [Method](docs/method.md): how each check was measured, its limits, and how to reproduce it
 - [iOS accessibility](docs/ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
-- [Android accessibility](docs/android-accessibility.md): every Android accessibility failure, from the audit’s output
+- [Android accessibility](docs/android-accessibility.md): every Android accessibility failure, with the line of code that causes it
 - [All checks](docs/checks.md): every accessibility check for every app, one table per component, plus the charts
 - [To do](TODO.md): what is left to measure, and how
 <!-- end:nav -->
@@ -94,7 +94,7 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
   - **Baseline and styling engines**
     - TalkBack: 60 of 62 checks
     - VoiceOver: 58 of 62 checks
-  - **Component libraries:** 55–70% of checks
+  - **Component libraries:** 53–69% of checks
 - **Speed differences are largest on the budget phone**
   - **Galaxy A15:** a theme switch takes
     - Unistyles: 71 ms, the fastest
@@ -128,7 +128,7 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
     - NativeWind: 183 ms
 - **Ready-made components: HeroUI**
   - The most accessible component library
-    - TalkBack: 47 of 67
+    - TalkBack: 46 of 67
     - VoiceOver: 44 of 67
   - Its memory grows the most on the Galaxy A15: +216 MiB after use
   - Accessibility gaps you’d fix yourself
@@ -172,9 +172,9 @@ One row per app.
 | [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 137 ms | +38 MiB | +51 MiB | 4.24 MB | 4.38 MB | 507 | 503 | 0 |
 | [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 183 ms | +51 MiB | 🟢 **+32 MiB** | 4.47 MB | 4.61 MB | 460 | 457 | 0 |
 | [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 🔴 116 ms | 🔴 630 ms | 🔴 +69 MiB | +46 MiB | 5.44 MB | 5.59 MB | not measured | 1,029 | 0 |
-| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 36 / 66 | 65 ms | 192 ms | +47 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | 520 | 🔴 7,488 |
-| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 47 / 67 | 65 ms | 239 ms | 🟢 **+29 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | 🔴 1,040 | 0 |
-| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 37 / 62 | 33 ms | 97 ms | +43 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | 601 | 1,519 |
+| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 35 / 66 | 65 ms | 192 ms | +47 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | 520 | 🔴 7,488 |
+| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 46 / 67 | 65 ms | 239 ms | 🟢 **+29 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | 🔴 1,040 | 0 |
+| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 39 / 62 | 33 ms | 97 ms | +43 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | 601 | 1,519 |
 <!-- end:scorecard -->
 
 <!-- begin:scorecardlinks -->
@@ -288,7 +288,7 @@ Best first.
 *Component library*
 
 - ✅ Best accessibility of the component libraries
-  - TalkBack: 47 of 67
+  - TalkBack: 46 of 67
   - VoiceOver: 44 of 67
 - ⚠️ Memory grows the most on the Galaxy A15: +216 MiB after use
 - ⚠️ Most re-renders per theme switch: 1,137 on iOS, 1,040 on Android
@@ -312,7 +312,7 @@ Best first.
   - Bundles all 1,917 lucide icons and uses 4
 - ⚠️ Button labels are cut off at the largest text size, on both platforms
 - ⚠️ Low accessibility
-  - TalkBack: 37 of 62
+  - TalkBack: 39 of 62
   - VoiceOver: 37 of 62
 - ⚠️ The checkbox is 16 dp tall on the phone, under the 48 dp minimum
 - ⚠️ Progress always reads 0%
@@ -331,7 +331,7 @@ Best first.
   - 7,488 lines
   - 17 type errors in them
 - ⚠️ Lowest accessibility
-  - TalkBack: 36 of 66
+  - TalkBack: 35 of 66
   - VoiceOver: 35 of 66
 - ⚠️ Controls too small to tap on the phone, under Google’s 48 dp minimum
   - Slider: 6 dp

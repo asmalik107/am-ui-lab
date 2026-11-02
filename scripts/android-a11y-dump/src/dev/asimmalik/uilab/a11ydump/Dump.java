@@ -93,6 +93,9 @@ public class Dump extends Instrumentation {
         o.put("id", n.getViewIdResourceName());
         o.put("text", str(n.getText()));
         o.put("contentDescription", str(n.getContentDescription()));
+        // TalkBack names a control after the node it is labelled by (aria-labelledby in React Native).
+        AccessibilityNodeInfo lb = n.getLabeledBy();
+        o.put("labeledBy", lb == null ? null : str(lb.getText() != null ? lb.getText() : lb.getContentDescription()));
         o.put("hint", str(n.getHintText()));
         o.put("stateDescription", str(n.getStateDescription()));
         o.put("error", str(n.getError()));

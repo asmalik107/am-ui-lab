@@ -201,9 +201,11 @@ ${chartMd('memory-used')}
 
 ${chartMd('cpu-flings')}
 
-### Measured on one platform only
+### Bundle size
 
 ${chartMd('bundle')}
+
+### Measured on one platform only
 
 ${chartMd('rerenders')}
 

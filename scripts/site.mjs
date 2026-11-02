@@ -307,7 +307,7 @@ footer h2 { color: var(--text); }
   </section>
   <section id="scorecard">
     <div class="reveal"><span class="sec-num">03</span><h2>Scorecard</h2></div>
-    <p class="hint reveal">One row per app. Click a column to rank by it. 🟢 best, 🔴 worst. Accessibility is checks passed, light theme. Theme switch and memory are on the Galaxy A15; bundle and re-renders on iOS.</p>
+    <p class="hint reveal">One row per app. Click a column to rank by it. 🟢 best, 🔴 worst. Every measure is shown for iOS (the iPhone 17 simulator) and Android (the Galaxy A15). Accessibility is checks passed, light theme. Re-renders on Android aren’t measured yet.</p>
     <div class="scroll reveal"><table class="card" id="card"></table></div>
   </section>
   <section id="checks">

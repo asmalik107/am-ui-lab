@@ -65,7 +65,7 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
 - [Reduced motion](#reduced-motion)
 - [Timings](#timings)
 - [Startup, memory and scrolling](#startup-memory-and-scrolling)
-- [Bundle size and re-renders](#bundle-size-and-re-renders-ios)
+- [Bundle size and re-renders](#bundle-size-and-re-renders)
 - [Developer cost](#developer-cost)
 
 <a id="in-brief"></a>
@@ -349,27 +349,27 @@ The baseline included.
 
 [How this was measured →](method.md#performance-checks)
 
-<a id="bundle-size-and-re-renders-ios"></a>
+<a id="bundle-size-and-re-renders"></a>
 
-## Bundle size and re-renders (iOS)
+## Bundle size and re-renders
 
-The JS is the same on both platforms, so these were measured once, on iOS.
-
-- **Bundle size:** the Hermes bytecode from `npx expo export --platform ios` (`scripts/bundle-size.mjs`).
+- **Bundle size:** the Hermes bytecode from `npx expo export`, once per platform (`scripts/bundle-size.mjs`).
+  - Android measured on 2 November 2026
 - **Re-renders:** components React rendered for light → dark, dark → brand and brand → light.
   - Counted with argent's React profiler on a Debug build (`scripts/rerender-run.mjs`)
+  - **Android not measured yet:** it needs a Debug build profiled on the phone
 
 <!-- begin:ioscode -->
-| App | JS bundle | Components rendered per theme switch |
-| --- | --- | --- |
-| baseline | 3.95 MB | 298 / 298 / 290 |
-| unistyles | 4.15 MB | 128 / 128 / 126 |
-| uniwind | 4.24 MB | 507 / 509 / 302 |
-| nativewind | 4.47 MB | 460 / 460 / 456 |
-| tamagui | 5.44 MB | not measured |
-| gluestack | 5.66 MB | 815 / 815 / 508 |
-| heroui | 5.24 MB | 1137 / 1135 / 948 |
-| reusables | 6.83 MB | 603 / 608 / 356 |
+| App | JS bundle, iOS | JS bundle, Android | Components rendered per theme switch, iOS | Components rendered per theme switch, Android |
+| --- | --- | --- | --- | --- |
+| baseline | 3.95 MB | 4.09 MB | 298 / 298 / 290 | not measured |
+| unistyles | 4.15 MB | 4.29 MB | 128 / 128 / 126 | not measured |
+| uniwind | 4.24 MB | 4.38 MB | 507 / 509 / 302 | not measured |
+| nativewind | 4.47 MB | 4.61 MB | 460 / 460 / 456 | not measured |
+| tamagui | 5.44 MB | 5.59 MB | not measured | not measured |
+| gluestack | 5.67 MB | 5.81 MB | 815 / 815 / 508 | not measured |
+| heroui | 5.24 MB | 5.39 MB | 1137 / 1135 / 948 | not measured |
+| reusables | 6.83 MB | 7.00 MB | 603 / 608 / 356 | not measured |
 <!-- end:ioscode -->
 
 - **Reusables** bundles every lucide icon (1,917 of them), although it uses 4.

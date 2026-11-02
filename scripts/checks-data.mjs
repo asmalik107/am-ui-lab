@@ -125,6 +125,7 @@ const score = (t) => ({ value: t ? (t.pass / t.total) * 100 : null, text: t ? `$
 const val = (a, get, fmt) => { const v = num(a, get); return { value: v, text: v == null ? 'not measured' : fmt(v) }; };
 const msF = (v) => `${v.toFixed(1)} ms`;
 const sF = (v) => `${(v / 1000).toFixed(2)} s`;
+const mbF = (v) => `${v.toFixed(2)} MB`;
 const mibF = (v) => `${v.toFixed(1)} MiB`;
 
 // [file, title, subtitle, how to read it, series]
@@ -163,10 +164,10 @@ export const charts = [
     'Compare apps within a platform: the simulator runs on a Mac, the phone on a budget CPU.',
     'HeroUI uses the most on both.',
   ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.metrics.scroll.cpuMs.total, sF), android: val(a, (d) => d.androidMetrics.scroll.cpuMs.total, sF) })))],
-  ['bundle', 'iOS JS bundle', 'Hermes bytecode from expo export. Shorter is better.', [
+  ['bundle', 'JS bundle', 'Hermes bytecode from expo export. Shorter is better.', [
     'Exact, with no run-to-run noise.',
     'The baseline is plain React Native, so the gap to it is what the library adds.',
-  ], single(apps.map(([a, name]) => ({ label: name, ...val(a, (d) => d.bundle.iosHbcBytes / 1e6, (v) => `${v.toFixed(2)} MB`) })), 'ios')],
+  ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.bundle.iosHbcBytes / 1e6, mbF), android: val(a, (d) => d.bundle.androidHbcBytes / 1e6, mbF) })))],
   ['rerenders', 'iOS: components re-rendered on one theme switch', 'Light → dark, React profiler on a Debug build. Fewer is better.', [
     'Tamagui isn’t measured: its Debug build aborts.',
   ], single(apps.map(([a, name]) => ({ label: name, ...val(a, (d) => d.metrics.rerenders.switches[0].renders, String) })), 'ios')],

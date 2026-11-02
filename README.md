@@ -101,10 +101,10 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
   - **iPhone simulator:** every app but Tamagui finishes within a frame or two
 - **Unistyles is the best all-rounder**
   - Fastest theme switch on the phone
-  - Fewest re-renders
+  - Fewest re-renders, on iOS
   - The baseline’s accessibility
 - **Each component library costs you something**
-  - **HeroUI:** memory grows by 216 MiB
+  - **HeroUI:** memory grows by 216 MiB on the phone
   - **Their code copied into your app**
     - gluestack: 7,488 lines
     - Reusables: 1,519 lines
@@ -150,21 +150,21 @@ One row per app.
 - 🟢 **Bold** is the best in each column, 🔴 the worst.
 - **Accessibility:** every check, in the light theme.
 - **Theme switch, iOS:** every app but one takes two frames (about 32 ms), so only the worst is marked.
-- **Theme switch, Android and memory:** on the Galaxy A15.
-- **Bundle size and re-renders:** on iOS. The JS is the same on both platforms.
+- **Android:** the Galaxy A15. **iOS:** the iPhone 17 simulator.
+- **Re-renders, Android:** not measured yet. It needs a Debug build profiled on the phone.
 - **Each column** links to its section in [Results](docs/results.md), listed under the table.
 
 <!-- begin:scorecard -->
-| App | [Accessibility, iOS](docs/results.md#accessibility) | [Accessibility, Android](docs/results.md#accessibility) | [Theme switch, iOS](docs/results.md#timings) | [Theme switch, Android](docs/results.md#timings) | [Memory growth, Android](docs/results.md#startup-memory-and-scrolling) | [JS bundle](docs/results.md#bundle-size-and-re-renders-ios) | [Re-renders per theme switch](docs/results.md#bundle-size-and-re-renders-ios) | [Library code copied in](docs/results.md#developer-cost) |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [Baseline](#baseline-plain-react-native-the-reference-point) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 99 ms | +50 MiB | 🟢 **3.95 MB** | 298 | 0 |
-| [Unistyles](#unistyles-360-best-all-rounder) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 🟢 **71 ms** | +54 MiB | 4.15 MB | 🟢 **128** | 0 |
-| [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 137 ms | +51 MiB | 4.24 MB | 507 | 0 |
-| [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 183 ms | 🟢 **+32 MiB** | 4.47 MB | 460 | 0 |
-| [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 🔴 99 ms | 🔴 630 ms | +46 MiB | 5.44 MB | not measured | 0 |
-| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 36 / 66 | 32 ms | 192 ms | +103 MiB | 5.66 MB | 815 | 🔴 7,488 |
-| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 47 / 67 | 32 ms | 239 ms | 🔴 +216 MiB | 5.24 MB | 🔴 1,137 | 0 |
-| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 37 / 62 | 32 ms | 97 ms | +48 MiB | 🔴 6.83 MB | 603 | 1,519 |
+| App | [Accessibility, iOS](docs/results.md#accessibility) | [Accessibility, Android](docs/results.md#accessibility) | [Theme switch, iOS](docs/results.md#timings) | [Theme switch, Android](docs/results.md#timings) | [Memory growth, iOS](docs/results.md#startup-memory-and-scrolling) | [Memory growth, Android](docs/results.md#startup-memory-and-scrolling) | [JS bundle, iOS](docs/results.md#bundle-size-and-re-renders) | [JS bundle, Android](docs/results.md#bundle-size-and-re-renders) | [Re-renders per theme switch, iOS](docs/results.md#bundle-size-and-re-renders) | [Re-renders per theme switch, Android](docs/results.md#bundle-size-and-re-renders) | [Library code copied in](docs/results.md#developer-cost) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [Baseline](#baseline-plain-react-native-the-reference-point) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 99 ms | +62 MiB | +50 MiB | 🟢 **3.95 MB** | 🟢 **4.09 MB** | 298 | not measured | 0 |
+| [Unistyles](#unistyles-360-best-all-rounder) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 🟢 **71 ms** | +61 MiB | +54 MiB | 4.15 MB | 4.29 MB | 🟢 **128** | not measured | 0 |
+| [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 137 ms | +67 MiB | +51 MiB | 4.24 MB | 4.38 MB | 507 | not measured | 0 |
+| [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **58 / 62** | 🟢 **60 / 62** | 32 ms | 183 ms | +66 MiB | 🟢 **+32 MiB** | 4.47 MB | 4.61 MB | 460 | not measured | 0 |
+| [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 🔴 99 ms | 🔴 630 ms | 🔴 +79 MiB | +46 MiB | 5.44 MB | 5.59 MB | not measured | not measured | 0 |
+| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 36 / 66 | 32 ms | 192 ms | +53 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | not measured | 🔴 7,488 |
+| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 47 / 67 | 32 ms | 239 ms | 🟢 **+36 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | not measured | 0 |
+| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 37 / 62 | 32 ms | 97 ms | +67 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | not measured | 1,519 |
 <!-- end:scorecard -->
 
 <!-- begin:scorecardlinks -->
@@ -174,9 +174,12 @@ One row per app.
 - **Accessibility, Android:** [Accessibility](docs/results.md#accessibility)
 - **Theme switch, iOS:** [Timings](docs/results.md#timings)
 - **Theme switch, Android:** [Timings](docs/results.md#timings)
+- **Memory growth, iOS:** [Startup, memory and scrolling](docs/results.md#startup-memory-and-scrolling)
 - **Memory growth, Android:** [Startup, memory and scrolling](docs/results.md#startup-memory-and-scrolling)
-- **JS bundle:** [Bundle size and re-renders](docs/results.md#bundle-size-and-re-renders-ios)
-- **Re-renders per theme switch:** [Bundle size and re-renders](docs/results.md#bundle-size-and-re-renders-ios)
+- **JS bundle, iOS:** [Bundle size and re-renders](docs/results.md#bundle-size-and-re-renders)
+- **JS bundle, Android:** [Bundle size and re-renders](docs/results.md#bundle-size-and-re-renders)
+- **Re-renders per theme switch, iOS:** [Bundle size and re-renders](docs/results.md#bundle-size-and-re-renders)
+- **Re-renders per theme switch, Android:** [Bundle size and re-renders](docs/results.md#bundle-size-and-re-renders)
 - **Library code copied in:** [Developer cost](docs/results.md#developer-cost)
 <!-- end:scorecardlinks -->
 
@@ -202,7 +205,7 @@ Best first.
 - ✅ Fastest theme switch on the phone
   - Unistyles: 71 ms
   - Baseline: 99 ms
-- ✅ Fewest re-renders per theme switch
+- ✅ Fewest re-renders per theme switch, on iOS
   - Unistyles: 128
   - Baseline: 298
 - ✅ The baseline’s accessibility, as the components are hand-built
@@ -226,7 +229,7 @@ Best first.
 - ⚠️ Slower theme switch on the phone
   - Uniwind: 137 ms
   - Baseline: 99 ms
-- ⚠️ More re-renders per theme switch
+- ⚠️ More re-renders per theme switch, on iOS
   - Uniwind: 507
   - Unistyles: 128
 
@@ -259,7 +262,9 @@ Best first.
 - ✅ Top accessibility score
   - TalkBack: 60 of 62
   - VoiceOver: 58 of 62
-- ✅ Smallest bundle: 3.95 MB
+- ✅ Smallest JS bundle
+  - iOS: 3.95 MB
+  - Android: 4.09 MB
 - ⚠️ Everything written by hand
   - Every component
   - All 75 accessibility props
@@ -276,7 +281,7 @@ Best first.
   - TalkBack: 47 of 67
   - VoiceOver: 44 of 67
 - ⚠️ Memory grows the most on the phone: +216 MiB after use
-- ⚠️ Most re-renders per theme switch: 1,137
+- ⚠️ Most re-renders per theme switch, on iOS: 1,137
 - ⚠️ Theme switch on the phone: 239 ms
 - ⚠️ Labelled switch and checkbox rows hide the control’s name, role and state
 
@@ -291,8 +296,9 @@ Best first.
 - ✅ Theme switch on the phone level with the baseline
   - Reusables: 97 ms
   - Baseline: 99 ms
-- ⚠️ Largest bundle
-  - 6.83 MB
+- ⚠️ Largest JS bundle
+  - iOS: 6.83 MB
+  - Android: 7.00 MB
   - Bundles all 1,917 lucide icons and uses 4
 - ⚠️ Button labels are cut off at the largest text size, on both platforms
 - ⚠️ Low accessibility

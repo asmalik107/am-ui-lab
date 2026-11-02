@@ -27,9 +27,13 @@ export const rows = apps.map((app) => {
     a11yAndroid: pass(r('android-a11y.json')),
     themeIos: r('ios-perf.json')?.theme.median ?? null,
     themeAndroid: r('android-perf.json')?.theme.median ?? null,
+    memGrowthIos: iMet ? (iMet.memory.used.physFootprint - iMet.memory.idle.physFootprint) / 1048576 : null,
     memGrowth: aMet ? (aMet.memory.used.pss - aMet.memory.idle.pss) / 1048576 : null,
     bundle: r('bundle.json') ? r('bundle.json').iosHbcBytes / 1e6 : null,
+    bundleAndroid: r('bundle.json')?.androidHbcBytes ? r('bundle.json').androidHbcBytes / 1e6 : null,
     rerenders: iMet?.rerenders?.switches?.[0]?.renders ?? null,
+    // Not counted on Android yet: it needs a Debug build profiled on the phone.
+    rerendersAndroid: null,
     copied: devcost?.rows.find((x) => x.app === app)?.copiedLines ?? null,
   };
 });
@@ -43,9 +47,12 @@ export const columns = [
   // On iOS every app but one takes two frames, so only the worst is marked.
   { head: 'Theme switch, iOS', link: 'timings', section: 'Timings', get: (x) => x.themeIos, better: 'low', fmt: (x) => `${Math.round(x.themeIos)} ms`, worstOnly: true },
   { head: 'Theme switch, Android', link: 'timings', section: 'Timings', get: (x) => x.themeAndroid, better: 'low', fmt: (x) => `${Math.round(x.themeAndroid)} ms` },
+  { head: 'Memory growth, iOS', link: 'startup-memory-and-scrolling', section: 'Startup, memory and scrolling', get: (x) => x.memGrowthIos, better: 'low', fmt: (x) => `+${Math.round(x.memGrowthIos)} MiB` },
   { head: 'Memory growth, Android', link: 'startup-memory-and-scrolling', section: 'Startup, memory and scrolling', get: (x) => x.memGrowth, better: 'low', fmt: (x) => `+${Math.round(x.memGrowth)} MiB` },
-  { head: 'JS bundle', link: 'bundle-size-and-re-renders-ios', section: 'Bundle size and re-renders', get: (x) => x.bundle, better: 'low', fmt: (x) => `${x.bundle.toFixed(2)} MB` },
-  { head: 'Re-renders per theme switch', link: 'bundle-size-and-re-renders-ios', section: 'Bundle size and re-renders', get: (x) => x.rerenders, better: 'low', fmt: (x) => x.rerenders.toLocaleString('en-GB') },
+  { head: 'JS bundle, iOS', link: 'bundle-size-and-re-renders', section: 'Bundle size and re-renders', get: (x) => x.bundle, better: 'low', fmt: (x) => `${x.bundle.toFixed(2)} MB` },
+  { head: 'JS bundle, Android', link: 'bundle-size-and-re-renders', section: 'Bundle size and re-renders', get: (x) => x.bundleAndroid, better: 'low', fmt: (x) => `${x.bundleAndroid.toFixed(2)} MB` },
+  { head: 'Re-renders per theme switch, iOS', link: 'bundle-size-and-re-renders', section: 'Bundle size and re-renders', get: (x) => x.rerenders, better: 'low', fmt: (x) => x.rerenders.toLocaleString('en-GB') },
+  { head: 'Re-renders per theme switch, Android', link: 'bundle-size-and-re-renders', section: 'Bundle size and re-renders', get: (x) => x.rerendersAndroid, better: 'low', fmt: (x) => x.rerendersAndroid.toLocaleString('en-GB') },
   { head: 'Library code copied in', link: 'developer-cost', section: 'Developer cost', get: (x) => x.copied, better: 'low', fmt: (x) => x.copied.toLocaleString('en-GB'), worstOnly: true },
 ];
 
@@ -189,11 +196,11 @@ export const points = [
   ] },
   { lead: 'Unistyles is the best all-rounder', items: [
     'Fastest theme switch on the phone',
-    'Fewest re-renders',
+    'Fewest re-renders, on iOS',
     'The baseline’s accessibility',
   ] },
   { lead: 'Each component library costs you something', items: [
-    `**HeroUI:** memory grows by ${Math.round(by.heroui.memGrowth)} MiB`,
+    `**HeroUI:** memory grows by ${Math.round(by.heroui.memGrowth)} MiB on the phone`,
     ['**Their code copied into your app**', [`gluestack: ${n(by.gluestack.copied)} lines`, `Reusables: ${n(by.reusables.copied)} lines`]],
     '**Reusables:** button labels cut off at large text sizes',
     `**Tamagui:** the slowest app, ${ms('tamagui')} ms per theme switch on the phone`,
@@ -252,7 +259,7 @@ const setupProblems = (app) => {
 export const libraries = [
   { app: 'unistyles', role: 'Best all-rounder', good: [
     ['Fastest theme switch on the phone', [`Unistyles: ${ms('unistyles')} ms`, `Baseline: ${ms('baseline')} ms`]],
-    ['Fewest re-renders per theme switch', [`Unistyles: ${by.unistyles.rerenders}`, `Baseline: ${by.baseline.rerenders}`]],
+    ['Fewest re-renders per theme switch, on iOS', [`Unistyles: ${by.unistyles.rerenders}`, `Baseline: ${by.baseline.rerenders}`]],
     access('unistyles', 'The baseline’s accessibility, as the components are hand-built'),
   ], bad: ['You build every component yourself, as with the baseline'] },
   { app: 'uniwind', role: 'Best if you want Tailwind classes', good: [
@@ -261,7 +268,7 @@ export const libraries = [
   ], bad: [
     'You build every component yourself, as with the baseline',
     ['Slower theme switch on the phone', [`Uniwind: ${ms('uniwind')} ms`, `Baseline: ${ms('baseline')} ms`]],
-    ['More re-renders per theme switch', [`Uniwind: ${by.uniwind.rerenders}`, `Unistyles: ${by.unistyles.rerenders}`]],
+    ['More re-renders per theme switch, on iOS', [`Uniwind: ${by.uniwind.rerenders}`, `Unistyles: ${by.unistyles.rerenders}`]],
   ] },
   { app: 'nativewind', role: 'Tailwind, still a release candidate', good: [
     access('nativewind', 'The baseline’s accessibility'),
@@ -273,20 +280,20 @@ export const libraries = [
   ] },
   { app: 'baseline', role: 'Plain React Native, the reference point', good: [
     access('baseline', 'Top accessibility score'),
-    `Smallest bundle: ${by.baseline.bundle.toFixed(2)} MB`,
+    ['Smallest JS bundle', [`iOS: ${by.baseline.bundle.toFixed(2)} MB`, `Android: ${by.baseline.bundleAndroid.toFixed(2)} MB`]],
   ], bad: [['Everything written by hand', ['Every component', `All ${devRow('baseline').a11yProps} accessibility props`]]] },
   { app: 'heroui', role: 'The most accessible component library', good: [
     access('heroui', 'Best accessibility of the component libraries'),
   ], bad: [
     `Memory grows the most on the phone: +${Math.round(by.heroui.memGrowth)} MiB after use`,
-    `Most re-renders per theme switch: ${n(by.heroui.rerenders)}`,
+    `Most re-renders per theme switch, on iOS: ${n(by.heroui.rerenders)}`,
     `Theme switch on the phone: ${ms('heroui')} ms`,
     'Labelled switch and checkbox rows hide the control’s name, role and state',
   ] },
   { app: 'reusables', role: 'Fast, with rough edges', good: [
     ['Theme switch on the phone level with the baseline', [`Reusables: ${ms('reusables')} ms`, `Baseline: ${ms('baseline')} ms`]],
   ], bad: [
-    ['Largest bundle', [`${by.reusables.bundle.toFixed(2)} MB`, 'Bundles all 1,917 lucide icons and uses 4']],
+    ['Largest JS bundle', [`iOS: ${by.reusables.bundle.toFixed(2)} MB`, `Android: ${by.reusables.bundleAndroid.toFixed(2)} MB`, 'Bundles all 1,917 lucide icons and uses 4']],
     'Button labels are cut off at the largest text size, on both platforms',
     access('reusables', 'Low accessibility'),
     `The checkbox is ${tooSmall('reusables').find((x) => x.startsWith('Checkbox')).split(': ')[1]} tall on the phone, under the 48 dp minimum`,

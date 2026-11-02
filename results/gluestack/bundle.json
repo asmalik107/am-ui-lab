@@ -1,6 +1,7 @@
 {
   "app": "gluestack",
-  "iosHbcBytes": 5664963,
-  "date": "2026-10-30",
-  "how": "npx expo export --platform ios, main Hermes bytecode file (index-*.hbc), test screen with items 1–19"
+  "iosHbcBytes": 5665731,
+  "androidHbcBytes": 5811858,
+  "date": "2026-11-02",
+  "how": "npx expo export --platform ios and --platform android, main Hermes bytecode file (index-*.hbc), test screen with items 1–19"
 }

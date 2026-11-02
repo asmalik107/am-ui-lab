@@ -1,5 +1,5 @@
-// iOS JS bundle size: the main Hermes bytecode file from `npx expo export
-// --platform ios`, as measured since 22 October.
+// JS bundle size: the main Hermes bytecode file from `npx expo export`, for
+// iOS (measured since 22 October) and Android (since 2 November).
 // Usage: node scripts/bundle-size.mjs <app>
 // Output: results/<app>/bundle.json
 import { execFileSync } from 'node:child_process';
@@ -14,11 +14,15 @@ if (!app) {
   process.exit(1);
 }
 const cwd = fileURLToPath(new URL(`../apps/${app}/`, import.meta.url));
-const out = join(tmpdir(), `uilab-export-${app}`);
-rmSync(out, { recursive: true, force: true });
-execFileSync('npx', ['expo', 'export', '--platform', 'ios', '--output-dir', out], { cwd, stdio: 'ignore' });
-const dir = join(out, '_expo/static/js/ios');
-const hbc = readdirSync(dir).filter((f) => f.endsWith('.hbc')).map((f) => ({ f, size: statSync(join(dir, f)).size })).sort((a, b) => b.size - a.size)[0];
-const result = { app, iosHbcBytes: hbc.size, date: new Date().toISOString().slice(0, 10), how: `npx expo export --platform ios, main Hermes bytecode file (${hbc.f.replace(/-[0-9a-f]+\.hbc$/, '-*.hbc')}), test screen with items 1–19` };
+const size = (platform) => {
+  const out = join(tmpdir(), `uilab-export-${app}-${platform}`);
+  rmSync(out, { recursive: true, force: true });
+  execFileSync('npx', ['expo', 'export', '--platform', platform, '--output-dir', out], { cwd, stdio: 'ignore' });
+  const dir = join(out, `_expo/static/js/${platform}`);
+  return readdirSync(dir).filter((f) => f.endsWith('.hbc')).map((f) => ({ f, size: statSync(join(dir, f)).size })).sort((a, b) => b.size - a.size)[0];
+};
+const ios = size('ios');
+const android = size('android');
+const result = { app, iosHbcBytes: ios.size, androidHbcBytes: android.size, date: new Date().toISOString().slice(0, 10), how: `npx expo export --platform ios and --platform android, main Hermes bytecode file (${ios.f.replace(/-[0-9a-f]+\.hbc$/, '-*.hbc')}), test screen with items 1–19` };
 writeFileSync(new URL(`../results/${app}/bundle.json`, import.meta.url), JSON.stringify(result, null, 2) + '\n');
 console.log(result);

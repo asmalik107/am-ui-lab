@@ -7,6 +7,7 @@ const load = (app, file) => {
   const u = new URL(`results/${app}/${file}`, root);
   return existsSync(u) ? JSON.parse(readFileSync(u, 'utf8')) : null;
 };
+const mb = (b) => (b ? `${(b / 1e6).toFixed(2)} MB` : '–');
 const d = Object.fromEntries(apps.map((a) => [a, {
   iA11y: load(a, 'ios-a11y.json'),
   aA11y: load(a, 'android-a11y.json'),
@@ -77,8 +78,8 @@ const tables = {
     }),
   ),
   ioscode: table(
-    ['App', 'JS bundle', 'Components rendered per theme switch'],
-    apps.map((a) => [a, d[a].bundle ? `${(d[a].bundle.iosHbcBytes / 1e6).toFixed(2)} MB` : '–', d[a].iMet?.rerenders?.switches?.map((s) => s.renders).join(' / ') ?? 'not measured']),
+    ['App', 'JS bundle, iOS', 'JS bundle, Android', 'Components rendered per theme switch, iOS', 'Components rendered per theme switch, Android'],
+    apps.map((a) => [a, mb(d[a].bundle?.iosHbcBytes), mb(d[a].bundle?.androidHbcBytes), d[a].iMet?.rerenders?.switches?.map((s) => s.renders).join(' / ') ?? 'not measured', 'not measured']),
   ),
 };
 

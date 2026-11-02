@@ -926,16 +926,20 @@ Compare apps within a platform. iOS is a simulator on a Mac, Android a budget ph
 - Compare apps within a platform: the simulator runs on a Mac, the phone on a budget CPU.
 - HeroUI uses the most on both.
 
-<a id="measured-on-one-platform-only"></a>
+<a id="bundle-size"></a>
 
-### Measured on one platform only
+### Bundle size
 
-![iOS JS bundle](charts/bundle.svg)
+![JS bundle](charts/bundle.svg)
 
 **How to read it:**
 
 - Exact, with no run-to-run noise.
 - The baseline is plain React Native, so the gap to it is what the library adds.
+
+<a id="measured-on-one-platform-only"></a>
+
+### Measured on one platform only
 
 ![iOS: components re-rendered on one theme switch](charts/rerenders.svg)
 

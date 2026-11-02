@@ -114,7 +114,8 @@ How every number in [Results](results.md) was measured.
 | Timings, startup, CPU | Simulator on a Mac | Budget phone; compare apps within a platform |
 | Memory | `footprint` phys_footprint | `dumpsys meminfo` total PSS. A different measure, so compare apps within a platform. |
 | Scrolling | CPU during 5 flings and main-thread hangs; frame hitches can't be recorded on the simulator | CPU during 5 flings (from `/proc`) and janky frames (`dumpsys gfxinfo`) |
-| Re-renders, bundle size | Measured (Debug build with Metro; `expo export`) | Not measured: the JS is the same, so counts and bundle size would match iOS |
+| Bundle size | `expo export --platform ios` | `expo export --platform android` |
+| Re-renders | Measured (Debug build with Metro) | Not measured yet: needs a Debug build profiled on the phone |
 
 **Don't compare memory or speed across platforms.**
 
@@ -171,7 +172,8 @@ How every number in [Results](results.md) was measured.
 
 - Mount time and commit count for the 200-row list (React profiler)
 - Commits and time to re-render after switching theme
-- JS bundle size (`expo export`), compared with an app that uses no library
+- JS bundle size (`expo export`, once per platform), compared with an app that uses no library
+  - Android added on 2 November 2026
 - Cold start to first screen (`expo-router` index mounted)
 
 **Added on 27 October 2026** (`scripts/metrics-run.mjs`, `scripts/rerender-run.mjs`):
@@ -188,6 +190,7 @@ How every number in [Results](results.md) was measured.
 - **Re-renders on a theme switch**
   - React commits and component renders, from argent's React profiler
   - Debug build, counts only
+  - iOS only so far: Android needs a Debug build profiled on the phone
 
 <a id="ease-of-use-log"></a>
 

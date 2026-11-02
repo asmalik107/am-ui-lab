@@ -132,6 +132,11 @@ export const headline = [
 // words "styling engine" and "component library" are used.
 // Installed versions, read from each app's node_modules so they can't drift.
 export const ver = (app, pkg) => load(`apps/${app}/node_modules/${pkg}/package.json`)?.version ?? '?';
+// What the results cover, said wherever the results are shown.
+export const scope = [
+  '**Common components only:** each app builds the [19 most-used components](docs/method.md#the-test-screen): buttons, form controls, overlays, a list and a theme switcher. The other components each library ships weren’t tested.',
+  `**NativeWind ${ver('nativewind', 'nativewind')} is a pre-release:** version 5 isn’t stable yet, so its results may change once it is.`,
+];
 // [text, link]: each links to the docs or release notes for that exact version.
 const sdk = ver('baseline', 'expo').split('.')[0];
 export const stack = [

@@ -4,7 +4,7 @@
 // step on GitHub. Reads only results/* (through the shared modules).
 // Usage: node scripts/site.mjs
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { columns, heading, headline, kind, libraries, pages, points, scorecard, slug, stack, versions } from './scorecard.mjs';
+import { columns, heading, headline, kind, libraries, pages, points, scope, scorecard, slug, stack, versions } from './scorecard.mjs';
 import { apps, charts, detail, differs, get, result, root, rows, sheetChecks, sheetKinds, shown, what } from './checks-data.mjs';
 
 const repo = 'https://github.com/asmalik107/am-ui-lab';
@@ -68,6 +68,7 @@ const data = {
   stats,
   apps: apps.map(([a, name]) => ({ app: a, name, version: versions[a]?.[0] ?? '' })),
   headline,
+  scope,
   points,
   stack,
   card,
@@ -160,7 +161,9 @@ nav.jump a[aria-current="true"] { background: var(--text); color: var(--bg); }
 section { padding: 64px 0 8px; scroll-margin-top: 56px; }
 .sec-num { font-size: 13px; font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: .06em; display: block; margin-bottom: 6px; }
 .note { border: 1px solid var(--line); border-left: 4px solid var(--accent); background: var(--surface); padding: 14px 18px; border-radius: 12px; margin: 18px 0; box-shadow: var(--shadow); }
-.note p { margin: 0; } .note p + p { margin-top: 4px; }
+.note p { margin: 0; }
+.note.scope { border-left-color: var(--android); }
+.note ul { margin: 6px 0 0; padding-left: 18px; } .note p + p { margin-top: 4px; }
 .points { display: grid; grid-template-columns: 1fr; gap: 12px; margin: 0; padding: 0; list-style: none; counter-reset: pt; }
 .points > li { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; box-shadow: var(--shadow); counter-increment: pt; transition: transform .2s, box-shadow .2s; }
 .points > li:hover { transform: translateY(-2px); }
@@ -283,6 +286,7 @@ footer h2 { color: var(--text); }
   <section id="answer">
     <div class="reveal"><span class="sec-num">01</span><h2>The answer</h2></div>
     <div class="note reveal" id="headline"></div>
+    <div class="note scope reveal"><p><strong>What this covers</strong></p><ul id="scope"></ul></div>
     <ul class="points" id="points"></ul>
   </section>
   <section id="scorecard">
@@ -342,6 +346,7 @@ $('#theme').onclick = () => {
 };
 
 $('#stack').innerHTML = D.stack.map(([t, u]) => '<li><a href="' + esc(u) + '">' + esc(t) + '</a></li>').join('');
+$('#scope').innerHTML = D.scope.map((x) => '<li>' + md(x) + '</li>').join('');
 $('#headline').innerHTML = D.headline.map(([w, x]) => '<p><strong>' + esc(w) + ':</strong> ' + esc(x) + '.</p>').join('');
 $('#stats').innerHTML = D.stats.map((x, i) => '<li class="reveal ' + x.tone + '" style="--d:' + i * 80 + 'ms"><span class="v">' + esc(x.value) + '</span><span class="l">' + esc(x.label) + '</span></li>').join('');
 $('#points').innerHTML = D.points.map((p, i) => '<li class="reveal" style="--d:' + i * 80 + 'ms"><h3>' + md(p.lead) + '</h3><ul>' + p.items.map(item).join('') + '</ul></li>').join('');

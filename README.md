@@ -32,6 +32,14 @@ A side-by-side comparison of React Native UI libraries on iOS and Android.
 - **Same checks:** every app goes through the same scripted checks, on both platforms.
 - **Measured only:** every number was measured. Where something couldn't be, the docs say so.
 
+<!-- begin:scope -->
+> [!IMPORTANT]
+> **What this covers**
+>
+> - **Common components only:** each app builds the [19 most-used components](docs/method.md#the-test-screen): buttons, form controls, overlays, a list and a theme switcher. The other components each library ships weren’t tested.
+> - **NativeWind 5.0.0-rc.0 is a pre-release:** version 5 isn’t stable yet, so its results may change once it is.
+<!-- end:scope -->
+
 <a id="what-is-being-compared"></a>
 
 ## What is being compared

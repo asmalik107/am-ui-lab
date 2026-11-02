@@ -12,6 +12,7 @@
 - [iOS accessibility](ios-accessibility.md): every iOS accessibility failure, with the line of code that causes it
 - **Android accessibility** (this page): every Android accessibility failure, from the audit’s output
 - [All checks](checks.md): every accessibility check for every app, one table per component, plus the charts
+- [To do](../TODO.md): what is left to measure, and how
 <!-- end:nav -->
 
 Every Android accessibility failure, from the audit’s own output. Generated from `results/` by `scripts/checks-md.mjs`.

@@ -333,8 +333,9 @@ export const pages = [
   ['iOS accessibility', 'docs/ios-accessibility.md', 'every iOS accessibility failure, with the line of code that causes it'],
   ['Android accessibility', 'docs/android-accessibility.md', 'every Android accessibility failure, from the audit’s output'],
   ['All checks', 'docs/checks.md', 'every accessibility check for every app, one table per component, plus the charts'],
+  ['To do', 'TODO.md', 'what is left to measure, and how'],
 ];
-export const href = (path, from) => (/^https?:/.test(path) || from === 'root' ? path : path === 'README.md' ? '../README.md' : path.replace(/^docs\//, ''));
+export const href = (path, from) => (/^https?:/.test(path) || from === 'root' ? path : path.startsWith('docs/') ? path.slice(5) : `../${path}`);
 export const nav = (current, from) => ['**The docs:**', pages.map(([label, path, what]) => (label === current ? `- **${label}** (this page): ${what}` : `- [${label}](${href(path, from)}): ${what}`)).join('\n')].join('\n\n');
 
 // GitHub's heading anchors: lower case, punctuation dropped, spaces to hyphens.

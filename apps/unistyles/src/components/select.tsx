@@ -24,7 +24,7 @@ export function Select({ label, options, value, onChange, testID }: SelectProps)
         {/* The backdrop is a sibling of the list, not its parent: aria-modal inside
             an accessible Pressable did not hide the screen behind it from VoiceOver. */}
         <View style={styles.menuWrap}>
-          <Pressable accessible={false} style={styles.backdrop} onPress={() => setOpen(false)} />
+          <Pressable accessible={false} importantForAccessibility="no" style={styles.backdrop} onPress={() => setOpen(false)} />
           <View aria-modal role="list" accessibilityLabel={label} style={styles.menu}>
             {options.map((opt, i) => (
               <Pressable

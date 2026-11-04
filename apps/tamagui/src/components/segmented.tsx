@@ -1,4 +1,5 @@
 import { SizableText, ToggleGroup, YStack } from 'tamagui'
+import { target } from './target'
 
 // Segmented control as a single-choice ToggleGroup. disableDeactivation keeps
 // one option selected. https://tamagui.dev/ui/toggle-group
@@ -10,7 +11,7 @@ export function Segmented({ label, options, value, onChange, testID }: { label: 
       </SizableText>
       <ToggleGroup testID={testID} type="single" disableDeactivation value={value} onValueChange={(v: string) => v && onChange(v)} aria-label={label} orientation="horizontal" flexDirection="row">
         {options.map((o, i) => (
-          <ToggleGroup.Item key={o} testID={`${testID}-${i}`} value={o} aria-label={o} flex={1} minH={44}>
+          <ToggleGroup.Item key={o} testID={`${testID}-${i}`} value={o} aria-label={o} flex={1} minH={target}>
             <SizableText color={o === value ? 'primary' : 'color'} fontSize={15} fontWeight="600">
               {o}
             </SizableText>

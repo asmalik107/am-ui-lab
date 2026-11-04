@@ -33,7 +33,7 @@ export function Select({ label, options, value, onChange, testID }: SelectProps)
         {/* The backdrop is a sibling of the list, not its parent: aria-modal inside
             an accessible Pressable did not hide the screen behind it from VoiceOver. */}
         <View style={{ flex: 1, justifyContent: 'center', padding: theme.space.xl }}>
-          <Pressable accessible={false} style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: c.scrim }} onPress={() => setOpen(false)} />
+          <Pressable accessible={false} importantForAccessibility="no" style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: c.scrim }} onPress={() => setOpen(false)} />
           <View aria-modal role="list" accessibilityLabel={label} style={{ backgroundColor: c.surfaceRaised, borderRadius: theme.radius.lg, paddingVertical: theme.space.sm }}>
             {options.map((opt, i) => (
               <Pressable

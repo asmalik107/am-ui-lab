@@ -23,7 +23,7 @@ export function Segmented({ label, options, value, onChange, testID }: { label: 
               aria-selected={selected}
               accessibilityLabel={o}
               onPress={() => onChange(o)}
-              className={`min-h-11 flex-1 items-center justify-center rounded-lg ${selected ? 'bg-accent' : 'bg-transparent'}`}>
+              className={`min-h-12 flex-1 items-center justify-center rounded-lg ${selected ? 'bg-accent' : 'bg-transparent'}`}>
               <Text className={selected ? 'text-accent-foreground' : 'text-foreground'} style={type.label}>
                 {o}
               </Text>

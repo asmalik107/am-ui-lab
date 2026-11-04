@@ -18,7 +18,7 @@ export function Segmented({ label, options, value, onChange, testID }: { label: 
               aria-selected={selected}
               accessibilityLabel={o}
               onPress={() => onChange(o)}
-              className={`min-h-11 flex-1 items-center justify-center rounded-sm ${selected ? 'bg-primary' : 'bg-transparent'}`}>
+              className={`min-h-12 flex-1 items-center justify-center rounded-sm ${selected ? 'bg-primary' : 'bg-transparent'}`}>
               <Text className={selected ? 'text-label text-primary-foreground' : 'text-label text-foreground'}>{o}</Text>
             </Pressable>
           );

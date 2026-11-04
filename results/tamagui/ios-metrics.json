@@ -108,8 +108,9 @@
     "hangs": 0
   },
   "rerenders": {
-    "date": "2026-10-30T17:13:38.105Z",
+    "date": "2026-11-04T17:54:02.345Z",
     "build": "Debug",
-    "error": "the Debug build aborts on a React Native Yoga layout assertion (__assert_rtn in YogaLayoutableShadowNode::layout, crash report UILabTamagui-2026-10-30-171250.ips), as it did on 28 October; Release builds are unaffected"
-  }
+    "error": "app did not show the test screen"
+  },
+  "platform": "ios"
 }

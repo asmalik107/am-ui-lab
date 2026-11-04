@@ -16,7 +16,7 @@ export function Menu({ label, items, onSelect, testID }: { label: string; items:
       <Button testID={`${testID}-open`} label={label} variant="secondary" onPress={() => setOpen(true)} />
       <Modal visible={open} transparent animationType={reduceMotion ? 'none' : 'fade'} onRequestClose={() => setOpen(false)}>
         <View style={styles.menuWrap}>
-          <Pressable accessible={false} style={styles.backdrop} onPress={() => setOpen(false)} />
+          <Pressable accessible={false} importantForAccessibility="no" style={styles.backdrop} onPress={() => setOpen(false)} />
           <View testID={testID} aria-modal role="menu" accessibilityLabel={label} style={styles.menu}>
             {items.map((item, i) => (
               <Pressable

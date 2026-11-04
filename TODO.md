@@ -12,8 +12,8 @@ What's left before the results are complete. Each item says how to run it and wh
 
 ## Gaps in the current results
 
-- [ ] **Tamagui re-renders on iOS:** its Debug build crashes there, so it has Android counts only. See `apps/tamagui/NOTES.md`
-- [ ] **Tamagui Select and Accordion on iOS:** they couldn't be tested
+- [x] **Tamagui re-renders on iOS:** not measurable, recorded as a Tamagui shortcoming. Its closed Select keeps a `display: none` view, which crashes the Debug build through an open React Native bug, [react-native#52349](https://github.com/react/react-native/issues/52349). Traced on 4 November 2026 in [its notes](apps/tamagui/NOTES.md#ios-debug-build-crashes-traced-4-november-2026)
+- [x] **Tamagui Select and Accordion on iOS:** a Tamagui result, not a gap. Their triggers aren't accessibility elements, so VoiceOver can't open them ([its notes](apps/tamagui/NOTES.md#select-and-accordion-triggers-re-checked-29-october-2026))
 - [ ] **gluestack's own bottom sheet:** tested on 4 of the 5 sheet checks
 
 ## Optional

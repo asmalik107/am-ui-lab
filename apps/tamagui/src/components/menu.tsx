@@ -1,4 +1,5 @@
 import { Menu as TMenu } from 'tamagui'
+import { target } from './target'
 
 import { Button } from './button'
 
@@ -13,7 +14,7 @@ export function Menu({ label, items, onSelect, testID }: { label: string; items:
       <TMenu.Portal>
         <TMenu.Content testID={testID} bg="surface-raised" borderColor="border-color" borderWidth={1} rounded="md" py="sm">
           {items.map((item, i) => (
-            <TMenu.Item key={item} testID={`${testID}-item-${i}`} onSelect={() => onSelect(item)} minH={44} px="lg" justify="center">
+            <TMenu.Item key={item} testID={`${testID}-item-${i}`} onSelect={() => onSelect(item)} minH={target} px="lg" justify="center">
               <TMenu.ItemTitle color="color" fontSize={16}>
                 {item}
               </TMenu.ItemTitle>

@@ -45,6 +45,9 @@ export function Button({ label, onPress, disabled, loading, variant = 'primary',
       testID={testID}
       role="button"
       aria-disabled={inactive}
+      // Without a label, aria-busy makes the Android name just "busy", in place of the
+      // text (RN BaseViewManager.updateViewContentDescription).
+      accessibilityLabel={label}
       aria-busy={loading}
       disabled={inactive}
       onPress={onPress}

@@ -52,10 +52,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 - **Unistyles:** 2
 - **Uniwind:** 2
 - **NativeWind:** 2
-- **HeroUI:** 6
-- **gluestack:** 4
-- **Tamagui:** 9
-- **Reusables:** 10
+- **HeroUI:** 5
+- **gluestack:** 3
+- **Tamagui:** 5
+- **Reusables:** 9
 
 <a id="button"></a>
 
@@ -64,7 +64,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
-| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ❌ ⚠️ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -80,8 +80,6 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 - **gluestack**
   - iOS, touch target: 370×36pt
   - Android, touch target: 352×36dp
-- **Tamagui**
-  - Android, touch target: 352×44dp
 - **Reusables**
   - iOS, touch target: 370×40pt
   - Android, touch target: 352×40dp
@@ -95,7 +93,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ |
-| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ➖ / ❌ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ➖ / ✅ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -113,7 +111,6 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
   - Android, touch target: 352×36dp
 - **Tamagui**
   - iOS, name, role, state: missing
-  - Android, touch target: 352×44dp
 - **Reusables**
   - iOS, touch target: 370×40pt
   - Android, touch target: 352×40dp
@@ -127,7 +124,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ❌ ⚠️ | ❌ / ❌ | ❌ / ❌ |
-| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ➖ / ❌ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ➖ / ✅ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -149,8 +146,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
   - Android, touch target: 352×36dp
 - **Tamagui**
   - iOS, name, role, state: missing
-  - Android, name, role, state: label="Saving" value="" traits=[button, notEnabled] 352×44dp
-  - Android, touch target: 352×44dp
+  - Android, name, role, state: label="Saving" value="" traits=[button, notEnabled] 352×48dp
 - **Reusables**
   - iOS, name, role, state: label="Saving" value="" traits=[button, notEnabled] 370×40pt
   - Android, name, role, state: label="Saving" value="" traits=[button, notEnabled] 352×40dp
@@ -320,7 +316,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | name, role, state | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ✅ ⚠️ |
-| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ➖ / ❌ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ➖ / ✅ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -351,8 +347,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
   - Android, touch target: 352×40dp
 - **Tamagui**
   - iOS, name, role, state: missing
-  - Android, name, role, state: label="60 seconds" value="collapsed" traits=[combobox] role="Combo box" 352×44dp
-  - Android, touch target: 352×44dp
+  - Android, name, role, state: label="60 seconds" value="collapsed" traits=[combobox] role="Combo box" 352×48dp
 - **Reusables**
   - iOS, name, role, state: label="60 seconds" value="" traits=[] 200×40pt
   - iOS, touch target: 200×40pt
@@ -367,7 +362,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | name, role, state | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ |
-| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ✅ / ❌ ⚠️ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ✅ / ✅ | ❌ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -398,7 +393,6 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
   - Android, touch target: 63×31dp
 - **Tamagui**
   - iOS, name, role, state: label="Today" value="" traits=[selected] 123×44pt
-  - Android, touch target: 117×44dp
 - **Reusables**
   - iOS, name, role, state: label="Today" value="" traits=[selected] 58×30pt
   - iOS, touch target: 58×30pt
@@ -483,6 +477,7 @@ No check failed for any app.
 | title is a heading | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ |
 | actions are buttons | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 | closes | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| every stop has a name | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ❌ | ➖ / ❌ | ➖ / ✅ | ➖ / ✅ |
 
 <details>
 <summary>What each check means</summary>
@@ -492,6 +487,7 @@ No check failed for any app.
 - **title is a heading:** The title has the heading role.
 - **actions are buttons:** Its actions have the button role.
 - **closes:** Closes from its own Close or Cancel button.
+- **every stop has a name:** 
 
 </details>
 
@@ -502,9 +498,11 @@ No check failed for any app.
   - iOS, screen behind is hidden from the screen reader: still exposed: 15 elements, such as test-button-disabled, test-button-loading, Form
   - Android, screen behind is hidden from the screen reader: still exposed: 46 elements, such as test-sheet-close, Component test screen, test-theme
   - Android, title is a heading: AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Delete this workout?"
+  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
 - **gluestack**
   - iOS, screen behind is hidden from the screen reader: still exposed: 19 elements, such as test-theme-0, test-theme-1, test-theme-2
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
+  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
 - **Tamagui**
   - iOS, screen behind is hidden from the screen reader: still exposed: 13 elements, such as Form, test-textfield, test-switch
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-tamagui-close, Component test screen, test-theme-0
@@ -528,6 +526,7 @@ No check failed for any app.
 | screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | n/r / ❌ | ✅ / ❌ ⚠️ |
 | new value read on trigger | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | n/r / ✅ | ✅ / ✅ |
 | test could run | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ |
+| every stop has a name | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ❌ | ➖ / ✅ | n/r / ✅ | ➖ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -538,6 +537,7 @@ No check failed for any app.
 - **screen behind is hidden from the screen reader:** While open, nothing behind it is in the accessibility tree.
 - **new value read on trigger:** After picking, the trigger announces the new value.
 - **test could run:** The element the test needs was there, so the test could run.
+- **every stop has a name:** 
 
 </details>
 
@@ -549,6 +549,7 @@ No check failed for any app.
   - Android, options are actionable: AXViewGroup label="30 seconds" value="unchecked", and 4 more like it
   - iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-theme-0, test-theme-1, test-theme-2
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-close, Component test screen, test-theme
+  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
 - **gluestack**
   - iOS, current option marked: AXGroup label="60 seconds"
   - Android, current option marked: AXViewGroup label="60 seconds"
@@ -566,6 +567,7 @@ No check failed for any app.
   - iOS, options are actionable: AXGroup label="30 seconds", and 4 more like it
   - Android, options are actionable: AXViewGroup label="30 seconds", and 4 more like it
   - Android, screen behind is hidden from the screen reader: still exposed: 40 elements, such as Component test screen, test-theme-0, test-theme-1
+  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
 
 </details>
 
@@ -593,7 +595,7 @@ No check failed for any app.
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | name, role, value | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ❌ / ❌ | ❌ / ✅ ⚠️ | ✅ / ✅ |
-| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ✅ / ❌ ⚠️ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ✅ / ✅ |
 | dragging changes the value | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ | ✅ / ✅ |
 
 <details>
@@ -623,8 +625,6 @@ No check failed for any app.
   - iOS, name, role, value: label="Weight" value="30%" traits=[] 28×28pt
   - iOS, touch target: 28×28pt
   - Android, touch target: 28×28dp
-- **Reusables**
-  - Android, touch target: 352×44dp
 
 </details>
 
@@ -698,11 +698,12 @@ No check failed for any app.
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | trigger name and role | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
-| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ❌ ⚠️ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ | ❌ / ❌ |
 | opens | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 | items are buttons | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ✅ / ❌ ⚠️ | ❌ / ✅ ⚠️ |
 | screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ✅ ⚠️ | ✅ / ❌ ⚠️ |
 | closes after an action | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| every stop has a name | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ❌ | ➖ / ❌ | ➖ / ✅ | ➖ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -713,6 +714,7 @@ No check failed for any app.
 - **items are buttons:** Each menu action has the button role.
 - **screen behind is hidden from the screen reader:** While open, nothing behind it is in the accessibility tree.
 - **closes after an action:** Choosing an action closes the menu.
+- **every stop has a name:** 
 
 </details>
 
@@ -723,14 +725,15 @@ No check failed for any app.
   - iOS, items are buttons: AXGroup label="Duplicate", and 2 more like it
   - iOS, screen behind is hidden from the screen reader: still exposed: 17 elements, such as test-toast-show, Tabs, test-tabs-0
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-close, Component test screen, test-theme
+  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
 - **gluestack**
   - iOS, touch target: 370×38pt
   - Android, touch target: 352×38dp
   - iOS, items are buttons: AXGroup label="Duplicate", and 2 more like it
   - iOS, screen behind is hidden from the screen reader: still exposed: 18 elements, such as test-sheet-open-gluestack, test-toast-show, Tabs
   - Android, screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme, test-theme-0
+  - Android, every stop has a name: unnamed: AXViewGroup 352×6dp, AXViewGroup 210×140dp
 - **Tamagui**
-  - Android, touch target: 147×44dp
   - Android, items are buttons: AXView label="Duplicate", and 2 more like it
   - iOS, screen behind is hidden from the screen reader: still exposed: 14 elements, such as test-sheet-open-tamagui, test-sheet-open-expoui, test-toast-show
 - **Reusables**
@@ -738,6 +741,7 @@ No check failed for any app.
   - Android, touch target: 352×40dp
   - iOS, items are buttons: AXGroup label="Duplicate", and 2 more like it
   - Android, screen behind is hidden from the screen reader: still exposed: 40 elements, such as Component test screen, test-theme-0, test-theme-1
+  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp, AXView#test-menu 224×119dp
 
 </details>
 
@@ -749,7 +753,7 @@ No check failed for any app.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | options have name and role | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ |
 | selected option marked | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ |
-| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ❌ ⚠️ | ✅ / ❌ ⚠️ | ❌ / ❌ |
+| touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ |
 | selection moves on tap | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ✅ / ✅ |
 
 <details>
@@ -765,18 +769,13 @@ No check failed for any app.
 <details>
 <summary>Why checks failed</summary>
 
-- **HeroUI**
-  - Android, touch target: 116×44dp
-- **gluestack**
-  - Android, touch target: 116×44dp
 - **Tamagui**
   - iOS, options have name and role: label="Week" value="" traits=[] 123×44pt, and 2 more like it
-  - Android, options have name and role: label="Week" value="" traits=[] 117×44dp, and 2 more like it
+  - Android, options have name and role: label="Week" value="" traits=[] 117×48dp, and 2 more like it
   - iOS, selected option marked: label="Week" value="" traits=[] 123×44pt, and 2 more like it
-  - Android, selected option marked: label="Week" value="" traits=[] 117×44dp, and 2 more like it
-  - Android, touch target: 117×44dp
+  - Android, selected option marked: label="Week" value="" traits=[] 117×48dp, and 2 more like it
   - iOS, selection moves on tap: label="Week" value="" traits=[] 123×44pt | label="Month" value="" traits=[] 123×44pt
-  - Android, selection moves on tap: label="Week" value="" traits=[] 117×44dp | label="Month" value="" traits=[] 117×44dp
+  - Android, selection moves on tap: label="Week" value="" traits=[] 117×48dp | label="Month" value="" traits=[] 117×48dp
 - **Reusables**
   - iOS, touch target: 124×40pt
   - Android, touch target: 118×40dp
@@ -971,7 +970,7 @@ Compare apps within a platform. iOS is an iPhone 12 Pro, Android a budget Galaxy
 **How to read it:**
 
 - Unistyles re-renders the fewest on both platforms, HeroUI and Tamagui the most.
-- Tamagui has Android counts only: its Debug build aborts on iOS.
+- Tamagui has Android counts only: its Debug build aborts on iOS. A closed Select keeps a hidden `display: none` view, which trips an open React Native bug, [react-native#52349](https://github.com/react/react-native/issues/52349). Release builds aren’t affected.
 
 <!-- begin:navfoot -->
 

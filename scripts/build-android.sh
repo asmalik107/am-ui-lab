@@ -17,4 +17,4 @@ if [ "$status" -ne 0 ]; then
   grep -E "error:|FAILURE|What went wrong" -A3 "$log" | head -30
   exit "$status"
 fi
-ls "android/app/build/outputs/apk/$variant/"*.apk
+ls "$PWD/android/app/build/outputs/apk/$variant/"*.apk

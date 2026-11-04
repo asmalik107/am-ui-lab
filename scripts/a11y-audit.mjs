@@ -161,7 +161,7 @@ states.main = main;
 const expect = [
   ['Button', 'test-button', (e) => e.traits.includes('button')],
   ['Button (disabled)', 'test-button-disabled', (e) => e.traits.includes('button') && e.traits.includes('notEnabled')],
-  ['Button (loading)', 'test-button-loading', (e) => e.traits.includes('button') && /busy|progress|loading/i.test(`${e.label} ${e.value}`)],
+  ['Button (loading)', 'test-button-loading', (e) => e.traits.includes('button') && /Saving/.test(e.label ?? '') && /busy|progress|loading/i.test(`${e.label} ${e.value}`)],
   ['Text field', 'test-textfield', (e) => /Email/.test(e.label ?? '')],
   ['Switch', 'test-switch', (e) => (e.traits.includes('toggleButton') || /switch/i.test(e.value ?? '')) && /Workout reminders/.test(e.label ?? '') && e.value != null],
   ['Checkbox', 'test-checkbox', (e) => /checkbox/i.test(`${e.value} ${e.traits}`) && /(un)?checked|not checked|0|1/i.test(e.value ?? '') && /agree/i.test(e.label ?? '')],
@@ -190,6 +190,18 @@ const headings = ['Buttons', 'Form', 'Overlays', 'Tabs', 'More components', 'Lis
 const leaks = (els, own) => els.filter((e) => (e.identifier && mainIds.has(e.identifier) && !own.includes(e.identifier)) || headings.includes(e.label));
 const axDesc = (e) => (e ? `${e.role} label="${e.label}"${e.value != null ? ` value="${e.value}"` : ''}` : 'missing');
 const leakDetail = (l) => (l.length ? `still exposed: ${l.map((e) => e.identifier ?? e.label).join(', ')}` : 'nothing behind it in the system tree');
+// A stop with no name: TalkBack says "Unlabelled", e.g. a clickable full-screen
+// backdrop behind an overlay. On iOS, describe lists unnamed elements too (an
+// element with only a value counts as unnamed).
+// Form controls are left out: none is in an overlay, so an unnamed one is the
+// screen behind leaking through, which the check above already counts.
+const formControl = (e) => ['checkbox', 'radio', 'toggleButton', 'adjustable'].some((t) => e.traits?.includes(t));
+const unnamed = (els) => shown(els).filter((e) => !(e.label ?? '').trim() && !(e.identifier && mainIds.has(e.identifier)) && !formControl(e));
+const named = (name, els) => {
+  const u = unnamed(els);
+  const size = (e) => (e.frame ? [e.frame.width, e.frame.height] : [e.w * screen.width, e.h * screen.height]).map(Math.round).join('×');
+  add(name, 'every stop has a name', u.length === 0, u.length ? `unnamed: ${u.map((e) => `${e.role}${e.identifier ? `#${e.identifier}` : ''} ${size(e)}${unit}`).join(', ')}` : 'every stop in the overlay has a name');
+};
 
 // 2. Text field error: is the message present and linked to the field?
 try {
@@ -218,6 +230,7 @@ try {
   if (dlg) {
     const l = leaks(dlg, ['test-dialog', 'test-dialog-confirm', 'test-dialog-cancel']);
     add('Dialog', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
+    named('Dialog', dlg);
     const title = shown(dlg).find((e) => e.label.includes('Delete this workout?'));
     add('Dialog', 'title is a heading', title?.role === 'AXHeading', axDesc(title));
     const cancel = shown(dlg).find((e) => e.identifier === 'test-dialog-cancel' || e.label === 'Cancel');
@@ -257,6 +270,7 @@ for (const v of sheetVariants) {
       add(v.name, 'title and body readable', hasShown(sh, 'Goblet squat') && hasShown(sh, 'kettlebell'), hasShown(sh, 'Goblet squat') ? 'title in tree' : 'title and body text not in the system tree');
       const l = leaks(sh, [v.open.replace('-open', ''), v.close]);
       add(v.name, 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
+      named(v.name, sh);
       const close = shown(sh).find((e) => e.identifier === v.close) ?? shown(sh).find((e) => e.label === 'Close');
       if (close) tap(close);
       const gone = await waitFor((els) => !isSheet(els));
@@ -290,6 +304,7 @@ try {
     add('Select', 'options are actionable', opts.length >= 5 && opts.every((e) => e.role === 'AXButton' || /radio|menu|option/i.test(`${e.value} ${e.role}`)), opts.map(axDesc).join(' | '));
     const l = leaks(sel, ['test-select']);
     add('Select', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
+    named('Select', sel);
     const pick = opts.find((e) => e.label.includes('90 seconds'));
     if (pick) tap(pick);
     await sleep(1000);
@@ -410,6 +425,7 @@ try {
     add('Menu', 'items are buttons', items.every((e) => e && (e.role === 'AXButton' || /menu/i.test(e.role))), items.map(axDesc).join(' | '));
     const l = leaks(mn, ['test-menu-open', 'test-menu']);
     add('Menu', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
+    named('Menu', mn);
     if (items[0]) tap(items[0]);
     const closed = await waitFor((els) => !hasShown(els, menuItems[2]));
     add('Menu', 'closes after an action', !!closed, closed ? 'actions gone' : 'still open');

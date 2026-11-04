@@ -1,4 +1,5 @@
 import { Adapt, Label, Select as TSelect, Sheet, Text, YStack } from 'tamagui'
+import { target } from './target'
 
 type SelectProps = { label: string; options: readonly string[]; value: string; onChange: (v: string) => void; testID?: string }
 
@@ -12,7 +13,7 @@ export function Select({ label, options, value, onChange, testID }: SelectProps)
         {label}
       </Label>
       <TSelect id={id} value={value} onValueChange={onChange}>
-        <TSelect.Trigger testID={testID} minH={44} bg="surface-raised" borderColor="border-color" borderWidth={1} rounded="md">
+        <TSelect.Trigger testID={testID} minH={target} bg="surface-raised" borderColor="border-color" borderWidth={1} rounded="md">
           <TSelect.Value color="color" fontSize={16} />
         </TSelect.Trigger>
 
@@ -33,7 +34,7 @@ export function Select({ label, options, value, onChange, testID }: SelectProps)
             <TSelect.Group>
               <TSelect.Label color="text-muted">{label}</TSelect.Label>
               {options.map((opt, i) => (
-                <TSelect.Item key={opt} testID={`${testID}-option-${i}`} value={opt} minH={44}>
+                <TSelect.Item key={opt} testID={`${testID}-option-${i}`} value={opt} minH={target}>
                   <TSelect.ItemText color="color" fontSize={16}>
                     {opt}
                   </TSelect.ItemText>

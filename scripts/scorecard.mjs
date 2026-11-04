@@ -339,8 +339,11 @@ export const libraries = [
     ['Slowest theme switch', [`Phone: ${ms('tamagui')} ms, about ${Math.round(by.tamagui.themeAndroid / by.baseline.themeAndroid)} times the baseline`, `iOS: ${Math.round((load('results/tamagui/iphone-perf.json') ?? load('results/tamagui/ios-perf.json')).theme.median)} ms`]],
     access('tamagui', 'Low accessibility'),
     'The switch and checkbox have no name',
-    `Its Debug build crashes on iOS, so re-renders are counted on Android only: ${n(by.tamagui.rerendersAndroid)} per theme switch`,
-    'Select and Accordion couldn’t be tested on iOS',
+    ['Its Debug build crashes on iOS, so re-renders are counted on Android only', [
+      'A closed Select keeps its options in a hidden view, which trips an open React Native bug, [react-native#52349](https://github.com/react/react-native/issues/52349). Debug builds check for it; Release builds don’t. [Traced in its notes](apps/tamagui/NOTES.md#ios-debug-build-crashes-traced-4-november-2026)',
+      `Android: ${n(by.tamagui.rerendersAndroid)} per theme switch`,
+    ]],
+    'Select and Accordion can’t be opened with VoiceOver: their triggers aren’t accessibility elements',
   ] },
 ];
 

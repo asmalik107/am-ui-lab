@@ -493,7 +493,7 @@ function drawCharts() {
       + rows.map((r) => '<div class="row ' + (picked ? (picked === r.app ? 'on' : 'dim') : '') + '" data-app="' + r.app + '" role="button" tabindex="0" aria-pressed="' + (picked === r.app) + '"><span class="lbl">' + esc(r.label) + '</span><span class="bars">'
         + v(r).map((x, i) => '<span class="b" title="' + esc(r.label + ': ' + x.text) + '"><span class="fill ' + cls[i] + '" style="width:calc(' + ((x.value ?? 0) / max * 100).toFixed(1) + '% - 70px)"></span>' + esc(x.text) + '</span>').join('')
         + '</span></div>').join('')
-      + '<details><summary>How to read it</summary><ul>' + c.read.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul></details></figure>';
+      + '<details><summary>How to read it</summary><ul>' + c.read.map((x) => '<li>' + md(x) + '</li>').join('') + '</ul></details></figure>';
   }).join('');
 }
 $('#chart-list').onclick = (e) => {

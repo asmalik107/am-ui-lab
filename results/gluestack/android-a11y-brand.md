@@ -1,6 +1,6 @@
 # gluestack: Android accessibility audit, brand theme
 
-Run 2026-11-04 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, brand theme, with `scripts/a11y-audit.mjs`. 35/66 checks passed.
+Run 2026-11-04 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, brand theme, with `scripts/a11y-audit.mjs`. 40/72 checks passed.
 
 Roles, states, sizes and reachability come from the accessibility tree of the active window, read through UiAutomation by `scripts/android-a11y-dump` (what TalkBack is given, not what it speaks). Touch targets are checked against 48 dp. Elements of an overlay's own window are reachable; anything else in that window counts as exposed behind it.
 
@@ -31,27 +31,32 @@ Roles, states, sizes and reachability come from the accessibility tree of the ac
 | Text field | error reachable from field | **fail** | label="Email" value="not-an-email" traits=[] 326×34dp hint="" |
 | Dialog | opens | pass | title in tree |
 | Dialog | screen behind is hidden from TalkBack | **fail** | still exposed: Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-menu-open, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list |
+| Dialog | every stop has a name | **fail** | unnamed: AXViewGroup 384×832dp |
 | Dialog | title is a heading | pass | AXHeading label="Delete this workout?" |
 | Dialog | actions are buttons | pass | AXButton label="Cancel" |
 | Dialog | closes | pass | title gone |
 | Bottom sheet | opens | pass | sheet content in tree |
 | Bottom sheet | title and body readable | pass | title in tree |
 | Bottom sheet | screen behind is hidden from TalkBack | **fail** | still exposed: Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-menu-open, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list |
+| Bottom sheet | every stop has a name | pass | every stop in the overlay has a name |
 | Bottom sheet | closes | pass | sheet gone |
 | Bottom sheet | screen reachable again after close | pass | screen controls back in system tree |
 | Bottom sheet (@expo/ui) | opens | pass | sheet content in tree |
 | Bottom sheet (@expo/ui) | title and body readable | pass | title in tree |
 | Bottom sheet (@expo/ui) | screen behind is hidden from TalkBack | pass | nothing behind it in the system tree |
+| Bottom sheet (@expo/ui) | every stop has a name | pass | every stop in the overlay has a name |
 | Bottom sheet (@expo/ui) | closes | pass | sheet gone |
 | Bottom sheet (@expo/ui) | screen reachable again after close | pass | screen controls back in system tree |
 | Bottom sheet (gluestack BottomSheet) | opens | pass | sheet content in tree |
 | Bottom sheet (gluestack BottomSheet) | title and body readable | **fail** | title and body text not in the system tree |
 | Bottom sheet (gluestack BottomSheet) | screen behind is hidden from TalkBack | **fail** | still exposed: Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-menu-open, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list |
+| Bottom sheet (gluestack BottomSheet) | every stop has a name | pass | every stop in the overlay has a name |
 | Bottom sheet (gluestack BottomSheet) | closes | **fail** | still open |
 | Select | opens | pass | options in tree |
 | Select | current option marked | **fail** | AXViewGroup label="60 seconds" |
 | Select | options are actionable | **fail** | AXViewGroup label="30 seconds" \| AXViewGroup label="45 seconds" \| AXViewGroup label="60 seconds" \| AXViewGroup label="90 seconds" \| AXViewGroup label="2 minutes" |
 | Select | screen behind is hidden from TalkBack | **fail** | still exposed: Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-menu-open, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list |
+| Select | every stop has a name | pass | every stop in the overlay has a name |
 | Select | new value read on trigger | **fail** | label="" value="" traits=[button] 352×40dp |
 | Toast | in accessibility tree | pass | AXView label="Set logged" |
 | Slider | name, role, value | **fail** | label="Slider" value="" traits=[] 352×6dp |
@@ -67,8 +72,9 @@ Roles, states, sizes and reachability come from the accessibility tree of the ac
 | Menu | opens | pass | all three actions in tree |
 | Menu | items are buttons | pass | AXMenuItem label="Duplicate" \| AXMenuItem label="Share" \| AXMenuItem label="Archive" |
 | Menu | screen behind is hidden from TalkBack | **fail** | still exposed: Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-expoui, test-sheet-open-gluestack, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list |
+| Menu | every stop has a name | **fail** | unnamed: AXViewGroup 352×6dp, AXViewGroup 210×139dp |
 | Menu | closes after an action | pass | actions gone |
-| Segmented control | options have name and role | pass | label="Week" value="selected" traits=[button, selected] 116×44dp \| label="Month" value="" traits=[button] 115×44dp \| label="Year" value="" traits=[button] 116×44dp |
-| Segmented control | selected option marked | pass | label="Week" value="selected" traits=[button, selected] 116×44dp \| label="Month" value="" traits=[button] 115×44dp \| label="Year" value="" traits=[button] 116×44dp |
-| Segmented control | target ≥ 48dp | **fail** | 116×44dp |
-| Segmented control | selection moves on tap | pass | label="Week" value="" traits=[button] 116×44dp \| label="Month" value="selected" traits=[button, selected] 115×44dp |
+| Segmented control | options have name and role | pass | label="Week" value="selected" traits=[button, selected] 116×48dp \| label="Month" value="" traits=[button] 115×48dp \| label="Year" value="" traits=[button] 116×48dp |
+| Segmented control | selected option marked | pass | label="Week" value="selected" traits=[button, selected] 116×48dp \| label="Month" value="" traits=[button] 115×48dp \| label="Year" value="" traits=[button] 116×48dp |
+| Segmented control | target ≥ 48dp | pass | 116×48dp |
+| Segmented control | selection moves on tap | pass | label="Week" value="" traits=[button] 116×48dp \| label="Month" value="selected" traits=[button, selected] 115×48dp |

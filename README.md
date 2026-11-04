@@ -92,9 +92,9 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
 
 - **Accessibility depends on who writes the components**
   - **Baseline and styling engines**
-    - TalkBack: 60 of 62 checks
+    - TalkBack: 65 of 67 checks
     - VoiceOver: 58 of 62 checks
-  - **Component libraries:** 53–69% of checks
+  - **Component libraries:** 56–75% of checks
 - **Speed differences are largest on the budget phone**
   - **Galaxy A15:** a theme switch takes
     - Unistyles: 71 ms, the fastest
@@ -128,7 +128,7 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
     - NativeWind: 183 ms
 - **Ready-made components: HeroUI**
   - The most accessible component library
-    - TalkBack: 46 of 67
+    - TalkBack: 49 of 73
     - VoiceOver: 44 of 67
   - Its memory grows the most on the Galaxy A15: +216 MiB after use
   - Accessibility gaps you’d fix yourself
@@ -167,14 +167,14 @@ One row per app.
 <!-- begin:scorecard -->
 | App | [Accessibility, iOS](docs/results.md#accessibility) | [Accessibility, Android](docs/results.md#accessibility) | [Theme switch, iOS](docs/results.md#timings) | [Theme switch, Android](docs/results.md#timings) | [Memory growth, iOS](docs/results.md#startup-memory-and-scrolling) | [Memory growth, Android](docs/results.md#startup-memory-and-scrolling) | [JS bundle, iOS](docs/results.md#bundle-size-and-re-renders) | [JS bundle, Android](docs/results.md#bundle-size-and-re-renders) | [Re-renders per theme switch, iOS](docs/results.md#bundle-size-and-re-renders) | [Re-renders per theme switch, Android](docs/results.md#bundle-size-and-re-renders) | [Library code copied in](docs/results.md#developer-cost) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [Baseline](#baseline-plain-react-native-the-reference-point) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 99 ms | +68 MiB | +50 MiB | 🟢 **3.95 MB** | 🟢 **4.09 MB** | 298 | 294 | 0 |
-| [Unistyles](#unistyles-360-best-all-rounder) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 🟢 **71 ms** | +67 MiB | +54 MiB | 4.15 MB | 4.29 MB | 🟢 **128** | 🟢 **123** | 0 |
-| [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 137 ms | +38 MiB | +51 MiB | 4.24 MB | 4.38 MB | 507 | 503 | 0 |
-| [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **58 / 62** | 🟢 **60 / 62** | 33 ms | 183 ms | +51 MiB | 🟢 **+32 MiB** | 4.47 MB | 4.61 MB | 460 | 457 | 0 |
-| [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 🔴 116 ms | 🔴 630 ms | 🔴 +69 MiB | +46 MiB | 5.44 MB | 5.59 MB | not measured | 1,029 | 0 |
-| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 35 / 66 | 65 ms | 192 ms | +47 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | 520 | 🔴 7,488 |
-| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 46 / 67 | 65 ms | 239 ms | 🟢 **+29 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | 🔴 1,040 | 0 |
-| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 41 / 62 | 33 ms | 97 ms | +43 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | 601 | 1,519 |
+| [Baseline](#baseline-plain-react-native-the-reference-point) | 🟢 **58 / 62** | 🟢 **65 / 67** | 33 ms | 99 ms | +68 MiB | +50 MiB | 🟢 **3.95 MB** | 🟢 **4.09 MB** | 298 | 294 | 0 |
+| [Unistyles](#unistyles-360-best-all-rounder) | 🟢 **58 / 62** | 🟢 **65 / 67** | 33 ms | 🟢 **71 ms** | +67 MiB | +54 MiB | 4.15 MB | 4.29 MB | 🟢 **128** | 🟢 **123** | 0 |
+| [Uniwind](#uniwind-1130-best-if-you-want-tailwind-classes) | 🟢 **58 / 62** | 🟢 **65 / 67** | 33 ms | 137 ms | +38 MiB | +51 MiB | 4.24 MB | 4.38 MB | 507 | 503 | 0 |
+| [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **58 / 62** | 🟢 **65 / 67** | 33 ms | 183 ms | +51 MiB | 🟢 **+32 MiB** | 4.47 MB | 4.61 MB | 460 | 457 | 0 |
+| [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 55 / 73 | 🔴 116 ms | 🔴 630 ms | 🔴 +69 MiB | +46 MiB | 5.44 MB | 5.59 MB | not measured | 1,029 | 0 |
+| [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 40 / 72 | 65 ms | 192 ms | +47 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | 520 | 🔴 7,488 |
+| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 49 / 73 | 65 ms | 239 ms | 🟢 **+29 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | 🔴 1,040 | 0 |
+| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 45 / 67 | 33 ms | 97 ms | +43 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | 601 | 1,519 |
 <!-- end:scorecard -->
 
 <!-- begin:scorecardlinks -->
@@ -219,7 +219,7 @@ Best first.
   - Unistyles: 128 on iOS, 123 on Android
   - Baseline: 298 on iOS, 294 on Android
 - ✅ The baseline’s accessibility, as the components are hand-built
-  - TalkBack: 60 of 62
+  - TalkBack: 65 of 67
   - VoiceOver: 58 of 62
 - ⚠️ You build every component yourself, as with the baseline
 
@@ -232,7 +232,7 @@ Best first.
 *Styling engine*
 
 - ✅ The baseline’s accessibility
-  - TalkBack: 60 of 62
+  - TalkBack: 65 of 67
   - VoiceOver: 58 of 62
 - ✅ No setup problems hit
 - ⚠️ You build every component yourself, as with the baseline
@@ -252,7 +252,7 @@ Best first.
 *Styling engine*
 
 - ✅ The baseline’s accessibility
-  - TalkBack: 60 of 62
+  - TalkBack: 65 of 67
   - VoiceOver: 58 of 62
 - ✅ Least memory growth on the Galaxy A15: +32 MiB
 - ⚠️ You build every component yourself, as with the baseline
@@ -270,7 +270,7 @@ Best first.
 *Baseline*
 
 - ✅ Top accessibility score
-  - TalkBack: 60 of 62
+  - TalkBack: 65 of 67
   - VoiceOver: 58 of 62
 - ✅ Smallest JS bundle
   - iOS: 3.95 MB
@@ -288,7 +288,7 @@ Best first.
 *Component library*
 
 - ✅ Best accessibility of the component libraries
-  - TalkBack: 46 of 67
+  - TalkBack: 49 of 73
   - VoiceOver: 44 of 67
 - ⚠️ Memory grows the most on the Galaxy A15: +216 MiB after use
 - ⚠️ Most re-renders per theme switch: 1,137 on iOS, 1,040 on Android
@@ -312,7 +312,7 @@ Best first.
   - Bundles all 1,917 lucide icons and uses 4
 - ⚠️ Button labels are cut off at the largest text size, on both platforms
 - ⚠️ Low accessibility
-  - TalkBack: 41 of 62
+  - TalkBack: 45 of 67
   - VoiceOver: 37 of 62
 - ⚠️ The checkbox is 16 dp tall on the phone, under the 48 dp minimum
 - ⚠️ Progress always reads 0%
@@ -331,7 +331,7 @@ Best first.
   - 7,488 lines
   - 17 type errors in them
 - ⚠️ Lowest accessibility
-  - TalkBack: 35 of 66
+  - TalkBack: 40 of 72
   - VoiceOver: 35 of 66
 - ⚠️ Controls too small to tap on the phone, under Google’s 48 dp minimum
   - Slider: 6 dp
@@ -343,7 +343,6 @@ Best first.
   - Button: 36 dp
   - Menu: 38 dp
   - Select trigger: 40 dp
-  - Segmented control: 44 dp
 - ⚠️ Most setup problems hit: 8, listed in [its notes](apps/gluestack/NOTES.md#errors-hit-and-fixes)
   - The CLI hung while cloning
   - The CLI dropped Metro watchFolders
@@ -369,11 +368,13 @@ Best first.
   - Phone: 630 ms, about 6 times the baseline
   - iOS: 116 ms
 - ⚠️ Low accessibility
-  - TalkBack: 42 of 67
+  - TalkBack: 55 of 73
   - VoiceOver: 36 of 57
 - ⚠️ The switch and checkbox have no name
-- ⚠️ Its Debug build crashes on iOS, so re-renders are counted on Android only: 1,029 per theme switch
-- ⚠️ Select and Accordion couldn’t be tested on iOS
+- ⚠️ Its Debug build crashes on iOS, so re-renders are counted on Android only
+  - A closed Select keeps its options in a hidden view, which trips an open React Native bug, [react-native#52349](https://github.com/react/react-native/issues/52349). Debug builds check for it; Release builds don’t. [Traced in its notes](apps/tamagui/NOTES.md#ios-debug-build-crashes-traced-4-november-2026)
+  - Android: 1,029 per theme switch
+- ⚠️ Select and Accordion can’t be opened with VoiceOver: their triggers aren’t accessibility elements
 
 [Setup notes](apps/tamagui/NOTES.md) · [Raw results](results/tamagui/)
 <!-- end:libraries -->

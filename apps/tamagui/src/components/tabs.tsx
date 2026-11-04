@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { SizableText, Tabs as TTabs, Text, style } from 'tamagui'
+import { target } from './target'
 
 // Tabs: Tabs.List gets aria-label as in Tamagui's demo. v3 Tabs ship no visual
 // defaults, so the selected tab is styled with activeStyle.
@@ -17,7 +18,7 @@ export function Tabs({ tabs, panels, testID, label }: { tabs: readonly string[];
             testID={`${testID}-${i}`}
             value={String(i)}
             flex={1}
-            minH={44}
+            minH={target}
             items="center"
             justify="center"
             borderBottomWidth={3}

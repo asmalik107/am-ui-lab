@@ -160,6 +160,21 @@ Reduce Motion for Dialog/Sheet animations: Tamagui has no reduce-motion handling
 - The optional native style runtime (`@tamagui/native-registry` + Nitro) and `experimental.nativeFastPath`: not enabled (beta, native module).
 - `Adapt when="max-md"` from the docs example was dropped. `platform="touch"` alone adapts on every phone and tablet size.
 
+### iOS Debug build crashes (traced 4 November 2026)
+
+The Debug build aborts about 9 seconds after launch on the iOS simulator, every time (4 of 4 launches), so Tamagui's iOS re-renders aren't measured. Release builds don't have the check that fails, so every other iOS result is unaffected.
+
+- **The assertion:** `react_native_assert(YGNodeGetOwner(childYogaNode) == &yogaNode_)` in `YogaLayoutableShadowNode.cpp:709` (React Native 0.86.3).
+- **The node, read in lldb on a build with React Native compiled from source:** a `View` with `display: none` (tag 248) inside the lab's Select wrapper, next to the "Rest time" label and the `test-select` trigger. Its Yoga owner is a stale clone of its parent.
+- **Why it's there:** a closed Select keeps its options mounted in `<SelectViewportFrame display="none">` (`@tamagui/select/src/SelectViewport.native.tsx:45-47`, Tamagui 3.1.2).
+- **Why that crashes:** React Native has an open bug where a `display: none` view keeps a stale layout mark and owner across commits, [react-native#52349](https://github.com/react/react-native/issues/52349). Debug builds assert on it; Release builds skip the check.
+- **Workaround, not applied:** `lazyMount` plus `renderValue` on the Select makes a closed Select render nothing. The docs describe these for SSR only, and the lab measures Tamagui as shipped.
+
+The Debug build also prints three Tamagui warnings on every launch, none caused by the app's code:
+- "a variant set `numberOfLines` / `lineBreakMode`, which is not a style": Tamagui's own `Text` `ellipsis` variant sets them on native (`@tamagui/web/src/views/Text.tsx:15-26`), and Tamagui's own check flags it (`getSplitStyles.tsx:943-953`).
+- "style() was called during render": the app's only `style()` call is at module scope (`src/components/tabs.tsx:8`). The check also flags module-scope pieces in modules loaded after the first render (`@tamagui/web/src/style.ts:80-82`), which is every expo-router screen.
+- Metro: "Attempted to import … not listed in the exports" for several `@tamagui/*` internal files.
+
 ## iOS bundle size
 
 `npx expo export --platform ios --output-dir $TMPDIR/uilab-export-tamagui`:

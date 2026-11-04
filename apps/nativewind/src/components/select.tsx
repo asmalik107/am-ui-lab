@@ -29,7 +29,7 @@ export function Select({ label, options, value, onChange, testID }: SelectProps)
         {/* The backdrop is a sibling of the list, not its parent: aria-modal inside
             an accessible Pressable did not hide the screen behind it from VoiceOver. */}
         <View className="flex-1 justify-center p-xl">
-          <Pressable accessible={false} className="absolute inset-0 bg-scrim" onPress={() => setOpen(false)} />
+          <Pressable accessible={false} importantForAccessibility="no" className="absolute inset-0 bg-scrim" onPress={() => setOpen(false)} />
           <View aria-modal role="list" accessibilityLabel={label} className="rounded-lg bg-surface-raised py-sm">
             {options.map((opt, i) => (
               <Pressable

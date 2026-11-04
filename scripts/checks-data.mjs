@@ -176,7 +176,7 @@ export const charts = [
   ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.bundle.iosHbcBytes / 1e6, mbF), android: val(a, (d) => d.bundle.androidHbcBytes / 1e6, mbF) })))],
   ['rerenders', 'Components re-rendered on one theme switch', 'Light → dark, React profiler on a Debug build. Fewer is better.', [
     'Unistyles re-renders the fewest on both platforms, HeroUI and Tamagui the most.',
-    'Tamagui has Android counts only: its Debug build aborts on iOS.',
+    'Tamagui has Android counts only: its Debug build aborts on iOS. A closed Select keeps a hidden `display: none` view, which trips an open React Native bug, [react-native#52349](https://github.com/react/react-native/issues/52349). Release builds aren’t affected.',
   ], paired(apps.map(([a, name]) => ({ label: name, ios: val(a, (d) => d.metrics.rerenders.switches[0].renders, String), android: val(a, (d) => d.androidMetrics.rerenders.switches[0].renders, String) })))],
 ];
 

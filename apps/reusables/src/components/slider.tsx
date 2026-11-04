@@ -37,7 +37,7 @@ export function Slider({ label, unit, value, min, max, step, onChange, testID }:
         onResponderTerminationRequest={() => false}
         onResponderGrant={(e) => fromX(e.nativeEvent.locationX)}
         onResponderMove={(e) => fromX(e.nativeEvent.locationX)}
-        className="min-h-11 justify-center">
+        className="min-h-12 justify-center">
         <View pointerEvents="none" className="h-1.5 rounded-full bg-primary/20">
           <View className="h-1.5 rounded-full bg-primary" style={{ width: `${pct * 100}%` }} />
         </View>

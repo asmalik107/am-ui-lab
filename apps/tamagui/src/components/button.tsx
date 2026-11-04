@@ -1,4 +1,5 @@
 import { Button as TButton, Spinner } from 'tamagui'
+import { target } from './target'
 
 type ButtonProps = {
   label: string
@@ -26,8 +27,8 @@ export function Button({ label, onPress, disabled, loading, variant = 'primary',
       disabled={disabled || loading}
       onPress={onPress}
       icon={loading ? <Spinner color="color" /> : undefined}
-      minH={44}
-      minW={44}>
+      minH={target}
+      minW={target}>
       <TButton.Text color={variant === 'secondary' ? 'primary' : 'color'} fontSize={15} lineHeight="20px">
         {label}
       </TButton.Text>

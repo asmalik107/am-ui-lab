@@ -68,17 +68,17 @@ Each library’s failures beyond the ones above.
 
 ### Baseline
 
-**60 of 62** checks pass on Android.
+**65 of 67** checks pass on Android.
 
 - **No failures** beyond those every app has.
 
-**Why** (Confirmed): the loading button sets `aria-busy` and no `accessibilityLabel`, so React Native replaces its name with just “busy” (`RN/…/uimanager/BaseViewManager.java:415-446`). Heard: “busy, Button, disabled”, so “Saving” is lost. **Fix:** give the loading button an explicit `accessibilityLabel`.
+**Why:** both are shared by every app (above). The loading button’s name was “busy” only, because `aria-busy` with no `accessibilityLabel` replaces the text (`RN/…/uimanager/BaseViewManager.java:415-446`, heard “busy, Button, disabled”). Fixed in the lab on 4 November 2026 by setting `accessibilityLabel`, in the four apps that share this button.
 
 <a id="unistyles"></a>
 
 ### Unistyles
 
-**60 of 62** checks pass on Android.
+**65 of 67** checks pass on Android.
 
 - **Same failures as the baseline.** It restyles the baseline’s components, so it keeps their accessibility.
 
@@ -86,7 +86,7 @@ Each library’s failures beyond the ones above.
 
 ### Uniwind
 
-**60 of 62** checks pass on Android.
+**65 of 67** checks pass on Android.
 
 - **Same failures as the baseline.** It restyles the baseline’s components, so it keeps their accessibility.
 
@@ -94,7 +94,7 @@ Each library’s failures beyond the ones above.
 
 ### NativeWind
 
-**60 of 62** checks pass on Android.
+**65 of 67** checks pass on Android.
 
 - **Same failures as the baseline.** It restyles the baseline’s components, so it keeps their accessibility.
 
@@ -102,7 +102,7 @@ Each library’s failures beyond the ones above.
 
 ### HeroUI
 
-**46 of 67** checks pass on Android.
+**49 of 73** checks pass on Android.
 
 - **Button (loading)**
   - name, role, state: label="Saving" value="" traits=[button, notEnabled] 352×48dp
@@ -122,21 +122,23 @@ Each library’s failures beyond the ones above.
   - error reachable from field: label="Email" value="not-an-email" traits=[] 352×48dp hint=""
 - **Dialog**
   - screen behind is hidden from the screen reader: still exposed: 46 elements, such as test-sheet-close, Component test screen, test-theme
+  - every stop has a name: unnamed: AXViewGroup 384×832dp
   - title is a heading: AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Delete this workout?"
 - **HeroUI’s own bottom sheet**
   - title and body readable: title and body text not in the system tree
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
+  - every stop has a name: unnamed: AXViewGroup 384×832dp
 - **@gorhom bottom sheet**
   - title and body readable: title and body text not in the system tree
 - **Select**
   - options are actionable: AXViewGroup label="30 seconds" value="unchecked", and 4 more like it
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-close, Component test screen, test-theme
+  - every stop has a name: unnamed: AXViewGroup 384×832dp
 - **Slider**
   - touch target: 28×20dp
 - **Menu**
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-close, Component test screen, test-theme
-- **Segmented control**
-  - touch target: 116×44dp
+  - every stop has a name: unnamed: AXViewGroup 384×832dp
 
 **Why:**
 
@@ -146,18 +148,18 @@ Each library’s failures beyond the ones above.
 - **Screen behind exposed (Dialog, BottomSheet, Select, Menu):** [A]. HeroUI’s `FullWindowOverlay` is a bare fragment unless `Platform.OS === 'ios'` (`node_modules/heroui-native/src/helpers/internal/components/full-window-overlay.tsx:56-62`).
 - **Both sheets’ title and body unread.** Heard: TalkBack focuses the whole sheet and says only “Bottom Sheet, Slider”; the title and body inside aren’t focusable. gorhom makes the content `accessible` (`@gorhom/bottom-sheet/src/components/bottomSheet/constants.ts:29-31`), and neither HeroUI’s sheet nor the app’s raw one opts out (`src/components/exercise-sheet.tsx:22-26`).
 - **Switch and Checkbox: row and control are separate.** `ControlField` is a bare `Pressable` with no role or state (`node_modules/heroui-native/src/components/control-field/control-field.tsx:127`). TalkBack gets a row with no role, then a control with no name.
-- **Touch targets:** library size tokens. Switch 24 (`src/styles/components/switch.css:3-4`), Checkbox and Radio 24 (`checkbox.css:3-4`, `radio.css:11-12`), Slider thumb 28 × 20 (`slider.css:78-81`), Tab 36 (`tabs.css:61`). Segmented 44 is lab code (`src/components/segmented.tsx:26`).
+- **Touch targets:** library size tokens. Switch 24 (`src/styles/components/switch.css:3-4`), Checkbox and Radio 24 (`checkbox.css:3-4`, `radio.css:11-12`), Slider thumb 28 × 20 (`slider.css:78-81`), Tab 36 (`tabs.css:61`).
 - **Button (loading):** [C]. Only `disabled` is set (`node_modules/heroui-native/src/components/button/button.tsx:297`).
 - **Select trigger: no name.** It’s a `combobox` with no label (`src/primitives/select/select.tsx:242`), and the “Rest time” label isn’t linked (`src/app/index.tsx:177-179`). Options are `role="option"`: [B].
 - **Dialog title “not a heading”:** an audit artifact. `aria-labelledby` makes React Native give the dialog container a name joined from its children, which the audit matches first. The real title is a heading: heard “Delete this workout?, Heading”.
-- **Dialog backdrop is an unlabelled stop.** Heard: “Unlabelled”. A full-screen focusable, clickable view with no name sits behind the dialog. The audit doesn’t check for this. Whether swiping reads the title twice wasn’t checked: TalkBack’s swipe gestures can’t be sent over adb.
+- **Unnamed backdrop (Dialog, Bottom sheet, Select, Menu).** Heard on the dialog: “Unlabelled”. Each overlay’s backdrop is the primitive `Overlay`, a full-screen clickable view with no name (in `node_modules/heroui-native/src/components/`: `dialog/dialog.tsx:48`, `bottom-sheet/bottom-sheet.tsx:45`, `select/select.tsx:73`, `menu/menu.tsx:67`). Whether swiping reads the dialog title twice wasn’t checked: TalkBack’s swipe gestures can’t be sent over adb.
 - **Text field error not reachable:** React Native has no `aria-describedby`; `FieldError` is plain text.
 
 <a id="gluestack"></a>
 
 ### gluestack
 
-**35 of 66** checks pass on Android.
+**40 of 72** checks pass on Android.
 
 - **Button**
   - touch target: 352×36dp
@@ -183,6 +185,7 @@ Each library’s failures beyond the ones above.
   - error reachable from field: label="Email" value="not-an-email" traits=[] 326×34dp hint=""
 - **Dialog**
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
+  - every stop has a name: unnamed: AXViewGroup 384×832dp
 - **Bottom sheet (gluestack BottomSheet)**
   - title and body readable: title and body text not in the system tree
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
@@ -203,8 +206,7 @@ Each library’s failures beyond the ones above.
 - **Menu**
   - touch target: 352×38dp
   - screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme, test-theme-0
-- **Segmented control**
-  - touch target: 116×44dp
+  - every stop has a name: unnamed: AXViewGroup 352×6dp, AXViewGroup 210×140dp
 
 **Why:**
 
@@ -214,8 +216,9 @@ Each library’s failures beyond the ones above.
 - **Screen behind exposed (Dialog, BottomSheet, Select, Menu):** [A]. `Overlay` defaults to `useRNModal = false` and renders into a portal in the same window (`node_modules/@gluestack-ui/core/lib/esm/overlay/creator/index.jsx:10`, `:37`). `useRNModalOnAndroid` would fix it, but nothing sets it.
 - **BottomSheet title and body unread.** Confirmed in the tree; the same structure as HeroUI’s sheet, which was heard. gorhom makes the sheet content `accessible`, labelled “Bottom Sheet” (`@gorhom/bottom-sheet/src/components/bottomSheet/constants.ts:29-31`), which TalkBack reads as one stop. The baseline opts out with `accessible={false}` (`apps/baseline/src/components/exercise-sheet.tsx:18`); gluestack’s wrapper doesn’t (`components/ui/bottomsheet/index.tsx:222-243`).
 - **BottomSheet doesn’t close.** Confirmed in the code. `close()` only sets `index` to -1 (`components/ui/bottomsheet/index.tsx:113-115`). When the prop changes, gorhom 5.2.14 calls `handleSnapToIndex(-1)`, which animates to `detents[-1]`, undefined (`node_modules/@gorhom/bottom-sheet/src/components/bottomSheet/BottomSheet.tsx:1123`, `:1789`). Only the first mount maps -1 to the closed position (`:875-877`). Same on iOS. **Fix:** call the sheet ref’s `close()`.
-- **Touch targets:** library sizes. Button and Menu trigger 36 (`components/ui/button/index.tsx:39`), Select trigger 40 (`select/index.tsx:60`), Tab 31 (`tabs/index.tsx:42`), Accordion 20 (the padding is on the header, not the trigger: `accordion/index.tsx:39`, `:48`), Checkbox and Radio 22. Segmented 44 is lab code (`src/components/segmented.tsx:21`).
+- **Touch targets:** library sizes. Button and Menu trigger 36 (`components/ui/button/index.tsx:39`), Select trigger 40 (`select/index.tsx:60`), Tab 31 (`tabs/index.tsx:42`), Accordion 20 (the padding is on the header, not the trigger: `accordion/index.tsx:39`, `:48`), Checkbox and Radio 22.
 - **Button (loading):** [C]. `ButtonSpinner` has `aria-label="loading"`, but it isn’t read: heard “Saving, Button, disabled”.
+- **Unnamed stops (Dialog, Menu).** The dialog’s backdrop is a clickable `AnimatedPressable` with no name (`components/ui/alert-dialog/index.tsx:22`, `:32`). The menu has two unnamed views inside it, 352 × 6 and 210 × 140 dp (Likely its content frame and a spacer, not traced to a line).
 - **Switch: no name.** React Native’s `Switch` with a `Text` beside it, as the docs show (`src/components/switch-row.tsx:11-19`).
 - **Checkbox named “terms”:** `aria-label || value` (`node_modules/@gluestack-ui/core/lib/esm/checkbox/creator/Checkbox.jsx:30`).
 - **Select trigger: an empty button.** The value sits in a hidden `TextInput` (`select/creator/SelectInput.jsx:28-30`). Options pass `checked` only as a style state (`SelectItem.jsx:24-40`).
@@ -227,15 +230,10 @@ Each library’s failures beyond the ones above.
 
 ### Tamagui
 
-**42 of 67** checks pass on Android.
+**55 of 73** checks pass on Android.
 
-- **Button**
-  - touch target: 352×44dp
-- **Button (disabled)**
-  - touch target: 352×44dp
 - **Button (loading)**
-  - name, role, state: label="Saving" value="" traits=[button, notEnabled] 352×44dp
-  - touch target: 352×44dp
+  - name, role, state: label="Saving" value="" traits=[button, notEnabled] 352×48dp
 - **Switch**
   - name, role, state: label="" value="" traits=[] 42×22dp
   - touch target: 42×22dp
@@ -245,10 +243,7 @@ Each library’s failures beyond the ones above.
 - **Radio option**
   - touch target: 22×22dp
 - **Select trigger**
-  - name, role, state: label="60 seconds" value="collapsed" traits=[combobox] role="Combo box" 352×44dp
-  - touch target: 352×44dp
-- **Tab (selected)**
-  - touch target: 117×44dp
+  - name, role, state: label="60 seconds" value="collapsed" traits=[combobox] role="Combo box" 352×48dp
 - **Dialog**
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-tamagui-close, Component test screen, test-theme-0
 - **Bottom sheet (Tamagui Sheet)**
@@ -260,13 +255,11 @@ Each library’s failures beyond the ones above.
 - **Accordion**
   - header is a button: label="Warm-up, ▾" value="collapsed" traits=[] 99×53dp
 - **Menu**
-  - touch target: 147×44dp
   - items are buttons: AXView label="Duplicate", and 2 more like it
 - **Segmented control**
-  - options have name and role: label="Week" value="" traits=[] 117×44dp, and 2 more like it
-  - selected option marked: label="Week" value="" traits=[] 117×44dp, and 2 more like it
-  - touch target: 117×44dp
-  - selection moves on tap: label="Week" value="" traits=[] 117×44dp | label="Month" value="" traits=[] 117×44dp
+  - options have name and role: label="Week" value="" traits=[] 117×48dp, and 2 more like it
+  - selected option marked: label="Week" value="" traits=[] 117×48dp, and 2 more like it
+  - selection moves on tap: label="Week" value="" traits=[] 117×48dp | label="Month" value="" traits=[] 117×48dp
 
 **Why:**
 
@@ -274,7 +267,6 @@ Each library’s failures beyond the ones above.
 - **[B] `role="option"` has no Android mapping.** It falls to `else -> null` in `RN/…/uimanager/ReactAccessibilityDelegate.kt:543`, so options get no role.
 - **[C] Loading is disabled + spinner, with no busy state.** React Native adds “busy” to the name only when `accessibilityState.busy` is set (`RN/…/uimanager/BaseViewManager.java:432-435`). No library sets it. Heard in Reusables and gluestack: “Saving, Button, disabled”.
 - **Screen behind exposed (Dialog, Sheet, Select):** [A]. Dialog content goes through `PortalItem` (`node_modules/@tamagui/dialog/src/Dialog.tsx:205`) and a modal Sheet through `<Portal>` (`@tamagui/sheet/src/SheetImplementationCustom.tsx:1201`).
-- **Touch targets at 44:** lab code. The app hard-codes `minH={44}` (`src/components/button.tsx:29`, `select.tsx:15`, `tabs.tsx:20`, `segmented.tsx:13`). The baseline uses 48 on Android.
 - **Checkbox, Radio 22 and Switch 42 × 22:** Tamagui’s default size `md` (`node_modules/tamagui/src/components/Checkbox.tsx:19-20`, `RadioGroup.tsx:18-19`, `Switch.tsx:18-19`). Slider thumb 28: lab code (`src/components/slider.tsx:16`).
 - **Switch: no name, role or state.** On native, `useSwitch` returns only `onPress` (`node_modules/@tamagui/switch-headless/src/useSwitch.tsx:89-96`); the role and state are set on web only.
 - **Checkbox and Select trigger: no name.** `Label htmlFor` links the control on web only (`node_modules/@tamagui/label/src/Label.tsx:54`).
@@ -287,7 +279,7 @@ Each library’s failures beyond the ones above.
 
 ### Reusables
 
-**41 of 62** checks pass on Android.
+**45 of 67** checks pass on Android.
 
 - **Button**
   - touch target: 352×40dp
@@ -314,13 +306,13 @@ Each library’s failures beyond the ones above.
 - **Select**
   - options are actionable: AXViewGroup label="30 seconds", and 4 more like it
   - screen behind is hidden from the screen reader: still exposed: 40 elements, such as Component test screen, test-theme-0, test-theme-1
-- **Slider**
-  - touch target: 352×44dp
+  - every stop has a name: unnamed: AXViewGroup 384×832dp
 - **Progress**
   - name and value: label="0%" value="0" traits=[] role="Progress bar" 352×8dp
 - **Menu**
   - touch target: 352×40dp
   - screen behind is hidden from the screen reader: still exposed: 40 elements, such as Component test screen, test-theme-0, test-theme-1
+  - every stop has a name: unnamed: AXViewGroup 384×832dp, AXView#test-menu 224×119dp
 - **Segmented control**
   - touch target: 118×40dp
 
@@ -330,8 +322,9 @@ Each library’s failures beyond the ones above.
 - **[B] `role="option"` has no Android mapping.** It falls to `else -> null` in `RN/…/uimanager/ReactAccessibilityDelegate.kt:543`, so options get no role.
 - **[C] Loading is disabled + spinner, with no busy state.** React Native adds “busy” to the name only when `accessibilityState.busy` is set (`RN/…/uimanager/BaseViewManager.java:432-435`). No library sets it. Heard in Reusables and gluestack: “Saving, Button, disabled”.
 - **Screen behind exposed (Dialog, Select, Menu):** [A]. The copied components use `FullWindowOverlay` on iOS only (`src/components/ui/alert-dialog.tsx:17`, `select.tsx:68`, `dropdown-menu.tsx:88`).
-- **Touch targets:** the library’s Tailwind sizes, kept on purpose (NOTES.md). Button and Menu trigger `h-10` (`src/components/ui/button.tsx:43`), Switch 32 × 18 (`switch.tsx:12`), Checkbox and Radio `size-4` (`checkbox.tsx:23`, `radio-group.tsx:19`), Tab 30 (`tabs.tsx:20`), Segmented `h-10` (`toggle.tsx:28`). Slider 44 is lab code (`src/components/slider.tsx:40`).
+- **Touch targets:** the library’s Tailwind sizes, kept on purpose (NOTES.md). Button and Menu trigger `h-10` (`src/components/ui/button.tsx:43`), Switch 32 × 18 (`switch.tsx:12`), Checkbox and Radio `size-4` (`checkbox.tsx:23`, `radio-group.tsx:19`), Tab 30 (`tabs.tsx:20`), Segmented `h-10` (`toggle.tsx:28`).
 - **Button (loading):** [C]. RNR’s Button has no `aria-busy` (NOTES.md).
+- **Unnamed stops (Select, Menu).** Each overlay is a full-screen `Pressable` that closes on tap, with no name (`src/components/ui/select.tsx:83-90`, `dropdown-menu.tsx:104-116`). The menu’s content (`test-menu`) has no name either.
 - **Dialog title isn’t a heading.** The copied overlay wraps the content in a full-screen `Pressable` (`src/components/ui/alert-dialog.tsx:37-41`), which absorbs title and description into one stop.
 - **Select options:** `role="option"`: [B]. Selection still comes through, so “current option marked” passes.
 - **Progress reads “0%”:** `value` goes only to the indicator, never to the root (`src/components/ui/progress.tsx:14-24`).
@@ -367,14 +360,12 @@ Checks that pass on one platform and fail on the other.
     - Menu, items are buttons
   - **Passes on iOS only:**
     - Dialog, title is a heading
-    - Segmented control, touch target
 - **gluestack**
   - **Passes on Android only:**
     - Tab (selected), name, role, state
     - Menu, items are buttons
   - **Passes on iOS only:**
     - Button (loading), name, role, state
-    - Segmented control, touch target
 - **Tamagui**
   - **Passes on Android only:**
     - Button (disabled), name, role, state
@@ -382,11 +373,7 @@ Checks that pass on one platform and fail on the other.
     - Slider, name, role, value
     - Menu, screen behind is hidden from the screen reader
   - **Passes on iOS only:**
-    - Button, touch target
-    - Tab (selected), touch target
-    - Menu, touch target
     - Menu, items are buttons
-    - Segmented control, touch target
 - **Reusables**
   - **Passes on Android only:**
     - Text field, name, role, state
@@ -398,7 +385,6 @@ Checks that pass on one platform and fail on the other.
     - Menu, items are buttons
   - **Passes on iOS only:**
     - Select, screen behind is hidden from the screen reader
-    - Slider, touch target
     - Menu, screen behind is hidden from the screen reader
 
 **Why they differ** (Confirmed unless marked):
@@ -415,6 +401,7 @@ Checks that pass on one platform and fail on the other.
 - **gluestack Button (loading) passes on iOS only.** VoiceOver folds the spinner into the button as “In progress” (Likely); on Android the spinner isn’t read (heard “Saving, Button, disabled”).
 - **HeroUI Dialog: title is a heading passes on iOS only.** An audit artifact on Android (see HeroUI above).
 - **Touch targets at 44 pass on iOS only.** 44 pt is Apple’s minimum; Google’s is 48 dp.
+- **Every stop has a name** was added on 4 November 2026 and has Android results only so far. The iOS results get it on the next iOS run.
 
 <!-- begin:navfoot -->
 

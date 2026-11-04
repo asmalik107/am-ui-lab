@@ -1,0 +1,6 @@
+{
+  "name": "lab-runs",
+  "version": "0.1.0",
+  "description": "Shows which device runs which am-ui-lab check, progress through the 8 apps, and how fresh each result is",
+  "types": "./types/index.d.ts"
+}

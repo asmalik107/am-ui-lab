@@ -263,7 +263,7 @@ ${nav('Android accessibility', 'docs')}
 
 Every Android accessibility failure, from the audit’s own output, with the code that causes it. Generated from \`results/\` by \`scripts/checks-md.mjs\`.
 
-- **Traced by hand.** Each failure was traced to the code that causes it, as on the [iOS page](ios-accessibility.md). Confirmed means the line that does it was read; Likely says how to confirm it on the device. The sheets were checked with TalkBack.
+- **Traced by hand.** Each failure was traced to the code that causes it, as on the [iOS page](ios-accessibility.md). Confirmed means the line that does it was read, or the phone showed it. **Heard** quotes TalkBack itself, read from its Display speech output setting on the A15. Two causes are still Likely.
 - **Paths** are relative to \`apps/<app>/\` unless they say otherwise. \`RN/\` is \`node_modules/react-native/\`, and \`RN/…/uimanager/\` is \`RN/ReactAndroid/src/main/java/com/facebook/react/uimanager/\`.
 - **Device:** Samsung Galaxy A15 5G (${device?.device?.name ?? 'SM-A156E'}), ${device?.device?.runtime ?? 'Android 16'}.
 - **Touch targets** are checked against Google’s 48 × 48 dp.

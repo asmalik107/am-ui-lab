@@ -19,10 +19,29 @@ import java.util.List;
 
 public class Dump extends Instrumentation {
     private float density;
+    private String focusId;
+
+    private static AccessibilityNodeInfo find(AccessibilityNodeInfo n, String id) {
+        // "text:<s>" matches a node's text or content description instead of its testID.
+        // "px:<l,t,r,b>" matches a focusable node's bounds in pixels.
+        CharSequence label = n.getContentDescription() != null ? n.getContentDescription() : n.getText();
+        Rect r = new Rect();
+        n.getBoundsInScreen(r);
+        if (id.startsWith("text:") ? label != null && id.substring(5).contentEquals(label)
+                : id.startsWith("px:") ? n.isFocusable() && id.substring(3).equals(r.left + "," + r.top + "," + r.right + "," + r.bottom)
+                : id.equals(n.getViewIdResourceName())) return n;
+        for (int i = 0; i < n.getChildCount(); i++) {
+            AccessibilityNodeInfo c = n.getChild(i);
+            AccessibilityNodeInfo hit = c == null ? null : find(c, id);
+            if (hit != null) return hit;
+        }
+        return null;
+    }
 
     @Override
     public void onCreate(Bundle arguments) {
         super.onCreate(arguments);
+        focusId = arguments == null ? null : arguments.getString("focus");
         start();
     }
 
@@ -57,6 +76,11 @@ public class Dump extends Instrumentation {
                 windows.put(jw);
             }
             AccessibilityNodeInfo root = ua.getRootInActiveWindow();
+            // -e focus <testID>: move the screen reader's focus there, so TalkBack speaks it.
+            if (root != null && focusId != null) {
+                AccessibilityNodeInfo target = find(root, focusId);
+                result.put("focused", target != null && target.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS));
+            }
             JSONArray nodes = new JSONArray();
             if (root != null) walk(root, nodes, 0);
             result.put("density", density);

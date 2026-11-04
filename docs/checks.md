@@ -52,10 +52,10 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 - **Unistyles:** 2
 - **Uniwind:** 2
 - **NativeWind:** 2
-- **HeroUI:** 5
-- **gluestack:** 3
+- **HeroUI:** 9
+- **gluestack:** 5
 - **Tamagui:** 5
-- **Reusables:** 9
+- **Reusables:** 11
 
 <a id="button"></a>
 
@@ -474,20 +474,20 @@ No check failed for any app.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | opens | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 | screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
+| every stop has a name | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ❌ ⚠️ | ✅ / ✅ | ✅ / ✅ |
 | title is a heading | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ |
 | actions are buttons | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 | closes | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
-| every stop has a name | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ❌ | ➖ / ❌ | ➖ / ✅ | ➖ / ✅ |
 
 <details>
 <summary>What each check means</summary>
 
 - **opens:** Opens when its trigger is tapped.
 - **screen behind is hidden from the screen reader:** While open, nothing behind it is in the accessibility tree.
+- **every stop has a name:** 
 - **title is a heading:** The title has the heading role.
 - **actions are buttons:** Its actions have the button role.
 - **closes:** Closes from its own Close or Cancel button.
-- **every stop has a name:** 
 
 </details>
 
@@ -495,19 +495,19 @@ No check failed for any app.
 <summary>Why checks failed</summary>
 
 - **HeroUI**
-  - iOS, screen behind is hidden from the screen reader: still exposed: 15 elements, such as test-button-disabled, test-button-loading, Form
+  - iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-button-disabled, test-button-loading, Form
   - Android, screen behind is hidden from the screen reader: still exposed: 46 elements, such as test-sheet-close, Component test screen, test-theme
-  - Android, title is a heading: AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Delete this workout?"
   - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
+  - Android, title is a heading: AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Delete this workout?"
 - **gluestack**
   - iOS, screen behind is hidden from the screen reader: still exposed: 19 elements, such as test-theme-0, test-theme-1, test-theme-2
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
   - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
 - **Tamagui**
-  - iOS, screen behind is hidden from the screen reader: still exposed: 13 elements, such as Form, test-textfield, test-switch
+  - iOS, screen behind is hidden from the screen reader: still exposed: 11 elements, such as Form, test-textfield, test-switch
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-tamagui-close, Component test screen, test-theme-0
 - **Reusables**
-  - iOS, screen behind is hidden from the screen reader: still exposed: 19 elements, such as test-button-disabled, test-button-loading, Form
+  - iOS, screen behind is hidden from the screen reader: still exposed: 18 elements, such as test-button-loading, Form, test-textfield
   - Android, screen behind is hidden from the screen reader: still exposed: 41 elements, such as Component test screen, test-theme-0, test-theme-1
   - iOS, title is a heading: AXGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Cancel, Delete"
   - Android, title is a heading: AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this."
@@ -524,9 +524,9 @@ No check failed for any app.
 | current option marked | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | n/r / ✅ | ❌ / ✅ ⚠️ |
 | options are actionable | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | n/r / ✅ | ❌ / ❌ |
 | screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | n/r / ❌ | ✅ / ❌ ⚠️ |
+| every stop has a name | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ✅ | n/r / ✅ | ✅ / ❌ ⚠️ |
 | new value read on trigger | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | n/r / ✅ | ✅ / ✅ |
 | test could run | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ |
-| every stop has a name | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ❌ | ➖ / ✅ | n/r / ✅ | ➖ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -535,9 +535,9 @@ No check failed for any app.
 - **current option marked:** The selected option is marked as checked or selected.
 - **options are actionable:** Options have a button, radio or option role.
 - **screen behind is hidden from the screen reader:** While open, nothing behind it is in the accessibility tree.
+- **every stop has a name:** 
 - **new value read on trigger:** After picking, the trigger announces the new value.
 - **test could run:** The element the test needs was there, so the test could run.
-- **every stop has a name:** 
 
 </details>
 
@@ -555,7 +555,7 @@ No check failed for any app.
   - Android, current option marked: AXViewGroup label="60 seconds"
   - iOS, options are actionable: AXGroup label="30 seconds", and 4 more like it
   - Android, options are actionable: AXViewGroup label="30 seconds", and 4 more like it
-  - iOS, screen behind is hidden from the screen reader: still exposed: 17 elements, such as test-theme-0, test-theme-1, test-theme-2
+  - iOS, screen behind is hidden from the screen reader: still exposed: 18 elements, such as test-theme-0, test-theme-1, test-theme-2
   - Android, screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme, test-theme-0
   - iOS, new value read on trigger: label="" value="" traits=[button] 370×40pt
   - Android, new value read on trigger: label="" value="" traits=[button] 352×40dp
@@ -702,8 +702,8 @@ No check failed for any app.
 | opens | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 | items are buttons | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ✅ / ❌ ⚠️ | ❌ / ✅ ⚠️ |
 | screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ✅ ⚠️ | ✅ / ❌ ⚠️ |
+| every stop has a name | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ❌ ⚠️ | ✅ / ✅ | ✅ / ❌ ⚠️ |
 | closes after an action | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
-| every stop has a name | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ✅ | ➖ / ❌ | ➖ / ❌ | ➖ / ✅ | ➖ / ❌ |
 
 <details>
 <summary>What each check means</summary>
@@ -713,8 +713,8 @@ No check failed for any app.
 - **opens:** Opens when its trigger is tapped.
 - **items are buttons:** Each menu action has the button role.
 - **screen behind is hidden from the screen reader:** While open, nothing behind it is in the accessibility tree.
-- **closes after an action:** Choosing an action closes the menu.
 - **every stop has a name:** 
+- **closes after an action:** Choosing an action closes the menu.
 
 </details>
 
@@ -723,19 +723,19 @@ No check failed for any app.
 
 - **HeroUI**
   - iOS, items are buttons: AXGroup label="Duplicate", and 2 more like it
-  - iOS, screen behind is hidden from the screen reader: still exposed: 17 elements, such as test-toast-show, Tabs, test-tabs-0
+  - iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-sheet-open-expoui, test-toast-show, Tabs
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-close, Component test screen, test-theme
   - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
 - **gluestack**
   - iOS, touch target: 370×38pt
   - Android, touch target: 352×38dp
   - iOS, items are buttons: AXGroup label="Duplicate", and 2 more like it
-  - iOS, screen behind is hidden from the screen reader: still exposed: 18 elements, such as test-sheet-open-gluestack, test-toast-show, Tabs
+  - iOS, screen behind is hidden from the screen reader: still exposed: 17 elements, such as test-dialog-open, test-sheet-open, test-sheet-open-expoui
   - Android, screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme, test-theme-0
   - Android, every stop has a name: unnamed: AXViewGroup 352×6dp, AXViewGroup 210×140dp
 - **Tamagui**
   - Android, items are buttons: AXView label="Duplicate", and 2 more like it
-  - iOS, screen behind is hidden from the screen reader: still exposed: 14 elements, such as test-sheet-open-tamagui, test-sheet-open-expoui, test-toast-show
+  - iOS, screen behind is hidden from the screen reader: still exposed: 14 elements, such as test-sheet-open, test-sheet-open-tamagui, test-sheet-open-expoui
 - **Reusables**
   - iOS, touch target: 370×40pt
   - Android, touch target: 352×40dp
@@ -807,20 +807,20 @@ Each sheet gets the same 5 checks: opens, title and body readable, screen behind
 <summary>Why checks failed</summary>
 
 - **Baseline**
-  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-textfield, test-switch, test-checkbox
+  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 15 elements, such as test-button-disabled, test-button-loading, Form
   - @gorhom/bottom-sheet, Android, screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme, test-theme-0
 - **Unistyles**
-  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-textfield, test-switch, test-checkbox
+  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 15 elements, such as test-button-disabled, test-button-loading, Form
   - @gorhom/bottom-sheet, Android, screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme, test-theme-0
 - **Uniwind**
   - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 15 elements, such as test-button-disabled, test-button-loading, Form
   - @gorhom/bottom-sheet, Android, screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme, test-theme-0
 - **NativeWind**
-  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-textfield, test-switch, test-checkbox
+  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 15 elements, such as test-button-disabled, test-button-loading, Form
   - @gorhom/bottom-sheet, Android, screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme, test-theme-0
 - **HeroUI**
   - @gorhom/bottom-sheet, iOS, title and body readable: title and body text not in the system tree
-  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 17 elements, such as test-switch, test-checkbox, test-radiogroup-0
+  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-button-disabled, test-button-loading, Form
   - @gorhom/bottom-sheet, Android, title and body readable: title and body text not in the system tree
   - @gorhom/bottom-sheet, Android, screen behind is hidden from the screen reader: still exposed: 46 elements, such as test-sheet-close, Component test screen, test-theme
   - The library’s own sheet, iOS, title and body readable: title and body text not in the system tree
@@ -831,18 +831,18 @@ Each sheet gets the same 5 checks: opens, title and body readable, screen behind
   - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 19 elements, such as test-button-loading, Form, test-textfield
   - @gorhom/bottom-sheet, Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
   - The library’s own sheet, iOS, title and body readable: title and body text not in the system tree
-  - The library’s own sheet, iOS, screen behind is hidden from the screen reader: still exposed: 17 elements, such as test-button-disabled, test-button-loading, Form
+  - The library’s own sheet, iOS, screen behind is hidden from the screen reader: still exposed: 19 elements, such as test-button-loading, Form, test-textfield
   - The library’s own sheet, iOS, closes: still open
   - The library’s own sheet, Android, title and body readable: title and body text not in the system tree
   - The library’s own sheet, Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
   - The library’s own sheet, Android, closes: still open
 - **Tamagui**
-  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 13 elements, such as Form, test-textfield, test-switch
+  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 11 elements, such as Form, test-textfield, test-switch
   - @gorhom/bottom-sheet, Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-tamagui-close, Component test screen, test-theme-0
   - The library’s own sheet, iOS, screen behind is hidden from the screen reader: still exposed: 15 elements, such as test-textfield, test-switch, test-radiogroup-0
   - The library’s own sheet, Android, screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme-0, test-theme-1
 - **Reusables**
-  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 19 elements, such as test-button-disabled, test-button-loading, Form
+  - @gorhom/bottom-sheet, iOS, screen behind is hidden from the screen reader: still exposed: 18 elements, such as test-button-loading, Form, test-textfield
   - @gorhom/bottom-sheet, Android, screen behind is hidden from the screen reader: still exposed: 41 elements, such as Component test screen, test-theme-0, test-theme-1
 
 </details>

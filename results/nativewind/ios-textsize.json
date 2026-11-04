@@ -1,12 +1,13 @@
 {
   "app": "nativewind",
   "bundleId": "dev.asimmalik.uilab.nativewind",
-  "udid": "11A84A8F-FDB1-4921-8105-D7B17EC3CBC1",
+  "udid": "965B6388-1EA1-456D-BE79-9A8E8401B0BA",
+  "platform": "ios",
   "device": {
     "name": "iPhone 17",
     "runtime": "iOS 27.0"
   },
-  "date": "2026-10-30T13:46:04.483Z",
+  "date": "2026-11-04T20:34:59.601Z",
   "growth": [
     {
       "id": "test-button",

@@ -1,12 +1,13 @@
 {
   "app": "heroui",
   "bundleId": "dev.asimmalik.uilab.heroui",
-  "udid": "11A84A8F-FDB1-4921-8105-D7B17EC3CBC1",
+  "udid": "965B6388-1EA1-456D-BE79-9A8E8401B0BA",
+  "platform": "ios",
   "device": {
     "name": "iPhone 17",
     "runtime": "iOS 27.0"
   },
-  "date": "2026-10-30T14:42:15.566Z",
+  "date": "2026-11-04T21:12:09.679Z",
   "growth": [
     {
       "id": "test-button",
@@ -106,9 +107,9 @@
     },
     {
       "id": "test-segmented-0",
-      "normal": 44,
+      "normal": 48,
       "large": 143,
-      "ratio": 3.25
+      "ratio": 2.9791666666666665
     }
   ],
   "offscreen": [

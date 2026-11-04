@@ -1,13 +1,14 @@
 {
   "app": "unistyles",
   "bundleId": "dev.asimmalik.uilab.unistyles",
-  "udid": "11A84A8F-FDB1-4921-8105-D7B17EC3CBC1",
+  "udid": "965B6388-1EA1-456D-BE79-9A8E8401B0BA",
+  "platform": "ios",
   "device": {
     "name": "iPhone 17",
     "runtime": "iOS 27.0"
   },
   "theme": "dark",
-  "date": "2026-10-30T12:50:42.647Z",
+  "date": "2026-11-04T20:07:56.965Z",
   "findings": [
     {
       "component": "Button",
@@ -37,7 +38,7 @@
       "component": "Button (loading)",
       "check": "name, role, state",
       "pass": true,
-      "detail": "label=\"In progress, Saving\" value=\"busy\" traits=[button, notEnabled] 370×44pt"
+      "detail": "label=\"Saving\" value=\"busy\" traits=[button, notEnabled] 370×44pt"
     },
     {
       "component": "Button (loading)",
@@ -161,6 +162,12 @@
     },
     {
       "component": "Dialog",
+      "check": "every stop has a name",
+      "pass": true,
+      "detail": "every stop in the overlay has a name"
+    },
+    {
+      "component": "Dialog",
       "check": "title is a heading",
       "pass": true,
       "detail": "AXHeading label=\"Delete this workout?\""
@@ -197,6 +204,12 @@
     },
     {
       "component": "Bottom sheet",
+      "check": "every stop has a name",
+      "pass": true,
+      "detail": "every stop in the overlay has a name"
+    },
+    {
+      "component": "Bottom sheet",
       "check": "closes",
       "pass": true,
       "detail": "sheet gone"
@@ -224,6 +237,12 @@
       "check": "screen behind is hidden from VoiceOver",
       "pass": true,
       "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Bottom sheet (@expo/ui)",
+      "check": "every stop has a name",
+      "pass": true,
+      "detail": "every stop in the overlay has a name"
     },
     {
       "component": "Bottom sheet (@expo/ui)",
@@ -260,6 +279,12 @@
       "check": "screen behind is hidden from VoiceOver",
       "pass": true,
       "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Select",
+      "check": "every stop has a name",
+      "pass": true,
+      "detail": "every stop in the overlay has a name"
     },
     {
       "component": "Select",
@@ -350,6 +375,12 @@
       "check": "screen behind is hidden from VoiceOver",
       "pass": true,
       "detail": "nothing behind it in the system tree"
+    },
+    {
+      "component": "Menu",
+      "check": "every stop has a name",
+      "pass": true,
+      "detail": "every stop in the overlay has a name"
     },
     {
       "component": "Menu",
@@ -654,7 +685,7 @@
           "button",
           "notEnabled"
         ],
-        "label": "In progress, Saving",
+        "label": "Saving",
         "value": "busy",
         "identifier": "test-button-loading",
         "viewClassName": "RCTViewComponentView"
@@ -1828,7 +1859,7 @@
         "traits": [
           "staticText"
         ],
-        "label": "Theme switch: 32.1 ms"
+        "label": "Theme switch: 31.9 ms"
       },
       {
         "frame": {
@@ -1871,7 +1902,7 @@
       },
       {
         "role": "AXStaticText",
-        "label": "Theme switch: 32.1 ms",
+        "label": "Theme switch: 31.9 ms",
         "nx": 0.14950000000000002,
         "ny": 0.0685,
         "x": 0.01,
@@ -2021,7 +2052,7 @@
       },
       {
         "role": "AXButton",
-        "label": "In progress, Saving",
+        "label": "Saving",
         "value": "busy",
         "identifier": "test-button-loading",
         "nx": 0.5,
@@ -2188,7 +2219,7 @@
       },
       {
         "role": "AXButton",
-        "label": "In progress, Saving",
+        "label": "Saving",
         "value": "busy",
         "identifier": "test-button-loading",
         "nx": 0.5,
@@ -2200,7 +2231,7 @@
       },
       {
         "role": "AXStaticText",
-        "label": "Theme switch: 32.1 ms",
+        "label": "Theme switch: 30.3 ms",
         "identifier": "perf-theme",
         "nx": 0.14950000000000002,
         "ny": 0.0685,

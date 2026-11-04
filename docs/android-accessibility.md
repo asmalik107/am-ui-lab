@@ -359,13 +359,19 @@ Checks that pass on one platform and fail on the other.
     - Slider, name, role, value
     - Menu, items are buttons
   - **Passes on iOS only:**
+    - Dialog, every stop has a name
     - Dialog, title is a heading
+    - HeroUI’s own bottom sheet, every stop has a name
+    - Select, every stop has a name
+    - Menu, every stop has a name
 - **gluestack**
   - **Passes on Android only:**
     - Tab (selected), name, role, state
     - Menu, items are buttons
   - **Passes on iOS only:**
     - Button (loading), name, role, state
+    - Dialog, every stop has a name
+    - Menu, every stop has a name
 - **Tamagui**
   - **Passes on Android only:**
     - Button (disabled), name, role, state
@@ -385,7 +391,9 @@ Checks that pass on one platform and fail on the other.
     - Menu, items are buttons
   - **Passes on iOS only:**
     - Select, screen behind is hidden from the screen reader
+    - Select, every stop has a name
     - Menu, screen behind is hidden from the screen reader
+    - Menu, every stop has a name
 
 **Why they differ** (Confirmed unless marked):
 
@@ -401,7 +409,7 @@ Checks that pass on one platform and fail on the other.
 - **gluestack Button (loading) passes on iOS only.** VoiceOver folds the spinner into the button as “In progress” (Likely); on Android the spinner isn’t read (heard “Saving, Button, disabled”).
 - **HeroUI Dialog: title is a heading passes on iOS only.** An audit artifact on Android (see HeroUI above).
 - **Touch targets at 44 pass on iOS only.** 44 pt is Apple’s minimum; Google’s is 48 dp.
-- **Every stop has a name** was added on 4 November 2026 and has Android results only so far. The iOS results get it on the next iOS run.
+- **gluestack, HeroUI and Reusables: every stop has a name passes on iOS only.** Their unnamed backdrops are clickable views TalkBack stops on, heard as “Unlabelled”. On iOS a view is a VoiceOver element only when it’s `accessible`, and these backdrops aren’t, so VoiceOver skips them.
 
 <!-- begin:navfoot -->
 

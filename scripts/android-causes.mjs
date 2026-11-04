@@ -94,4 +94,4 @@ export const differences = `**Why they differ** (Confirmed unless marked):
 - **gluestack Button (loading) passes on iOS only.** VoiceOver folds the spinner into the button as “In progress” (Likely); on Android the spinner isn’t read (heard “Saving, Button, disabled”).
 - **HeroUI Dialog: title is a heading passes on iOS only.** An audit artifact on Android (see HeroUI above).
 - **Touch targets at 44 pass on iOS only.** 44 pt is Apple’s minimum; Google’s is 48 dp.
-- **Every stop has a name** was added on 4 November 2026 and has Android results only so far. The iOS results get it on the next iOS run.`;
+- **gluestack, HeroUI and Reusables: every stop has a name passes on iOS only.** Their unnamed backdrops are clickable views TalkBack stops on, heard as “Unlabelled”. On iOS a view is a VoiceOver element only when it’s \`accessible\`, and these backdrops aren’t, so VoiceOver skips them.`;

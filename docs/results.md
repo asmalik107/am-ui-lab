@@ -125,14 +125,14 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
 
 | App | Test screen, iOS | Test screen, Android | Extra sheets, iOS | Extra sheets, Android | All checks, iOS | All checks, Android | Checks that differ |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| baseline | 53 / 57 | 59 / 61 | 5 / 5 | 6 / 6 | 58 / 62 | 65 / 67 | 2 |
-| unistyles | 53 / 57 | 59 / 61 | 5 / 5 | 6 / 6 | 58 / 62 | 65 / 67 | 2 |
-| uniwind | 53 / 57 | 59 / 61 | 5 / 5 | 6 / 6 | 58 / 62 | 65 / 67 | 2 |
-| nativewind | 53 / 57 | 59 / 61 | 5 / 5 | 6 / 6 | 58 / 62 | 65 / 67 | 2 |
-| tamagui | 27 / 47 | 44 / 61 | 9 / 10 | 11 / 12 | 36 / 57 | 55 / 73 | 5 |
-| gluestack | 29 / 57 | 32 / 61 | 6 / 9 | 8 / 11 | 35 / 66 | 40 / 72 | 3 |
-| heroui | 36 / 57 | 39 / 61 | 8 / 10 | 10 / 12 | 44 / 67 | 49 / 73 | 5 |
-| reusables | 32 / 57 | 39 / 61 | 5 / 5 | 6 / 6 | 37 / 62 | 45 / 67 | 9 |
+| baseline | 57 / 61 | 59 / 61 | 6 / 6 | 6 / 6 | 63 / 67 | 65 / 67 | 2 |
+| unistyles | 57 / 61 | 59 / 61 | 6 / 6 | 6 / 6 | 63 / 67 | 65 / 67 | 2 |
+| uniwind | 57 / 61 | 59 / 61 | 6 / 6 | 6 / 6 | 63 / 67 | 65 / 67 | 2 |
+| nativewind | 57 / 61 | 59 / 61 | 6 / 6 | 6 / 6 | 63 / 67 | 65 / 67 | 2 |
+| tamagui | 30 / 50 | 44 / 61 | 11 / 12 | 11 / 12 | 41 / 62 | 55 / 73 | 5 |
+| gluestack | 33 / 61 | 32 / 61 | 8 / 11 | 8 / 11 | 41 / 72 | 40 / 72 | 5 |
+| heroui | 40 / 61 | 39 / 61 | 10 / 12 | 10 / 12 | 50 / 73 | 49 / 73 | 9 |
+| reusables | 36 / 61 | 39 / 61 | 6 / 6 | 6 / 6 | 42 / 67 | 45 / 67 | 11 |
 <!-- end:accessibility -->
 
 <a id="failing-in-every-app-on-both-platforms"></a>

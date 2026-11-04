@@ -102,7 +102,7 @@ Each library’s failures beyond the ones above.
 
 ### HeroUI
 
-**49 of 73** checks pass on Android.
+**50 of 73** checks pass on Android.
 
 - **Button (loading)**
   - name, role, state: label="Saving" value="" traits=[button, notEnabled] 352×48dp
@@ -123,7 +123,6 @@ Each library’s failures beyond the ones above.
 - **Dialog**
   - screen behind is hidden from the screen reader: still exposed: 46 elements, such as test-sheet-close, Component test screen, test-theme
   - every stop has a name: unnamed: AXViewGroup 384×832dp
-  - title is a heading: AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Delete this workout?"
 - **HeroUI’s own bottom sheet**
   - title and body readable: title and body text not in the system tree
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
@@ -151,7 +150,6 @@ Each library’s failures beyond the ones above.
 - **Touch targets:** library size tokens. Switch 24 (`src/styles/components/switch.css:3-4`), Checkbox and Radio 24 (`checkbox.css:3-4`, `radio.css:11-12`), Slider thumb 28 × 20 (`slider.css:78-81`), Tab 36 (`tabs.css:61`).
 - **Button (loading):** [C]. Only `disabled` is set (`node_modules/heroui-native/src/components/button/button.tsx:297`).
 - **Select trigger: no name.** It’s a `combobox` with no label (`src/primitives/select/select.tsx:242`), and the “Rest time” label isn’t linked (`src/app/index.tsx:177-179`). Options are `role="option"`: [B].
-- **Dialog title “not a heading”:** an audit artifact. `aria-labelledby` makes React Native give the dialog container a name joined from its children, which the audit matches first. The real title is a heading: heard “Delete this workout?, Heading”.
 - **Unnamed backdrop (Dialog, Bottom sheet, Select, Menu).** Heard on the dialog: “Unlabelled”. Each overlay’s backdrop is the primitive `Overlay`, a full-screen clickable view with no name (in `node_modules/heroui-native/src/components/`: `dialog/dialog.tsx:48`, `bottom-sheet/bottom-sheet.tsx:45`, `select/select.tsx:73`, `menu/menu.tsx:67`). Whether swiping reads the dialog title twice wasn’t checked: TalkBack’s swipe gestures can’t be sent over adb.
 - **Text field error not reachable:** React Native has no `aria-describedby`; `FieldError` is plain text.
 
@@ -360,7 +358,6 @@ Checks that pass on one platform and fail on the other.
     - Menu, items are buttons
   - **Passes on iOS only:**
     - Dialog, every stop has a name
-    - Dialog, title is a heading
     - HeroUI’s own bottom sheet, every stop has a name
     - Select, every stop has a name
     - Menu, every stop has a name
@@ -407,7 +404,6 @@ Checks that pass on one platform and fail on the other.
 - **Reusables Select: current option marked passes on Android only.** `aria-selected` becomes `setSelected` on Android (`ReactAccessibilityDelegate.kt:633`); on iOS the `option` has no trait to carry it.
 - **Tamagui Button (disabled) passes on Android only.** Disabled sets `tabIndex: -1` (`@tamagui/button/src/Button.tsx:172-175`), which removes it on iOS. On Android the node is `focusable: false` but still clickable, which TalkBack stops on: heard “Unavailable, Button, disabled”.
 - **gluestack Button (loading) passes on iOS only.** VoiceOver folds the spinner into the button as “In progress” (Likely); on Android the spinner isn’t read (heard “Saving, Button, disabled”).
-- **HeroUI Dialog: title is a heading passes on iOS only.** An audit artifact on Android (see HeroUI above).
 - **Touch targets at 44 pass on iOS only.** 44 pt is Apple’s minimum; Google’s is 48 dp.
 - **gluestack, HeroUI and Reusables: every stop has a name passes on iOS only.** Their unnamed backdrops are clickable views TalkBack stops on, heard as “Unlabelled”. On iOS a view is a VoiceOver element only when it’s `accessible`, and these backdrops aren’t, so VoiceOver skips them.
 

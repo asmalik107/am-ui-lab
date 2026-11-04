@@ -131,7 +131,7 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
 | nativewind | 57 / 61 | 59 / 61 | 6 / 6 | 6 / 6 | 63 / 67 | 65 / 67 | 2 |
 | tamagui | 30 / 50 | 44 / 61 | 11 / 12 | 11 / 12 | 41 / 62 | 55 / 73 | 5 |
 | gluestack | 33 / 61 | 32 / 61 | 8 / 11 | 8 / 11 | 41 / 72 | 40 / 72 | 5 |
-| heroui | 40 / 61 | 39 / 61 | 10 / 12 | 10 / 12 | 50 / 73 | 49 / 73 | 9 |
+| heroui | 40 / 61 | 40 / 61 | 10 / 12 | 10 / 12 | 50 / 73 | 50 / 73 | 8 |
 | reusables | 36 / 61 | 39 / 61 | 6 / 6 | 6 / 6 | 42 / 67 | 45 / 67 | 11 |
 <!-- end:accessibility -->
 

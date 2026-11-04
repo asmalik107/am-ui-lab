@@ -231,7 +231,11 @@ try {
     const l = leaks(dlg, ['test-dialog', 'test-dialog-confirm', 'test-dialog-cancel']);
     add('Dialog', 'screen behind is hidden from VoiceOver', l.length === 0, leakDetail(l));
     named('Dialog', dlg);
-    const title = shown(dlg).find((e) => e.label.includes('Delete this workout?'));
+    // On Android a dialog container named by aria-labelledby also includes the title,
+    // so the stop named exactly the title is preferred: TalkBack reads it on its own
+    // ("Delete this workout?, Heading" in HeroUI). On iOS an accessible container
+    // that includes the title is the stop VoiceOver lands on, so it comes first.
+    const title = (android && shown(dlg).find((e) => e.label === 'Delete this workout?')) || shown(dlg).find((e) => e.label.includes('Delete this workout?'));
     add('Dialog', 'title is a heading', title?.role === 'AXHeading', axDesc(title));
     const cancel = shown(dlg).find((e) => e.identifier === 'test-dialog-cancel' || e.label === 'Cancel');
     add('Dialog', 'actions are buttons', cancel?.role === 'AXButton', axDesc(cancel));

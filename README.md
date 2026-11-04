@@ -128,7 +128,7 @@ Ready-made buttons, dialogs, sheets and more, each with its own accessibility.
     - NativeWind: 183 ms
 - **Ready-made components: HeroUI**
   - The most accessible component library
-    - TalkBack: 49 of 73
+    - TalkBack: 50 of 73
     - VoiceOver: 50 of 73
   - Its memory grows the most on the Galaxy A15: +216 MiB after use
   - Accessibility gaps you’d fix yourself
@@ -173,7 +173,7 @@ One row per app.
 | [NativeWind](#nativewind-500-rc0-tailwind-still-a-release-candidate) | 🟢 **63 / 67** | 🟢 **65 / 67** | 33 ms | 183 ms | +51 MiB | 🟢 **+32 MiB** | 4.47 MB | 4.61 MB | 460 | 457 | 0 |
 | [Tamagui](#tamagui-312-slowest-on-both-platforms) | 41 / 62 | 55 / 73 | 🔴 116 ms | 🔴 630 ms | 🔴 +69 MiB | +46 MiB | 5.44 MB | 5.59 MB | not measured | 1,029 | 0 |
 | [gluestack](#gluestack-5015-most-code-to-own) | 🔴 41 / 72 | 🔴 40 / 72 | 65 ms | 192 ms | +47 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | 520 | 🔴 7,488 |
-| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 50 / 73 | 49 / 73 | 65 ms | 239 ms | 🟢 **+29 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | 🔴 1,040 | 0 |
+| [HeroUI](#heroui-1011-the-most-accessible-component-library) | 50 / 73 | 50 / 73 | 65 ms | 239 ms | 🟢 **+29 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | 🔴 1,040 | 0 |
 | [Reusables](#reusables-cli-071-fast-with-rough-edges) | 42 / 67 | 45 / 67 | 33 ms | 97 ms | +43 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | 601 | 1,519 |
 <!-- end:scorecard -->
 
@@ -288,7 +288,7 @@ Best first.
 *Component library*
 
 - ✅ Best accessibility of the component libraries
-  - TalkBack: 49 of 73
+  - TalkBack: 50 of 73
   - VoiceOver: 50 of 73
 - ⚠️ Memory grows the most on the Galaxy A15: +216 MiB after use
 - ⚠️ Most re-renders per theme switch: 1,137 on iOS, 1,040 on Android

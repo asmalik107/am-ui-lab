@@ -72,10 +72,6 @@ ${shared}
 ${shared}
 - **Screen behind exposed (Dialog, Select, Menu):** [A]. The copied components use \`FullWindowOverlay\` on iOS only (\`src/components/ui/alert-dialog.tsx:17\`, \`select.tsx:68\`, \`dropdown-menu.tsx:88\`).
 - **Touch targets:** the library’s Tailwind sizes, kept on purpose (NOTES.md). Button and Menu trigger \`h-10\` (\`src/components/ui/button.tsx:43\`), Switch 32 × 18 (\`switch.tsx:12\`), Checkbox and Radio \`size-4\` (\`checkbox.tsx:23\`, \`radio-group.tsx:19\`), Tab 30 (\`tabs.tsx:20\`), Segmented \`h-10\` (\`toggle.tsx:28\`). Slider 44 is lab code (\`src/components/slider.tsx:40\`).
-- **Switch and Select trigger: name, role, state.** An audit artifact: TalkBack reads the label.
-  - Heard: “off, Switch for Workout reminders” and “collapsed, 60 seconds, Combo box for Rest time”. TalkBack adds the \`aria-labelledby\` label as “for …”.
-  - The audit takes the \`contentDescription\` as the name instead. The switch’s comes from \`aria-valuetext\`, which @rn-primitives sets to “on” or “off” (\`node_modules/@rn-primitives/switch/dist/switch.mjs:27\`, applied at \`RN/…/uimanager/BaseViewManager.java:437-442\`). The trigger’s is its value.
-  - The Text field, Checkbox and Radio use the same linking and pass, because they have no description of their own.
 - **Button (loading):** [C]. RNR’s Button has no \`aria-busy\` (NOTES.md).
 - **Dialog title isn’t a heading.** The copied overlay wraps the content in a full-screen \`Pressable\` (\`src/components/ui/alert-dialog.tsx:37-41\`), which absorbs title and description into one stop.
 - **Select options:** \`role="option"\`: [B]. Selection still comes through, so “current option marked” passes.
@@ -89,7 +85,9 @@ export const differences = `**Why they differ** (Confirmed unless marked):
 - **Bottom sheets’ title and body no longer differ.** They fail on both platforms in HeroUI and gluestack, for the same reason: gorhom’s \`accessible\` sheet content is one stop.
 - **Tamagui Menu: screen behind hidden passes on Android only.** Android’s menu is a Compose popup in its own window; iOS’s is a SwiftUI context menu over the screen.
 - **Reusables Select and Menu: screen behind hidden passes on iOS only.** \`FullWindowOverlay\` is iOS only.
-- **Reusables Text field and Checkbox pass on Android only.** Android honours \`aria-labelledby\`; iOS doesn’t.
+- **Reusables Text field, Checkbox, Switch and Select trigger pass on Android only.** Android honours \`aria-labelledby\`; iOS doesn’t.
+  - TalkBack reads the linked label after the control’s own description. Heard: “off, Switch for Workout reminders” and “collapsed, 60 seconds, Combo box for Rest time”.
+  - The switch’s own description is “on” or “off”, from the \`aria-valuetext\` that @rn-primitives sets (\`node_modules/@rn-primitives/switch/dist/switch.mjs:27\`, applied at \`RN/…/uimanager/BaseViewManager.java:437-442\`). The trigger’s is its value.
 - **Reusables Select: current option marked passes on Android only.** \`aria-selected\` becomes \`setSelected\` on Android (\`ReactAccessibilityDelegate.kt:633\`); on iOS the \`option\` has no trait to carry it.
 - **Tamagui Button (disabled) passes on Android only.** Disabled sets \`tabIndex: -1\` (\`@tamagui/button/src/Button.tsx:172-175\`), which removes it on iOS. On Android the node is \`focusable: false\` but still clickable, which TalkBack stops on: heard “Unavailable, Button, disabled”.
 - **gluestack Button (loading) passes on iOS only.** VoiceOver folds the spinner into the button as “In progress” (Likely); on Android the spinner isn’t read (heard “Saving, Button, disabled”).

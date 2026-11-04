@@ -122,7 +122,7 @@ Each library’s failures beyond the ones above.
   - error reachable from field: label="Email" value="not-an-email" traits=[] 352×48dp hint=""
 - **Dialog**
   - screen behind is hidden from the screen reader: still exposed: 46 elements, such as test-sheet-close, Component test screen, test-theme
-  - title is a heading: AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this."
+  - title is a heading: AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Delete this workout?"
 - **HeroUI’s own bottom sheet**
   - title and body readable: title and body text not in the system tree
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
@@ -287,7 +287,7 @@ Each library’s failures beyond the ones above.
 
 ### Reusables
 
-**39 of 62** checks pass on Android.
+**41 of 62** checks pass on Android.
 
 - **Button**
   - touch target: 352×40dp
@@ -297,14 +297,12 @@ Each library’s failures beyond the ones above.
   - name, role, state: label="Saving" value="" traits=[button, notEnabled] 352×40dp
   - touch target: 352×40dp
 - **Switch**
-  - name, role, state: label="on" value="checked" traits=[toggleButton] 32×18dp
   - touch target: 32×18dp
 - **Checkbox**
   - touch target: 16×16dp
 - **Radio option**
   - touch target: 16×16dp
 - **Select trigger**
-  - name, role, state: label="60 seconds" value="collapsed" traits=[combobox] role="Combo box" 200×40dp
   - touch target: 200×40dp
 - **Tab (selected)**
   - touch target: 57×30dp
@@ -333,10 +331,6 @@ Each library’s failures beyond the ones above.
 - **[C] Loading is disabled + spinner, with no busy state.** React Native adds “busy” to the name only when `accessibilityState.busy` is set (`RN/…/uimanager/BaseViewManager.java:432-435`). No library sets it. Heard in Reusables and gluestack: “Saving, Button, disabled”.
 - **Screen behind exposed (Dialog, Select, Menu):** [A]. The copied components use `FullWindowOverlay` on iOS only (`src/components/ui/alert-dialog.tsx:17`, `select.tsx:68`, `dropdown-menu.tsx:88`).
 - **Touch targets:** the library’s Tailwind sizes, kept on purpose (NOTES.md). Button and Menu trigger `h-10` (`src/components/ui/button.tsx:43`), Switch 32 × 18 (`switch.tsx:12`), Checkbox and Radio `size-4` (`checkbox.tsx:23`, `radio-group.tsx:19`), Tab 30 (`tabs.tsx:20`), Segmented `h-10` (`toggle.tsx:28`). Slider 44 is lab code (`src/components/slider.tsx:40`).
-- **Switch and Select trigger: name, role, state.** An audit artifact: TalkBack reads the label.
-  - Heard: “off, Switch for Workout reminders” and “collapsed, 60 seconds, Combo box for Rest time”. TalkBack adds the `aria-labelledby` label as “for …”.
-  - The audit takes the `contentDescription` as the name instead. The switch’s comes from `aria-valuetext`, which @rn-primitives sets to “on” or “off” (`node_modules/@rn-primitives/switch/dist/switch.mjs:27`, applied at `RN/…/uimanager/BaseViewManager.java:437-442`). The trigger’s is its value.
-  - The Text field, Checkbox and Radio use the same linking and pass, because they have no description of their own.
 - **Button (loading):** [C]. RNR’s Button has no `aria-busy` (NOTES.md).
 - **Dialog title isn’t a heading.** The copied overlay wraps the content in a full-screen `Pressable` (`src/components/ui/alert-dialog.tsx:37-41`), which absorbs title and description into one stop.
 - **Select options:** `role="option"`: [B]. Selection still comes through, so “current option marked” passes.
@@ -396,7 +390,9 @@ Checks that pass on one platform and fail on the other.
 - **Reusables**
   - **Passes on Android only:**
     - Text field, name, role, state
+    - Switch, name, role, state
     - Checkbox, name, role, state
+    - Select trigger, name, role, state
     - Tab (selected), name, role, state
     - Select, current option marked
     - Menu, items are buttons
@@ -411,7 +407,9 @@ Checks that pass on one platform and fail on the other.
 - **Bottom sheets’ title and body no longer differ.** They fail on both platforms in HeroUI and gluestack, for the same reason: gorhom’s `accessible` sheet content is one stop.
 - **Tamagui Menu: screen behind hidden passes on Android only.** Android’s menu is a Compose popup in its own window; iOS’s is a SwiftUI context menu over the screen.
 - **Reusables Select and Menu: screen behind hidden passes on iOS only.** `FullWindowOverlay` is iOS only.
-- **Reusables Text field and Checkbox pass on Android only.** Android honours `aria-labelledby`; iOS doesn’t.
+- **Reusables Text field, Checkbox, Switch and Select trigger pass on Android only.** Android honours `aria-labelledby`; iOS doesn’t.
+  - TalkBack reads the linked label after the control’s own description. Heard: “off, Switch for Workout reminders” and “collapsed, 60 seconds, Combo box for Rest time”.
+  - The switch’s own description is “on” or “off”, from the `aria-valuetext` that @rn-primitives sets (`node_modules/@rn-primitives/switch/dist/switch.mjs:27`, applied at `RN/…/uimanager/BaseViewManager.java:437-442`). The trigger’s is its value.
 - **Reusables Select: current option marked passes on Android only.** `aria-selected` becomes `setSelected` on Android (`ReactAccessibilityDelegate.kt:633`); on iOS the `option` has no trait to carry it.
 - **Tamagui Button (disabled) passes on Android only.** Disabled sets `tabIndex: -1` (`@tamagui/button/src/Button.tsx:172-175`), which removes it on iOS. On Android the node is `focusable: false` but still clickable, which TalkBack stops on: heard “Unavailable, Button, disabled”.
 - **gluestack Button (loading) passes on iOS only.** VoiceOver folds the spinner into the button as “In progress” (Likely); on Android the spinner isn’t read (heard “Saving, Button, disabled”).

@@ -8,7 +8,7 @@ What's left before the results are complete. Each item says how to run it and wh
 
 - [x] **Android re-renders:** measured on 2 November 2026 with `scripts/rerender-android.sh <serial>`
 - [x] **Android reduced motion, 3 runs:** median of 3 per overlay since 2 November 2026 (`node scripts/motion-test.mjs <app> <bundleId> <serial> 3`)
-- [x] **TalkBack by hand:** every Android failure traced to its code on 2 November 2026, in [Android accessibility](docs/android-accessibility.md), and checked with TalkBack on 4 November 2026. Two Reusables failures (Switch and Select trigger) turned out to be audit artifacts: TalkBack reads their labels
+- [x] **TalkBack by hand:** every Android failure traced to its code on 2 November 2026, in [Android accessibility](docs/android-accessibility.md), and checked with TalkBack on 4 November 2026. Two Reusables failures (Switch and Select trigger) turned out to be audit artifacts, because TalkBack reads their labels. The audit was fixed and rerun the same day
 
 ## Gaps in the current results
 

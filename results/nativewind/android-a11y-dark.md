@@ -1,6 +1,6 @@
 # nativewind: Android accessibility audit, dark theme
 
-Run 2026-11-02 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, dark theme, with `scripts/a11y-audit.mjs`. 60/62 checks passed.
+Run 2026-11-04 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, dark theme, with `scripts/a11y-audit.mjs`. 60/62 checks passed.
 
 Roles, states, sizes and reachability come from the accessibility tree of the active window, read through UiAutomation by `scripts/android-a11y-dump` (what TalkBack is given, not what it speaks). Touch targets are checked against 48 dp. Elements of an overlay's own window are reachable; anything else in that window counts as exposed behind it.
 

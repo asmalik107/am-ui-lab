@@ -1,6 +1,6 @@
 # heroui: Android accessibility audit, dark theme
 
-Run 2026-11-02 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, dark theme, with `scripts/a11y-audit.mjs`. 46/67 checks passed.
+Run 2026-11-04 on the SM-A156E (Android 16 (API 36), R5CXA2TFTKP), Release build, dark theme, with `scripts/a11y-audit.mjs`. 46/67 checks passed.
 
 Roles, states, sizes and reachability come from the accessibility tree of the active window, read through UiAutomation by `scripts/android-a11y-dump` (what TalkBack is given, not what it speaks). Touch targets are checked against 48 dp. Elements of an overlay's own window are reachable; anything else in that window counts as exposed behind it.
 
@@ -31,7 +31,7 @@ Roles, states, sizes and reachability come from the accessibility tree of the ac
 | Text field | error reachable from field | **fail** | label="Email" value="not-an-email" traits=[] 352×48dp hint="" |
 | Dialog | opens | pass | title in tree |
 | Dialog | screen behind is hidden from TalkBack | **fail** | still exposed: test-sheet-close, Component test screen, test-theme, test-theme-0, test-theme-1, test-theme-2, Buttons, test-button, test-button-disabled, test-button-loading, Form, test-textfield, test-switch, test-checkbox, test-radiogroup, test-radiogroup-0, test-radiogroup-1, test-radiogroup-2, test-select, Overlays, test-dialog-open, test-sheet-open, test-sheet-open-gorhom, test-sheet-open-expoui, test-toast-show, Tabs, test-tabs-0, test-tabs-1, test-tabs-2, More components, test-slider, test-progress, test-accordion-0, test-accordion-1, test-accordion-2, test-menu-open, test-segmented, test-segmented-0, test-segmented-1, test-segmented-2, Native control (@expo/ui), test-native-switch, List, test-list-link, perf-theme, perf-list |
-| Dialog | title is a heading | **fail** | AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this." |
+| Dialog | title is a heading | **fail** | AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Delete this workout?" |
 | Dialog | actions are buttons | pass | AXButton label="Cancel" |
 | Dialog | closes | pass | title gone |
 | Bottom sheet | opens | pass | sheet content in tree |

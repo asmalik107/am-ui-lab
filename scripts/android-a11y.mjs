@@ -57,9 +57,10 @@ export function androidA11y({ udid, bundleId, swipe, sleep }) {
     const h = b.h / screen.height;
     return {
       identifier: n.id ?? undefined,
-      // TalkBack skips an empty description, and names a control by its labelledby
-      // node; a text field's own text is its value, so the label comes first there.
-      label: n.contentDescription || (n.editable && n.labeledBy) || n.text || n.labeledBy || '',
+      // TalkBack skips an empty description, and reads a labelledby node after the
+      // control's own name ("off, Switch for Workout reminders"); a text field's own
+      // text is its value, so the label comes first there.
+      label: n.editable ? n.contentDescription || n.labeledBy || n.text || '' : [...new Set([n.contentDescription || n.text, n.labeledBy].filter(Boolean))].join(', '),
       value: state.length ? state.join(', ') : n.editable ? n.text ?? '' : undefined,
       hint: [n.error, n.tooltip, n.hint].filter(Boolean).join(' ') || undefined,
       traits,

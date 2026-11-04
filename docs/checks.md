@@ -55,7 +55,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 - **HeroUI:** 6
 - **gluestack:** 4
 - **Tamagui:** 9
-- **Reusables:** 8
+- **Reusables:** 10
 
 <a id="button"></a>
 
@@ -201,7 +201,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
+| name, role, state | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ✅ ⚠️ |
 | touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
 
 <details>
@@ -232,7 +232,6 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
   - Android, touch target: 42×22dp
 - **Reusables**
   - iOS, name, role, state: label="" value="1" traits=[button, toggleButton] 32×19pt
-  - Android, name, role, state: label="on" value="checked" traits=[toggleButton] 32×18dp
   - iOS, touch target: 32×19pt
   - Android, touch target: 32×18dp
 
@@ -320,7 +319,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| name, role, state | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
+| name, role, state | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ✅ ⚠️ |
 | touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ➖ / ❌ | ❌ / ❌ |
 
 <details>
@@ -356,7 +355,6 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
   - Android, touch target: 352×44dp
 - **Reusables**
   - iOS, name, role, state: label="60 seconds" value="" traits=[] 200×40pt
-  - Android, name, role, state: label="60 seconds" value="collapsed" traits=[combobox] role="Combo box" 200×40dp
   - iOS, touch target: 200×40pt
   - Android, touch target: 200×40dp
 
@@ -503,7 +501,7 @@ No check failed for any app.
 - **HeroUI**
   - iOS, screen behind is hidden from the screen reader: still exposed: 15 elements, such as test-button-disabled, test-button-loading, Form
   - Android, screen behind is hidden from the screen reader: still exposed: 46 elements, such as test-sheet-close, Component test screen, test-theme
-  - Android, title is a heading: AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this."
+  - Android, title is a heading: AXViewGroup label="Delete this workout?, This removes the workout and its logged sets. You cannot undo this., Delete this workout?"
 - **gluestack**
   - iOS, screen behind is hidden from the screen reader: still exposed: 19 elements, such as test-theme-0, test-theme-1, test-theme-2
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0

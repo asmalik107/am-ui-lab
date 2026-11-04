@@ -174,7 +174,7 @@ One row per app.
 | [Tamagui](#tamagui-312-slowest-on-both-platforms) | 36 / 57 | 42 / 67 | 🔴 116 ms | 🔴 630 ms | 🔴 +69 MiB | +46 MiB | 5.44 MB | 5.59 MB | not measured | 1,029 | 0 |
 | [gluestack](#gluestack-5015-most-code-to-own) | 🔴 35 / 66 | 🔴 35 / 66 | 65 ms | 192 ms | +47 MiB | +103 MiB | 5.67 MB | 5.81 MB | 815 | 520 | 🔴 7,488 |
 | [HeroUI](#heroui-1011-the-most-accessible-component-library) | 44 / 67 | 46 / 67 | 65 ms | 239 ms | 🟢 **+29 MiB** | 🔴 +216 MiB | 5.24 MB | 5.39 MB | 🔴 1,137 | 🔴 1,040 | 0 |
-| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 39 / 62 | 33 ms | 97 ms | +43 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | 601 | 1,519 |
+| [Reusables](#reusables-cli-071-fast-with-rough-edges) | 37 / 62 | 41 / 62 | 33 ms | 97 ms | +43 MiB | +48 MiB | 🔴 6.83 MB | 🔴 7.00 MB | 603 | 601 | 1,519 |
 <!-- end:scorecard -->
 
 <!-- begin:scorecardlinks -->
@@ -312,7 +312,7 @@ Best first.
   - Bundles all 1,917 lucide icons and uses 4
 - ⚠️ Button labels are cut off at the largest text size, on both platforms
 - ⚠️ Low accessibility
-  - TalkBack: 39 of 62
+  - TalkBack: 41 of 62
   - VoiceOver: 37 of 62
 - ⚠️ The checkbox is 16 dp tall on the phone, under the 48 dp minimum
 - ⚠️ Progress always reads 0%

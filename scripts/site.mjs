@@ -19,9 +19,10 @@ const repo = 'https://github.com/asmalik107/am-ui-lab';
 const siteUrl = pages.find(([label]) => label === 'Site')[1];
 const title = 'React Native UI Lab: 8 UI libraries compared on accessibility and speed';
 const summary = 'Eight React Native UI libraries compared on accessibility, theming speed and memory, on an iPhone and a budget Android phone.';
-// Google Search Console's HTML-tag verification: set this to the content value
-// Search Console gives, and the tag is added to the page.
-const googleVerification = process.env.GOOGLE_SITE_VERIFICATION ?? '';
+// Google Search Console's HTML-tag verification for the URL-prefix property
+// https://asmalik107.github.io/am-ui-lab/. The tag must stay on the page for
+// the property to stay verified.
+const googleVerification = process.env.GOOGLE_SITE_VERIFICATION ?? '4geVNT0EzCJQwPaMFld_LXh4LL2GauQ_n-mWJfP-3XM';
 const blob = `${repo}/blob/main/`;
 
 // Every check, with each app's result on each platform:

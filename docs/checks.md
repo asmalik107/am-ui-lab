@@ -39,7 +39,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 - ➖ not applicable: the app has no such element.
 - **n/r** not run: the test could not start.
 - ⚠️ the two platforms give different results.
-- **Under each table**, two fold-outs say what each check means and why any check failed.
+- **Under each table**, two fold-outs say what each check means, with a picture of a pass and a fail, and why any check failed.
 - **NativeWind** results use a line-height workaround. See `apps/nativewind/NOTES.md`.
 
 <a id="accessibility-checks"></a>
@@ -69,8 +69,19 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **name, role, state:** The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
+![A button read with its label and the button role passes. Read with its label only, the user isn’t told it can be activated.](checks/pictures/button-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+![Button: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-button.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -98,8 +109,19 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **name, role, state:** The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
+![A disabled button is read as dimmed or disabled. When it fails, it sounds like a button that works.](checks/pictures/button-disabled-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+![Button: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-button.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -129,8 +151,19 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **name, role, state:** The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
+![A button that is saving says it is busy. When it fails, nothing says it is working.](checks/pictures/button-loading-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+![Button: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-button.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -168,9 +201,25 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **name, role, state:** The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).
-- **error shown:** After an invalid entry, the error message appears in the tree.
-- **error reachable from field:** The error is part of the field’s label, value or hint, so it’s read with the field.
+![A text field read with its label passes. Without it, the user hears an unnamed field.](checks/pictures/field-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+![After an invalid email, the error message is in the tree. When it fails, it never appears there.](checks/pictures/field-error-shown.svg)
+
+- **error shown:** Types “not-an-email” into the email field, moves focus away, then looks for the error.
+  - **Passes:** The message “Enter a valid email” appears in the tree.
+  - **Fails:** The error never appears in the tree.
+
+![The error is part of what the field reads, so it is heard with the field. When it fails, the field is read without it.](checks/pictures/field-error-linked.svg)
+
+- **error reachable from field:** Reads the email field after the error appears.
+  - **Passes:** The error is part of the field’s label, value or hint, so it is read with the field.
+  - **Fails:** The field is read without the error, so a screen reader user has to go looking for it.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -203,8 +252,19 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **name, role, state:** The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
+![A switch read with its label, the switch role and on or off passes. Read with its label only, it fails.](checks/pictures/switch-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+![Switch row: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-switch.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -245,8 +305,19 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **name, role, state:** The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
+![A checkbox read with its label, the checkbox role and checked passes. Without its role or state, it fails.](checks/pictures/checkbox-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+![Checkbox: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-checkbox.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -286,8 +357,19 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **name, role, state:** The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
+![A radio option read with its label, the radio role and selected passes. Without its role or state, it fails.](checks/pictures/radio-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+![Radio option: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-radio.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -321,8 +403,19 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **name, role, state:** The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
+![The select trigger is read with its name, its value and a button role. When it fails, a part is missing.](checks/pictures/select-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+![Select trigger: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-select.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -367,8 +460,19 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **name, role, state:** The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
+![The selected tab is read with the tab role and as selected. When it fails, nothing says which tab is open.](checks/pictures/tab-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+![Tab: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-tab.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -412,8 +516,19 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **name, role, state:** The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
+![The native switch is read with its label, the switch role and on or off.](checks/pictures/native-switch-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+![Native switch row: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-native-switch.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -459,8 +574,19 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 <details>
 <summary>What each check means</summary>
 
-- **all options exposed:** All three options are separate elements the screen reader can reach.
-- **group label read:** The group label is in the tree.
+![Each of the three radio options is its own stop for the screen reader. When it fails, they are merged into one stop, or some are missing.](checks/pictures/radio-options.svg)
+
+- **all options exposed:** Counts the radio options in the accessibility tree.
+  - **Passes:** All three options are separate elements the screen reader can move to.
+  - **Fails:** Fewer than three: options are merged into one element or missing.
+
+![The group label “Experience level” is in the tree, so it is read with the options. When it fails, it is drawn but the screen reader can’t reach it.](checks/pictures/radio-label.svg)
+
+- **group label read:** Looks for the radio group’s label in the accessibility tree.
+  - **Passes:** The label “Experience level” is in the tree.
+  - **Fails:** It is drawn on screen but the screen reader can’t reach it.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -474,7 +600,7 @@ No check failed for any app.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | opens | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 | screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ | ❌ / ❌ |
-| every stop has a name | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ❌ ⚠️ | ✅ / ✅ | ✅ / ✅ |
+| everything the screen reader lands on has a name | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ❌ ⚠️ | ✅ / ✅ | ✅ / ✅ |
 | title is a heading | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ |
 | actions are buttons | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 | closes | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
@@ -482,12 +608,43 @@ No check failed for any app.
 <details>
 <summary>What each check means</summary>
 
-- **opens:** Opens when its trigger is tapped.
-- **screen behind is hidden from the screen reader:** While open, nothing behind it is in the accessibility tree.
-- **every stop has a name:** 
-- **title is a heading:** The title has the heading role.
-- **actions are buttons:** Its actions have the button role.
-- **closes:** Closes from its own Close or Cancel button.
+![Tapping Delete workout opens the dialog. When it fails, nothing new appears in the tree.](checks/pictures/dialog-opens.svg)
+
+- **opens:** Taps the trigger and waits for the overlay’s content in the tree.
+  - **Passes:** Its title or content appears.
+  - **Fails:** Nothing appears in the tree after the tap.
+
+![With the dialog open, the screen reader can only reach the dialog. When it fails, it can still reach Delete workout behind it.](checks/pictures/dialog-behind.svg)
+
+- **screen behind is hidden from the screen reader:** With the overlay open, lists every element the screen reader can reach.
+  - **Passes:** Only the overlay’s own elements: nothing from the screen behind it.
+  - **Fails:** Controls behind the overlay can still be reached, e.g. “Delete workout, button” behind the dialog.
+
+![Every stop in the dialog has a name. When it fails, the dimmed backdrop is a stop of its own, read as “Unlabelled”.](checks/pictures/dialog-unnamed.svg)
+
+- **everything the screen reader lands on has a name:** With the overlay open, lists every element the screen reader can move to (each “stop”) and looks for any without a label.
+  - **Passes:** Every one has a name.
+  - **Fails:** At least one has none, e.g. a full-screen dimmed backdrop that TalkBack reads as “Unlabelled”.
+
+![The dialog title is read as a heading, so screen reader users can jump to it. In the failing app the whole dialog is one element, so there is no title stop at all.](checks/pictures/dialog-heading.svg)
+
+- **title is a heading:** Reads the dialog title’s role.
+  - **Passes:** The title has the heading role, so it is read as “…, heading”.
+  - **Fails:** It is read as plain text.
+
+![Cancel is read as a button. When it fails, it sounds like plain text.](checks/pictures/dialog-buttons.svg)
+
+- **actions are buttons:** Reads the role of the dialog’s Cancel action.
+  - **Passes:** It has the button role.
+  - **Fails:** It is read as plain text, so the user isn’t told it can be activated.
+
+![Tapping Cancel closes the dialog. When it fails, the dialog is still in the tree.](checks/pictures/dialog-closes.svg)
+
+- **closes:** Taps the overlay’s own Close or Cancel button.
+  - **Passes:** The overlay leaves the tree.
+  - **Fails:** It is still open.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -497,11 +654,11 @@ No check failed for any app.
 - **HeroUI**
   - iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-button-disabled, test-button-loading, Form
   - Android, screen behind is hidden from the screen reader: still exposed: 46 elements, such as test-sheet-close, Component test screen, test-theme
-  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
+  - Android, everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 - **gluestack**
   - iOS, screen behind is hidden from the screen reader: still exposed: 19 elements, such as test-theme-0, test-theme-1, test-theme-2
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
-  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
+  - Android, everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 - **Tamagui**
   - iOS, screen behind is hidden from the screen reader: still exposed: 11 elements, such as Form, test-textfield, test-switch
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-tamagui-close, Component test screen, test-theme-0
@@ -523,20 +680,56 @@ No check failed for any app.
 | current option marked | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | n/r / ✅ | ❌ / ✅ ⚠️ |
 | options are actionable | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | n/r / ✅ | ❌ / ❌ |
 | screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | n/r / ❌ | ✅ / ❌ ⚠️ |
-| every stop has a name | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ✅ | n/r / ✅ | ✅ / ❌ ⚠️ |
+| everything the screen reader lands on has a name | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ✅ | n/r / ✅ | ✅ / ❌ ⚠️ |
 | new value read on trigger | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | n/r / ✅ | ✅ / ✅ |
-| test could run | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ |
+| test could start | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
 
-- **opens:** Opens when its trigger is tapped.
-- **current option marked:** The selected option is marked as checked or selected.
-- **options are actionable:** Options have a button, radio or option role.
-- **screen behind is hidden from the screen reader:** While open, nothing behind it is in the accessibility tree.
-- **every stop has a name:** 
-- **new value read on trigger:** After picking, the trigger announces the new value.
-- **test could run:** The element the test needs was there, so the test could run.
+![Tapping the Rest time select shows its options. When it fails, nothing new appears in the tree.](checks/pictures/select-opens.svg)
+
+- **opens:** Taps the trigger and waits for the overlay’s content in the tree.
+  - **Passes:** Its title or content appears.
+  - **Fails:** Nothing appears in the tree after the tap.
+
+![The open list marks the option already chosen, 60 seconds, as selected. When it fails, nothing says which one is chosen.](checks/pictures/select-current.svg)
+
+- **current option marked:** Opens the select and reads the option that is already chosen (60 seconds).
+  - **Passes:** It is marked as selected or checked.
+  - **Fails:** Nothing says which option is chosen.
+
+![Every option has a button, radio or option role, so the user knows it can be picked. When it fails, options sound like plain text.](checks/pictures/select-options.svg)
+
+- **options are actionable:** Reads the role of every option in the open select.
+  - **Passes:** Each has a button, radio or option role.
+  - **Fails:** At least one is read as plain text.
+
+![With the list open, the screen reader can only reach the options. When it fails, it can still reach the screen behind.](checks/pictures/select-behind.svg)
+
+- **screen behind is hidden from the screen reader:** With the overlay open, lists every element the screen reader can reach.
+  - **Passes:** Only the overlay’s own elements: nothing from the screen behind it.
+  - **Fails:** Controls behind the overlay can still be reached, e.g. “Delete workout, button” behind the dialog.
+
+![Every stop in the open list has a name. When it fails, the backdrop behind the list is a stop of its own, read as “Unlabelled”.](checks/pictures/select-unnamed.svg)
+
+- **everything the screen reader lands on has a name:** With the overlay open, lists every element the screen reader can move to (each “stop”) and looks for any without a label.
+  - **Passes:** Every one has a name.
+  - **Fails:** At least one has none, e.g. a full-screen dimmed backdrop that TalkBack reads as “Unlabelled”.
+
+![After picking 90 seconds, the trigger reads the new value. When it fails, it still reads the old one.](checks/pictures/select-new-value.svg)
+
+- **new value read on trigger:** Picks 90 seconds, then reads the select’s trigger.
+  - **Passes:** The trigger reads the new value.
+  - **Fails:** It still reads the old value, or no value.
+
+![The test finds the element it starts from, so its other checks run. When it fails, the element isn’t there and the rest of that test is marked not run.](checks/pictures/test-ran.svg)
+
+- **test could start:** Looks for the element the test starts from.
+  - **Passes:** It was there, so the test’s other checks ran.
+  - **Fails:** It wasn’t, so the test’s other checks are marked not run (n/r).
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -548,7 +741,7 @@ No check failed for any app.
   - Android, options are actionable: AXViewGroup label="30 seconds" value="unchecked", and 4 more like it
   - iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-theme-0, test-theme-1, test-theme-2
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-close, Component test screen, test-theme
-  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
+  - Android, everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 - **gluestack**
   - iOS, current option marked: AXGroup label="60 seconds"
   - Android, current option marked: AXViewGroup label="60 seconds"
@@ -560,13 +753,13 @@ No check failed for any app.
   - Android, new value read on trigger: label="" value="" traits=[button] 352×40dp
 - **Tamagui**
   - Android, screen behind is hidden from the screen reader: still exposed: 44 elements, such as test-sheet-tamagui-close, Component test screen, test-theme-0
-  - iOS, test could run: element test-select not in tree
+  - iOS, test could start: element test-select not in tree
 - **Reusables**
   - iOS, current option marked: AXGroup label="60 seconds"
   - iOS, options are actionable: AXGroup label="30 seconds", and 4 more like it
   - Android, options are actionable: AXViewGroup label="30 seconds", and 4 more like it
   - Android, screen behind is hidden from the screen reader: still exposed: 40 elements, such as Component test screen, test-theme-0, test-theme-1
-  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
+  - Android, everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 
 </details>
 
@@ -576,12 +769,18 @@ No check failed for any app.
 
 | Check | Baseline<br>iOS / Android | Unistyles<br>iOS / Android | Uniwind<br>iOS / Android | NativeWind<br>iOS / Android | HeroUI<br>iOS / Android | gluestack<br>iOS / Android | Tamagui<br>iOS / Android | Reusables<br>iOS / Android |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| in accessibility tree | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
+| screen reader can find it | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
 
-- **in accessibility tree:** The toast appears in the tree while it is on screen.
+![The toast is in the tree while it is on screen. When it fails, it is drawn but the screen reader never finds it.](checks/pictures/toast.svg)
+
+- **screen reader can find it:** Shows the toast and looks for its text in the tree within 3 s.
+  - **Passes:** The toast is in the tree while it is on screen.
+  - **Fails:** It is drawn but not in the tree, so the screen reader never finds it.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -600,9 +799,25 @@ No check failed for any app.
 <details>
 <summary>What each check means</summary>
 
-- **name, role, value:** The screen reader gets a label, the adjustable role and the current value.
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
-- **dragging changes the value:** Dragging the thumb changes the value in the tree. It stands in for the screen reader’s adjust gesture.
+![The slider is read with its label, its value and the adjustable role. When it fails, a part is missing.](checks/pictures/slider-nrs.svg)
+
+- **name, role, value:** Reads the slider from the accessibility tree.
+  - **Passes:** It has a label, the adjustable role and its current value.
+  - **Fails:** Any of the three is missing.
+
+![Slider thumb: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-slider.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+![Dragging the thumb changes the value the screen reader is given. When it fails, the value stays the same.](checks/pictures/slider-drag.svg)
+
+- **dragging changes the value:** Drags the thumb across the track and reads the value before and after. It stands in for the screen reader’s adjust gesture.
+  - **Passes:** The value in the tree changes.
+  - **Fails:** The value stays the same.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -638,7 +853,13 @@ No check failed for any app.
 <details>
 <summary>What each check means</summary>
 
-- **name and value:** The screen reader gets a label and the current value.
+![The progress bar is read with its label and how far along it is. When it fails, the value or label is missing.](checks/pictures/progress-nrs.svg)
+
+- **name and value:** Reads the progress bar from the accessibility tree.
+  - **Passes:** It has a label and its current value.
+  - **Fails:** The label or the value is missing.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -664,16 +885,42 @@ No check failed for any app.
 | touch target | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | n/r / ✅ | ✅ / ✅ |
 | expanded state exposed | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | n/r / ✅ | ✅ / ✅ |
 | content shows and hides | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | n/r / ✅ | ✅ / ✅ |
-| test could run | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ |
+| test could start | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
 
-- **header is a button:** The section header has the button role.
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
-- **expanded state exposed:** The header reads as expanded when open and not when closed.
-- **content shows and hides:** The section text appears on the first tap and goes on the second.
-- **test could run:** The element the test needs was there, so the test could run.
+![The section header is read as a button, so the user knows it opens. When it fails, it sounds like a heading or plain text.](checks/pictures/accordion-button.svg)
+
+- **header is a button:** Reads the role of the accordion’s first header.
+  - **Passes:** It has the button role.
+  - **Fails:** It is read as plain text.
+
+![Accordion header: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-accordion.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+![An open section’s header is read as expanded, and a closed one as collapsed. When it fails, the header sounds the same either way.](checks/pictures/accordion-expanded.svg)
+
+- **expanded state exposed:** Reads the header closed, taps it, and reads it open.
+  - **Passes:** It reads as expanded when open and not when closed.
+  - **Fails:** It reads the same either way.
+
+![Tapping the header shows the section’s text, and tapping again hides it. When it fails, the text doesn’t appear, or doesn’t go.](checks/pictures/accordion-content.svg)
+
+- **content shows and hides:** Taps the header twice, looking for the section text after each tap.
+  - **Passes:** The text appears on the first tap and goes on the second.
+  - **Fails:** It doesn’t appear, or doesn’t go.
+
+![The test finds the element it starts from, so its other checks run. When it fails, the element isn’t there and the rest of that test is marked not run.](checks/pictures/test-ran.svg)
+
+- **test could start:** Looks for the element the test starts from.
+  - **Passes:** It was there, so the test’s other checks ran.
+  - **Fails:** It wasn’t, so the test’s other checks are marked not run (n/r).
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -686,7 +933,7 @@ No check failed for any app.
 - **Tamagui**
   - iOS, header is a button: missing
   - Android, header is a button: label="Warm-up, ▾" value="collapsed" traits=[] 99×53dp
-  - iOS, test could run: element test-accordion-0 not in tree
+  - iOS, test could start: element test-accordion-0 not in tree
 
 </details>
 
@@ -701,19 +948,55 @@ No check failed for any app.
 | opens | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 | items are buttons | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ✅ ⚠️ | ❌ / ✅ ⚠️ | ✅ / ❌ ⚠️ | ❌ / ✅ ⚠️ |
 | screen behind is hidden from the screen reader | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ❌ / ❌ | ❌ / ❌ | ❌ / ✅ ⚠️ | ✅ / ❌ ⚠️ |
-| every stop has a name | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ❌ ⚠️ | ✅ / ✅ | ✅ / ❌ ⚠️ |
+| everything the screen reader lands on has a name | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ❌ ⚠️ | ✅ / ❌ ⚠️ | ✅ / ✅ | ✅ / ❌ ⚠️ |
 | closes after an action | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ | ✅ / ✅ |
 
 <details>
 <summary>What each check means</summary>
 
-- **trigger name and role:** The menu button has a label and the button role.
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
-- **opens:** Opens when its trigger is tapped.
-- **items are buttons:** Each menu action has the button role.
-- **screen behind is hidden from the screen reader:** While open, nothing behind it is in the accessibility tree.
-- **every stop has a name:** 
-- **closes after an action:** Choosing an action closes the menu.
+![The menu button is read with its name and the button role. When it fails, the user hears an unnamed button or plain text.](checks/pictures/menu-trigger.svg)
+
+- **trigger name and role:** Reads the menu button from the accessibility tree.
+  - **Passes:** It has a label and the button role.
+  - **Fails:** The label or the role is missing.
+
+![Menu button: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-menu.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+![Tapping Workout options shows its three actions. When it fails, nothing new appears in the tree.](checks/pictures/menu-opens.svg)
+
+- **opens:** Taps the trigger and waits for the overlay’s content in the tree.
+  - **Passes:** Its title or content appears.
+  - **Fails:** Nothing appears in the tree after the tap.
+
+![Each menu action is read as a button. When it fails, actions sound like plain text.](checks/pictures/menu-items.svg)
+
+- **items are buttons:** Reads the role of each menu action.
+  - **Passes:** Each has the button role.
+  - **Fails:** At least one is read as plain text.
+
+![With the menu open, the screen reader can only reach the menu. When it fails, it can still reach the screen behind.](checks/pictures/menu-behind.svg)
+
+- **screen behind is hidden from the screen reader:** With the overlay open, lists every element the screen reader can reach.
+  - **Passes:** Only the overlay’s own elements: nothing from the screen behind it.
+  - **Fails:** Controls behind the overlay can still be reached, e.g. “Delete workout, button” behind the dialog.
+
+![Every stop in the open menu has a name. When it fails, a backdrop that closes the menu is a stop of its own, read as “Unlabelled”.](checks/pictures/menu-unnamed.svg)
+
+- **everything the screen reader lands on has a name:** With the overlay open, lists every element the screen reader can move to (each “stop”) and looks for any without a label.
+  - **Passes:** Every one has a name.
+  - **Fails:** At least one has none, e.g. a full-screen dimmed backdrop that TalkBack reads as “Unlabelled”.
+
+![Tapping Duplicate runs it and closes the menu. When it fails, the menu stays open.](checks/pictures/menu-closes.svg)
+
+- **closes after an action:** Taps the first menu action.
+  - **Passes:** The menu leaves the tree.
+  - **Fails:** It is still open.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -724,14 +1007,14 @@ No check failed for any app.
   - iOS, items are buttons: AXGroup label="Duplicate", and 2 more like it
   - iOS, screen behind is hidden from the screen reader: still exposed: 16 elements, such as test-sheet-open-expoui, test-toast-show, Tabs
   - Android, screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-close, Component test screen, test-theme
-  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp
+  - Android, everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 - **gluestack**
   - iOS, touch target: 370×38pt
   - Android, touch target: 352×38dp
   - iOS, items are buttons: AXGroup label="Duplicate", and 2 more like it
   - iOS, screen behind is hidden from the screen reader: still exposed: 17 elements, such as test-dialog-open, test-sheet-open, test-sheet-open-expoui
   - Android, screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme, test-theme-0
-  - Android, every stop has a name: unnamed: AXViewGroup 352×6dp, AXViewGroup 210×140dp
+  - Android, everything the screen reader lands on has a name: unnamed: AXViewGroup 352×6dp, AXViewGroup 210×140dp
 - **Tamagui**
   - Android, items are buttons: AXView label="Duplicate", and 2 more like it
   - iOS, screen behind is hidden from the screen reader: still exposed: 14 elements, such as test-sheet-open, test-sheet-open-tamagui, test-sheet-open-expoui
@@ -740,7 +1023,7 @@ No check failed for any app.
   - Android, touch target: 352×40dp
   - iOS, items are buttons: AXGroup label="Duplicate", and 2 more like it
   - Android, screen behind is hidden from the screen reader: still exposed: 40 elements, such as Component test screen, test-theme-0, test-theme-1
-  - Android, every stop has a name: unnamed: AXViewGroup 384×832dp, AXView#test-menu 224×119dp
+  - Android, everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp, AXView#test-menu 224×119dp
 
 </details>
 
@@ -758,10 +1041,31 @@ No check failed for any app.
 <details>
 <summary>What each check means</summary>
 
-- **options have name and role:** Each option has a label and a button, radio or tab role.
-- **selected option marked:** The selected option is marked as selected or checked, and the others aren’t.
-- **touch target:** At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).
-- **selection moves on tap:** Tapping another option moves the selected state to it.
+![Each segment is read with its label and a button, radio or tab role. When it fails, it sounds like plain text.](checks/pictures/segmented-nrs.svg)
+
+- **options have name and role:** Reads each segment of the segmented control.
+  - **Passes:** Each has a label and a button, radio or tab role.
+  - **Fails:** A label or role is missing.
+
+![The selected segment, Week, is read as selected, and the others aren’t. When it fails, nothing says which one is selected.](checks/pictures/segmented-selected.svg)
+
+- **selected option marked:** Reads every segment’s state.
+  - **Passes:** The selected one is marked as selected or checked, and the others aren’t.
+  - **Fails:** Nothing says which is selected.
+
+![Segment: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-segmented.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+![Tapping Month moves the selected state to it. When it fails, the tree still says Week is selected.](checks/pictures/segmented-moves.svg)
+
+- **selection moves on tap:** Taps the second segment and reads the states again.
+  - **Passes:** The selected state moves to it.
+  - **Fails:** It stays on the first, or isn’t marked at all.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 
@@ -799,6 +1103,43 @@ Each sheet gets the same 5 checks: opens, title and body readable, screen behind
 - **@gorhom/bottom-sheet:** the raw third-party sheet, themed with the library’s tokens
 - **@expo/ui BottomSheet:** the native sheet, filled with @expo/ui’s own Text and Button
 - **The library’s own sheet:** the sheet component the library ships, set up as its docs show
+
+</details>
+
+<details>
+<summary>What each check means</summary>
+
+![Tapping Show exercise details slides the sheet up from the bottom. When it fails, nothing new appears in the tree.](checks/pictures/sheet-opens.svg)
+
+- **opens:** Taps the trigger and waits for the overlay’s content in the tree.
+  - **Passes:** Its title or content appears.
+  - **Fails:** Nothing appears in the tree after the tap.
+
+![The sheet’s title and description are in the tree. When it fails, they are drawn but the screen reader can’t reach them.](checks/pictures/sheet-text.svg)
+
+- **title and body readable:** Looks for the sheet’s title and body text in the tree.
+  - **Passes:** Both are in the tree.
+  - **Fails:** The text is drawn but the screen reader can’t reach it.
+
+![With the sheet open, the screen reader can only reach the sheet. When it fails, it can still reach the screen above it.](checks/pictures/sheet-behind.svg)
+
+- **screen behind is hidden from the screen reader:** With the overlay open, lists every element the screen reader can reach.
+  - **Passes:** Only the overlay’s own elements: nothing from the screen behind it.
+  - **Fails:** Controls behind the overlay can still be reached, e.g. “Delete workout, button” behind the dialog.
+
+![Tapping Close slides the sheet away. When it fails, the sheet is still in the tree.](checks/pictures/sheet-closes.svg)
+
+- **closes:** Taps the overlay’s own Close or Cancel button.
+  - **Passes:** The overlay leaves the tree.
+  - **Fails:** It is still open.
+
+![After the sheet closes, the screen’s controls are back for the screen reader. When it fails, they stay hidden as if the sheet were still open.](checks/pictures/sheet-after.svg)
+
+- **screen reachable again after close:** After the sheet closes, looks for the screen’s controls in the tree.
+  - **Passes:** They are back, so the screen reader can use the screen again.
+  - **Fails:** They are still hidden, as if the sheet were open.
+
+All checks, with their pictures: [Method](method.md#checks-in-pictures).
 
 </details>
 

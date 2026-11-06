@@ -122,22 +122,22 @@ Each library’s failures beyond the ones above.
   - error reachable from field: label="Email" value="not-an-email" traits=[] 352×48dp hint=""
 - **Dialog**
   - screen behind is hidden from the screen reader: still exposed: 46 elements, such as test-sheet-close, Component test screen, test-theme
-  - every stop has a name: unnamed: AXViewGroup 384×832dp
+  - everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 - **HeroUI’s own bottom sheet**
   - title and body readable: title and body text not in the system tree
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
-  - every stop has a name: unnamed: AXViewGroup 384×832dp
+  - everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 - **@gorhom bottom sheet**
   - title and body readable: title and body text not in the system tree
 - **Select**
   - options are actionable: AXViewGroup label="30 seconds" value="unchecked", and 4 more like it
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-close, Component test screen, test-theme
-  - every stop has a name: unnamed: AXViewGroup 384×832dp
+  - everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 - **Slider**
   - touch target: 28×20dp
 - **Menu**
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as test-sheet-close, Component test screen, test-theme
-  - every stop has a name: unnamed: AXViewGroup 384×832dp
+  - everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 
 **Why:**
 
@@ -183,7 +183,7 @@ Each library’s failures beyond the ones above.
   - error reachable from field: label="Email" value="not-an-email" traits=[] 326×34dp hint=""
 - **Dialog**
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
-  - every stop has a name: unnamed: AXViewGroup 384×832dp
+  - everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 - **Bottom sheet (gluestack BottomSheet)**
   - title and body readable: title and body text not in the system tree
   - screen behind is hidden from the screen reader: still exposed: 45 elements, such as Component test screen, test-theme, test-theme-0
@@ -204,7 +204,7 @@ Each library’s failures beyond the ones above.
 - **Menu**
   - touch target: 352×38dp
   - screen behind is hidden from the screen reader: still exposed: 44 elements, such as Component test screen, test-theme, test-theme-0
-  - every stop has a name: unnamed: AXViewGroup 352×6dp, AXViewGroup 210×140dp
+  - everything the screen reader lands on has a name: unnamed: AXViewGroup 352×6dp, AXViewGroup 210×140dp
 
 **Why:**
 
@@ -304,13 +304,13 @@ Each library’s failures beyond the ones above.
 - **Select**
   - options are actionable: AXViewGroup label="30 seconds", and 4 more like it
   - screen behind is hidden from the screen reader: still exposed: 40 elements, such as Component test screen, test-theme-0, test-theme-1
-  - every stop has a name: unnamed: AXViewGroup 384×832dp
+  - everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp
 - **Progress**
   - name and value: label="0%" value="0" traits=[] role="Progress bar" 352×8dp
 - **Menu**
   - touch target: 352×40dp
   - screen behind is hidden from the screen reader: still exposed: 40 elements, such as Component test screen, test-theme-0, test-theme-1
-  - every stop has a name: unnamed: AXViewGroup 384×832dp, AXView#test-menu 224×119dp
+  - everything the screen reader lands on has a name: unnamed: AXViewGroup 384×832dp, AXView#test-menu 224×119dp
 - **Segmented control**
   - touch target: 118×40dp
 
@@ -357,18 +357,18 @@ Checks that pass on one platform and fail on the other.
     - Slider, name, role, value
     - Menu, items are buttons
   - **Passes on iOS only:**
-    - Dialog, every stop has a name
-    - HeroUI’s own bottom sheet, every stop has a name
-    - Select, every stop has a name
-    - Menu, every stop has a name
+    - Dialog, everything the screen reader lands on has a name
+    - HeroUI’s own bottom sheet, everything the screen reader lands on has a name
+    - Select, everything the screen reader lands on has a name
+    - Menu, everything the screen reader lands on has a name
 - **gluestack**
   - **Passes on Android only:**
     - Tab (selected), name, role, state
     - Menu, items are buttons
   - **Passes on iOS only:**
     - Button (loading), name, role, state
-    - Dialog, every stop has a name
-    - Menu, every stop has a name
+    - Dialog, everything the screen reader lands on has a name
+    - Menu, everything the screen reader lands on has a name
 - **Tamagui**
   - **Passes on Android only:**
     - Button (disabled), name, role, state
@@ -388,9 +388,9 @@ Checks that pass on one platform and fail on the other.
     - Menu, items are buttons
   - **Passes on iOS only:**
     - Select, screen behind is hidden from the screen reader
-    - Select, every stop has a name
+    - Select, everything the screen reader lands on has a name
     - Menu, screen behind is hidden from the screen reader
-    - Menu, every stop has a name
+    - Menu, everything the screen reader lands on has a name
 
 **Why they differ** (Confirmed unless marked):
 
@@ -405,7 +405,7 @@ Checks that pass on one platform and fail on the other.
 - **Tamagui Button (disabled) passes on Android only.** Disabled sets `tabIndex: -1` (`@tamagui/button/src/Button.tsx:172-175`), which removes it on iOS. On Android the node is `focusable: false` but still clickable, which TalkBack stops on: heard “Unavailable, Button, disabled”.
 - **gluestack Button (loading) passes on iOS only.** VoiceOver folds the spinner into the button as “In progress” (Likely); on Android the spinner isn’t read (heard “Saving, Button, disabled”).
 - **Touch targets at 44 pass on iOS only.** 44 pt is Apple’s minimum; Google’s is 48 dp.
-- **gluestack, HeroUI and Reusables: every stop has a name passes on iOS only.** Their unnamed backdrops are clickable views TalkBack stops on, heard as “Unlabelled”. On iOS a view is a VoiceOver element only when it’s `accessible`, and these backdrops aren’t, so VoiceOver skips them.
+- **gluestack, HeroUI and Reusables: everything the screen reader lands on has a name passes on iOS only.** Their unnamed backdrops are clickable views TalkBack stops on, heard as “Unlabelled”. On iOS a view is a VoiceOver element only when it’s `accessible`, and these backdrops aren’t, so VoiceOver skips them.
 
 <!-- begin:navfoot -->
 

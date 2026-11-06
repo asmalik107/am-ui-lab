@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { anchored, columns, measuredMd, measuredOn, heading, headline, scope, heroSvg, kind, kinds, libraries, names, nav, picks, points, scorecard, slug, stack, versions } from './scorecard.mjs';
+import { glossaryMd } from './checks-data.mjs';
 
 const root = new URL('../', import.meta.url);
 const apps = ['baseline', 'unistyles', 'uniwind', 'nativewind', 'tamagui', 'gluestack', 'heroui', 'reusables'];
@@ -126,7 +127,7 @@ const kindsMd = kinds.map((k) => [`**${k.title}**`, k.what, k.items.map((i) => (
 const files = {
   'README.md': { nav: nav('README', 'root'), stack: stack.map(([text, url]) => `  - [${text}](${url})`).join('\n'), kinds: kindsMd, ...readme },
   'docs/results.md': { nav: nav('Results', 'docs'), kinds: kindsMd, ...tables, navfoot: foot },
-  'docs/method.md': { nav: nav('Method', 'docs'), navfoot: foot },
+  'docs/method.md': { nav: nav('Method', 'docs'), glossary: glossaryMd(), navfoot: foot },
   'docs/ios-accessibility.md': { nav: nav('iOS accessibility', 'docs'), navfoot: foot },
 };
 

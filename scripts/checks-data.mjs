@@ -2,6 +2,7 @@
 // scripts/checks-md.mjs (the markdown) and scripts/site.mjs (the Pages site).
 import { existsSync, readFileSync } from 'node:fs';
 import { measuredOn } from './scorecard.mjs';
+import { alt, pictureFor } from './check-pictures.mjs';
 
 export const root = new URL('../', import.meta.url);
 export const apps = [
@@ -49,7 +50,6 @@ for (const p of ['ios', 'android']) for (const [a] of apps) for (const f of find
 export const order = [...new Set(rows.map((r) => r.component))];
 rows.sort((x, y) => order.indexOf(x.component) - order.indexOf(y.component));
 
-export const shown = (check) => check.replace('from VoiceOver', 'from the screen reader');
 // The audit's own detail for a result. A long list of exposed elements is
 // cut to a count and the first few, which is what a reader needs.
 export const detail = (f) => {
@@ -60,38 +60,100 @@ export const detail = (f) => {
   const items = m[1].split(', ');
   return items.length > 4 ? `still exposed: ${items.length} elements, such as ${items.slice(0, 3).join(', ')}` : f.detail;
 };
-export const what = {
-  'touch target': 'At least 44 × 44 pt on iOS (Apple’s default) and 48 × 48 dp on Android (Google’s minimum).',
-  'name, role, state': 'The screen reader gets a label, the right role, and the current state (disabled, busy, on/off, checked, selected).',
-  'all options exposed': 'All three options are separate elements the screen reader can reach.',
-  'group label read': 'The group label is in the tree.',
-  'error shown': 'After an invalid entry, the error message appears in the tree.',
-  'error reachable from field': 'The error is part of the field’s label, value or hint, so it’s read with the field.',
-  opens: 'Opens when its trigger is tapped.',
-  'screen behind is hidden from VoiceOver': 'While open, nothing behind it is in the accessibility tree.',
-  'title is a heading': 'The title has the heading role.',
-  'actions are buttons': 'Its actions have the button role.',
-  closes: 'Closes from its own Close or Cancel button.',
-  'title and body readable': 'The sheet’s title and body text are in the tree.',
-  'screen reachable again after close': 'After closing, the screen behind is back in the tree.',
-  'current option marked': 'The selected option is marked as checked or selected.',
-  'options are actionable': 'Options have a button, radio or option role.',
-  'new value read on trigger': 'After picking, the trigger announces the new value.',
-  'in accessibility tree': 'The toast appears in the tree while it is on screen.',
-  'test could run': 'The element the test needs was there, so the test could run.',
-  'name, role, value': 'The screen reader gets a label, the adjustable role and the current value.',
-  'dragging changes the value': 'Dragging the thumb changes the value in the tree. It stands in for the screen reader’s adjust gesture.',
-  'name and value': 'The screen reader gets a label and the current value.',
-  'header is a button': 'The section header has the button role.',
-  'expanded state exposed': 'The header reads as expanded when open and not when closed.',
-  'content shows and hides': 'The section text appears on the first tap and goes on the second.',
-  'trigger name and role': 'The menu button has a label and the button role.',
-  'items are buttons': 'Each menu action has the button role.',
-  'closes after an action': 'Choosing an action closes the menu.',
-  'options have name and role': 'Each option has a label and a button, radio or tab role.',
-  'selected option marked': 'The selected option is marked as selected or checked, and the others aren’t.',
-  'selection moves on tap': 'Tapping another option moves the selected state to it.',
+// Every check, explained for a reader: a plain name, what the audit does,
+// what passing and failing look like, and the diagram that shows it
+// (scripts/check-pictures.mjs). Keyed by the check's name in results/*.
+// [name, does, passes, fails, picture]
+const E = (name, does, passes, fails, picture) => ({ name, does, passes, fails, picture });
+export const explain = {
+  'touch target': E('touch target', 'Measures the control’s frame in the accessibility tree.', 'At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).', 'Either side is smaller, so it is easy to miss with a finger.', 'target-button'),
+  'name, role, state': E('name, role, state', 'Reads the control from the accessibility tree.', 'It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.', 'Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.', 'switch-nrs'),
+  'all options exposed': E('all options exposed', 'Counts the radio options in the accessibility tree.', 'All three options are separate elements the screen reader can move to.', 'Fewer than three: options are merged into one element or missing.', 'radio-options'),
+  'group label read': E('group label read', 'Looks for the radio group’s label in the accessibility tree.', 'The label “Experience level” is in the tree.', 'It is drawn on screen but the screen reader can’t reach it.', 'radio-label'),
+  'error shown': E('error shown', 'Types “not-an-email” into the email field, moves focus away, then looks for the error.', 'The message “Enter a valid email” appears in the tree.', 'The error never appears in the tree.', 'field-error-shown'),
+  'error reachable from field': E('error reachable from field', 'Reads the email field after the error appears.', 'The error is part of the field’s label, value or hint, so it is read with the field.', 'The field is read without the error, so a screen reader user has to go looking for it.', 'field-error-linked'),
+  opens: E('opens', 'Taps the trigger and waits for the overlay’s content in the tree.', 'Its title or content appears.', 'Nothing appears in the tree after the tap.', 'dialog-opens'),
+  'screen behind is hidden from VoiceOver': E('screen behind is hidden from the screen reader', 'With the overlay open, lists every element the screen reader can reach.', 'Only the overlay’s own elements: nothing from the screen behind it.', 'Controls behind the overlay can still be reached, e.g. “Delete workout, button” behind the dialog.', 'dialog-behind'),
+  'title is a heading': E('title is a heading', 'Reads the dialog title’s role.', 'The title has the heading role, so it is read as “…, heading”.', 'It is read as plain text.', 'dialog-heading'),
+  'actions are buttons': E('actions are buttons', 'Reads the role of the dialog’s Cancel action.', 'It has the button role.', 'It is read as plain text, so the user isn’t told it can be activated.', 'dialog-buttons'),
+  closes: E('closes', 'Taps the overlay’s own Close or Cancel button.', 'The overlay leaves the tree.', 'It is still open.', 'dialog-closes'),
+  'title and body readable': E('title and body readable', 'Looks for the sheet’s title and body text in the tree.', 'Both are in the tree.', 'The text is drawn but the screen reader can’t reach it.', 'sheet-text'),
+  'screen reachable again after close': E('screen reachable again after close', 'After the sheet closes, looks for the screen’s controls in the tree.', 'They are back, so the screen reader can use the screen again.', 'They are still hidden, as if the sheet were open.', 'sheet-after'),
+  'current option marked': E('current option marked', 'Opens the select and reads the option that is already chosen (60 seconds).', 'It is marked as selected or checked.', 'Nothing says which option is chosen.', 'select-current'),
+  'options are actionable': E('options are actionable', 'Reads the role of every option in the open select.', 'Each has a button, radio or option role.', 'At least one is read as plain text.', 'select-options'),
+  'new value read on trigger': E('new value read on trigger', 'Picks 90 seconds, then reads the select’s trigger.', 'The trigger reads the new value.', 'It still reads the old value, or no value.', 'select-new-value'),
+  'in accessibility tree': E('screen reader can find it', 'Shows the toast and looks for its text in the tree within 3 s.', 'The toast is in the tree while it is on screen.', 'It is drawn but not in the tree, so the screen reader never finds it.', 'toast'),
+  'test could run': E('test could start', 'Looks for the element the test starts from.', 'It was there, so the test’s other checks ran.', 'It wasn’t, so the test’s other checks are marked not run (n/r).', 'test-ran'),
+  'name, role, value': E('name, role, value', 'Reads the slider from the accessibility tree.', 'It has a label, the adjustable role and its current value.', 'Any of the three is missing.', 'slider-nrs'),
+  'dragging changes the value': E('dragging changes the value', 'Drags the thumb across the track and reads the value before and after. It stands in for the screen reader’s adjust gesture.', 'The value in the tree changes.', 'The value stays the same.', 'slider-drag'),
+  'name and value': E('name and value', 'Reads the progress bar from the accessibility tree.', 'It has a label and its current value.', 'The label or the value is missing.', 'progress-nrs'),
+  'header is a button': E('header is a button', 'Reads the role of the accordion’s first header.', 'It has the button role.', 'It is read as plain text.', 'accordion-button'),
+  'expanded state exposed': E('expanded state exposed', 'Reads the header closed, taps it, and reads it open.', 'It reads as expanded when open and not when closed.', 'It reads the same either way.', 'accordion-expanded'),
+  'content shows and hides': E('content shows and hides', 'Taps the header twice, looking for the section text after each tap.', 'The text appears on the first tap and goes on the second.', 'It doesn’t appear, or doesn’t go.', 'accordion-content'),
+  'trigger name and role': E('trigger name and role', 'Reads the menu button from the accessibility tree.', 'It has a label and the button role.', 'The label or the role is missing.', 'menu-trigger'),
+  'items are buttons': E('items are buttons', 'Reads the role of each menu action.', 'Each has the button role.', 'At least one is read as plain text.', 'menu-items'),
+  'closes after an action': E('closes after an action', 'Taps the first menu action.', 'The menu leaves the tree.', 'It is still open.', 'menu-closes'),
+  'options have name and role': E('options have name and role', 'Reads each segment of the segmented control.', 'Each has a label and a button, radio or tab role.', 'A label or role is missing.', 'segmented-nrs'),
+  'selected option marked': E('selected option marked', 'Reads every segment’s state.', 'The selected one is marked as selected or checked, and the others aren’t.', 'Nothing says which is selected.', 'segmented-selected'),
+  'selection moves on tap': E('selection moves on tap', 'Taps the second segment and reads the states again.', 'The selected state moves to it.', 'It stays on the first, or isn’t marked at all.', 'segmented-moves'),
+  'every stop has a name': E('everything the screen reader lands on has a name', 'With the overlay open, lists every element the screen reader can move to (each “stop”) and looks for any without a label.', 'Every one has a name.', 'At least one has none, e.g. a full-screen dimmed backdrop that TalkBack reads as “Unlabelled”.', 'dialog-unnamed'),
 };
+// A check the explain map doesn't cover would show up blank, so the
+// generators call this and fail instead.
+export const explained = (checks) => {
+  const missing = [...new Set(checks)].filter((c) => !explain[c]);
+  if (missing.length) throw new Error(`No entry in explain (scripts/checks-data.mjs) for: ${missing.join(', ')}`);
+};
+export const shown = (check) => explain[check]?.name ?? check;
+// A check's full explanation in markdown, as one list item.
+export const explainMd = (check) => {
+  const e = explain[check];
+  return `- **${e.name}:** ${e.does}\n  - **Passes:** ${e.passes}\n  - **Fails:** ${e.fails}`;
+};
+// The picture for a component's check: drawn as that component where there
+// is one, else the check's default.
+export const pictureOf = (component, check) => pictureFor(component, check, explain[check].picture);
+// What the audit read, cut to fit under a picture: sizes only for touch
+// targets, empty values dropped, long lists cut to their first item.
+const exampleText = (f) => {
+  const d = String(f.detail ?? '');
+  if (/^target/.test(f.check)) return `frame ${d.replace(/ \(system tree.*\)$/, '')}, minimum ${f.check.replace('target ≥ ', '')}`;
+  if (d === 'missing') return 'missing: not found in the tree';
+  const exposed = d.match(/^still exposed: (.*)$/);
+  if (exposed) { const items = exposed[1].split(', '); return `still exposed: ${items.length} elements, e.g. ${items.slice(0, 2).join(', ')}`; }
+  const parts = d.split(' | ');
+  const clean = (x) => x.replace(/ value=""/g, '').replace(/ \d+(\.\d+)?×\d+(\.\d+)?(pt|dp)/g, '').replace(/ \(system tree[^)]*\)/g, '').replace(/ role="[^"]*"/, '');
+  return clean(parts[0]) + (parts.length > 1 ? ` (+${parts.length - 1} more)` : '');
+};
+const appName = Object.fromEntries(apps);
+const shortComponent = (c) => (c.startsWith('Bottom sheet (') ? `${c.slice(14, -1).replace(/ BottomSheet| Sheet/, '')} sheet` : c);
+const sourceOf = (a, p, f) => `${appName[a]}, ${platform(p)} · ${shortComponent(f.component)}`;
+// One real passing and one real failing result per picture, light theme. The
+// pass prefers the baseline on iOS; the fail is the first app that fails.
+export const examples = (() => {
+  const out = {};
+  for (const p of ['ios', 'android']) for (const [a] of apps) for (const f of findingsOf(a, p) ?? []) {
+    const id = pictureOf(f.component, norm(f.check));
+    const slot = (out[id] ??= {});
+    const key = f.pass ? 'pass' : 'fail';
+    const ex = { text: exampleText(f), source: sourceOf(a, p, f) };
+    const preferred = f.pass && a === 'baseline' && p === 'ios';
+    if (!slot[key] || (preferred && !slot.fromBaseline)) { slot[key] = ex; if (preferred) slot.fromBaseline = true; }
+  }
+  for (const slot of Object.values(out)) delete slot.fromBaseline;
+  return out;
+})();
+// Markdown image for a picture, from a page in docs/.
+export const pictureMd = (id) => `![${alt(id)}](checks/pictures/${id}.svg)`;
+// Every check once, with its picture: the glossary on docs/method.md. Each
+// component's own picture is with its table in docs/checks.md.
+export const glossaryMd = () => [
+  '**Each picture** shows a pass next to a fail, drawn as one component the check runs on. The dashed outline is where the screen reader’s focus is, a pink dot is a tap, and the bubble under the screen is what the screen reader is given. Each component’s own pictures are under its table in [All checks](checks.md).',
+  ...Object.keys(explain).map((c) => [`#### ${explain[c].name}`, pictureMd(explain[c].picture), explainMd(c)].join('\n\n')),
+].join('\n\n');
+// One line: what is checked and what passes.
+export const what = Object.fromEntries(Object.entries(explain).map(([k, e]) => [k, `${e.does} Passes when: ${e.passes.charAt(0).toLowerCase()}${e.passes.slice(1)}`]));
+
 
 // A check the app never produced is either not applicable or, when its own
 // "test could run" check failed, not run.

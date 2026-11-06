@@ -30,6 +30,7 @@ How every number in [Results](results.md) was measured.
 - [The test screen](#the-test-screen)
 - [iOS and Android](#ios-and-android)
 - [Accessibility checks](#accessibility-checks)
+  - [Checks in pictures](#checks-in-pictures)
 - [Performance checks](#performance-checks)
 - [Ease-of-use log](#ease-of-use-log)
 - [Limits](#limits)
@@ -161,6 +162,324 @@ How every number in [Results](results.md) was measured.
 - What VoiceOver and TalkBack actually speak
 - Swipe order, as heard
 - Switch Control
+
+<a id="checks-in-pictures"></a>
+
+### Checks in pictures
+
+<!-- begin:glossary -->
+**Each picture** shows a pass next to a fail, drawn as one component the check runs on. The dashed outline is where the screen reader’s focus is, a pink dot is a tap, and the bubble under the screen is what the screen reader is given. Each component’s own pictures are under its table in [All checks](checks.md).
+
+<a id="touch-target"></a>
+
+#### touch target
+
+![Button: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-button.svg)
+
+- **touch target:** Measures the control’s frame in the accessibility tree.
+  - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
+  - **Fails:** Either side is smaller, so it is easy to miss with a finger.
+
+<a id="name-role-state"></a>
+
+#### name, role, state
+
+![A switch read with its label, the switch role and on or off passes. Read with its label only, it fails.](checks/pictures/switch-nrs.svg)
+
+- **name, role, state:** Reads the control from the accessibility tree.
+  - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
+  - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
+
+<a id="all-options-exposed"></a>
+
+#### all options exposed
+
+![Each of the three radio options is its own stop for the screen reader. When it fails, they are merged into one stop, or some are missing.](checks/pictures/radio-options.svg)
+
+- **all options exposed:** Counts the radio options in the accessibility tree.
+  - **Passes:** All three options are separate elements the screen reader can move to.
+  - **Fails:** Fewer than three: options are merged into one element or missing.
+
+<a id="group-label-read"></a>
+
+#### group label read
+
+![The group label “Experience level” is in the tree, so it is read with the options. When it fails, it is drawn but the screen reader can’t reach it.](checks/pictures/radio-label.svg)
+
+- **group label read:** Looks for the radio group’s label in the accessibility tree.
+  - **Passes:** The label “Experience level” is in the tree.
+  - **Fails:** It is drawn on screen but the screen reader can’t reach it.
+
+<a id="error-shown"></a>
+
+#### error shown
+
+![After an invalid email, the error message is in the tree. When it fails, it never appears there.](checks/pictures/field-error-shown.svg)
+
+- **error shown:** Types “not-an-email” into the email field, moves focus away, then looks for the error.
+  - **Passes:** The message “Enter a valid email” appears in the tree.
+  - **Fails:** The error never appears in the tree.
+
+<a id="error-reachable-from-field"></a>
+
+#### error reachable from field
+
+![The error is part of what the field reads, so it is heard with the field. When it fails, the field is read without it.](checks/pictures/field-error-linked.svg)
+
+- **error reachable from field:** Reads the email field after the error appears.
+  - **Passes:** The error is part of the field’s label, value or hint, so it is read with the field.
+  - **Fails:** The field is read without the error, so a screen reader user has to go looking for it.
+
+<a id="opens"></a>
+
+#### opens
+
+![Tapping Delete workout opens the dialog. When it fails, nothing new appears in the tree.](checks/pictures/dialog-opens.svg)
+
+- **opens:** Taps the trigger and waits for the overlay’s content in the tree.
+  - **Passes:** Its title or content appears.
+  - **Fails:** Nothing appears in the tree after the tap.
+
+<a id="screen-behind-is-hidden-from-the-screen-reader"></a>
+
+#### screen behind is hidden from the screen reader
+
+![With the dialog open, the screen reader can only reach the dialog. When it fails, it can still reach Delete workout behind it.](checks/pictures/dialog-behind.svg)
+
+- **screen behind is hidden from the screen reader:** With the overlay open, lists every element the screen reader can reach.
+  - **Passes:** Only the overlay’s own elements: nothing from the screen behind it.
+  - **Fails:** Controls behind the overlay can still be reached, e.g. “Delete workout, button” behind the dialog.
+
+<a id="title-is-a-heading"></a>
+
+#### title is a heading
+
+![The dialog title is read as a heading, so screen reader users can jump to it. In the failing app the whole dialog is one element, so there is no title stop at all.](checks/pictures/dialog-heading.svg)
+
+- **title is a heading:** Reads the dialog title’s role.
+  - **Passes:** The title has the heading role, so it is read as “…, heading”.
+  - **Fails:** It is read as plain text.
+
+<a id="actions-are-buttons"></a>
+
+#### actions are buttons
+
+![Cancel is read as a button. When it fails, it sounds like plain text.](checks/pictures/dialog-buttons.svg)
+
+- **actions are buttons:** Reads the role of the dialog’s Cancel action.
+  - **Passes:** It has the button role.
+  - **Fails:** It is read as plain text, so the user isn’t told it can be activated.
+
+<a id="closes"></a>
+
+#### closes
+
+![Tapping Cancel closes the dialog. When it fails, the dialog is still in the tree.](checks/pictures/dialog-closes.svg)
+
+- **closes:** Taps the overlay’s own Close or Cancel button.
+  - **Passes:** The overlay leaves the tree.
+  - **Fails:** It is still open.
+
+<a id="title-and-body-readable"></a>
+
+#### title and body readable
+
+![The sheet’s title and description are in the tree. When it fails, they are drawn but the screen reader can’t reach them.](checks/pictures/sheet-text.svg)
+
+- **title and body readable:** Looks for the sheet’s title and body text in the tree.
+  - **Passes:** Both are in the tree.
+  - **Fails:** The text is drawn but the screen reader can’t reach it.
+
+<a id="screen-reachable-again-after-close"></a>
+
+#### screen reachable again after close
+
+![After the sheet closes, the screen’s controls are back for the screen reader. When it fails, they stay hidden as if the sheet were still open.](checks/pictures/sheet-after.svg)
+
+- **screen reachable again after close:** After the sheet closes, looks for the screen’s controls in the tree.
+  - **Passes:** They are back, so the screen reader can use the screen again.
+  - **Fails:** They are still hidden, as if the sheet were open.
+
+<a id="current-option-marked"></a>
+
+#### current option marked
+
+![The open list marks the option already chosen, 60 seconds, as selected. When it fails, nothing says which one is chosen.](checks/pictures/select-current.svg)
+
+- **current option marked:** Opens the select and reads the option that is already chosen (60 seconds).
+  - **Passes:** It is marked as selected or checked.
+  - **Fails:** Nothing says which option is chosen.
+
+<a id="options-are-actionable"></a>
+
+#### options are actionable
+
+![Every option has a button, radio or option role, so the user knows it can be picked. When it fails, options sound like plain text.](checks/pictures/select-options.svg)
+
+- **options are actionable:** Reads the role of every option in the open select.
+  - **Passes:** Each has a button, radio or option role.
+  - **Fails:** At least one is read as plain text.
+
+<a id="new-value-read-on-trigger"></a>
+
+#### new value read on trigger
+
+![After picking 90 seconds, the trigger reads the new value. When it fails, it still reads the old one.](checks/pictures/select-new-value.svg)
+
+- **new value read on trigger:** Picks 90 seconds, then reads the select’s trigger.
+  - **Passes:** The trigger reads the new value.
+  - **Fails:** It still reads the old value, or no value.
+
+<a id="screen-reader-can-find-it"></a>
+
+#### screen reader can find it
+
+![The toast is in the tree while it is on screen. When it fails, it is drawn but the screen reader never finds it.](checks/pictures/toast.svg)
+
+- **screen reader can find it:** Shows the toast and looks for its text in the tree within 3 s.
+  - **Passes:** The toast is in the tree while it is on screen.
+  - **Fails:** It is drawn but not in the tree, so the screen reader never finds it.
+
+<a id="test-could-start"></a>
+
+#### test could start
+
+![The test finds the element it starts from, so its other checks run. When it fails, the element isn’t there and the rest of that test is marked not run.](checks/pictures/test-ran.svg)
+
+- **test could start:** Looks for the element the test starts from.
+  - **Passes:** It was there, so the test’s other checks ran.
+  - **Fails:** It wasn’t, so the test’s other checks are marked not run (n/r).
+
+<a id="name-role-value"></a>
+
+#### name, role, value
+
+![The slider is read with its label, its value and the adjustable role. When it fails, a part is missing.](checks/pictures/slider-nrs.svg)
+
+- **name, role, value:** Reads the slider from the accessibility tree.
+  - **Passes:** It has a label, the adjustable role and its current value.
+  - **Fails:** Any of the three is missing.
+
+<a id="dragging-changes-the-value"></a>
+
+#### dragging changes the value
+
+![Dragging the thumb changes the value the screen reader is given. When it fails, the value stays the same.](checks/pictures/slider-drag.svg)
+
+- **dragging changes the value:** Drags the thumb across the track and reads the value before and after. It stands in for the screen reader’s adjust gesture.
+  - **Passes:** The value in the tree changes.
+  - **Fails:** The value stays the same.
+
+<a id="name-and-value"></a>
+
+#### name and value
+
+![The progress bar is read with its label and how far along it is. When it fails, the value or label is missing.](checks/pictures/progress-nrs.svg)
+
+- **name and value:** Reads the progress bar from the accessibility tree.
+  - **Passes:** It has a label and its current value.
+  - **Fails:** The label or the value is missing.
+
+<a id="header-is-a-button"></a>
+
+#### header is a button
+
+![The section header is read as a button, so the user knows it opens. When it fails, it sounds like a heading or plain text.](checks/pictures/accordion-button.svg)
+
+- **header is a button:** Reads the role of the accordion’s first header.
+  - **Passes:** It has the button role.
+  - **Fails:** It is read as plain text.
+
+<a id="expanded-state-exposed"></a>
+
+#### expanded state exposed
+
+![An open section’s header is read as expanded, and a closed one as collapsed. When it fails, the header sounds the same either way.](checks/pictures/accordion-expanded.svg)
+
+- **expanded state exposed:** Reads the header closed, taps it, and reads it open.
+  - **Passes:** It reads as expanded when open and not when closed.
+  - **Fails:** It reads the same either way.
+
+<a id="content-shows-and-hides"></a>
+
+#### content shows and hides
+
+![Tapping the header shows the section’s text, and tapping again hides it. When it fails, the text doesn’t appear, or doesn’t go.](checks/pictures/accordion-content.svg)
+
+- **content shows and hides:** Taps the header twice, looking for the section text after each tap.
+  - **Passes:** The text appears on the first tap and goes on the second.
+  - **Fails:** It doesn’t appear, or doesn’t go.
+
+<a id="trigger-name-and-role"></a>
+
+#### trigger name and role
+
+![The menu button is read with its name and the button role. When it fails, the user hears an unnamed button or plain text.](checks/pictures/menu-trigger.svg)
+
+- **trigger name and role:** Reads the menu button from the accessibility tree.
+  - **Passes:** It has a label and the button role.
+  - **Fails:** The label or the role is missing.
+
+<a id="items-are-buttons"></a>
+
+#### items are buttons
+
+![Each menu action is read as a button. When it fails, actions sound like plain text.](checks/pictures/menu-items.svg)
+
+- **items are buttons:** Reads the role of each menu action.
+  - **Passes:** Each has the button role.
+  - **Fails:** At least one is read as plain text.
+
+<a id="closes-after-an-action"></a>
+
+#### closes after an action
+
+![Tapping Duplicate runs it and closes the menu. When it fails, the menu stays open.](checks/pictures/menu-closes.svg)
+
+- **closes after an action:** Taps the first menu action.
+  - **Passes:** The menu leaves the tree.
+  - **Fails:** It is still open.
+
+<a id="options-have-name-and-role"></a>
+
+#### options have name and role
+
+![Each segment is read with its label and a button, radio or tab role. When it fails, it sounds like plain text.](checks/pictures/segmented-nrs.svg)
+
+- **options have name and role:** Reads each segment of the segmented control.
+  - **Passes:** Each has a label and a button, radio or tab role.
+  - **Fails:** A label or role is missing.
+
+<a id="selected-option-marked"></a>
+
+#### selected option marked
+
+![The selected segment, Week, is read as selected, and the others aren’t. When it fails, nothing says which one is selected.](checks/pictures/segmented-selected.svg)
+
+- **selected option marked:** Reads every segment’s state.
+  - **Passes:** The selected one is marked as selected or checked, and the others aren’t.
+  - **Fails:** Nothing says which is selected.
+
+<a id="selection-moves-on-tap"></a>
+
+#### selection moves on tap
+
+![Tapping Month moves the selected state to it. When it fails, the tree still says Week is selected.](checks/pictures/segmented-moves.svg)
+
+- **selection moves on tap:** Taps the second segment and reads the states again.
+  - **Passes:** The selected state moves to it.
+  - **Fails:** It stays on the first, or isn’t marked at all.
+
+<a id="everything-the-screen-reader-lands-on-has-a-name"></a>
+
+#### everything the screen reader lands on has a name
+
+![Every stop in the dialog has a name. When it fails, the dimmed backdrop is a stop of its own, read as “Unlabelled”.](checks/pictures/dialog-unnamed.svg)
+
+- **everything the screen reader lands on has a name:** With the overlay open, lists every element the screen reader can move to (each “stop”) and looks for any without a label.
+  - **Passes:** Every one has a name.
+  - **Fails:** At least one has none, e.g. a full-screen dimmed backdrop that TalkBack reads as “Unlabelled”.
+<!-- end:glossary -->
 
 <a id="performance-checks"></a>
 

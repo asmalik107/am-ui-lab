@@ -220,7 +220,20 @@ select { font: inherit; padding: 5px 8px; border-radius: 8px; border: 1px solid 
 .grid td.cell.fail { background: var(--fail-bg); }
 .grid td.cell.pass { background: var(--pass-bg); }
 .grid td.cell.differs { background: var(--warn-bg); }
-.grid tr.comp td { background: var(--raised); font-weight: 650; font-size: 13px; color: var(--muted); letter-spacing: .02em; }
+/* The check table scrolls both ways inside its own box, so its header can
+   stick: the page's sticky nav is above it, and the box is never taller than
+   the window below that nav. */
+.scroll.tall { overflow: auto; max-height: calc(100dvh - var(--nav-h, 60px) - 24px); overscroll-behavior: contain; }
+.grid { border-collapse: separate; border-spacing: 0; }
+.grid thead th { z-index: 3; box-shadow: inset 0 -1px var(--line); border-bottom: 0; }
+.grid thead th:first-child { z-index: 4; }
+/* One tbody per component: a heading row that sticks under the table header,
+   a gap above it, and a firm line under the section's last row. */
+.grid tbody.group tr.comp th { position: sticky; top: var(--head-h, 52px); z-index: 2; padding: 0; background: var(--raised); border-bottom: 0; box-shadow: inset 0 -1px var(--line), inset 0 1px var(--line); }
+.grid tr.gap td { height: 14px; padding: 0; background: var(--bg); border: 0; }
+.grid tbody.group tr.comp .comp-label { position: sticky; left: 0; display: inline-flex; align-items: baseline; gap: 10px; padding: 10px 12px 10px 14px; border-left: 4px solid var(--accent); font-size: 15px; font-weight: 700; color: var(--text); }
+.grid tbody.group tr.comp .comp-label small { font-size: 12px; font-weight: 500; color: var(--muted); }
+.grid tbody.group tr:last-child td { border-bottom: 2px solid color-mix(in srgb, var(--muted) 45%, var(--line)); }
 .grid td.name { min-width: 200px; }
 .grid td.name small { display: block; color: var(--muted); }
 .grid td.name .how { all: unset; cursor: pointer; color: var(--accent); font-size: 12px; font-weight: 600; margin-top: 2px; display: inline-block; }
@@ -357,7 +370,7 @@ footer h2 { color: var(--text); }
       <span class="count" id="count" aria-live="polite"></span>
     </div>
     <div class="legend"><span>✅ pass</span><span>❌ fail</span><span>⚠️ the platforms differ</span><span>➖ no such element</span><span>n/r not run</span></div>
-    <div class="scroll"><table class="grid" id="grid"></table></div>
+    <div class="scroll tall" id="grid-box"><table class="grid" id="grid"></table></div>
   </section>
   <section id="charts">
     <div class="reveal"><span class="sec-num">05</span><h2>Charts</h2></div>
@@ -447,9 +460,11 @@ function drawGrid() {
     && (!fails || apps.some((a) => plats().some((p) => r.cells[a.app][p].s === 'fail')))
     && (!diff || apps.some((a) => r.cells[a.app].differs)));
   const head = '<thead><tr><th scope="col">Check</th>' + apps.map((a) => '<th scope="col">' + esc(a.name) + '<br><small class="na">' + (plat === 'both' ? 'iOS / Android' : plat === 'ios' ? 'iOS' : 'Android') + '</small></th>').join('') + '</tr></thead>';
+  // One tbody per component, opened by its heading row.
   let last = null;
+  const count = (c) => keep.filter((r) => r.component === c).length;
   const body = keep.map((r) => {
-    const group = r.component !== last ? '<tr class="comp"><td colspan="' + (apps.length + 1) + '">' + esc(r.component) + '</td></tr>' : '';
+    const group = r.component !== last ? (last === null ? '' : '</tbody>') + '<tbody class="group">' + (last === null ? '' : '<tr class="gap" aria-hidden="true"><td colspan="' + (apps.length + 1) + '"></td></tr>') + '<tr class="comp"><th scope="rowgroup" colspan="' + (apps.length + 1) + '"><span class="comp-label">' + esc(r.component) + ' <small>' + count(r.component) + ' check' + (count(r.component) === 1 ? '' : 's') + '</small></span></th></tr>' : '';
     last = r.component;
     const idx = D.checks.indexOf(r);
     return group + '<tr><td class="name">' + esc(r.check) + '<small>' + esc(r.passes) + '</small><button type="button" class="how" data-r="' + idx + '" aria-label="How ' + esc(r.check) + ' is tested">How it’s tested</button></td>' + apps.map((a) => {
@@ -460,9 +475,19 @@ function drawGrid() {
       return '<td class="cell ' + cls + '"><button type="button" data-r="' + idx + '" data-a="' + a.app + '" aria-label="' + esc(label) + '">' + ss.map((s) => icon[s]).join(' / ') + (plat === 'both' && c.differs ? ' ⚠️' : '') + '</button></td>';
     }).join('') + '</tr>';
   }).join('');
-  $('#grid').innerHTML = head + '<tbody>' + (body || '<tr><td colspan="' + (apps.length + 1) + '">No check matches these filters.</td></tr>') + '</tbody>';
+  $('#grid').innerHTML = head + (body ? body + '</tbody>' : '<tbody><tr><td colspan="' + (apps.length + 1) + '">No check matches these filters.</td></tr></tbody>');
+  sizes();
   $('#count').textContent = 'Showing ' + keep.length + ' of ' + D.checks.length + ' checks';
 }
+// The heading rows stick under the table header, and the table's box fits
+// under the page's sticky nav, so both heights are measured.
+function sizes() {
+  const thead = $('#grid thead');
+  if (thead) $('#grid').style.setProperty('--head-h', thead.offsetHeight + 'px');
+  const nav = document.querySelector('nav.jump');
+  if (nav) document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+}
+addEventListener('resize', sizes);
 $('#grid').onclick = (e) => {
   const b = e.target.closest('button[data-r]');
   if (!b) return;

@@ -13,6 +13,15 @@ explained([...rows.map((r) => r.check), ...sheetChecks]);
 const ex = (component, c) => { const { does, passes, fails } = explain[c]; return { does, passes, fails, pic: pictureOf(component, c) }; };
 
 const repo = 'https://github.com/asmalik107/am-ui-lab';
+// The page's own address, from the docs list in scorecard.mjs, and what a
+// link preview (Slack, LinkedIn, X, iMessage) shows. og.png is made by
+// scripts/og-image.mjs.
+const siteUrl = pages.find(([label]) => label === 'Site')[1];
+const title = 'React Native UI Lab: 8 UI libraries compared on accessibility and speed';
+const summary = 'Eight React Native UI libraries compared on accessibility, theming speed and memory, on an iPhone and a budget Android phone.';
+// Google Search Console's HTML-tag verification: set this to the content value
+// Search Console gives, and the tag is added to the page.
+const googleVerification = process.env.GOOGLE_SITE_VERIFICATION ?? '';
 const blob = `${repo}/blob/main/`;
 
 // Every check, with each app's result on each platform:
@@ -93,9 +102,20 @@ const html = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>React Native UI Lab</title>
+<title>${title}</title>
 <script>document.documentElement.classList.add('js');</script>
-<meta name="description" content="Eight React Native UI libraries compared on accessibility, theming speed and memory, on an iPhone and a budget Android phone.">
+<meta name="description" content="${summary}">
+<link rel="canonical" href="${siteUrl}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="React Native UI Lab">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${summary}">
+<meta property="og:url" content="${siteUrl}">
+<meta property="og:image" content="${siteUrl}og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Accessibility against theme-switch time for eight React Native UI libraries on a budget Android phone">
+<meta name="twitter:card" content="summary_large_image">${googleVerification ? `\n<meta name="google-site-verification" content="${googleVerification}">` : ''}
 <style>
 :root {
   --bg: #f6f5f1; --surface: #ffffff; --raised: #fbfaf7; --text: #18181b; --muted: #5d5a55; --line: #e3dfd6;

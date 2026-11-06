@@ -2,10 +2,13 @@
 // Android side by side, plus the charts as SVG files in docs/charts/) and
 // docs/android-accessibility.md (every Android failure).
 // Reads only results/*. Usage: node scripts/checks-md.mjs
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { everyApp as causesEveryApp, libraries as causesByLibrary, differences as causesDiffs } from './android-causes.mjs';
 import { anchored, measuredMd, measuredOn, nav } from './scorecard.mjs';
-import { apps, chartDevices, chartGroup, charts, data, detail, differs, findingsOf, get, keyOf, norm, order, platform, result, root, rows, sheetChecks, sheetKinds, shown, what } from './checks-data.mjs';
+import { picture, pictures } from './check-pictures.mjs';
+import { apps, chartDevices, chartGroup, charts, data, detail, differs, explain, explained, examples, explainMd, findingsOf, get, keyOf, norm, order, pictureMd, pictureOf, platform, result, root, rows, sheetChecks, sheetKinds, shown } from './checks-data.mjs';
+
+explained([...rows.map((r) => r.check), ...sheetChecks]);
 
 // Table cells can't hold a line break on every renderer, so pipes are escaped
 // and nothing here spans lines.
@@ -28,7 +31,7 @@ const componentSection = (c) => {
       return `${mark(i)} / ${mark(d)}${differs(i, d) ? ' ⚠️' : ''}`;
     }).join(' | ')} |`),
   ].join('\n');
-  const meanings = own.map((r) => `- **${shown(r.check)}:** ${what[r.check] ?? ''}`).join('\n');
+  const meanings = meaningsMd(c, own.map((r) => r.check));
   const failures = apps.map(([a, name]) => {
     const fails = own.flatMap((r) => ['ios', 'android'].map((p) => [p, r, result(a, r.key, p)])).filter(([, , f]) => f && !f.pass);
     return fails.length ? [`- **${name}**`, ...fails.map(([p, r, f]) => `  - ${platform(p)}, ${shown(r.check)}: ${detail(f)}`)].join('\n') : '';
@@ -40,6 +43,16 @@ const componentSection = (c) => {
     failures ? `<details>\n<summary>Why checks failed</summary>\n\n${failures}\n\n</details>` : 'No check failed for any app.',
   ].join('\n\n');
 };
+
+// What each check means: the checks grouped by picture, each picture once,
+// drawn as this component.
+function meaningsMd(component, checks) {
+  const ids = [...new Set(checks.map((c) => pictureOf(component, c)))];
+  return [
+    ...ids.map((id) => [pictureMd(id), checks.filter((c) => pictureOf(component, c) === id).map(explainMd).join('\n')].join('\n\n')),
+    'All checks, with their pictures: [Method](method.md#checks-in-pictures).',
+  ].join('\n\n');
+}
 
 // Bottom sheets: one row per kind of sheet. Each cell is the app's score out
 // of 5 on iOS and on Android.
@@ -65,6 +78,7 @@ const sheetSection = () => {
     `Each sheet gets the same 5 checks: ${sheetChecks.map(shown).join(', ')}. Each cell is the number passed, iOS / Android: ✅ all passed, ❌ at least one failed, ➖ the app has no such sheet.`,
     table,
     `<details>\n<summary>The three sheets</summary>\n\n${kinds}\n\n</details>`,
+    `<details>\n<summary>What each check means</summary>\n\n${meaningsMd('Bottom sheet', sheetChecks)}\n\n</details>`,
     failures ? `<details>\n<summary>Why checks failed</summary>\n\n${failures}\n\n</details>` : '',
   ].filter(Boolean).join('\n\n');
 };
@@ -128,6 +142,9 @@ function singleSvg(title, sub, rows, cls) {
   return svgDoc(title, sub, top + rows.length * per + 10, body);
 }
 mkdirSync(new URL('docs/charts/', root), { recursive: true });
+rmSync(new URL('docs/checks/pictures/', root), { recursive: true, force: true });
+mkdirSync(new URL('docs/checks/pictures/', root), { recursive: true });
+for (const id of Object.keys(pictures)) writeFileSync(new URL(`docs/checks/pictures/${id}.svg`, root), picture(id, { examples: examples[id] }));
 const draw = (file, title, sub, s) => (s.kind === 'paired' ? pairedSvg(title, sub, s.rows, measuredOn[chartGroup[file]]) : singleSvg(title, sub, s.rows, s.cls));
 for (const [file, title, sub, , series] of charts) writeFileSync(new URL(`docs/charts/${file}.svg`, root), draw(file, title, sub, series));
 const chartMd = (file) => {
@@ -163,7 +180,7 @@ Every accessibility check, for every app, with iOS and Android side by side. Gen
 - ➖ not applicable: the app has no such element.
 - **n/r** not run: the test could not start.
 - ⚠️ the two platforms give different results.
-- **Under each table**, two fold-outs say what each check means and why any check failed.
+- **Under each table**, two fold-outs say what each check means, with a picture of a pass and a fail, and why any check failed.
 - **NativeWind** results use a line-height workaround. See \`apps/nativewind/NOTES.md\`.
 
 ## Accessibility checks

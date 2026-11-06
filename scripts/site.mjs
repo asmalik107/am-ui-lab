@@ -5,7 +5,12 @@
 // Usage: node scripts/site.mjs
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { columns, devices, heading, headline, kind, kinds, libraries, pages, points, scope, scorecard, slug, stack, versions } from './scorecard.mjs';
-import { apps, chartDevices, charts, detail, differs, get, result, root, rows, sheetChecks, sheetKinds, shown, what } from './checks-data.mjs';
+import { picture, pictures, siteStyle } from './check-pictures.mjs';
+import { apps, chartDevices, charts, detail, differs, examples, explain, explained, get, pictureOf, result, root, rows, sheetChecks, sheetKinds, shown } from './checks-data.mjs';
+
+explained([...rows.map((r) => r.check), ...sheetChecks]);
+// How a check is tested, shown with its picture (see scripts/check-pictures.mjs).
+const ex = (component, c) => { const { does, passes, fails } = explain[c]; return { does, passes, fails, pic: pictureOf(component, c) }; };
 
 const repo = 'https://github.com/asmalik107/am-ui-lab';
 const blob = `${repo}/blob/main/`;
@@ -20,7 +25,7 @@ const checks = [
   ...rows.filter((r) => !isSheet(r.component)).map((r) => ({
     component: r.component,
     check: shown(r.check),
-    what: what[r.check] ?? '',
+    ...ex(r.component, r.check),
     cells: Object.fromEntries(apps.map(([a]) => [a, both(get(a, r, 'ios'), get(a, r, 'android'))])),
   })),
   // Sheets by kind, as in docs/checks.md: each app names its sheets
@@ -28,7 +33,7 @@ const checks = [
   ...sheetKinds.flatMap(([label, , pick]) => sheetChecks.map((c) => ({
     component: `Bottom sheet: ${label}`,
     check: shown(c),
-    what: what[c] ?? '',
+    ...ex('Bottom sheet', c),
     cells: Object.fromEntries(apps.map(([a]) => {
       const comp = pick(a);
       const f = (p) => (comp ? result(a, `${comp} | ${c}`, p) : null);
@@ -75,6 +80,7 @@ const data = {
   stack,
   card,
   checks,
+  pictures: Object.fromEntries(Object.keys(pictures).map((id) => [id, picture(id, { standalone: false, examples: examples[id] })])),
   charts: charts.map(([file, title, sub, read, series]) => ({ file, title, sub, read, on: chartDevices(file), ...series })),
   pages: pages.filter(([label]) => label !== 'Site').map(([label, path, about]) => ({ label, href: blob + path, about })),
   repo,
@@ -217,6 +223,12 @@ select { font: inherit; padding: 5px 8px; border-radius: 8px; border: 1px solid 
 .grid tr.comp td { background: var(--raised); font-weight: 650; font-size: 13px; color: var(--muted); letter-spacing: .02em; }
 .grid td.name { min-width: 200px; }
 .grid td.name small { display: block; color: var(--muted); }
+.grid td.name .how { all: unset; cursor: pointer; color: var(--accent); font-size: 12px; font-weight: 600; margin-top: 2px; display: inline-block; }
+.grid td.name .how:hover { text-decoration: underline; }
+.grid tr.info dl { margin: 4px 0 8px; display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; }
+.grid tr.info dt { font-weight: 650; }
+.grid tr.info dd { margin: 0; }
+${siteStyle}
 .grid tr.info td { position: static; background: var(--raised); font-size: 14px; padding: 12px 16px; }
 .grid tr.info .box { position: sticky; left: 16px; max-width: min(70ch, calc(100vw - 64px)); white-space: normal; }
 .grid tr.info p { margin: 4px 0; }
@@ -440,7 +452,7 @@ function drawGrid() {
     const group = r.component !== last ? '<tr class="comp"><td colspan="' + (apps.length + 1) + '">' + esc(r.component) + '</td></tr>' : '';
     last = r.component;
     const idx = D.checks.indexOf(r);
-    return group + '<tr><td class="name">' + esc(r.check) + '<small>' + esc(r.what) + '</small></td>' + apps.map((a) => {
+    return group + '<tr><td class="name">' + esc(r.check) + '<small>' + esc(r.passes) + '</small><button type="button" class="how" data-r="' + idx + '" aria-label="How ' + esc(r.check) + ' is tested">How it’s tested</button></td>' + apps.map((a) => {
       const c = r.cells[a.app];
       const ss = plats().map((p) => c[p].s);
       const cls = plat === 'both' && c.differs ? 'differs' : ss.includes('fail') ? 'fail' : ss.includes('pass') ? 'pass' : '';
@@ -454,14 +466,18 @@ function drawGrid() {
 $('#grid').onclick = (e) => {
   const b = e.target.closest('button[data-r]');
   if (!b) return;
-  const r = D.checks[b.dataset.r], a = D.apps.find((x) => x.app === b.dataset.a), c = r.cells[a.app];
+  const r = D.checks[b.dataset.r], a = b.dataset.a && D.apps.find((x) => x.app === b.dataset.a), c = a && r.cells[a.app];
   const word = { pass: '✅ passes', fail: '❌ fails', na: '➖ no such element', nr: 'not run: the test could not start' };
   document.querySelector('#grid tr.info')?.remove();
   const tr = b.closest('tr');
   const info = document.createElement('tr');
   info.className = 'info';
-  info.innerHTML = '<td colspan="' + tr.children.length + '" aria-live="polite"><div class="box"><p><strong>' + esc(a.name) + ' · ' + esc(r.component) + ' · ' + esc(r.check) + '</strong></p><p>' + esc(r.what) + '</p>'
-    + ['ios', 'android'].map((p) => '<p><strong>' + (p === 'ios' ? 'iOS' : 'Android') + ':</strong> ' + word[c[p].s] + (c[p].d ? '. ' + esc(c[p].d) : '') + '</p>').join('') + '<button type="button" class="close">Close</button></div></td>';
+  // The picture and how the check is tested, then, from a result cell, that app's results.
+  info.innerHTML = '<td colspan="' + tr.children.length + '" aria-live="polite"><div class="box"><p><strong>' + (a ? esc(a.name) + ' · ' : '') + esc(r.component) + ' · ' + esc(r.check) + '</strong></p>'
+    + D.pictures[r.pic]
+    + '<dl><dt>What it does</dt><dd>' + esc(r.does) + '</dd><dt>Passes</dt><dd>' + esc(r.passes) + '</dd><dt>Fails</dt><dd>' + esc(r.fails) + '</dd></dl>'
+    + (a ? ['ios', 'android'].map((p) => '<p><strong>' + (p === 'ios' ? 'iOS' : 'Android') + ':</strong> ' + word[c[p].s] + (c[p].d ? '. ' + esc(c[p].d) : '') + '</p>').join('') : '')
+    + '<button type="button" class="close">Close</button></div></td>';
   tr.after(info);
   info.querySelector('.close').onclick = () => { info.remove(); b.focus(); };
 };

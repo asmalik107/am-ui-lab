@@ -33,28 +33,35 @@ const center = ([x, y, w, h]) => [x + w / 2, y + h / 2];
 
 // --- Components, each drawn as it looks on the test screen. Each returns
 // { s: svg, b: named boxes [x, y, w, h] for focus and taps }.
-const button = (x, y, w, h, label, { disabled = false, busy = false, destructive = false } = {}) => {
-  const fill = disabled ? 'cp-off' : destructive ? 'cp-danger' : 'cp-btn';
-  const ink = disabled ? 'cp-muted' : 'cp-inv';
-  const s = rect(x, y, w, h, fill, 10)
-    + (busy ? circle(x + w / 2 - 34, y + h / 2, 6, 'cp-spin') : '')
+// Drawn to match the baseline app on the iPhone 17 simulator (iOS 27.0),
+// checked against it on 2026-11-06.
+// The small filled triangle the baseline uses on the select and accordion.
+const tri = (x, y, up = false) => path(up ? `M${x - 3} ${y + 2} L${x} ${y - 2} L${x + 3} ${y + 2} Z` : `M${x - 3} ${y - 2} L${x} ${y + 2} L${x + 3} ${y - 2} Z`, 'cp-tri');
+// Filled blue (or red), pale blue when disabled, or outlined with blue text.
+const button = (x, y, w, h, label, { disabled = false, busy = false, destructive = false, outline = false } = {}) => {
+  const fill = outline ? 'cp-outline' : disabled ? 'cp-btn-off' : destructive ? 'cp-danger' : 'cp-btn';
+  const ink = outline ? 'cp-accent' : 'cp-inv';
+  const s = rect(x, y, w, h, fill, 8)
+    + (busy ? circle(x + w / 2 - 30, y + h / 2, 5.5, 'cp-spin') : '')
     + text(x + w / 2 + (busy ? 8 : 0), y + h / 2 + 4.5, label, `cp-t cp-b ${ink}`, 'middle');
   return { s, b: { self: [x, y, w, h] } };
 };
-const field = (x, y, w, { label = 'Email', value = '', placeholder = 'you@example.com', error = '' } = {}) => {
+// Label above, then the field, then the helper text, which the error replaces.
+const field = (x, y, w, { label = 'Email', value = '', error = '' } = {}) => {
   const s = text(x, y + 10, label, 'cp-t cp-b')
     + rect(x, y + 18, w, 32, error ? 'cp-field cp-field-bad' : 'cp-field', 8)
-    + text(x + 10, y + 38, value || placeholder, value ? 'cp-t' : 'cp-t cp-muted')
-    + (error ? text(x, y + 66, error, 'cp-t cp-bad') : '');
-  return { s, b: { self: [x, y + 18, w, 32], error: [x, y + 55, 180, 14], label: [x, y, 40, 12] } };
+    + (value ? text(x + 10, y + 38, value) : '')
+    + (error ? text(x, y + 64, error, 'cp-t cp-bad cp-small') : text(x, y + 64, 'We’ll send your plan here.', 'cp-t cp-muted cp-small'));
+  return { s, b: { self: [x, y + 18, w, 32], error: [x, y + 55, 150, 12], label: [x, y, 40, 12] } };
 };
-const switchRow = (x, y, w, label, on = true) => {
-  const tx = x + w - 46;
-  const s = text(x, y + 22, label) + rect(tx, y + 7, 44, 26, on ? 'cp-on' : 'cp-off', 13) + circle(on ? tx + 31 : tx + 13, y + 20, 10, 'cp-knob');
-  return { s, b: { self: [x, y, w, 40], control: [tx, y + 7, 44, 26] } };
+// The switch sits at the right edge; the native one sits right after its label.
+const switchRow = (x, y, w, label, on = true, { inline = false } = {}) => {
+  const tx = inline ? x + label.length * 5 + 8 : x + w - 44;
+  const s = text(x, y + 22, label, inline ? 'cp-t cp-small' : 'cp-t') + rect(tx, y + 8, 44, 24, on ? 'cp-on' : 'cp-off', 12) + circle(on ? tx + 32 : tx + 12, y + 20, 10, 'cp-knob');
+  return { s, b: { self: [x, y, inline ? tx + 44 - x : w, 40], control: [tx, y + 8, 44, 24] } };
 };
 const checkbox = (x, y, label, checked = true) => {
-  const s = rect(x, y + 5, 20, 20, checked ? 'cp-on' : 'cp-field', 5)
+  const s = rect(x, y + 5, 20, 20, checked ? 'cp-on' : 'cp-field', 4)
     + (checked ? path(`M${x + 5} ${y + 15} L${x + 9} ${y + 19} L${x + 16} ${y + 10}`, 'cp-stroke cp-inv-stroke') : '')
     + text(x + 30, y + 20, label);
   return { s, b: { self: [x, y + 2, 190, 26], control: [x, y + 5, 20, 20] } };
@@ -68,91 +75,102 @@ const radios = (x, y, options, sel = 0, groupLabel = 'Experience level') => {
   return { s: text(x, y + 12, groupLabel, 'cp-t cp-b') + rows, b: { label: [x - 2, y, 110, 16], options: boxes, all: [x - 2, y + 22, 150, options.length * 30 - 6], control: [x + 1, y + 25, 18, 18] } };
 };
 const selectTrigger = (x, y, w, value = '60 seconds') => {
-  const s = text(x, y + 10, 'Rest time', 'cp-t cp-b') + rect(x, y + 18, w, 34, 'cp-field', 8) + text(x + 10, y + 39.5, value) + chevron(x + w - 16, y + 35);
+  const s = text(x, y + 10, 'Rest time', 'cp-t cp-b') + rect(x, y + 18, w, 34, 'cp-field', 8) + text(x + 10, y + 39.5, value) + tri(x + w - 14, y + 35);
   return { s, b: { self: [x, y + 18, w, 34], label: [x, y, 70, 12] } };
 };
 const SELECT = ['30 seconds', '45 seconds', '60 seconds', '90 seconds', '2 minutes'];
-// The open select: a list of options over the dimmed screen, the current one ticked.
-// It opens below the trigger, which stays in view at the top of the screen.
+// The open select: a white card centred over the dimmed screen, covering the
+// trigger. The current option is bold blue; there is no tick.
 const selectList = (current = 2) => {
-  const x = 20, y = 60, w = 210, rh = 16.4;
-  const rows = SELECT.map((o, i) => text(x + 28, y + 12 + i * rh + 3.5, o, 'cp-t cp-small') + (i === current ? path(`M${x + 10} ${y + 11 + i * rh} L${x + 13} ${y + 14 + i * rh} L${x + 19} ${y + 7 + i * rh}`, 'cp-stroke cp-accent-stroke') : '')
-    + (i ? rect(x + 8, y + 4 + i * rh, w - 16, 1, 'cp-line', 0) : '')).join('');
-  return { s: rect(x, y, w, rh * SELECT.length + 6, 'cp-pop', 12) + rows, b: { options: SELECT.map((_, i) => [x + 4, y + 3 + i * rh, w - 8, rh]), all: [x, y, w, rh * SELECT.length + 6] } };
+  const x = 18, y = 18, w = 214, rh = 22;
+  const rows = SELECT.map((o, i) => text(x + 14, y + 18 + i * rh, o, i === current ? 'cp-t cp-b cp-accent' : 'cp-t')).join('');
+  return { s: rect(x, y, w, rh * SELECT.length + 8, 'cp-card', 12) + rows, b: { options: SELECT.map((_, i) => [x + 4, y + 4 + i * rh, w - 8, rh]), all: [x, y, w, rh * SELECT.length + 8] } };
 };
+// Tabs: the selected one blue with a blue underline, then its panel text.
 const tabs = (x, y, w, labels = ['Today', 'Plan', 'Progress'], sel = 0) => {
   const cw = w / labels.length;
-  const s = labels.map((l, i) => text(x + cw * i + cw / 2, y + 18, l, i === sel ? 'cp-t cp-b cp-accent' : 'cp-t cp-muted', 'middle')).join('')
-    + rect(x, y + 29, w, 1, 'cp-line', 0) + rect(x + cw * sel + 10, y + 27, cw - 20, 3, 'cp-on', 1.5)
-    + lines(x, y + 46, [w - 40]);
+  const s = labels.map((l, i) => text(x + cw * i + cw / 2, y + 18, l, i === sel ? 'cp-t cp-b cp-accent' : 'cp-t', 'middle')).join('')
+    + rect(x, y + 29, w, 1, 'cp-line', 0) + rect(x + cw * sel, y + 27, cw, 3, 'cp-on', 1.5)
+    + text(x, y + 50, '3 exercises left today.');
   return { s, b: { tabs: labels.map((_, i) => [x + cw * i + 4, y, cw - 8, 30]) } };
 };
+// A blue-bordered control; the selected segment is solid blue with white text.
 const segmented = (x, y, w, opts = ['Week', 'Month', 'Year'], sel = 0) => {
   const cw = (w - 6) / opts.length;
-  const s = text(x, y + 10, 'Chart range', 'cp-t cp-b') + rect(x, y + 18, w, 34, 'cp-off', 10) + rect(x + 3 + cw * sel, y + 21, cw, 28, 'cp-seg', 8)
-    + opts.map((o, i) => text(x + 3 + cw * i + cw / 2, y + 39.5, o, i === sel ? 'cp-t cp-b' : 'cp-t', 'middle')).join('');
+  const s = text(x, y + 10, 'Chart range', 'cp-t cp-b') + rect(x, y + 18, w, 34, 'cp-seg-box', 8) + rect(x + 3 + cw * sel, y + 21, cw, 28, 'cp-btn', 6)
+    + opts.map((o, i) => text(x + 3 + cw * i + cw / 2, y + 39.5, o, i === sel ? 'cp-t cp-b cp-inv' : 'cp-t', 'middle')).join('');
   return { s, b: { opts: opts.map((_, i) => [x + 3 + cw * i, y + 21, cw, 28]) } };
 };
+// "Weight: 60 kg" above the track; blue to the left of the thumb, grey to the
+// right; a white thumb with a blue ring. 0–200 kg.
 const slider = (x, y, w, frac = 0.3, value = '60 kg') => {
   const tx = x + w * frac;
-  const s = text(x, y + 10, 'Weight', 'cp-t cp-b') + text(x + w, y + 10, value, 'cp-t cp-muted', 'end')
-    + rect(x, y + 30, w, 4, 'cp-line', 2) + rect(x, y + 30, w * frac, 4, 'cp-on', 2) + circle(tx, y + 32, 11, 'cp-knob cp-edge');
-  return { s, b: { self: [x, y + 18, w, 28], thumb: [tx, y + 32] } };
+  const s = text(x, y + 10, `Weight: ${value}`, 'cp-t cp-b')
+    + rect(x, y + 29, w, 5, 'cp-track', 2.5) + rect(x, y + 29, w * frac, 5, 'cp-on', 2.5) + circle(tx, y + 31.5, 10, 'cp-knob cp-ring-on');
+  return { s, b: { self: [x, y + 18, w, 28], thumb: [tx, y + 31.5] } };
 };
 const progress = (x, y, w, frac = 3 / 8) => {
-  const s = text(x, y + 10, 'Workout progress', 'cp-t cp-b') + rect(x, y + 22, w, 8, 'cp-line', 4) + rect(x, y + 22, w * frac, 8, 'cp-on', 4) + text(x, y + 48, '3 of 8 exercises', 'cp-t cp-muted');
-  return { s, b: { self: [x, y, w, 52] } };
+  const s = text(x, y + 10, 'Workout progress', 'cp-t cp-b') + rect(x, y + 20, w, 6, 'cp-track', 3) + rect(x, y + 20, w * frac, 6, 'cp-on', 3) + text(x, y + 42, '3 of 8 exercises', 'cp-t cp-muted cp-small');
+  return { s, b: { self: [x, y, w, 48] } };
 };
-// The accordion: three section headers with chevrons and dividers; `open`
-// shows that section's text under its header.
+// The accordion: one bordered box, three rows with dividers and small
+// triangles; `open` shows that section's text inside the box under its row.
 const accordion = (x, y, w, open = -1) => {
   const sections = ['Warm-up', 'Main set', 'Cool-down'];
+  const rowH = 26, panelH = 22;
+  const total = rowH * 3 + (open >= 0 ? panelH : 0);
+  let s = rect(x, y, w, total, 'cp-field', 8);
   let cy = y;
   const boxes = [];
-  let s = '';
   sections.forEach((t, i) => {
-    s += text(x, cy + 21, t, 'cp-t cp-b') + chevron(x + w - 10, cy + 17, i === open);
-    boxes.push([x - 2, cy + 6, w + 4, 22]);
-    cy += 32;
-    if (i === open) { s += text(x, cy + 18, 'Five minutes of easy cycling.', 'cp-t cp-muted'); cy += 26; }
-    s += rect(x, cy, w, 1, 'cp-line', 0);
+    if (i) s += rect(x, cy, w, 1, 'cp-line', 0);
+    s += text(x + 10, cy + 17, t) + tri(x + w - 12, cy + 13, i === open);
+    boxes.push([x + 2, cy + 2, w - 4, rowH - 4]);
+    cy += rowH;
+    if (i === open) { s += text(x + 10, cy + 13, 'Five minutes of easy cycling.', 'cp-t cp-muted'); cy += panelH; }
   });
-  return { s, b: { headers: boxes, panel: [x - 2, y + 37, w, 16] } };
+  return { s, b: { headers: boxes, panel: [x + 6, y + rowH + 2, w - 12, panelH - 6] } };
 };
-const menuTrigger = (x, y) => {
-  const s = rect(x, y, 150, 34, 'cp-field', 10) + text(x + 12, y + 21.5, 'Workout options') + [0, 1, 2].map((i) => circle(x + 128 + i * 6, y + 17, 2, 'cp-dotfill')).join('');
-  return { s, b: { self: [x, y, 150, 34] } };
-};
+// The menu button: an outlined button with blue text.
+const menuTrigger = (x, y) => button(x, y, 210, 30, 'Workout options', { outline: true });
 const MENU = ['Duplicate', 'Share', 'Archive'];
+// The open menu: the whole screen dimmed and a near-full-width white card
+// with the three actions, no dividers.
 const menuPopover = (x, y) => {
-  const s = rect(x, y, 140, 90, 'cp-pop', 12) + MENU.map((m, i) => text(x + 14, y + 22 + i * 28, m) + (i ? rect(x + 8, y + 6 + i * 28, 124, 1, 'cp-line', 0) : '')).join('');
-  return { s, b: { items: MENU.map((_, i) => [x + 4, y + 6 + i * 28, 132, 24]), all: [x, y, 140, 90] } };
+  const cx = 12, cw = SW - 24;
+  const s = dim() + rect(cx, y, cw, 84, 'cp-card', 12) + MENU.map((m, i) => text(cx + 14, y + 22 + i * 26, m)).join('');
+  return { s, b: { items: MENU.map((_, i) => [cx + 4, y + 6 + i * 26, cw - 8, 22]), all: [cx, y, cw, 84] } };
 };
-// The bottom sheet: attached to the bottom edge, rounded top corners, a grab
-// handle, then the exercise title, its description and Close.
+// The @gorhom bottom sheet: about the bottom quarter of the screen, attached to
+// the bottom edge, with a grab handle, the title, the description and an
+// outlined Close button.
 const sheetPanel = () => {
-  const y = 50;
+  const y = 70;
   const s = `<path d="M0 ${SY + y + 16} Q0 ${SY + y} 16 ${SY + y} L${SW - 16} ${SY + y} Q${SW} ${SY + y} ${SW} ${SY + y + 16} L${SW} ${SY + SH - 14} Q${SW} ${SY + SH} ${SW - 14} ${SY + SH} L14 ${SY + SH} Q0 ${SY + SH} 0 ${SY + SH - 14} Z" class="cp-card"/>`
-    + rect(SW / 2 - 18, y + 7, 36, 4, 'cp-line', 2)
-    + text(16, y + 32, 'Goblet squat', 'cp-t cp-b cp-big')
-    + text(16, y + 50, 'Hold the kettlebell at your chest, sit back', 'cp-t cp-muted cp-small')
-    + text(16, y + 63, 'and down, then drive up through your heels.', 'cp-t cp-muted cp-small')
-    + button(16, y + 72, SW - 32, 24, 'Close').s;
-  return { s, b: { title: [12, y + 18, 110, 20], body: [12, y + 40, 226, 28], text: [12, y + 18, 226, 50], close: [16, y + 72, SW - 32, 24] } };
+    + rect(SW / 2 - 14, y + 6, 28, 3, 'cp-line', 1.5)
+    + text(14, y + 26, 'Goblet squat', 'cp-t cp-b cp-big')
+    + text(14, y + 40, 'Hold the kettlebell at your chest, sit back and', 'cp-t cp-muted cp-small')
+    + text(14, y + 51, 'down, then drive up through your heels.', 'cp-t cp-muted cp-small')
+    + button(14, y + 57, SW - 28, 19, 'Close', { outline: true }).s;
+  return { s, b: { title: [10, y + 14, 100, 16], body: [10, y + 32, 230, 22], text: [10, y + 14, 230, 40], close: [14, y + 57, SW - 28, 19] } };
 };
 // The test screen behind each overlay, so "the screen behind" has something in it.
-const behindSheet = () => button(16, 10, SW - 32, 30, 'Show exercise details');
+const behindSheet = () => button(16, 10, SW - 32, 30, 'Show exercise details', { outline: true });
 const behindDialog = () => button(16, 10, SW - 32, 30, 'Delete workout', { destructive: true });
+// The dialog: a white card, a bold title, the body, then Cancel (outlined) and
+// Delete (red) side by side on the right.
 const dialogBox = () => {
-  const x = 30, y = 34, w = 190;
-  const s = rect(x, y, w, 104, 'cp-card', 14) + text(x + 14, y + 22, 'Delete this workout?', 'cp-t cp-b')
-    + text(x + 14, y + 40, 'This removes the workout and its', 'cp-t cp-muted cp-small') + text(x + 14, y + 52, 'logged sets. You cannot undo this.', 'cp-t cp-muted cp-small')
-    + text(x + 52, y + 84, 'Cancel', 'cp-t cp-b cp-accent', 'middle') + rect(x + 104, y + 68, 72, 26, 'cp-danger', 8) + text(x + 140, y + 85, 'Delete', 'cp-t cp-b cp-inv', 'middle');
-  return { s, b: { title: [x + 10, y + 8, 150, 20], cancel: [x + 18, y + 68, 68, 26], del: [x + 104, y + 68, 72, 26] } };
+  const x = 22, y = 34, w = 206;
+  const s = rect(x, y, w, 100, 'cp-card', 14) + text(x + 14, y + 24, 'Delete this workout?', 'cp-t cp-b cp-big')
+    + text(x + 14, y + 42, 'This removes the workout and its', 'cp-t cp-muted cp-small') + text(x + 14, y + 54, 'logged sets. You cannot undo this.', 'cp-t cp-muted cp-small')
+    + rect(x + 80, y + 66, 58, 24, 'cp-outline', 7) + text(x + 109, y + 82, 'Cancel', 'cp-t cp-b cp-accent', 'middle')
+    + rect(x + 144, y + 66, 50, 24, 'cp-danger', 7) + text(x + 169, y + 82, 'Delete', 'cp-t cp-b cp-inv', 'middle');
+  return { s, b: { title: [x + 10, y + 8, 160, 22], cancel: [x + 80, y + 66, 58, 24], del: [x + 144, y + 66, 50, 24], all: [x, y, w, 100] } };
 };
+// The toast: a near-full-width dark bar with the message on the left.
 const toast = () => {
-  const s = rect(45, 108, 160, 32, 'cp-toast', 16) + path(`M62 124 L66 128 L73 119`, 'cp-stroke cp-inv-stroke') + text(132, 128.5, 'Set logged', 'cp-t cp-b cp-inv', 'middle');
-  return { s, b: { self: [45, 108, 160, 32] } };
+  const s = rect(10, 112, 230, 28, 'cp-toast', 7) + text(24, 130, 'Set logged', 'cp-t cp-inv');
+  return { s, b: { self: [10, 112, 230, 28] } };
 };
 
 // The box under the screen: what the audit actually read for this check, in
@@ -214,7 +232,7 @@ export const pictures = {
   'button-loading-nrs': said('A button that is saving says it is busy. When it fails, nothing says it is working.', button(30, 55, 190, 40, 'Saving', { busy: true }).s + focus([30, 55, 190, 40]), '“Saving, busy, button”', '“Saving, button” (not busy)'),
   'field-nrs': said('A text field read with its label passes. Without it, the user hears an unnamed field.', field(20, 40, 210).s + focus(field(20, 40, 210).b.self), '“Email, text field”', '“Text field” (no name)'),
   'switch-nrs': said('A switch read with its label, the switch role and on or off passes. Read with its label only, it fails.', switchRow(20, 55, 210, 'Workout reminders').s + focus([20, 55, 210, 40]), '“Workout reminders, switch, on”', '“Workout reminders” (no role or state)'),
-  'native-switch-nrs': said('The native switch is read with its label, the switch role and on or off.', switchRow(20, 55, 210, 'Sync with Health', false).s + focus([20, 55, 210, 40]), '“Sync with Health, switch, on”', '“Sync with Health” (no role or state)'),
+  'native-switch-nrs': said('The native switch is read with its label, the switch role and on or off.', switchRow(20, 55, 210, 'Sync with Health (native control)', false, { inline: true }).s + focus(switchRow(20, 55, 210, 'Sync with Health (native control)', false, { inline: true }).b.self), '“Sync with Health, switch, on”', '“Sync with Health” (no role or state)'),
   'checkbox-nrs': said('A checkbox read with its label, the checkbox role and checked passes. Without its role or state, it fails.', checkbox(30, 58, 'I agree to the terms', false).s + focus([28, 60, 190, 26]), '“I agree to the terms, checkbox, ticked”', '“I agree to the terms” (no state)'),
   'radio-nrs': said('A radio option read with its label, the radio role and selected passes. Without its role or state, it fails.', r.s + focus(r.b.options[0]), '“Beginner, radio button, selected”', '“Beginner” (no role or state)'),
   'select-nrs': said('The select trigger is read with its name, its value and a button role. When it fails, a part is missing.', sel.s + focus(sel.b.self), '“Rest time, 60 seconds, button”', '“60 seconds” (no name or role)'),
@@ -227,15 +245,15 @@ export const pictures = {
   // Touch targets.
   'target-button': target('Button', (y, h) => button(20, y, 210, h, 'Save workout').s),
   'target-switch': target('Switch row', (y, h) => text(20, y + h / 2 + 4, 'Workout reminders') + rect(184, y + h / 2 - 13, 44, 26, 'cp-on', 13) + circle(215, y + h / 2, 10, 'cp-knob')),
-  'target-native-switch': target('Native switch row', (y, h) => text(20, y + h / 2 + 4, 'Sync with Health') + rect(184, y + h / 2 - 13, 44, 26, 'cp-off', 13) + circle(197, y + h / 2, 10, 'cp-knob')),
+  'target-native-switch': target('Native switch', (y, h) => text(18, y + h / 2 + 3.5, 'Sync with Health (native control)', 'cp-t cp-small') + rect(186, y + h / 2 - 12, 44, 24, 'cp-off', 12) + circle(198, y + h / 2, 10, 'cp-knob')),
   'target-checkbox': target('Checkbox', (y, h) => rect(22, y + h / 2 - 10, 20, 20, 'cp-field', 5) + text(52, y + h / 2 + 4, 'I agree to the terms')),
   'target-radio': target('Radio option', (y, h) => circle(32, y + h / 2, 9, 'cp-ring cp-ring-on') + circle(32, y + h / 2, 4.5, 'cp-dot') + text(50, y + h / 2 + 4.5, 'Beginner')),
-  'target-select': target('Select trigger', (y, h) => rect(20, y + 4, 210, h - 8, 'cp-field', 8) + text(30, y + h / 2 + 4, '60 seconds') + chevron(214, y + h / 2)),
-  'target-tab': target('Tab', (y, h) => text(58, y + h / 2 + 4, 'Today', 'cp-t cp-b cp-accent', 'middle') + text(125, y + h / 2 + 4, 'Plan', 'cp-t cp-muted', 'middle') + text(192, y + h / 2 + 4, 'Progress', 'cp-t cp-muted', 'middle') + rect(28, y + h - 4, 60, 3, 'cp-on', 1.5)),
-  'target-slider': target('Slider thumb', (y, h) => rect(20, y + h / 2 - 2, 210, 4, 'cp-line', 2) + rect(20, y + h / 2 - 2, 63, 4, 'cp-on', 2) + circle(83, y + h / 2, 11, 'cp-knob cp-edge')),
-  'target-accordion': target('Accordion header', (y, h) => text(20, y + h / 2 + 4, 'Warm-up', 'cp-t cp-b') + chevron(220, y + h / 2)),
-  'target-menu': target('Menu button', (y, h) => rect(20, y + 4, 210, h - 8, 'cp-field', 10) + text(32, y + h / 2 + 4, 'Workout options') + [0, 1, 2].map((i) => circle(208 + i * 6, y + h / 2, 2, 'cp-dotfill')).join('')),
-  'target-segmented': target('Segment', (y, h) => rect(20, y + 2, 210, h - 4, 'cp-off', 10) + rect(23, y + 5, 68, h - 10, 'cp-seg', 8) + ['Week', 'Month', 'Year'].map((o, i) => text(57 + i * 68, y + h / 2 + 4, o, i ? 'cp-t' : 'cp-t cp-b', 'middle')).join('')),
+  'target-select': target('Select trigger', (y, h) => rect(20, y + 4, 210, h - 8, 'cp-field', 8) + text(30, y + h / 2 + 4, '60 seconds') + tri(216, y + h / 2)),
+  'target-tab': target('Tab', (y, h) => text(58, y + h / 2 + 4, 'Today', 'cp-t cp-b cp-accent', 'middle') + text(125, y + h / 2 + 4, 'Plan', 'cp-t', 'middle') + text(192, y + h / 2 + 4, 'Progress', 'cp-t', 'middle') + rect(20, y + h - 4, 70, 3, 'cp-on', 1.5)),
+  'target-slider': target('Slider thumb', (y, h) => rect(20, y + h / 2 - 2.5, 210, 5, 'cp-track', 2.5) + rect(20, y + h / 2 - 2.5, 63, 5, 'cp-on', 2.5) + circle(83, y + h / 2, 10, 'cp-knob cp-ring-on')),
+  'target-accordion': target('Accordion header', (y, h) => rect(14, y + 2, 222, h - 4, 'cp-field', 6) + text(24, y + h / 2 + 4, 'Warm-up') + tri(224, y + h / 2)),
+  'target-menu': target('Menu button', (y, h) => button(20, y + 4, 210, h - 8, 'Workout options', { outline: true }).s),
+  'target-segmented': target('Segment', (y, h) => rect(20, y + 2, 210, h - 4, 'cp-seg-box', 8) + rect(23, y + 5, 68, h - 10, 'cp-btn', 6) + ['Week', 'Month', 'Year'].map((o, i) => text(57 + i * 68, y + h / 2 + 4, o, i ? 'cp-t' : 'cp-t cp-b cp-inv', 'middle')).join('')),
 
   // Radio group.
   'radio-options': P('Each of the three radio options is its own stop for the screen reader. When it fails, they are merged into one stop, or some are missing.',
@@ -257,7 +275,7 @@ export const pictures = {
   'dialog-unnamed': P('Every stop in the dialog has a name. When it fails, the dimmed backdrop is a stop of its own, read as “Unlabelled”.',
     behindDialog().s + dim() + dl.s + focus(dl.b.del), '“Delete, button”', behindDialog().s + dim() + dl.s + rect(3, 3, SW - 6, SH - 6, 'cp-focus', 12), '“Unlabelled” (the backdrop)'),
   'dialog-heading': P('The dialog title is read as a heading, so screen reader users can jump to it. In the failing app the whole dialog is one element, so there is no title stop at all.',
-    behindDialog().s + dim() + dl.s + focus(dl.b.title), '', behindDialog().s + dim() + dl.s + focus([30, 34, 190, 104]), ''),
+    behindDialog().s + dim() + dl.s + focus(dl.b.title), '', behindDialog().s + dim() + dl.s + focus(dl.b.all), ''),
   'dialog-buttons': said('Cancel is read as a button. When it fails, it sounds like plain text.',
     behindDialog().s + dim() + dl.s + focus(dl.b.cancel), '“Cancel, button”', '“Cancel” (no role)'),
   'dialog-closes': P('Tapping Cancel closes the dialog. When it fails, the dialog is still in the tree.',
@@ -293,7 +311,7 @@ export const pictures = {
 
   // Toast.
   toast: P('The toast is in the tree while it is on screen. When it fails, it is drawn but the screen reader never finds it.',
-    button(20, 14, 210, 34, 'Log set').s + toast().s + focus(toast().b.self), '“Set logged”', button(20, 14, 210, 34, 'Log set').s + toast().s + ghost(toast().b.self), 'Visible, but not in the tree'),
+    button(20, 14, 210, 34, 'Log set', { outline: true }).s + toast().s + focus(toast().b.self), '“Set logged”', button(20, 14, 210, 34, 'Log set', { outline: true }).s + toast().s + ghost(toast().b.self), 'Visible, but not in the tree'),
 
   // Slider.
   'slider-drag': P('Dragging the thumb changes the value the screen reader is given. When it fails, the value stays the same.',
@@ -314,7 +332,7 @@ export const pictures = {
   'menu-items': said('Each menu action is read as a button. When it fails, actions sound like plain text.',
     mt.s + mp.s + focus(mp.b.items[0]), '“Duplicate, button”', '“Duplicate” (no role)'),
   'menu-behind': P('With the menu open, the screen reader can only reach the menu. When it fails, it can still reach the screen behind.',
-    lines(20, 70, [50, 40, 54]) + mt.s + mp.s + focus(mp.b.items[1]), 'Reaches the menu only', lines(20, 70, [50, 40, 54]) + mt.s + mp.s + focus([16, 68, 58, 26]), 'Screen behind still reachable'),
+    mt.s + mp.s + focus(mp.b.items[1]), 'Reaches the menu only', mt.s + mp.s + focus(mt.b.self), 'Screen behind still reachable'),
   'menu-unnamed': P('Every stop in the open menu has a name. When it fails, a backdrop that closes the menu is a stop of its own, read as “Unlabelled”.',
     mt.s + mp.s + focus(mp.b.items[2]), '“Archive, button”', mt.s + mp.s + rect(3, 3, SW - 6, SH - 6, 'cp-focus', 12), '“Unlabelled” (the backdrop)'),
   'menu-closes': P('Tapping Duplicate runs it and closes the menu. When it fails, the menu stays open.',
@@ -369,7 +387,7 @@ svg { font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial
 .cp-bg { fill: #ffffff; } .cp-screen { fill: #f6f5f1; stroke: #d9d5cc; }
 .cp-card, .cp-knob, .cp-seg { fill: #ffffff; } .cp-pop { fill: #ffffff; stroke: #d9d5cc; } .cp-knob, .cp-seg { stroke: #d9d5cc; } .cp-edge { stroke: #8a867f; }
 .cp-field { fill: #ffffff; stroke: #c9c5bd; } .cp-field-bad { stroke: #b3261e; stroke-width: 1.5; }
-.cp-line { fill: #d9d5cc; } .cp-on, .cp-btn, .cp-dot { fill: #4f63c9; } .cp-off { fill: #e6e3dc; } .cp-danger { fill: #c0392b; } .cp-toast { fill: #26262b; }
+.cp-line { fill: #d9d5cc; } .cp-track { fill: #8a8a94; } .cp-tri { fill: #3a3a40; } .cp-outline { fill: #ffffff; stroke: #8a867f; } .cp-btn-off { fill: #9fb0e6; } .cp-seg-box { fill: #ffffff; stroke: #4f63c9; stroke-width: 1.5; } .cp-on, .cp-btn, .cp-dot { fill: #4f63c9; } .cp-off { fill: #e6e3dc; } .cp-danger { fill: #c0392b; } .cp-toast { fill: #26262b; }
 .cp-ring { fill: #ffffff; stroke: #8a867f; stroke-width: 1.5; } .cp-ring-on { stroke: #4f63c9; stroke-width: 2; } .cp-dotfill { fill: #5d5a55; }
 .cp-spin { fill: none; stroke: #ffffff; stroke-width: 2; stroke-dasharray: 22 16; }
 .cp-stroke { fill: none; stroke: #5d5a55; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; } .cp-inv-stroke { stroke: #ffffff; } .cp-accent-stroke { stroke: #4f63c9; } .cp-muted-stroke { stroke: #8a867f; }
@@ -384,7 +402,7 @@ svg { font: 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial
 @media (prefers-color-scheme: dark) {
   .cp-bg { fill: #17171c; } .cp-screen { fill: #0e0e11; stroke: #33333c; }
   .cp-card, .cp-knob, .cp-seg, .cp-pop, .cp-field { fill: #23232a; } .cp-pop, .cp-knob, .cp-seg, .cp-field { stroke: #3a3a44; }
-  .cp-line { fill: #3a3a44; } .cp-on, .cp-btn, .cp-dot { fill: #8fa3ff; } .cp-off { fill: #2c2c34; } .cp-danger { fill: #e5675a; } .cp-toast { fill: #ececf1; }
+  .cp-line { fill: #3a3a44; } .cp-track { fill: #5a5a64; } .cp-tri { fill: #c9c9d1; } .cp-outline, .cp-seg-box { fill: #23232a; } .cp-outline { stroke: #5a5a64; } .cp-btn-off { fill: #3c4778; } .cp-seg-box { stroke: #8fa3ff; } .cp-on, .cp-btn, .cp-dot { fill: #8fa3ff; } .cp-off { fill: #2c2c34; } .cp-danger { fill: #e5675a; } .cp-toast { fill: #ececf1; }
   .cp-ring { fill: #23232a; stroke: #a09da6; } .cp-ring-on { stroke: #8fa3ff; } .cp-dotfill { fill: #a09da6; }
   .cp-spin { stroke: #0e0e11; } .cp-stroke { stroke: #a09da6; } .cp-inv-stroke { stroke: #0e0e11; } .cp-accent-stroke { stroke: #8fa3ff; }
   .cp-dim { fill: #000000; fill-opacity: .55; } .cp-focus { stroke: #a5a6ff; } .cp-guide { stroke: #a09da6; } .cp-hit { fill: #8b8cff; }
@@ -399,7 +417,7 @@ export const siteStyle = `.cp { display: block; width: 100%; max-width: 530px; h
 .cp .cp-bg { fill: var(--surface); } .cp .cp-screen { fill: var(--bg); stroke: var(--line); }
 .cp .cp-card, .cp .cp-knob, .cp .cp-seg, .cp .cp-pop, .cp .cp-field { fill: var(--surface); } .cp .cp-pop, .cp .cp-knob, .cp .cp-seg, .cp .cp-field { stroke: var(--line); } .cp .cp-edge { stroke: var(--muted); }
 .cp .cp-field-bad { stroke: #d0453b; stroke-width: 1.5; }
-.cp .cp-line { fill: var(--line); } .cp .cp-on, .cp .cp-btn, .cp .cp-dot { fill: var(--ios); } .cp .cp-off { fill: color-mix(in srgb, var(--muted) 18%, var(--surface)); } .cp .cp-danger { fill: #d0453b; } .cp .cp-toast { fill: var(--text); }
+.cp .cp-line { fill: var(--line); } .cp .cp-track { fill: var(--muted); } .cp .cp-tri { fill: var(--text); } .cp .cp-outline { fill: var(--surface); stroke: var(--muted); } .cp .cp-btn-off { fill: color-mix(in srgb, var(--ios) 50%, var(--surface)); } .cp .cp-seg-box { fill: var(--surface); stroke: var(--ios); stroke-width: 1.5; } .cp .cp-on, .cp .cp-btn, .cp .cp-dot { fill: var(--ios); } .cp .cp-off { fill: color-mix(in srgb, var(--muted) 18%, var(--surface)); } .cp .cp-danger { fill: #d0453b; } .cp .cp-toast { fill: var(--text); }
 .cp .cp-ring { fill: var(--surface); stroke: var(--muted); stroke-width: 1.5; } .cp .cp-ring-on { stroke: var(--ios); stroke-width: 2; } .cp .cp-dotfill { fill: var(--muted); }
 .cp .cp-spin { fill: none; stroke: var(--surface); stroke-width: 2; stroke-dasharray: 22 16; }
 .cp .cp-stroke { fill: none; stroke: var(--muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; } .cp .cp-inv-stroke { stroke: var(--surface); } .cp .cp-accent-stroke { stroke: var(--ios); } .cp .cp-muted-stroke { stroke: var(--muted); }

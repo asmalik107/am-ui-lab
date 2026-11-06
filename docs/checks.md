@@ -522,7 +522,7 @@ All checks, with their pictures: [Method](method.md#checks-in-pictures).
   - **Passes:** It has a label, the right role (button, switch, checkbox…) and its current state: disabled, busy, on/off, checked or selected.
   - **Fails:** Any of the three is missing or wrong, e.g. a switch read as just “Workout reminders”.
 
-![Native switch row: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-native-switch.svg)
+![Native switch: the tappable area is at least 44 pt tall (48 dp on Android). When it fails, it is smaller than the dashed minimum.](checks/pictures/target-native-switch.svg)
 
 - **touch target:** Measures the control’s frame in the accessibility tree.
   - **Passes:** At least 44 × 44 pt on iOS (Apple’s default control size) and 48 × 48 dp on Android (Google’s minimum).
